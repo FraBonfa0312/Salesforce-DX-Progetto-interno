@@ -1,0 +1,10 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens" access="global" >
+<aura:attribute name="ContactName" type="String"/>
+<aura:attribute name="ResourceName" type="String"/>
+<aura:attribute name="TerritoryName" type="String"/>
+<aura:attribute name="TerritoryStreet" type="String"/>
+        <div class="slds-box">
+            <div class="slds-text-heading_large slds-text-align_center">Hi {!v.ContactName}, let's get your meeting scheduled with {!v.ResourceName}</div>
+            <div class="slds-text-heading_small slds-text-align_center">Select a time that works for you at our Branch located at {!v.TerritoryStreet}</div>
+        </div>  
+</aura:component>

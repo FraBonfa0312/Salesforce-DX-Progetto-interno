@@ -1,0 +1,121 @@
+<aura:component implements="flexipage:availableForAllPageTypes" access="Global">
+   	<aura:attribute name="metric1" type="String"></aura:attribute>
+    <aura:attribute name="metric2" type="String"></aura:attribute>
+    <aura:attribute name="metric3" type="String"></aura:attribute>
+    <aura:attribute name="metric4" type="String"></aura:attribute>
+    <aura:attribute name="metric1Name" type="String"></aura:attribute>
+    <aura:attribute name="metric2Name" type="String"></aura:attribute>
+    <aura:attribute name="metric3Name" type="String"></aura:attribute>
+    <aura:attribute name="metric4Name" type="String"></aura:attribute>
+    
+    
+    <lightning:layout>
+        <!-- Card #1 -->
+        <lightning:layoutItem padding="around-small" size="3">
+            <div class="slds-card slds-card_boundary action-card">
+                <div class="slds-p-around_medium">
+                    <div class="slds-media slds-media_center slds-p-bottom_medium">
+                        <div class="slds-media_figure">
+                            <lightning:icon iconName="action:upload" size="small"></lightning:icon>                        
+                        </div>
+                        <div class="slds-media_body">
+                            <span class=" slds-m-left_x-small slds-truncate">Records Uploaded</span>
+                        </div>
+                    </div>
+                    <div class="nbamessage">
+                        {!v.message}
+                    </div>
+                    <lightning:buttonGroup class="slds-m-top_medium slds-has-flexi-truncate">
+                        <lightning:button variant="neutral" label="{!v.action}" class="slds-truncate left-button" onclick="{!c.offerAccept}" ></lightning:button>                   
+                        <lightning:button variant="neutral" label="{!v.action2}" class="slds-truncate right-button" onclick="{!c.offerReject}" ></lightning:button>
+                    </lightning:buttonGroup>
+                </div> 
+                <div class=" slds-border_top slds-theme_shade recommendation-footer slds-p-around_x-small">
+                </div>
+            </div>
+        </lightning:layoutItem>
+        
+        <!-- Card #2 -->
+        <lightning:layoutItem padding="around-small" size="3">
+            
+            <div class="slds-card slds-card_boundary action-card">
+                <div class="slds-p-around_medium">
+                    <div class="slds-media slds-media_center slds-p-bottom_medium">
+                        <div class="slds-media_figure">
+                            <lightning:icon iconName="action:new_lead" size="small"></lightning:icon>                        
+                        </div>
+                        <div class="slds-media_body">
+                            <span class=" slds-m-left_x-small slds-truncate">Leads Created</span>
+                        </div>
+                    </div>
+                    <div class="nbamessage">
+                        {!v.message}
+                    </div>
+                    <lightning:buttonGroup class="slds-m-top_medium slds-has-flexi-truncate">
+                        <lightning:button variant="neutral" label="{!v.action}" class="slds-truncate left-button" onclick="{!c.offerAccept}" ></lightning:button>                   
+                        <lightning:button variant="neutral" label="{!v.action2}" class="slds-truncate right-button" onclick="{!c.offerReject}" ></lightning:button>
+                    </lightning:buttonGroup>
+                </div> 
+                <div class=" slds-border_top slds-theme_shade recommendation-footer slds-p-around_x-small">
+                </div>
+            </div>
+        </lightning:layoutItem>
+        
+        
+        <!-- Card #3 -->
+        <lightning:layoutItem padding="around-small" size="3">
+            
+            <div class="slds-card slds-card_boundary action-card">
+                <div class="slds-p-around_medium">
+                    <div class="slds-media slds-media_center slds-p-bottom_medium">
+                        <div class="slds-media_figure">
+                            <lightning:icon iconName="action:new_opportunity" size="small"></lightning:icon>                        
+                        </div>
+                        <div class="slds-media_body">
+                            <span class=" slds-m-left_x-small slds-truncate">Opportunities Created</span>
+                        </div>
+                    </div>
+                    <div class="nbamessage">
+                        {!v.message}
+                    </div>
+                    <lightning:buttonGroup class="slds-m-top_medium slds-has-flexi-truncate">
+                        <lightning:button variant="neutral" label="{!v.action}" class="slds-truncate left-button" onclick="{!c.offerAccept}" ></lightning:button>                   
+                        <lightning:button variant="neutral" label="{!v.action2}" class="slds-truncate right-button" onclick="{!c.offerReject}" ></lightning:button>
+                    </lightning:buttonGroup>
+                </div> 
+                <div class=" slds-border_top slds-theme_shade recommendation-footer slds-p-around_x-small">
+                </div>
+            </div>
+        </lightning:layoutItem>
+        
+        <!-- Card #4 -->
+        <lightning:layoutItem padding="around-small" size="3">
+            
+            <div class="slds-card slds-card_boundary action-card">
+                <div class="slds-p-around_medium">
+                    <div class="slds-media slds-media_center slds-p-bottom_medium">
+                        <div class="slds-media_figure">
+                        	<lightning:icon iconName="action:close" size="small"></lightning:icon>                        
+                        </div>
+                        <div class="slds-media_body">
+                            <span class=" slds-m-left_x-small slds-truncate">Void Records</span>
+                        </div>
+                    </div>
+                    <div class="nbamessage">
+                        {!v.message}
+                    </div>
+                    <lightning:buttonGroup class="slds-m-top_medium slds-has-flexi-truncate">
+                        <lightning:button variant="neutral" label="{!v.action}" class="slds-truncate left-button" onclick="{!c.offerAccept}" ></lightning:button>                   
+                        <lightning:button variant="neutral" label="{!v.action2}" class="slds-truncate right-button" onclick="{!c.offerReject}" ></lightning:button>
+                    </lightning:buttonGroup>
+                </div> 
+                <div class=" slds-border_top slds-theme_shade recommendation-footer slds-p-around_x-small">
+                </div>
+            </div>
+        </lightning:layoutItem>
+        
+    </lightning:layout>
+
+    
+	
+</aura:component>

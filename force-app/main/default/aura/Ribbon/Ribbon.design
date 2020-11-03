@@ -1,0 +1,43 @@
+<design:component >
+    <design:attribute name="section1" Label="Section 1" description="Show Section 1" />
+    <design:attribute name="title1" label="Title 1" description="Title for Section 1" />
+	<design:attribute name="field1" label="Field 1" description="Api name of field 1" />
+    <design:attribute name="color1" label="Section 1 Color" description="Select static color or semaphoric" 
+                      datasource="Semaphoric,White,Grey,Dark Blue,Blue,Light Blue,Salesforce Blue,Green,Yellow,Red,Dark" default="Blue"/>
+    <design:attribute name="striped1" label="Striped Color for Section 1" description="Stripes for section1" />
+    
+    <design:attribute name="section2" Label="Section 2" description="Show Section 2" />
+    <design:attribute name="title2" label="Title 2" description="Title for Section 2" />    
+    <design:attribute name="header2" label="Label 2" description="Label for field 2" />
+	<design:attribute name="field2" label="Field 2" description="Api name of field 2" />
+ 
+    <design:attribute name="header3" label="Label 3" description="Label for field 3" />
+	<design:attribute name="field3" label="Field 3" description="Api name of field 3" />
+ 	<design:attribute name="color2" label="Section 2 Color" description="Select static color or semaphoric" 
+                      datasource="Semaphoric,White,Grey,Dark Blue,Blue,Light Blue,Salesforce Blue,Green,Yellow,Red,Dark" default="Blue"/>
+    <design:attribute name="striped2" label="Striped Color for Section 2" description="Stripes for section1" />
+    
+    <design:attribute name="section3" Label="Section 3" description="Show Section 3" default="true"/>
+	<design:attribute name="title3" label="Title 3" description="Title for Section 3" />
+    
+    <design:attribute name="header4" label="Label 4" description="Label for field 4" />
+	<design:attribute name="field4" label="Field 4" description="Api name of field 4" />
+    
+    <design:attribute name="header5" label="Label 5" description="Label for field 5" />
+	<design:attribute name="field5" label="Field 5" description="Api name of field 5" />
+ 	<design:attribute name="color3" label="Section 3 Color" description="Select static color or semaphoric" 
+                      datasource="Semaphoric,White,Grey,Dark Blue,Blue,Light Blue,Salesforce Blue,Green,Yellow,Red,Dark" default="Blue"/>
+    <design:attribute name="striped3" label="Striped Color for Section 3" description="Stripes for section1" />          
+    
+	<design:attribute name="section4" Label="Section 4" description="Show Section 4" />
+    <design:attribute name="title4" label="Title 4" description="Title for Section 4" />
+    
+    <design:attribute name="header6" label="Label 6" description="Label for field 6" />
+	<design:attribute name="field6" label="Field 6" description="Api name of field 6" />
+        
+    <design:attribute name="header7" label="Label 7" description="Label for field 7" />
+	<design:attribute name="field7" label="Field 7" description="Api name of field 7" />
+    <design:attribute name="color4" label="Section 4 Color" description="Select static color or semaphoric" 
+                      datasource="Semaphoric,White,Grey,Dark Blue,Blue,Light Blue,Salesforce Blue,Green,Yellow,Red,Dark" default="Blue"/>
+        <design:attribute name="striped4" label="Striped Color for Section 1" description="Stripes for section1" />  
+</design:component>

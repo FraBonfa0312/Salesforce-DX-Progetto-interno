@@ -1,0 +1,248 @@
+<!-- Dev Notes:
+*Author: Jake Hendrix
+*Date: August 25, 2019
+*Comments: In progress like crazy...
+
+*Revisions Planned:
+    - Pull recommendations from ED predictions, NBA recommendations, FINAlerts (to be expanded later..)
+    - Down the road... figure out how to recommend attendees based on agenda topics. For example, discussing Book of Business analysis should probably include the underwriter!
+	- 
+*Revisions Completed:
+	- Updated path component to display on grey background
+	-
+
+*Parking Lot:
+	- removed slds-grow from modal body definition
+
+
+-->
+
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,force:hasSObjectName" access="global">
+    <!-- *************************************** Data and Events Definition Section *************************************** -->
+    <aura:attribute name="Title" type="String" default="Agenda Builder" />
+    <aura:attribute name="buttonLabel" type="String" default="Start" />
+    <aura:attribute name="currentStep" type="string" default="1" />
+    <aura:attribute name="tempBody" type="String" default="Body Text" />
+
+    <!-- *************************************** Temporary Component Body Section *************************************** -->
+
+    <lightning:button label="(Temp)Agenda Builder" onclick="{!c.openModal}" />
+
+    <div role="dialog" tabindex="-1" aria-labelledby="header43" aura:id="ABModal" class="slds-modal slds-modal_small">
+        <div class="slds-modal__container">
+
+
+            <!-- *************************************** Modal Header Section *************************************** -->
+
+            <header class="slds-modal__header">
+                <lightning:buttonIcon iconName="utility:close" onclick="{!c.closeModal}" alternativeText="close"
+                    variant="bare-inverse" class="slds-modal__close" />
+                <h2 id="header43" class="slds-text-heading_medium">{!v.Title}</h2>
+            </header>
+
+            <div class="slds-modal__content  slds-p-around_medium" id="modal-content-id-1">
+                <!-- *************************************** Modal Page 1 *************************************** -->
+                <div class="{!v.currentStep == '1' ? 'slds-show' : 'slds-hide'}">
+                    <c:INS_agendaBuilderHeader Title="Getting Started" Icon="custom:custom96"
+                        SubTitle="In three quick steps, you'll have a strong agenda!" />
+                    <div class="slds-m-top_x-large slds-m-bottom_small">
+                        <div class="slds-m-around_medium slds-align_absolute-center">
+                            <div class="slds-text-heading_medium">Design a meeting for success</div>
+                        </div>
+                        <img src="https://sfdc-demo-images-jake.s3.amazonaws.com/einsteinRocketImg.png"
+                            class="openingImg" />
+                        <c:INS_agendaPageOne />
+                    </div>
+                </div>
+
+
+                <!-- *************************************** Modal Page 2 *************************************** -->
+                <div class="{!v.currentStep == '2' ? 'slds-show' : 'slds-hide'}">
+                    <c:INS_agendaBuilderHeader Title="Shape Your Meeting" Icon="standard:entitlement"
+                        SubTitle="Let's pick a few topics to drive this conversaton" />
+                    <!-- Awesome meetings are driven by awesome conversation. Make your discussion points impactful! By the way, we've helped you out with a few suggestions below as well-->
+                    <c:INS_agendaBuilderPage2 />
+                </div>
+
+
+                <!-- *************************************** Modal Page 3 *************************************** -->
+                <div class="{!v.currentStep == '3' ? 'slds-show' : 'slds-hide'}">
+                    <c:INS_agendaBuilderHeader Title="Validate Attendees" Icon="standard:queue"
+                        SubTitle="Scheduler has added the following attendees for you..." />
+                    <div class="myContainer">
+                        <div class="slds-p-left_small slds-p-top_small slds-m-right_x-small slds-text-heading_medium">Confirmed Attendees:</div>
+                        <lightning:card variant="base">
+                            <div class="slds-card__body_inner">
+                                <div aura:id="firsthalf" class="slds-m-top_small">
+                                    <div class="slds-form slds-form_stacked slds-p-around_xx-small">
+                                        <div class="slds-grid slds-gutters slds-m-bottom_x-small">
+                                            <div class="slds-col slds-size_8-of-12">
+                                                <div class="slds-m-bottom_small">
+                                                    <ul class="slds-list_vertical-space-medium">
+                                                        <li class="slds-item">
+                                                            <!-- Attendee Card Here -->
+                                                            <div
+                                                                class="slds-p-around_medium slds-card slds-card_boundary wholeCard">
+                                                                <lightning:layout horizontalAlign="spread"
+                                                                    verticalAlign="center">
+                                                                    <lightning:layoutItem>
+                                                                        <div class="slds-media slds-media_center">
+                                                                            <div class="slds-media__figure">
+                                                                                <img src="https://sfdc-demo-images-jake.s3.amazonaws.com/Screen+Shot+2019-09-16+at+1.33.34+PM.png"
+                                                                                    class="customer-avatar" />
+                                                                            </div>
+                                                                            <div class="slds-media__body">
+                                                                                <ul class="slds-list_horizontal">
+                                                                                    <li>
+                                                                                        <div
+                                                                                            class="slds-text-heading_small">
+                                                                                            Frank Levin</div>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <lightning:badge
+                                                                                            class="slds-m-left_small"
+                                                                                            label="Primary">
+                                                                                        </lightning:badge>
+                                                                                    </li>
+                                                                                </ul>
+                                                                                <div style="font-size: 13px;">Owner,
+                                                                                    Principal Agent</div>
+                                                                            </div>
+                                                                            <div
+                                                                                class="slds-media__figure slds-media__figure_reverse">
+                                                                            </div>
+                                                                        </div>
+                                                                    </lightning:layoutItem>
+                                                                    <lightning:layoutItem>
+                                                                        <lightning:layout horizontalAlign="spread">
+                                                                            <lightning:layoutItem>
+                                                                                <lightning:buttonIcon
+                                                                                    iconName="utility:close"
+                                                                                    size="small" variant="neutral" />
+                                                                            </lightning:layoutItem>
+                                                                        </lightning:layout>
+                                                                    </lightning:layoutItem>
+                                                                </lightning:layout>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="slds-col slds-size_4-of-12 customLookup">
+                                                <c:zJH_customLookup objectAPIName="Contact" IconName="standard:contact"
+                                                    label="" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <!--<lightning:input class="slds-m-bottom_small" label="Input label" placeholder="Search to Add..." type="text"
+                                variant="label-hidden"></lightning:input>
+                            <ul class="slds-list_vertical-space-medium">
+                                <li class="slds-item">
+                                    <lightning:layout class="slds-p-bottom_x-small slds-border_bottom"
+                                        horizontalAlign="spread" verticalAlign="center">
+                                        <div class="slds-media slds-media_center">
+                                            <div class="slds-media__figure">
+                                                <lightning:icon iconName="standard:avatar" size="medium"
+                                                    variant="circle" />
+                                            </div>
+                                            <div class="slds-media__body"><a href="javascript:void(0);"
+                                                    class=" slds-text-link">Frank Levin</a>
+                                                <lightning:badge class="slds-m-left_x-small" label="Primary" />
+                                                <div style="font-size: 0.75rem;">Principal Agent</div>
+                                            </div>
+                                            <div class="slds-media__figure slds-media__figure_reverse"></div>
+                                        </div>
+                                        <lightning:layout verticalAlign="center">
+                                            <lightning:layoutItem>
+                                                <lightning:button class="slds-theme_neutral" iconPosition="left"
+                                                    variant="neutral" type="button" label="Remove">
+                                                </lightning:button>
+                                            </lightning:layoutItem>
+                                        </lightning:layout>
+                                    </lightning:layout>
+                                </li>
+                                <li class="slds-item">
+                                    <lightning:layout class="slds-p-bottom_x-small slds-border_bottom"
+                                        horizontalAlign="spread" verticalAlign="center">
+                                        <div class="slds-media slds-media_center">
+                                            <div class="slds-media__figure">
+                                                <lightning:icon iconName="standard:avatar" size="medium"
+                                                    variant="circle" />
+                                            </div>
+                                            <div class="slds-media__body"><a href="javascript:void(0);"
+                                                    class=" slds-text-link">Rick James</a>
+                                                <div style="font-size: 0.75rem;">Licensed Producer</div>
+                                            </div>
+                                            <div class="slds-media__figure slds-media__figure_reverse"></div>
+                                        </div>
+                                        <lightning:layout verticalAlign="center">
+                                            <lightning:layoutItem>
+                                                <lightning:button class="slds-theme_neutral" iconPosition="left"
+                                                    variant="neutral" type="button" label="Remove">
+                                                </lightning:button>
+                                            </lightning:layoutItem>
+                                        </lightning:layout>
+                                    </lightning:layout>
+                                </li>
+                                <li class="slds-item">
+                                    <lightning:layout class="slds-p-bottom_x-small slds-border_bottom"
+                                        horizontalAlign="spread" verticalAlign="center">
+                                        <div class="slds-media slds-media_center">
+                                            <div class="slds-media__figure">
+                                                <lightning:icon iconName="standard:avatar" size="medium"
+                                                    variant="circle" />
+                                            </div>
+                                            <div class="slds-media__body"><a href="javascript:void(0);"
+                                                    class=" slds-text-link">Mike Jones</a>
+                                                <div style="font-size: 0.75rem;">Licensed Producer</div>
+                                            </div>
+                                            <div class="slds-media__figure slds-media__figure_reverse"></div>
+                                        </div>
+                                        <lightning:layout verticalAlign="center">
+                                            <lightning:layoutItem>
+                                                <lightning:button class="slds-theme_neutral" iconPosition="left"
+                                                    variant="brand" type="button" label="Remove"></lightning:button>
+                                            </lightning:layoutItem>
+                                        </lightning:layout>
+                                    </lightning:layout>
+                                </li>
+                            </ul> -->
+                            </div>
+                        </lightning:card>
+                    </div>
+                    <!-- <img src="https://general-demo-content-gif-storage.s3.amazonaws.com/cityScapeSlow.gif" /> -->
+                </div>
+
+                <!-- *************************************** Modal Page 4 *************************************** -->
+                <div class="{!v.currentStep == '4' ? 'slds-show' : 'slds-hide'}">
+                    <c:INS_agendaBuilderHeader Title="Wrapping Up!" Icon="standard:output"
+                        SubTitle="Looking good! Here are a few handy actions to help save time." />
+
+                    <c:INS_agendaBuilderPage4 />
+                    <!-- <img src="https://general-demo-content-gif-storage.s3.amazonaws.com/cityScapeSlow.gif" /> -->
+                </div>
+            </div>
+
+            <!-- *************************************** Modal Footer Sections *************************************** -->
+
+            <footer class="slds-modal__footer slds-grid slds-grid_align-spread">
+                <!-- <button class="slds-button slds-button_neutral">Cancel</button> -->
+                <lightning:button aura:id="backBtn" class="slds-button slds-hidden" label="Back"
+                    onclick="{!c.doClickBack}" />
+                <lightning:progressIndicator currentStep="{!v.currentStep}" type="base" variant="base"
+                    class="slds-progress_shade">
+                    <lightning:progressStep label="Getting Started" value="1" />
+                    <lightning:progressStep label="Topics" value="2" />
+                    <lightning:progressStep label="Attendees" value="3" />
+                    <lightning:progressStep label="Review" value="4" />
+                </lightning:progressIndicator>
+                <lightning:button class="slds-button slds-button_brand" label="{!v.buttonLabel}"
+                    onclick="{!c.doClick}" />
+            </footer>
+        </div>
+    </div>
+    <div class="slds-backdrop " aura:id="Modalbackdrop"></div>
+</aura:component>

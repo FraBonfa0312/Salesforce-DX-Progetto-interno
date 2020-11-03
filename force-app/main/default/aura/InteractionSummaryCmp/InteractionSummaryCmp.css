@@ -1,0 +1,62 @@
+.THIS .summaryCard svg, .THIS .reportCard .slds-icon-utility-notebook svg{
+    fill: white;
+}
+.THIS .eventcard svg, .THIS .attendeecard svg{
+    fill:white;
+    padding:4px;
+}
+.THIS .quipdoc, .THIS .eventcard, .THIS .attendeecard{
+    background:#fafaf9 !important;
+}
+.THIS .nested-card{
+    font-size:0.75rem;
+    background:#fafaf9 !important;
+}
+.THIS .eventcard .slds-icon-utility-event{
+    background:#eb7092;
+    width:24px;
+    height:24px;
+}
+
+.THIS .attendeecard .slds-icon-utility-user{
+    background:#4bc076;
+    width:24px;
+    height:24px;
+}
+.THIS .quipdoc .slds-icon-utility-quip{
+    padding:2px;
+}
+.THIS .reportChevron .slds-icon-utility-chevronright svg{
+    fill:#706e6b;
+}
+.THIS .reportChevron{
+    cursor:pointer;
+}
+.THIS .summaryCard .slds-icon-utility-list, .THIS .reportCard .slds-icon-utility-notebook{
+    padding: 4px;
+    background: #0070d2;
+}
+.THIS hr{
+    margin: 0rem 0 !important;
+}
+.THIS .search-text{
+    width:37em;
+    margin-right:1rem;
+    display:inline-block;
+}
+.THIS .badge-inprogress{
+    background-color:#f89406;
+    color:white;
+}
+.THIS .badge-overdue{
+    background-color:#ff4007;
+    color:white;
+}
+.THIS .badge-completed{
+    background-color:#468847;
+    color:white;
+}
+.THIS .badge-notstarted{
+    background-color:#928f8b;
+	color:white;    
+}

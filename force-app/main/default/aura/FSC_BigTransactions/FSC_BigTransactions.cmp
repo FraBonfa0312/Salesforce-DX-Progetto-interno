@@ -1,0 +1,275 @@
+<aura:component controller="GrabBigFinTransactions" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:handler name="init" action="{!c.myAction}" value="{!this}" />
+    <aura:attribute name="myOutputs" type="Financial_Account_Transaction__b[]" />
+    <aura:attribute name="showMe" type="Boolean" default="false"/>
+    <aura:attribute name="showPrevious" type="Boolean" default="false"/>
+    <aura:attribute name="myLatestDateTime" type="DateTime" />
+    <aura:attribute name="myMostRecentDateTime" type="DateTime" />
+    <aura:attribute name="myDateTimes" type="DateTime[]" />
+    <aura:attribute name="myOriginalPrior" type="DateTime" />
+    <aura:attribute name="DateTimePrior" type="DateTime" />
+    <aura:attribute name="myPriorChecker" type="Integer" default="0"/>
+    <aura:attribute name="recordId" type="Id" />
+    <aura:attribute name="myTitle" type="String" default="Financial Account Transactions"/>
+    <aura:attribute name="myIcon" type="String" default="custom:custom41"/>
+    <aura:attribute name="testString1" type="String" />
+    <aura:attribute name="testString2" type="String" />
+    <aura:attribute name="testString3" type="String" />
+    <aura:attribute name="testString4" type="String" />
+    <aura:attribute name="testString5" type="String" />
+    <aura:attribute name="testString6" type="String" />
+    <aura:attribute name="testString7" type="String" />
+    <aura:attribute name="testString8" type="String" />
+    <aura:attribute name="myCurrentCounterStart" type="Integer"/>
+    <aura:attribute name="myCurrentCounterEnd" type="Integer"/>
+    
+    <aura:if isTrue="{! empty(v.myOutputs)}">
+        <aura:if isTrue="{!v.myCurrentCounterStart == 1}">            
+            <article class="slds-card">
+                <div class="slds-card__header slds-grid">
+                    <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                        <div class="slds-media__figure">
+                            <span>                
+                                <lightning:icon iconName="{!v.myIcon}" size="small"/>
+                            </span>
+                        </div>
+                        <div class="slds-media__body">
+                            <h2 class="slds-card__header-title">
+                                <a href="javascript:void(0);" class="slds-card__header-link slds-truncate" title="Accounts">
+                                    <span>{!v.myTitle} (0)</span>
+                                </a>
+                            </h2>
+                        </div>
+                    </header>
+                </div>
+            </article>            
+        </aura:if>
+        <aura:if isTrue="{!v.myCurrentCounterStart != 1}">
+            <article class="slds-card slds-card_boundary">
+                <div class="slds-card__header slds-grid">
+                    <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                        <div class="slds-media__figure">
+                            <span>                
+                                <lightning:icon iconName="{!v.myIcon}" size="small"/>
+                            </span>
+                        </div>
+                        <div class="slds-media__body">
+                            <h2 class="slds-card__header-title">
+                                <a href="javascript:void(0);" class="slds-card__header-link slds-truncate" title="Transactions">
+                                    <span class="slds-text-heading_small">{!v.myTitle} (End)</span>
+                                </a>
+                            </h2>
+                        </div>
+                        <aura:if isTrue="{!v.myCurrentCounterStart != 1}">
+                            <div class="slds-no-flex slds-p-right_xx-small">
+                                <lightning:button class="slds-button slds-button_neutral" label="Back" onclick="{!c.getPrior}"/>
+                            </div>
+                        </aura:if>
+                        <aura:if isTrue="{!v.myOutputs.length == 5}">
+                            <div class="slds-no-flex slds-p-left_xx-small">
+                                <lightning:button class="slds-button slds-button_neutral" label="Next" onclick="{!c.getNext}"/>
+                            </div>
+                        </aura:if>
+                    </header>
+                </div>
+                <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+                    <thead>
+                        <tr class="slds-text-title_caps">
+                            <th scope="col" class="slds-cell-wrap">
+                                <div class="slds-truncate" title="TName">TRANSACTION NAME</div>
+                            </th>
+                            <th scope="col" class="slds-cell-wrap">
+                                <div class="slds-truncate" title="Amount">AMOUNT</div>
+                            </th>
+                            <th scope="col" class="slds-cell-wrap">
+                                <div class="slds-truncate" title="Type">TRANSACTION TYPE</div>
+                            </th>
+                            <th scope="col" class="slds-cell-wrap">
+                                <div class="slds-truncate" title="Date">TRANSACTION DATE</div>
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+                <br/>
+                <div class="slds-text-heading_medium slds-align_absolute-center">                        
+                    You've Reached The End.&nbsp;<a onclick="{!c.getPrior}"> Go Back.</a>
+                </div>
+                <br/>                
+            </article>
+        </aura:if>
+    </aura:if>
+    
+    <aura:if isTrue="{! !empty(v.myOutputs)}">        
+        <article class="slds-card slds-card_boundary">
+            <div class="slds-card__header slds-grid">
+                <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                    <div class="slds-media__figure">
+                        <span>                
+                            <lightning:icon iconName="{!v.myIcon}" size="small"/>
+                        </span>
+                    </div>
+                    <div class="slds-media__body">
+                        <h2 class="slds-card__header-title">
+                            <a href="javascript:void(0);" class="slds-card__header-link slds-truncate" title="Transactions">
+                                <span class="slds-text-heading_small">{!v.myTitle} ({!v.myCurrentCounterStart} - {!v.myCurrentCounterEnd})</span>
+                            </a>
+                        </h2>
+                    </div>
+                    <aura:if isTrue="{!v.myCurrentCounterStart != 1}">
+                        <div class="slds-no-flex slds-p-right_xx-small">
+                            <lightning:button class="slds-button slds-button_neutral" label="Back" onclick="{!c.getPrior}"/>
+                        </div>
+                    </aura:if>
+                    <aura:if isTrue="{!v.myOutputs.length == 5}">
+                        <div class="slds-no-flex slds-p-left_xx-small">
+                            <lightning:button class="slds-button slds-button_neutral" label="Next" onclick="{!c.getNext}"/>
+                        </div>
+                    </aura:if>
+                </header>
+            </div>
+            
+            <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+                <thead>
+                    <tr class="slds-text-title_caps">
+                        <th scope="col" class="slds-cell-wrap">
+                            <div class="slds-truncate" title="TName">TRANSACTION NAME</div>
+                        </th>
+                        <th scope="col" class="slds-cell-wrap">
+                            <div class="slds-truncate" title="Amount">AMOUNT</div>
+                        </th>
+                        <th scope="col" class="slds-cell-wrap">
+                            <div class="slds-truncate" title="Type">TRANSACTION TYPE</div>
+                        </th>
+                        <th scope="col" class="slds-cell-wrap">
+                            <div class="slds-truncate" title="Date">TRANSACTION DATE</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>   
+                    <aura:iteration aura:id="myFive" items="{!v.myOutputs}" var="myOutput" indexVar="index">                    
+                        <tr>
+                            <th scope="row" data-label="ID__c" class="slds-cell-wrap">
+                                <div class="slds-truncate" title="ID__c"><a href="javascript:void(0);" 
+                                                                            data-conId1="{!myOutput.Transaction_Id__c}" 
+                                                                            data-conId2="{!myOutput.Amount__c}" 
+                                                                            data-conId3="{!myOutput.Transaction_Type__c}" 
+                                                                            data-conId4="{!myOutput.Transaction_Date__c}" 
+                                                                            data-conId5="{!myOutput.Transaction_Status__c}" 
+                                                                            data-conId6="{!myOutput.Transaction_Sub_Type__c}" 
+                                                                            data-conId7="{!myOutput.Inherent_Name__c}" 
+                                                                            data-conId8="{!myOutput.Description__c}" 
+                                                                            aura:id="myFiveInScope" 
+                                                                            onclick="{!c.getInfo}">{!myOutput.Transaction_Id__c}</a></div>
+                            </th>
+                            <td data-label="Amount" class="slds-cell-wrap">
+                                <div class="slds-truncate" title="Amount">
+                                    <lightning:formattedNumber value="{!myOutput.Amount__c}" style="currency"/>
+                                </div>
+                                
+                            </td>
+                            <td data-label="Type" class="slds-cell-wrap">
+                                <div class="slds-truncate" title="Type">{!myOutput.Transaction_Type__c}</div>
+                            </td>
+                            <td data-label="Type" class="slds-cell-wrap">
+                                <lightning:formattedDateTime value="{!myOutput.Transaction_Date__c}" year="numeric" 
+                                                             month="numeric" day="numeric"
+                                                             hour="2-digit" minute="2-digit" 
+                                                             hour12="true">
+                                </lightning:formattedDateTime>
+                            </td>
+                        </tr>
+                    </aura:iteration>
+                </tbody>
+            </table>
+            
+            <aura:if isTrue="{! !v.showMe}">
+                <footer class="slds-card__footer">
+                    <div class="slds-card__footer-action"><a>Further Details</a></div>    
+                </footer>
+            </aura:if>
+            
+            <aura:if isTrue="{!v.showMe}">        
+                <footer class="slds-card__footer slds-theme_shade">            
+                    <div class="slds-grid slds-gutters slds-p-bottom_small">
+                        <div class="slds-col slds-border_left slds-border_right">
+                            <span>
+                                <div class="slds-text-title slds-truncate" title="ClaimID">Transaction Id</div>
+                                <div title="ClaimID"><strong>{!v.testString1}</strong></div>
+                            </span>
+                        </div>
+                        <div class="slds-col slds-border_right">
+                            <span>
+                                <div class="slds-text-title slds-truncate" title="Amt">Amount</div>
+                                <div title="Amt"><strong>${!v.testString2}</strong></div>
+                            </span>
+                        </div>
+                        <div class="slds-col slds-border_right">
+                            <span>
+                                <div class="slds-text-title slds-truncate" title="Type">Type</div>
+                                <div title="TypeOutput"><strong>{!v.testString3}</strong></div>
+                            </span>
+                        </div>
+                        <div class="slds-col slds-border_right">
+                            <span>
+                                <div class="slds-text-title slds-truncate" title="Type">Date/Time</div>
+                                <div title="TypeOutput">
+                                    <strong>
+                                        <lightning:formattedDateTime value="{!v.testString4}" year="numeric" 
+                                                                     month="numeric" day="numeric"
+                                                                     hour="2-digit" minute="2-digit" 
+                                                                     hour12="true">
+                                        </lightning:formattedDateTime>
+                                        
+                                    </strong>
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="slds-border_top slds-p-bottom_xxx-small slds-p-top_small">
+                    </div>
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-border_left slds-border_right">
+                            <span>
+                                <div class="slds-text-title slds-truncate" title="ClaimID">Status</div>
+                                <div title="ClaimID"><strong>{!v.testString5}</strong></div>
+                            </span>
+                        </div>
+                        <div class="slds-col slds-border_right">
+                            <span>
+                                <div class="slds-text-title slds-truncate" title="Amt">Sub Type</div>
+                                <div title="Amt"><strong>{!v.testString6}</strong></div>
+                            </span>
+                        </div>
+                        <div class="slds-col slds-border_right">
+                            <span>
+                                <div class="slds-text-title slds-truncate" title="Type"> Inherent Info</div>
+                                <div title="TypeOutput">
+                                    <aura:if isTrue="{! !empty(v.testString7)}">
+                                        <strong>
+                                            <a onclick="{!c.getClick}">Click Here</a>
+                                        </strong>
+                                    </aura:if>
+                                    <aura:if isTrue="{! empty(v.testString7)}">
+                                        <strong>
+                                            None Exists
+                                        </strong>
+                                    </aura:if>
+                                </div>
+                            </span>
+                        </div>
+                        <div class="slds-col slds-border_right">
+                            <span>
+                                <div class="slds-text-title slds-truncate" title="Type">Descripton</div>
+                                <div title="TypeOutput"><strong>{!v.testString8}</strong></div>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="slds-p-top_small slds-border_bottom">
+                    </div>                  
+                </footer>        
+            </aura:if>
+        </article>        
+    </aura:if>
+    
+    
+</aura:component>

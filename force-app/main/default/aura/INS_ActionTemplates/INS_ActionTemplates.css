@@ -1,0 +1,17 @@
+.THIS {
+   
+}
+
+.THIS .scrollerSize {
+    height: 500px;
+}
+
+.THIS .asterisk{
+    color: red;
+    margin-right:2px;
+}
+
+.THIS .actionItem {
+    display:flex;
+    
+}

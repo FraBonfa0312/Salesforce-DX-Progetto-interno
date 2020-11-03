@@ -1,0 +1,89 @@
+<template>
+    <div class="slds-m-bottom_small slds-page-header  slds-page-header_record-home">
+        <lightning-layout horizontal-align="spread" vertical-align="center">
+            <lightning-layout-item>
+                <div class="slds-media">
+                    <div class="slds-media__figure">
+                        <lightning-icon icon-name="standard:performance" size="medium" variant="slds-icon-inverse">
+                        </lightning-icon>
+                    </div>
+                    <div class="slds-media__body">
+                        <div style="font-size: 0.8125rem;">{title}</div>
+                        <div class="slds-page-header__title slds-text-heading_small">Hello, {name}!</div>
+                    </div>
+                    <div class="slds-media__figure slds-media__figure_reverse"></div>
+                </div>
+            </lightning-layout-item>
+            <lightning-layout-item>
+                <lightning-layout>
+                    <lightning-layout-item>
+                        <lightning-button-group class="slds-m-left_medium">
+                            <lightning-button class="slds-theme_neutral" variant="neutral" label="View My Day"
+                                onclick={openModal}></lightning-button>
+                        </lightning-button-group>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-layout-item>
+        </lightning-layout>
+
+        <div class="slds-page-header__detail-row">
+            <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_warning" role="alert">
+                <span class="slds-assistive-text">Announcement</span>
+                <span class="slds-icon_container slds-icon-utility-warning slds-m-right_medium"
+                    title="Description of icon when needed">
+                    <lightning-icon icon-name="utility:announcement" size="medium"></lightning-icon>
+                </span>
+                <h2 class="announcement-message">
+                    {message} <a href="javascript:void(0);" onclick={doLearning}
+                        class="slds-m-left_x-small">{link_text}</a>
+                </h2>
+                <div class="slds-notify__close">
+                    <lightning-button-icon icon-name="utility:close" size="small" variant="bare">
+                    </lightning-button-icon>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL -->
+    <div if:true={showModal}>
+        <div class="slds-modal slds-modal_small slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header slds-modal__header_empty">
+                    <lightning-button-icon icon-name="utility:close" onclick={closeModal} alternative-text="close"
+                        variant="bare-inverse" class="slds-modal__close"></lightning-button-icon>
+                </header>
+
+                <!-- <c:INS_agendaBuilderHeader Icon="standard:today" Title="Upcoming Agency Visits"
+                                                   SubTitle="See below for a breakdown of your day." /> -->
+                <div class="slds-modal__content slds-p-around_medium">
+                    <div class="slds-m-bottom_small slds-page-header">
+                        <div class="slds-media">
+                            <div class="slds-media__figure">
+                                <lightning-icon icon-name={modal_icon} size="medium" variant="slds-icon-inverse">
+                                </lightning-icon>
+                            </div>
+                            <div class="slds-media__body">
+                                <div class="slds-page-header__title slds-text-heading_small">{modal_title}</div>
+                                <ul class="slds-list_horizontal slds-has-dividers_left">
+                                    <li class="slds-item">
+                                        <div>{modal_subtitle}</div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="slds-media__figure slds-media__figure_reverse"></div>
+                        </div>
+                    </div>
+
+                    <!-- <c:INS_myAgencyVisits/> -->
+                    <c-ins_agency-visits-cmp></c-ins_agency-visits-cmp>
+                </div>
+                <div class="slds-modal__footer">
+                    <lightning-button variant="brand" label="Close" onclick={closeModal}></lightning-button>
+                </div>
+                <!-- <c:z_imageContainer1/>-->
+            </div>
+        </div>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </div>
+</template>

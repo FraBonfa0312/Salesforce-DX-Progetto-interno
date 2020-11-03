@@ -1,0 +1,37 @@
+.THIS.imageContainerClass{
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+.THIS .imageClass{
+    display: block;
+    width: 100%;
+}
+
+.THIS .selectCompanyInfo{
+    position: absolute;
+    top: 21.4%;
+    left: 2.9%;
+    height: 5.6%;
+    width: 14.3%;
+    /*background-color: rgba(255,0,0,0.3);*/
+}
+
+.THIS .selectPeople{
+    position: absolute;
+    top: 27.2%;
+    left: 2.9%;
+    height: 5.6%;
+    width: 14.3%;
+    /*background-color: rgba(144,238,144,0.3);*/
+}
+
+.THIS .selectInsights{
+    position: absolute;
+    top: 33%;
+    left: 2.9%;
+    height: 5.6%;
+    width: 14.3%;
+    /*background-color: rgba(0,0,255,0.3);*/
+}

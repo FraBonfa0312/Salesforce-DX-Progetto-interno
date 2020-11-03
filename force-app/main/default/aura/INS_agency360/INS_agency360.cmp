@@ -1,0 +1,521 @@
+<!-- Developer Notes:
+*Author: Joint
+*Date: August 15, 2019
+*Comments: 
+*Planned Revisions:
+	-Enable LDS to pull the address out. Previous implementation was for contacts, listed fields don't work on accounts.
+     - Figure out how to parse/split the mailing city and state from the address field, then push into LDS call
+     -TEMPORARILY REMOVED CARDS FROM BOTTOM SECTION
+
+*Completed Revisions:
+    -removed to support other objects
+			<div class="slds-grid slds-grid_align-end slds-p-around_medium">
+              	<lightning:buttonMenu iconName="utility:down" alternativeText="More" variant="bare-inverse" menuAlignment="right" onselect="{! c.openmodal }">
+                    <lightning:menuItem label="Update Card Info" value="update360" />                    
+                </lightning:buttonMenu>
+            </div>
+
+
+-->
+
+
+
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,force:hasSObjectName" access="global">
+
+    <aura:attribute name="backgroundImageUrl" type="String" access="global" />
+    <aura:attribute name="backgroundHexColor" type="String" access="global" />
+    <aura:attribute name="pullMargin" type="Boolean" access="global" />
+    <aura:attribute name="metric1Icon" type="String" access="global" />
+    <aura:attribute name="metric1IconSize" type="String" access="global" />
+    <aura:attribute name="metric1Label" type="String" access="global" />
+    <aura:attribute name="metric2Icon" type="String" access="global" />
+    <aura:attribute name="metric2IconSize" type="String" access="global" />
+    <aura:attribute name="metric2Label" type="String" access="global" />
+    <aura:attribute name="hideCust360Id" type="Boolean" access="global" />
+    <aura:attribute name="hideChurn" type="Boolean" access="global" />
+    <aura:attribute name="threshold1" type="Integer" access="global" default="20" />
+    <aura:attribute name="threshold2" type="Integer" access="global" default="60" />
+    <aura:attribute name="iconColor" type="String" access="global" default="#0070d2" />
+    <aura:attribute name="badge" type="String" access="global" />
+
+
+    <aura:attribute name="contactFields" type="String[]" access="global"
+        default="Name,Total_DWP__c,Production_Segment__c, AccountLogo__c,
+                    Profile_Completion__c, Agency_Compliance__c, Performance_to_Plan__c,BillingCity,
+                    BillingState,INS_Relationship_Indicator__c,INS_National_Rank__c,Planned_P_C_Growth__c,YTD_P_C_Growth__c,Policy_Loss_Ratio__c,
+                    Quoted_Ratio__c,YTD_Bind_Ratio__c,INS_Policy_Retention_Ratio__c,Appointment_Date__c,JH_Temp_Total_Production__c" />
+
+    <aura:attribute name="record" type="Object" />
+    <aura:attribute name="fields" type="Object" />
+    <aura:attribute name="recordError" type="String" />
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <force:recordData aura:id="recordHandler" recordId="{!v.recordId}" fields="{!v.contactFields}"
+        targetRecord="{!v.record}" targetError="{!v.recordError}" targetFields="{!v.fields}" mode="EDIT"
+        recordUpdated="{!c.handleRecordUpdated}" />
+
+
+    <div class="slds-card card" aura:id="card">
+        <div class="header-image"
+            style="{! 'background-image:url(' + (v.backgroundImageUrl) + '); background-color:' + (v.backgroundHexColor) + ';'}">
+            <div class="slds-grid slds-grid_align-end slds-p-around_medium">
+                <lightning:buttonMenu iconName="utility:down" alternativeText="More" variant="bare-inverse"
+                    menuAlignment="right" onselect="{! c.handleMenuSelect }">
+                    <lightning:menuItem prefixIconName="utility:record_update" label="Agenda Builder"
+                        value="agendaBuilder" />
+                </lightning:buttonMenu>
+            </div>
+        </div>
+        <div class="slds-media slds-m-left_x-large">
+            <div class="slds-media_figure">
+                <div class="customer-image-container ">
+                    <aura:if isTrue="{!empty(v.fields.AccountLogo__c)}">
+                        <img src="/_slds/images/themes/lightning_lite/lightning_lite_profile_avatar_160.png"
+                            class="customer-avatar" />
+                        <aura:set attribute="else">
+                            <img src="{!v.fields.AccountLogo__c}" class="customer-avatar" />
+                        </aura:set>
+                    </aura:if>
+
+
+                    <div class="csat-indicator slds-p-right_medium">
+                        <aura:if isTrue="{!not(empty(v.fields.Cust360_CSAT__c))}">
+                            <aura:if isTrue="{!greaterthanorequal(v.fields.Cust360_CSAT__c, 4)}">
+                                <!--<img src="{!$Resource.ContactImageResources + '/ContactImageResources/Positive.png'}" alt="CSAT"  />-->
+                                <lightning:icon iconName="utility:smiley_and_people"
+                                    class="csat-icon csat-icon-positive" size="small"></lightning:icon>
+                                <aura:set attribute="else">
+                                    <aura:if isTrue="{!lessthan(v.fields.Cust360_CSAT__c, 2)}">
+                                        <lightning:icon iconName="utility:sentiment_negative"
+                                            class="csat-icon csat-icon-negative" size="small"></lightning:icon>
+                                        <aura:set attribute="else">
+                                            <lightning:icon iconName="utility:sentiment_neutral"
+                                                class="csat-icon csat-icon-neutral" size="small"></lightning:icon>
+                                        </aura:set>
+                                    </aura:if>
+                                </aura:set>
+                            </aura:if>
+                        </aura:if>
+
+                    </div>
+                </div>
+            </div>
+            <div class="slds-media_body slds-m-left_medium slds-m-top_medium">
+                <div class="slds-text-heading_small title-weight">{!v.fields.Name}
+                    <span class="slds-p-left_x-small">
+                    </span>
+                </div>
+                <div class="slds-text-color_weak">{!v.fields.BillingCity + ', ' +
+                    v.fields.BillingState}
+                    <span class="slds-m-left_x-small">
+                        <!-- <lightning:badge label="Good Standing" class="" icon="utility:like"/> -->
+                        <img src="" class="" />
+                    </span>
+                </div>
+                <!-- <aura:if isTrue="{!not(empty(v.fields.MailingCity))}">
+                	<div class="slds-text-color_weak ">{!v.fields.MailingCity + ', ' + v.fields.MailingState}</div>
+                </aura:if>  -->
+            </div>
+        </div>
+
+        <!-- Customer Metrics -->
+        <lightning:layout horizontalAlign="center" class="slds-m-vertical_medium ">
+            <lightning:layoutItem padding="" size="6" flexibility="auto,grow,shrink"
+                class="slds-border_right slds-p-left_large">
+                <div class="slds-media slds-media_center slds-media_large slds-p-left_small slds-p-right_medium">
+                    <div class="slds-media_figure slds-m-right_medium">
+                        <lightning:icon iconName="{!v.metric1Icon}" size="{!v.metric1IconSize}"
+                            class="grey-icon-gold" />
+                    </div>
+                    <!-- Removed hover component temporarily -->
+                    <!-- <c:zJH_popOver title="National Rank"> -->
+                    <div class="slds-media_body">
+                        <div class=" title-weight">
+                            #&nbsp;{!v.fields.INS_National_Rank__c}
+                        </div>
+                        <div class="slds-text-color_weak" style="font-size:12px;">
+                            {!v.metric1Label}
+                        </div>
+                    </div>
+                    <!-- </c:zJH_popOver> -->
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="" size="6" flexibility="auto,grow,shrink" class="slds-border_left">
+                <div class="slds-media slds-media_center slds-media_large slds-p-left_medium slds-p-right_large">
+                    <div class="slds-media_figure slds-m-right_medium">
+                        <lightning:icon iconName="{!v.metric2Icon}" size="{!v.metric2IconSize}"
+                            class="grey-icon-green" />
+                    </div>
+                    <div class="slds-media_body">
+                        <div class=" title-weight">
+                            $&nbsp;{!v.fields.JH_Temp_Total_Production__c}
+                        </div>
+                        <!-- <div class=" title-weight">
+                            <ui:outputNumber aura:id="LTV" value="{!v.fields.Cust360_LTV__pc}" />
+                        </div> -->
+                        <div class="slds-text-color_weak" style="font-size:12px;">
+                            {!v.metric2Label}
+                        </div>
+                    </div>
+                </div>
+            </lightning:layoutItem>
+        </lightning:layout>
+
+        <div class="slds-m-left_medium slds-m-right_medium slds-m-bottom_x-small slds-p-top_xx-small">
+            <lightning:tabset variant="scoped" class="slds-p-around_x-small">
+                <!-- Tab 1 -->
+                <lightning:tab label="Summary" iconName="utility:multi_picklist" title="summaryDetails"
+                    iconAssistiveText="Replace">
+                    <div class="slds-p-horizontal_small">
+                        <ul class="slds-has-dividers_bottom-space">
+                            <li class="slds-item">
+                                <div class="slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_6-of-12">
+                                        <div class="slds-media slds-media_center">
+                                            <div class="slds-media__figure">
+                                                <lightning:icon iconName="utility:checkin" size="small"
+                                                    class="grey-icon-blue" />
+                                            </div>
+                                            <div class="slds-media__body">
+                                                <div class="slds-form-element">
+                                                    <span class="slds-form-element__label">Locations:</span>
+                                                    <div class="slds-form-element__control">
+                                                        <span class="slds-form-element__static">9</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="slds-col slds-size_6-of-12">
+                                        <div class="slds-media slds-media_center">
+                                            <div class="slds-media__figure">
+                                                <lightning:icon iconName="utility:location" size="small"
+                                                    class="grey-icon-blue" />
+                                            </div>
+                                            <div class="slds-media__body">
+                                                <div class="slds-form-element">
+                                                    <span class="slds-form-element__label">Primary Region:</span>
+                                                    <div class="slds-form-element__control">
+                                                        <span class="slds-form-element__static">Great
+                                                            Lakes</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="slds-item">
+                                <div class="slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_6-of-12">
+                                        <div class="slds-media slds-media_center">
+                                            <div class="slds-media__figure">
+                                                <lightning:icon iconName="utility:groups" size="small"
+                                                    class="grey-icon-blue" />
+                                            </div>
+                                            <div class="slds-media__body">
+                                                <div class="slds-form-element">
+                                                    <span class="slds-form-element__label">Producers:</span>
+                                                    <div class="slds-form-element__control">
+                                                        <span class="slds-form-element__static">13</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_6-of-12">
+                                        <div class="slds-media slds-media_center">
+                                            <div class="slds-media__figure">
+                                                <lightning:icon iconName="utility:date_input" size="small"
+                                                    class="grey-icon-blue" />
+                                            </div>
+                                            <div class="slds-media__body">
+                                                <div class="slds-form-element">
+                                                    <span class="slds-form-element__label">Appointed:</span>
+                                                    <div class="slds-form-element__control">
+                                                        <span
+                                                            class="slds-form-element__static">{!v.fields.Appointment_Date__c}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </lightning:tab>
+                <!-- Tab 2 -->
+                <lightning:tab label="Metrics" iconName="utility:metrics" title="keyMetrics"
+                    iconAssistiveText="Replace">
+                    <div class="slds-p-horizontal_small">
+                        <ul class="slds-has-dividers_bottom-space">
+                            <li class="slds-item">
+                                <div class="slds-grid slds-grid_align-spread">
+                                    <div class="slds-col slds-size_4-of-12">
+                                        <div class="slds-form-element">
+                                            <span class="slds-form-element__label">Planned Growth:</span>
+                                            <div class="slds-form-element__control">
+                                                <span class="slds-form-element__static ">
+                                                    <!-- <lightning:dynamicIcon type="trend" option="down" alternativeText="Trending down"/> -->
+                                                    {!v.fields.Planned_P_C_Growth__c}%
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_4-of-12">
+                                        <div class="slds-form-element">
+                                            <span class="slds-form-element__label">YTD Growth:</span>
+                                            <div class="slds-form-element__control">
+                                                <span
+                                                    class="slds-form-element__static ">{!v.fields.YTD_P_C_Growth__c}%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_4-of-12">
+                                        <div class="slds-form-element">
+                                            <span class="slds-form-element__label">Net Retention:</span>
+                                            <div class="slds-form-element__control">
+
+                                                <span
+                                                    class="slds-form-element__static ">{!v.fields.INS_Policy_Retention_Ratio__c}%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="slds-item">
+                                <div class="slds-grid slds-grid_align-spread">
+                                    <div class="slds-col slds-size_4-of-12">
+                                        <div class="slds-form-element">
+                                            <span class="slds-form-element__label">Quote Ratio:</span>
+                                            <div class="slds-form-element__control">
+                                                <span
+                                                    class="slds-form-element__static ">{!v.fields.Quoted_Ratio__c}%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_4-of-12">
+                                        <div class="slds-form-element">
+                                            <span class="slds-form-element__label">Bind Ratio:</span>
+                                            <div class="slds-form-element__control">
+                                                <span
+                                                    class="slds-form-element__static ">{!v.fields.YTD_Bind_Ratio__c}%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_4-of-12">
+                                        <div class="slds-form-element">
+                                            <span class="slds-form-element__label">Loss Ratio:</span>
+                                            <div class="slds-form-element__control">
+                                                <span
+                                                    class="slds-form-element__static ">{!v.fields.Policy_Loss_Ratio__c}%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </lightning:tab>
+                <!-- <lightning:tab label="Status" iconName="utility:feed" title="commandCenter"
+                    iconAssistiveText="Command Center">
+                    <div class="slds-p-horizontal_small">
+                        <ul class="slds-has-dividers_bottom-space">
+                            <li class="slds-item">
+                                <div class="slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_6-of-12">
+                                        <div class="slds-media slds-media_center">
+                                            <div class="slds-media_body">
+                                                <span class="slds-form-element__label">Relationship Health:</span>
+                                            </div>
+                                            <div class="slds-media_figure slds-media__figure_reverse">
+                                                <img src="https://icon-library.net/images/green-check-mark-icon/green-check-mark-icon-29.jpg"
+                                                    class="iconImg" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="slds-col slds-size_6-of-12">
+                                        <div class="slds-media slds-media_center">
+                                            <div class="slds-media_body">
+                                                <span class="slds-form-element__label">Profitability:</span>
+                                            </div>
+                                            <div class="slds-media_figure slds-media__figure_reverse">
+                                                <img src="https://icon-library.net/images/green-check-mark-icon/green-check-mark-icon-29.jpg"
+                                                    class="iconImg" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="slds-item">
+                                <div class="slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_6-of-12">
+                                        <div class="slds-media slds-media_center">
+                                            <div class="slds-media_body">
+                                                <span class="slds-form-element__label">Licensing:</span>
+                                            </div>
+                                            <div class="slds-media_figure slds-media__figure_reverse">
+                                                <img src="https://icon-library.net/images/green-check-mark-icon/green-check-mark-icon-29.jpg"
+                                                    class="iconImg" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_6-of-12">
+                                        <div class="slds-media slds-media_center">
+                                            <div class="slds-media_body">
+                                                <span class="slds-form-element__label">Thing:</span>
+                                            </div>
+                                            <div class="slds-media_figure slds-media__figure_reverse">
+                                                <img src="https://cdn2.iconfinder.com/data/icons/color-svg-vector-icons-2/512/warning_alert_attention_search-512.png"
+                                                    class="iconImg" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+
+                </lightning:tab> -->
+
+            </lightning:tabset>
+        </div>
+
+
+
+
+
+
+
+
+
+        <!-- Salesforce Customer 360 ID Card
+        
+        <aura:if isTrue="{! not(v.hideCust360Id)}">
+            <div class="slds-card slds-card_boundary slds-m-horizontal_x-large slds-m-vertical_medium slds-p-vertical_x-small slds-p-horizontal_small ">
+                <div class="slds-media slds-media_center">
+                    <div class="slds-media_figure ">
+                    </div>
+                    <div class="slds-media_body slds-m-left_small">
+                    	<div class="title-weight" style="font-size:14px;">Customer 360 ID</div>
+                        <div>{!v.fields.Cust360_Id__c}</div>
+                    </div>
+                </div>
+            
+            </div>
+        </aura:if> -->
+
+
+        <!-- ******************************* Testing Additional Metrics Section ******************************* 
+        
+        <div class="slds-card slds-m-horizontal_x-large slds-m-vertical_medium slds-p-vertical_x-small slds-p-horizontal_small jakeStyle">
+            <lightning:layout horizontalAlign="spread" verticalAlign="center">
+                <lightning:layoutItem>
+                    <div class="slds-media slds-media_center">
+                        <div class="slds-media__figure">
+                            <lightning:icon iconName="standard:opportunity" size="small" variant="slds-icon-inverse"></lightning:icon>
+                        </div>
+                        <div class="slds-media__body">
+                            <div style="font-size: 0.8125rem;"><b>Opportunities</b></div>
+                        </div>
+                        <div class="slds-media__figure slds-media__figure_reverse"></div>
+                    </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem>
+                    <lightning:icon iconName="utility:chevronright" size="x-small"></lightning:icon>
+                </lightning:layoutItem>
+            </lightning:layout>
+        </div>
+        
+        <div class="slds-card slds-m-horizontal_x-large slds-m-vertical_medium slds-p-vertical_x-small slds-p-horizontal_small jakeStyle">
+            <lightning:layout horizontalAlign="spread" verticalAlign="center">
+                <lightning:layoutItem>
+                    <div class="slds-media slds-media_center">
+                        <div class="slds-media__figure">
+                            <lightning:icon iconName="standard:task" size="small" variant="slds-icon-inverse"></lightning:icon>
+                        </div>
+                        <div class="slds-media__body">
+                            <div style="font-size: 0.8125rem;"><b>Interactions</b></div>
+                        </div>
+                        <div class="slds-media__figure slds-media__figure_reverse"></div>
+                    </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem>
+                    <lightning:icon iconName="utility:chevronright" size="x-small"></lightning:icon>
+                </lightning:layoutItem>
+            </lightning:layout>
+        </div>
+        
+        <div class="slds-card slds-m-horizontal_x-large slds-m-vertical_medium slds-p-vertical_x-small slds-p-horizontal_small jakeStyle ">
+            <lightning:layout horizontalAlign="spread" verticalAlign="center">
+                <lightning:layoutItem>
+                    <div class="slds-media slds-media_center">
+                        <div class="slds-media__figure">
+                            <lightning:icon iconName="standard:logging" size="small" variant="slds-icon-inverse"></lightning:icon>
+                        </div>
+                        <div class="slds-media__body">
+                            <div style="font-size: 0.8125rem;"><b>Log Email on Send</b></div>
+                        </div>
+                        <div class="slds-media__figure slds-media__figure_reverse"></div>
+                    </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem>
+                    <lightning:icon iconName="utility:chevronright" size="x-small"></lightning:icon>
+                </lightning:layoutItem>
+            </lightning:layout>
+        </div>
+        
+    -->
+
+    </div>
+
+
+    <!-- Edit Cust 360 Modal -->
+    <!-- removed to support other objects
+    <div role="dialog" tabindex="-1" aria-labelledby="header43" aura:id="Modalbox" class="slds-modal">
+                
+        <div class="slds-modal__container">
+            <div class="slds-modal__header">                
+                <h2 id="header43" class="slds-text-heading_medium">Update Customer 360</h2>
+            </div>
+            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+               	<lightning:layout multipleRows="true" class="slds-p-bottom_x-large">
+                    <lightning:layoutItem padding="around-medium" size="6">
+                        <lightning:input aura:id="custCSAT" name="custCSAT" label="Customer Satisfaction" value="{!v.fields.Cust360_CSAT__c}"  />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem padding="around-medium" size="6">                        
+						<lightning:select aura:id="custLoyalty" name="custLoyalty" label="Loyalty Status" value="{!v.fields.Cust360_Loyalty__c}">
+                            <option value="Platinum">Platinum</option>
+                            <option value="Gold">Gold</option>
+                            <option value="Silver">Silver</option>
+                            <option value="Bronze">Bronze</option>
+                        </lightning:select>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem padding="around-medium" size="6">
+                        <lightning:input aura:id="custLTV" name="custLTV" label="Lifetime Value" value="{!v.fields.Cust360_LTV__c}"  />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem padding="around-medium" size="6">
+                        <lightning:input aura:id="custChurn" name="custChurn" label="Risk of Churn" value="{!v.fields.Cust360_ChurnRisk__c}"  />
+                    </lightning:layoutItem>
+                </lightning:layout>
+            </div>
+            <div class="slds-modal__footer">
+                <lightning:button variant="neutral" label="Cancel" onclick="{!c.cancel}" />
+                <lightning:button variant="brand" label="Save" onclick="{!c.handleSaveRecord}" />
+            </div>
+        </div> 
+        
+    </div>
+    
+    <div class="slds-backdrop " aura:id="Modalbackdrop"></div>
+	-->
+
+
+
+
+</aura:component>

@@ -1,0 +1,572 @@
+<aura:component controller="MortgageOnboardcntrl" implements="lightning:actionOverride,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,forceCommunity:availableForAllPageTypes,force:hasRecordId,force:hasSObjectName">
+    <aura:attribute name="showPopUp" type="Boolean" default="false" />
+    <aura:attribute name="userName" type="String" default="User"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <div class="slds-box landingpage" aura:id="landingpage">
+        <header class="slds-modal__header slds-text-heading_medium slds-hyphenate banner">
+            Onboarding 
+        </header>
+        <div class="slds-grid startingblock">
+            <h2>Hi {!v.userName} !</h2>
+        </div>
+        <div class="slds-grid">
+            <p>We are pleased to welcome you to Cumulus Lending. We have made your onboarding process easy and seamless.</p>
+        </div>
+        <div class="slds-grid">
+            <p>Your onboarding process will consist of 5 steps. In order to complete the process ,you will need the following documents:</p>
+        </div>
+        <div class="slds-grid">
+            <ul class="slds-list_dotted">
+                <li>IRS W-9 Form</li>
+                <li>Resumes of Principal Officers</li>
+                <li>Balance Sheet and Profit &amp; Loss Statement – dated within last 90 days. Both signed by principal</li>
+                <li>Anti-Money Laundering &amp; Bank Secrecy Act Compliance Declaration</li>
+                <li>Articles of Incorporation</li>
+            </ul>
+        </div>
+        <div class="startbtn">
+            <ui:button aura:id="prevButton" press="{!c.new1}" label="Begin Onboarding Process" class="slds-button slds-button_brand"/>
+        </div>
+    </div>
+    <div class="container" aura:id="container">
+        <div class="slds-grid progressbar hide" aura:id="progressbar">
+            <div class="slds-progress slds-progress_shade">
+                <ol class="slds-progress__list">
+                    <li class="slds-progress__item slds-is-completed">
+                        <button class="slds-button slds-button_icon slds-button_icon slds-progress__marker_icon" title="Step 1 - Completed">
+                            <lightning:icon iconName="action:approval" size="small" alternativeText="Success"/>
+                            <span class="slds-assistive-text">Step 1 - Completed</span>
+                        </button>
+                    </li>
+                    <li class="slds-progress__item slds-is-active" aura:id="companyinformation">
+                        <button class="slds-button slds-button_icon slds-button_icon slds-progress__marker_icon">
+                            <lightning:icon aura:id="Edit2" iconName="action:edit" size="small" alternativeText="Success"/>
+                            <lightning:icon aura:id="Approval2" iconName="action:approval" size="small" alternativeText="Success" class="hide"/>
+                            <span class="slds-assistive-text">Step 2 - Completed</span>
+                        </button>
+                    </li>
+                    <li class="slds-progress__item" aura:id="ownerinformation">
+                        <button class="slds-button slds-button_icon slds-button_icon slds-progress__marker" aura:id="progress3">
+                            <lightning:icon aura:id="Edit3" iconName="action:edit" size="small" alternativeText="Success" class="hide"/>
+                            <lightning:icon aura:id="Approval3" iconName="action:approval" size="small" alternativeText="Success" class="hide"/>
+                            <span class="slds-assistive-text">Step 3 </span>
+                        </button>
+                    </li>
+                    <li class="slds-progress__item" aura:id="vendorinformation">
+                        <button class="slds-button slds-button_icon slds-progress__marker" aura:id="progress4">
+                            <lightning:icon aura:id="Edit4" iconName="action:edit" size="small" alternativeText="Success" class="hide"/>
+                            <lightning:icon aura:id="Approval4" iconName="action:approval" size="small" alternativeText="Success" class="hide"/>
+                            <span class="slds-assistive-text">Step 4 </span>
+                        </button>
+                    </li>
+                    <li class="slds-progress__item" aura:id="documents">
+                        <button class="slds-button slds-button_icon slds-progress__marker" aura:id="progress5">
+                            <lightning:icon aura:id="Edit5" iconName="action:edit" size="small" alternativeText="Success" class="hide"/>
+                            <lightning:icon aura:id="Approval5" iconName="action:approval" size="small" alternativeText="Success" class="hide"/>
+                            <span class="slds-assistive-text">Step 5 </span>
+                        </button>
+                    </li>
+                    <li class="slds-progress__item" aura:id="DocuSign">
+                        <button class="slds-button slds-button_icon slds-progress__marker" aura:id="progress6">
+                            <lightning:icon aura:id="Edit6" iconName="action:edit" size="small" alternativeText="Success" class="hide"/>
+                            <lightning:icon aura:id="Approval6" iconName="action:approval" size="small" alternativeText="Success" class="hide"/>
+                            <span class="slds-assistive-text">Step 6</span>
+                        </button>
+                    </li>
+                    <li class="slds-progress__item" aura:id="DocuSign1">
+                        <button class="slds-button slds-button_icon slds-progress__marker" aura:id="progress7">
+                            <lightning:icon aura:id="Edit7" iconName="action:edit" size="small" alternativeText="Success" class="hide"/>
+                            <lightning:icon aura:id="Approval7" iconName="action:approval" size="small" alternativeText="Success" class="hide"/>
+                            <span class="slds-assistive-text">Step 6</span>
+                        </button>
+                    </li>
+                    <li class="slds-progress__item" aura:id="complete">
+                        <button class="slds-button slds-button_icon slds-progress__marker" aura:id="progress8">
+                            <lightning:icon aura:id="Edit8" iconName="action:edit" size="small" alternativeText="Success" class="hide"/>
+                            <lightning:icon aura:id="Approval8" iconName="action:approval" size="small" alternativeText="Success" class="hide"/>
+                            <span class="slds-assistive-text">Step 6</span>
+                        </button>
+                    </li>
+                </ol>
+                <div class="slds-progress-bar slds-progress-bar_x-small" aria-valuemin="0" aria-valuemax="100" aria-valuenow="25" role="progressbar">
+                    <span class="slds-progress-bar__value" style="width: 25%;" aura:id="progressbarcolor">
+                        <span class="slds-assistive-text">Progress: 25%</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="form hide" aura:id="form">
+            <div class="slds-modal__content">
+                <div class="page1" aura:id="page1">
+                    <header class="slds-modal__header">
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Company Information</h2>
+                    </header>
+                    <div class="slds-grid">
+                        <div class="slds-col slds-p-horizontal_medium">
+                            <div class="slds-form-element form">
+                                <label class="slds-form-element__label slds-text-body_regular">Legal Name of the company</label>
+                                <div class="slds-form-element__control">
+                                    <ui:inputText aura:id="legalname" class="txtbox"
+                                                  />
+                                </div>  
+                            </div>
+                            <div class="slds-form-element form">
+                                <label class="slds-form-element__label slds-text-body_regular">DBA</label>
+                                <div class="slds-form-element__control">
+                                    <ui:inputDate aura:id="dateField" displayDatePicker="true"/>
+                                </div>  
+                            </div>
+                            <div class="slds-form-element form">
+                                <label class="slds-form-element__label slds-text-body_regular">Broker ID</label>
+                                <div class="slds-form-element__control">
+                                    <ui:inputText aura:id="legalname" class="txtbox"
+                                                  />
+                                </div>  
+                            </div>
+                            <div class="slds-form-element form">
+                                <label class="slds-form-element__label slds-text-body_regular">Primary Contact</label>
+                                <div class="slds-form-element__control">
+                                    <ui:inputText aura:id="mailing" class="txtbox"
+                                                  />
+                                </div>  
+                            </div>
+                            <div class="slds-form-element form">
+                                <label class="slds-form-element__label slds-text-body_regular">Address</label>
+                                <div class="slds-form-element__control">
+                                    <ui:inputText aura:id="state" class="txtbox"
+                                                  placeholder=""/>
+                                </div>  
+                            </div>
+                            <div class="slds-form-element form">
+                                <label class="slds-form-element__label slds-text-body_regular">Company NMLS Number</label>
+                                <div class="slds-form-element__control">
+                                    <ui:inputText aura:id="email" class="txtbox"
+                                                  placeholder=""/>
+                                </div>  
+                            </div>
+                        </div>
+                        <div class="slds-col slds-p-horizontal_medium">
+                            <div class="slds-form-element form">
+                                <label class="slds-form-element__label slds-text-body_regular">Mailing Address</label>
+                                <div class="slds-form-element__control">
+                                    <ui:inputText aura:id="city" class="txtbox"
+                                                  placeholder=""/>
+                                </div>  
+                            </div>
+                            <div class="slds-form-element form">
+                                <label class="slds-form-element__label slds-text-body_regular">Business Phone Number</label>
+                                <div class="slds-form-element__control">
+                                    <ui:inputText aura:id="countrybirth" class="txtbox"
+                                                  placeholder=""/>
+                                </div>  
+                            </div>
+                            
+                            <div class="slds-form-element form">
+                                <label class="slds-form-element__label slds-text-body_regular">Tax ID number</label>
+                                <div class="slds-form-element__control">
+                                    <ui:inputText aura:id="maidenname" class="txtbox"
+                                                  placeholder=""/>
+                                </div>  
+                            </div>
+                            <div class="slds-form-element form">
+                                <label class="slds-form-element__label slds-text-body_regular">Number of Employees</label>
+                                <div class="slds-form-element__control">
+                                    <ui:inputText aura:id="ssn" class="txtbox"
+                                                  placeholder=""/>
+                                </div>  
+                            </div>
+                            <div class="slds-form-element form">
+                                <label class="slds-form-element__label slds-text-body_regular">Company Net Worth</label>
+                                <div class="slds-form-element__control">
+                                    <ui:inputText aura:id="email" class="txtbox"
+                                                  placeholder=""/>
+                                </div>  
+                            </div>
+                            <div class="slds-form-element form">
+                                <label class="slds-form-element__label slds-text-body_regular">Company Website</label>
+                                <div class="slds-form-element__control">
+                                    <ui:inputText aura:id="email" class="txtbox"
+                                                  placeholder=""/>
+                                </div>  
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-grid">
+                        <div class="slds-col">
+                            <div class="slds-form-element">
+                                <label class="slds-form-element__label slds-text-body_regular">List of state(s) where Applicant is licensed</label>
+                                <div class="slds-form-element__control">
+                                    <ui:inputTextArea aura:id="email" class="txtbox"
+                                                      placeholder=""/>
+                                </div>  
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-grid">
+                        <label class="slds-form-element__label slds-text-body_regular checkboxes">Corporation</label>
+                        <div class="slds-form-element__control checkboxes" style="display:inline-flex">
+                            <ui:inputCheckbox class="checkboxes" aura:id="checkbox" change=""/>
+                            <label class="slds-form-element__label slds-text-body_regular labels">C- Corporation</label>
+                            <ui:inputCheckbox class="checkboxes" aura:id="checkbox" change=""/>
+                            <label class="slds-form-element__label slds-text-body_regular labels">S- Corporation</label>
+                            <ui:inputCheckbox class="checkboxes" aura:id="checkbox" change=""/>
+                            <label class="slds-form-element__label slds-text-body_regular labels">Partnership</label>
+                            <ui:inputCheckbox class="checkboxes" aura:id="checkbox" change=""/>
+                            <label class="slds-form-element__label slds-text-body_regular labels">LLC</label>                            
+                            <ui:inputCheckbox class="checkboxes" aura:id="checkbox" change=""/>
+                            <label class="slds-form-element__label slds-text-body_regular labels">Sole Proprietorship</label>
+                        </div>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <button class="slds-button slds-button_brand" onclick="{}">Back</button>
+                        <button class="slds-button slds-button_brand" onclick="{!c.page1to2}">Next</button>
+                    </footer>
+                </div>
+                <div class="page2 hide" aura:id="page2">
+                    <header class="slds-modal__header">
+                        <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Ownership Interest Information</h2>
+                    </header> 
+                    <div class="slds-grid">
+                        <div class="slds-col slds-p-horizontal_small">
+                            <div class="slds-form-element__label">
+                                Does the Applicant,its owners, or any of its employees have any ownership interest in any mortgage-related business?
+                            </div>
+                            <div class="slds-form-element" style="display:-webkit-inline-box">
+                                <div class="slds-form-element__control">
+                                    <ui:inputCheckbox aura:id="owneryes" class="checkbox"
+                                                      />
+                                </div> 
+                                <label class="slds-form-element__label slds-text-body_regular">Yes</label>
+                            </div>
+                            <div class="slds-form-element" style="display:-webkit-inline-box">
+                                <div class="slds-form-element__control">
+                                    <ui:inputCheckbox aura:id="wsecheckbox" class="checkbox"
+                                                      />
+                                </div>  
+                                <label class="slds-form-element__label slds-text-body_regular">No</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-grid">
+                        <div class="slds-text-body_regular pagetitle">If yes,please provide the name(s) and required information</div>
+                    </div>
+                    <div class="slds-grid">
+                        <div class="slds-col slds-p-horizontal_medium">
+                            <div class="slds-form-element form">
+                                <label class="slds-form-element__label slds-text-body_regular">Business Name</label>
+                                <div class="slds-form-element__control">
+                                    <ui:inputText aura:id="statesreg" class="txtbox"
+                                                  />
+                                </div>  
+                            </div>
+                            <div class="slds-form-element form">
+                                <label class="slds-form-element__label slds-text-body_regular">Owner(s)</label>
+                                <div class="slds-form-element__control">
+                                    <ui:inputText aura:id="statesreg" class="txtbox"
+                                                  />
+                                </div>  
+                            </div>
+                            <div class="slds-form-element form">
+                                <label class="slds-form-element__label slds-text-body_regular">Physical Address</label>
+                                <div class="slds-form-element__control">
+                                    <ui:inputText aura:id="statesreg" class="txtbox"
+                                                  />
+                                </div>  
+                            </div>
+                            <div class="slds-form-element form">
+                                <label class="slds-form-element__label slds-text-body_regular">State</label>
+                                <div class="slds-form-element__control">
+                                    <ui:inputText aura:id="statesreg" class="txtbox"
+                                                  />
+                                </div>  
+                            </div>
+                        </div>
+                        <div class="slds-col slds-p-horizontal_medium">
+                            <div class="slds-form-element form">
+                                <label class="slds-form-element__label slds-text-body_regular">Type of Businesses/Services Offered</label>
+                                <div class="slds-form-element__control">
+                                    <ui:inputText aura:id="designations" class="txtbox"
+                                                  />
+                                </div>  
+                            </div>
+                            <div class="slds-form-element form">
+                                <label class="slds-form-element__label slds-text-body_regular">Ownership Percentage</label>
+                                <div class="slds-form-element__control">
+                                    <ui:inputText aura:id="designations" class="txtbox"
+                                                  />
+                                </div>  
+                            </div>
+                            <div class="slds-form-element form">
+                                <label class="slds-form-element__label slds-text-body_regular">City</label>
+                                <div class="slds-form-element__control">
+                                    <ui:inputText aura:id="statesreg" class="txtbox"
+                                                  />
+                                </div>  
+                            </div>
+                            <div class="slds-form-element form">
+                                <label class="slds-form-element__label slds-text-body_regular">Zip</label>
+                                <div class="slds-form-element__control">
+                                    <ui:inputText aura:id="statesreg" class="txtbox"
+                                                  />
+                                </div>  
+                            </div>
+                        </div>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <button class="slds-button slds-button_brand" onclick="{!c.close1}">Back</button>
+                        <button class="slds-button slds-button_brand" onclick="{!c.page2to3}">Next</button>
+                    </footer>
+                </div>
+                <div class="page3 hide" aura:id="page3">
+                    <header class="slds-modal__header">
+                        <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Current Vendor Information</h2>
+                    </header> 
+                    <div class="slds-grid">
+                        <div class="slds-text-body_regular pagetitle">Please list all current vendors involved in origination, processing, funding, document preparation, etc.</div>
+                    </div>
+                    <div class="slds-grid">
+                        <div class="slds-col slds-p-horizontal_medium">
+                            <div class="slds-form-element form">
+                                <label class="slds-form-element__label slds-text-body_regular">Business Name</label>
+                                <div class="slds-form-element__control">
+                                    <ui:inputText aura:id="statesreg" class="txtbox"
+                                                  />
+                                </div>  
+                            </div>
+                            <div class="slds-form-element form">
+                                <label class="slds-form-element__label slds-text-body_regular">Owner(s)</label>
+                                <div class="slds-form-element__control">
+                                    <ui:inputText aura:id="statesreg" class="txtbox"
+                                                  />
+                                </div>  
+                            </div>
+                            <div class="slds-form-element form">
+                                <label class="slds-form-element__label slds-text-body_regular">Physical Address</label>
+                                <div class="slds-form-element__control">
+                                    <ui:inputText aura:id="statesreg" class="txtbox"
+                                                  />
+                                </div>  
+                            </div>
+                            <div class="slds-form-element form">
+                                <label class="slds-form-element__label slds-text-body_regular">State</label>
+                                <div class="slds-form-element__control">
+                                    <ui:inputText aura:id="statesreg" class="txtbox"
+                                                  />
+                                </div>  
+                            </div>
+                        </div>
+                        <div class="slds-col slds-p-horizontal_medium">
+                            <div class="slds-form-element form">
+                                <label class="slds-form-element__label slds-text-body_regular">Vendor Service Offered</label>
+                                <div class="slds-form-element__control">
+                                    <ui:inputText aura:id="designations" class="txtbox"
+                                                  />
+                                </div>  
+                            </div>
+                            <div class="slds-form-element form">
+                                <label class="slds-form-element__label slds-text-body_regular">Ownership Percentage</label>
+                                <div class="slds-form-element__control">
+                                    <ui:inputText aura:id="designations" class="txtbox"
+                                                  />
+                                </div>  
+                            </div>
+                            <div class="slds-form-element form">
+                                <label class="slds-form-element__label slds-text-body_regular">City</label>
+                                <div class="slds-form-element__control">
+                                    <ui:inputText aura:id="statesreg" class="txtbox"
+                                                  />
+                                </div>  
+                            </div>
+                            <div class="slds-form-element form">
+                                <label class="slds-form-element__label slds-text-body_regular">Zip</label>
+                                <div class="slds-form-element__control">
+                                    <ui:inputText aura:id="statesreg" class="txtbox"
+                                                  />
+                                </div>  
+                            </div>
+                        </div>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <button class="slds-button slds-button_brand" onclick="{!c.close1}">Add More</button>
+                        <button class="slds-button slds-button_brand" onclick="{!c.page3to4}">Next</button>
+                    </footer>
+                </div>
+                <div class="page4 hide" aura:id="page4">
+                    <header class="slds-modal__header">
+                        <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Requested Loan Product Types</h2>
+                    </header> 
+                    <div class="slds-grid">
+                        <div class="slds-col slds-p-horizontal_small">
+                            <div class="slds-form-element" style="display:-webkit-inline-box;padding-left: 10px;">
+                                <div class="slds-form-element__control">
+                                    <ui:inputCheckbox aura:id="owneryes" class="checkbox"
+                                                      />
+                                </div> 
+                                <label class="slds-form-element__label slds-text-body_regular">Conventional</label>
+                            </div>
+                            <div class="slds-form-element" style="display:-webkit-inline-box;padding-left: 10px;">
+                                <div class="slds-form-element__control">
+                                    <ui:inputCheckbox aura:id="wsecheckbox" class="checkbox"
+                                                      />
+                                </div>  
+                                <label class="slds-form-element__label slds-text-body_regular">CONV Non-Conforming</label>
+                            </div>
+                            <div class="slds-form-element" style="display:-webkit-inline-box;padding-left: 10px;">
+                                <div class="slds-form-element__control">
+                                    <ui:inputCheckbox aura:id="wsecheckbox" class="checkbox"
+                                                      />
+                                </div>  
+                                <label class="slds-form-element__label slds-text-body_regular">FHA</label>
+                            </div>
+                            <div class="slds-form-element" style="display:-webkit-inline-box;padding-left: 10px;">
+                                <div class="slds-form-element__control">
+                                    <ui:inputCheckbox aura:id="wsecheckbox" class="checkbox"
+                                                      />
+                                </div>  
+                                <label class="slds-form-element__label slds-text-body_regular">USDA</label>
+                            </div>
+                             <div class="slds-form-element" style="display:-webkit-inline-box;padding-left: 10px;">
+                                <div class="slds-form-element__control">
+                                    <ui:inputCheckbox aura:id="wsecheckbox" class="checkbox"
+                                                      />
+                                </div>  
+                                <label class="slds-form-element__label slds-text-body_regular">VA</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-grid">
+                        <div class="slds-col slds-p-horizontal_medium">
+                            <div class="slds-form-element form">
+                                <label class="slds-form-element__label slds-text-body_regular">Type of Loan</label>
+                                <div class="slds-form-element__control">
+                                    <ui:inputText aura:id="statesreg" class="txtbox"
+                                                  />
+                                </div>  
+                            </div>
+                            <div class="slds-form-element form">
+                                <label class="slds-form-element__label slds-text-body_regular">Type of Loan</label>
+                                <div class="slds-form-element__control">
+                                    <ui:inputText aura:id="statesreg" class="txtbox"
+                                                  />
+                                </div>  
+                            </div>
+                            <div class="slds-form-element form">
+                                <label class="slds-form-element__label slds-text-body_regular">Type of Loan</label>
+                                <div class="slds-form-element__control">
+                                    <ui:inputText aura:id="statesreg" class="txtbox"
+                                                  />
+                                </div>  
+                            </div>
+                        </div>
+                        <div class="slds-col slds-p-horizontal_medium">
+                            <div class="slds-form-element form">
+                                <label class="slds-form-element__label slds-text-body_regular"># of Loans</label>
+                                <div class="slds-form-element__control">
+                                    <ui:inputText aura:id="designations" class="txtbox"
+                                                  />
+                                </div>  
+                            </div>
+                            <div class="slds-form-element form">
+                                <label class="slds-form-element__label slds-text-body_regular"># of Loans</label>
+                                <div class="slds-form-element__control">
+                                    <ui:inputText aura:id="designations" class="txtbox"
+                                                  />
+                                </div>  
+                            </div>
+                            <div class="slds-form-element form">
+                                <label class="slds-form-element__label slds-text-body_regular"># of Loans</label>
+                                <div class="slds-form-element__control">
+                                    <ui:inputText aura:id="statesreg" class="txtbox"
+                                                  />
+                                </div>  
+                            </div>
+                        </div>
+                              <div class="slds-col slds-p-horizontal_medium">
+                            <div class="slds-form-element form">
+                                <label class="slds-form-element__label slds-text-body_regular">Funded Volume</label>
+                                <div class="slds-form-element__control">
+                                    <ui:inputText aura:id="designations" class="txtbox"
+                                                  />
+                                </div>  
+                            </div>
+                            <div class="slds-form-element form">
+                                <label class="slds-form-element__label slds-text-body_regular">Funded Volume</label>
+                                <div class="slds-form-element__control">
+                                    <ui:inputText aura:id="designations" class="txtbox"
+                                                  />
+                                </div>  
+                            </div>
+                            <div class="slds-form-element form">
+                                <label class="slds-form-element__label slds-text-body_regular">Funded Volume</label>
+                                <div class="slds-form-element__control">
+                                    <ui:inputText aura:id="statesreg" class="txtbox"
+                                                  />
+                                </div>  
+                            </div>
+                        </div>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <button class="slds-button slds-button_brand" onclick="{!c.close1}">Add More</button>
+                        <button class="slds-button slds-button_brand" onclick="{!c.page4to5}">Next</button>
+                    </footer>
+                </div>
+                <div class="page5 hide" aura:id="page5">
+                    <header class="slds-modal__header">
+                        <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Upload Documents</h2>
+                    </header> 
+                    <div class="slds-grid">
+                                 IRS W-9 Form
+                    </div>
+                    <div></div>
+                   <div class="slds-grid">
+                                Anti-Money Laundering and Bank Secrecy Act Compliance Declaration
+                    </div>
+                      <div></div>
+					<div class="slds-grid">
+                                Balance Sheet and Profit and Loss Statement (dated within last 90 days)
+                    </div>
+                      <div></div>
+                    <div class="slds-grid">
+                                 Mortgage Broker Compensation Agreement
+                    </div>
+                      <div></div>
+                    <div class="slds-grid">
+                                 Articles of Incorporation (if applicable)
+                    </div>
+                    
+                    <c:LightningAttachmentUploader />
+                    <div class="slds-grid">
+                               Other Documents
+                    </div>
+                    <c:LightningAttachmentUploader />
+                    <footer class="slds-modal__footer">
+                        <button class="slds-button slds-button_brand" onclick="{!c.close1}">Add More</button>
+                        <button class="slds-button slds-button_brand" onclick="{!c.page5to6}">Next</button>
+                    </footer>
+                </div>
+                <div class="page6 hide" aura:id="page6">
+                    <header class="slds-modal__header">
+                        <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Electronic Signature</h2>
+                    </header> 
+                  <p> <iframe width="100%" height="850" src="https://demo.docusign.net/Member/PowerFormSigning.aspx?PowerFormId=6583c5ee-48df-4aaa-baa7-267153e9e125" id="theIframe"/></p>
+                   
+                   
+                    
+                    <footer class="slds-modal__footer">
+                        <button class="slds-button slds-button_brand" onclick="{!c.close1}">Add More</button>
+                        <button class="slds-button slds-button_brand" onclick="{!c.page6to7}">Next</button>
+                    </footer>
+                </div>
+               <div class="page7 hide" aura:id="page7">
+                    <header class="slds-modal__header">
+                        <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Completed!</h2>
+                    </header> 
+                   <h1 class="congrats"> Thank you! Your application has been successfully submitted. Your team at Drop Mortgage is excited to begin this journey with you and if you have any questions, please feel free to contact us. <br/><br/> You can also check the status of your application by click below.</h1>
+                    <footer class="slds-modal__footer">
+                        <button class="slds-button slds-button_brand" onclick="{!c.application}">View Application</button>
+                    </footer>
+                </div>
+            </div>
+        </div> 
+    </div>
+</aura:component>

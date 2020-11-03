@@ -1,0 +1,28 @@
+.THIS {
+}
+
+.THIS .wrap {
+    width: 200px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.THIS .goal-icon {
+    position: absolute;
+    top: 84px;
+    left: 87px;
+    background-color: #6eb8e3;
+}
+
+.THIS .progress-wrap {
+    padding: .75rem 2rem;
+}
+
+.THIS .progress-wrap .slds-progress-bar__value {
+    background-color: #6eb8e3;
+}
+
+.THIS .progress-title {
+    margin-bottom: 5px;
+    font-size: .8rem !important;
+}

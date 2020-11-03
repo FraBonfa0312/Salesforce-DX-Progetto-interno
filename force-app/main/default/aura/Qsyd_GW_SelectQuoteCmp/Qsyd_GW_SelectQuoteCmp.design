@@ -1,0 +1,9 @@
+<design:component>
+    <design:attribute name="programName1" label="Program 1 name" default="Basic Program"/>
+    <design:attribute name="programName2" label="Program 2 name" default="Premium Program"/>
+    <design:attribute name="programName3" label="Program 3 name" default="Standard Program"/>
+    <design:attribute name="programPrice1"  label="Program 1 price" default="20.67"/>
+    <design:attribute name="programPrice2"  label="Program 2 price" default="182.00"/>
+    <design:attribute name="programPrice3"  label="Program 3 price" default="115.17"/>
+    <design:attribute name="currencySymbol" label="Currency symbol"  default="$"/>
+</design:component>

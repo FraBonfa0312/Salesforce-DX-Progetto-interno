@@ -1,0 +1,21 @@
+.THIS.scrollerSize {
+    height: calc(100vh - 185px);
+    /* 12rem  173px*/
+    overflow:hidden;
+    z-index: 2;
+}
+.THIS .hiddenDiv {
+    display:none;
+}
+.THIS svg.slds-button__icon--stateful {
+    margin-right:0rem !important;
+}
+.THIS svg.slds-button__icon_left {
+    margin-right:0rem !important;
+}
+.THIS .buttonSize {
+    height: 100%;
+    padding-top:    calc(50vh - 6.7rem);
+    padding-bottom: calc(50vh - 6.7rem);
+    display:block;
+}

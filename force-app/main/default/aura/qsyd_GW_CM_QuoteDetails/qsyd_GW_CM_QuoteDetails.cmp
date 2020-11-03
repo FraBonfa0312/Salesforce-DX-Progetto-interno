@@ -1,0 +1,53 @@
+<!-- CM #4-->
+<aura:component access="global">
+    <ltng:require styles="{!$Resource.Q_GWScreenBaseCss}" afterScriptsLoaded="{!c.handleCMQuoteInit}" />
+
+    <aura:attribute name="coverageStartDate" type="String" />
+    <aura:attribute name="coverageDuration" type="String" />
+    <aura:attribute name="oppty" type="Opportunity" />
+
+    <aura:attribute name="QuoteCurrencySymbol" type="String" />
+    <aura:attribute name="QuoteProgramCM" type="String" />
+    <aura:attribute name="QuoteProgramPriceCM" type="String" />
+    <aura:attribute name="QuoteProgramTaxCM" type="String" />
+
+    <aura:attribute name="QuoteProgramTotalCost" type="String" />
+
+    <div class="GWScreenContainer">
+        <lightning:layout multipleRows="true">
+            <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                <div class="sectionTitle">
+                    <span class="title">Quote</span>
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="6" class="slds-p-vertical_small slds-p-right_small">
+                <div class="slds-p-vertical_xx-small"><span>Total {!v.QuoteProgramCM}</span><span
+                        class="right">{!v.QuoteCurrencySymbol + v.QuoteProgramPriceCM}</span></div>
+                <div class="slds-p-vertical_xx-small"><span>Taxes</span><span class="right">{!v.QuoteCurrencySymbol +
+                        v.QuoteProgramTaxCM}</span></div>
+                <hr style="margin:5px" />
+                <div class="slds-p-vertical_small"><span style="font-size:14px">TOTAL COST</span><span
+                        style="font-size:18px" class="right">{!v.QuoteCurrencySymbol + v.QuoteProgramPriceCM}</span>
+                </div>
+            </lightning:layoutItem>
+
+            <lightning:layoutItem size="6" class="slds-p-vertical_small slds-p-left_small">
+                <div class="slds-grid slds-grid_align-spread">
+                    <div class="slds-col slds-size_1-of-6">
+                        Policy Period
+                    </div>
+                    <div class="slds-col slds-size_4-of-6 slds-text-align_right">
+                        {!v.coverageDuration}
+                    </div>
+                </div>
+                <div class="slds-m-top_xx-large">
+                    <a>
+                        Edit Coverages
+                    </a>
+                </div>
+            </lightning:layoutItem>
+        </lightning:layout>
+    </div>
+
+
+</aura:component>

@@ -1,0 +1,309 @@
+<aura:component implements='flexipage:availableForRecordHome,force:hasRecordId,force:hasSObjectName' access="global" controller="Ribbon">
+    
+    <!--internal attributes-->
+    <aura:attribute name="recordId" type="Id"/>
+    <aura:attribute name="sObjectName" type="string"/>
+	<aura:attribute name="num" type="integer" />
+    <!--design attributes-->
+    <aura:attribute name="section1" type="boolean"  default="true"/>
+    <aura:attribute name="title1" type="string" required="true" default="title 1"/>
+    <aura:attribute name="field1" type="string"  />
+    <aura:attribute name="color1" type="string" default="Blue" />
+    <aura:attribute name="striped1" type="boolean" default="false" />
+    
+    <aura:attribute name="section2" type="boolean" default="true"/>
+    <aura:attribute name="title2" type="string" required="true" default="title 2"/>
+    <aura:attribute name="header2" type="string" required="true" default="Header 2"/>
+    <aura:attribute name="field2" type="string"  />    
+    <aura:attribute name="header3" type="string" required="true" default="Header 3"/>
+    <aura:attribute name="field3" type="string"  />
+     <aura:attribute name="color2" type="string" default="Blue" />
+    <aura:attribute name="striped2" type="boolean" default="false" />
+    
+    <aura:attribute name="section3" type="boolean"  default="true"/>
+    <aura:attribute name="title3" type="string" required="true" default="title 3"/>
+    <aura:attribute name="header4" type="string" required="true" default="Header 4"/>
+    <aura:attribute name="field4" type="string"  />   
+    <aura:attribute name="header5" type="string" required="true" default="Header 5"/>
+    <aura:attribute name="field5" type="string"  />
+     <aura:attribute name="color3" type="string" default="Blue" />
+    <aura:attribute name="striped3" type="boolean" default="false" />
+    
+    <aura:attribute name="section4" type="boolean"  default="true"/>
+    <aura:attribute name="title4" type="string" required="true" default="title 4"/>
+    <aura:attribute name="header6" type="string" required="true" default="Header 6"/>
+    <aura:attribute name="field6" type="string"  />
+    <aura:attribute name="header7" type="string" required="true" default="Header 7"/>
+    <aura:attribute name="field7" type="string"/>
+    <aura:attribute name="color4" type="string" default="Blue" />
+    <aura:attribute name="striped4" type="boolean" default="false" />
+    
+    <!-- Type Attributes -->
+    <aura:attribute name="types" type="Object"/>
+    <aura:attribute name="field1_type" type="String"/>
+    <aura:attribute name="field2_type" type="String"/>
+    <aura:attribute name="field3_type" type="String"/>
+    <aura:attribute name="field4_type" type="String"/>
+    <aura:attribute name="field5_type" type="String"/>
+    <aura:attribute name="field6_type" type="String"/>
+    <aura:attribute name="field7_type" type="String"/>
+    
+    
+    <!--Data Attributes -->
+    <aura:attribute name="data" type="Object"/>
+    <aura:attribute name="field1_data" type="Decimal"/>
+    <aura:attribute name="field1_data_st" type="String"/>
+    <aura:attribute name="field1_data_dt" type="Date"/>
+    
+    <aura:attribute name="field2_data" type="Decimal"/>
+    <aura:attribute name="field2_data_st" type="String"/>
+    <aura:attribute name="field2_data_dt" type="Date"/> 
+    
+    <aura:attribute name="field3_data" type="Decimal"/>   
+    <aura:attribute name="field3_data_st" type="String"/>
+    <aura:attribute name="field3_data_dt" type="Date"/>
+    
+    <aura:attribute name="field4_data" type="Decimal"/>    
+    <aura:attribute name="field4_data_st" type="String"/>
+    <aura:attribute name="field4_data_dt" type="Date"/>
+    
+    <aura:attribute name="field5_data" type="Decimal"/>        
+    <aura:attribute name="field5_data_st" type="String"/>
+    <aura:attribute name="field5_data_dt" type="Date"/>
+    
+    <aura:attribute name="field6_data" type="Decimal"/>   	
+    <aura:attribute name="field6_data_st" type="String"/>
+    <aura:attribute name="field6_data_dt" type="Date"/>
+    
+    <aura:attribute name="field7_data" type="Decimal"/>    
+    <aura:attribute name="field7_data_st" type="String"/>
+    <aura:attribute name="field7_data_dt" type="Date"/>
+    
+    <!-- Handlers -->
+  	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler event="aura:doneRendering"   action="{!c.doDoneRendering}"/>
+   
+
+    <div class="slds-grid"> 
+    
+        <!-- Section 1 -->
+        <aura:if isTrue="{!v.section1}" >
+        <div class="{!'slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-'+v.num+' slds-large-size--1-of-'+v.num}">
+            <div class="slds-grid">
+                <div class="slds-p-left--xx-small slds-text-heading--small slds-col slds-theme--shade slds-text-align--left">{!v.title1}</div>
+            </div>
+            <div class="slds-grid slds-grid--vertical-stretch" style="height:70px;">
+                <div class="slds-col slds-text-align--center" aura:id="section1" >
+                <p class="slds-text-heading--medium" style="margin-top: 10pt;">
+                     <aura:if isTrue="{!v.field1_type=='Decimal'}" >
+	                    <ui:outputNumber value="{!v.field1_data}" />
+                         <aura:set attribute="else">
+                             <aura:if isTrue="{!v.field1_type=='String'}" >
+      							<ui:outputRichText value="{!v.field1_data_st}" />
+                                 <aura:set attribute="else">
+                                     <aura:if isTrue="{!v.field1_type=='Date'}" >
+                                         <ui:outputDate value="{!v.field1_data_dt}" />
+                                         <aura:set attribute="else">
+                                             <ui:outputCurrency format="." value="{!v.field1_data}" />
+                                             
+                                         </aura:set>
+                                     </aura:if>
+                                 </aura:set>
+                                     </aura:if>
+                                 </aura:set>
+                             </aura:if>
+                </p>
+                </div>
+            </div>
+        </div>
+        </aura:if>
+        <!-- Section 2 -->
+		<aura:if isTrue="{!v.section2}" >     
+        <div class="{!'slds-col--padded slds-size--1-of-1 slds-medium-size--2-of-'+v.num+' slds-large-size--2-of-'+v.num}">
+        <!--<div class="slds-col- -padded slds-size- -1-of-1 slds-medium-size- -2-of-7 slds-large-size- -2-of-7">       -->
+            <div class="slds-grid">
+                <div class="slds-p-left--xx-small slds-text-heading--small slds-col--padded slds-theme--shade slds-text-align--left">{!v.title2}</div>
+            </div>
+            <div class="slds-grid slds-wrap slds-grid--vertical-stretch">                
+                <div class="slds-col--padded slds-size--1-of-1 slds-large-size--1-of-1" aura:id="section2" style="height:70px;">
+                <div class="slds-grid slds-nowrap slds-grid--pull-padded">
+                  <div class="slds-col--padded slds-size--1-of-2 slds-medium-size--1-of-1 slds-large-size--1-of-2">
+                  <p class="slds-text-body--regular" style="margin-top: 7pt;">{!v.header2}</p></div>
+                  <div class="slds-col--padded slds-size--1-of-2 slds-medium-size--1-of-1 slds-large-size--1-of-2">
+                  <p class="slds-text-body--regular" style="margin-top: 7pt;">
+                  <aura:if isTrue="{!v.field2_type=='Decimal'}" >
+	                    <ui:outputNumber value="{!v.field2_data}" />
+                         <aura:set attribute="else">
+                             <aura:if isTrue="{!v.field2_type=='String'}" >
+      							<ui:outputRichText value="{!v.field2_data_st}" />
+                                 <aura:set attribute="else">
+                                     <aura:if isTrue="{!v.field2_type=='Date'}" >
+                                         <ui:outputDate value="{!v.field2_data_dt}" />
+                                         <aura:set attribute="else">
+                                             <ui:outputCurrency value="{!v.field2_data}" />                                           
+                                         </aura:set>
+                                     </aura:if>
+                                 </aura:set>
+                                     </aura:if>
+                                 </aura:set>
+                             </aura:if>
+                  </p></div>
+                </div>
+                <div class="slds-grid slds-nowrap slds-grid--pull-padded">
+                  <div class="slds-col--padded slds-size--1-of-2 slds-medium-size--1-of-1 slds-large-size--1-of-2">
+                  <p class="slds-text-body--regular" style="margin-top: 7pt;">{!v.header3}</p></div>
+                  <div class="slds-col--padded slds-size--1-of-2 slds-medium-size--1-of-1 slds-large-size--1-of-2">
+                  <p class="slds-text-body--regular" style="margin-top: 7pt;">
+                  <aura:if isTrue="{!v.field3_type=='Decimal'}" >
+	                    <ui:outputNumber value="{!v.field3_data}" />
+                         <aura:set attribute="else">
+                             <aura:if isTrue="{!v.field3_type=='String'}" >
+      							<ui:outputRichText value="{!v.field3_data_st}" />
+                                 <aura:set attribute="else">
+                                     <aura:if isTrue="{!v.field3_type=='Date'}" >
+                                         <ui:outputDate value="{!v.field3_data_dt}" />
+                                         <aura:set attribute="else">
+                                             <ui:outputCurrency value="{!v.field3_data}" />                                             
+                                         </aura:set>
+                                     </aura:if>
+                                 </aura:set>
+                                     </aura:if>
+                                 </aura:set>
+                             </aura:if>
+                  </p></div>
+                </div>
+                </div>
+                            
+            </div>        
+        </div>
+        </aura:if>
+        <!-- Section 3 -->
+        <aura:if isTrue="{!v.section3}" >
+        <div class="{!'slds-p-left--xx-small slds-text-heading--small slds-col--padded slds-col--padded slds-size--1-of-1 slds-medium-size--2-of-'+v.num+' slds-large-size--2-of-'+v.num}">    
+            <div class="slds-grid">
+                <div class="slds-col--padded slds-theme--shade slds-text-align--left">{!v.title3}</div>
+            </div>
+            <div class="slds-grid slds-wrap slds-grid--vertical-stretch">                
+                <div class="slds-col--padded slds-size--1-of-1 slds-large-size--1-of-1" aura:id="section3" style="height:70px;">
+                <div class="slds-grid slds-nowrap slds-grid--pull-padded">
+                  <div class="slds-col--padded slds-size--1-of-2 slds-medium-size--1-of-1 slds-large-size--1-of-2">
+                  <p class="slds-text-body--regular" style="margin-top: 7pt;">{!v.header4}</p></div>
+                  <div class="slds-col--padded slds-size--1-of-2 slds-medium-size--1-of-1 slds-large-size--1-of-2">
+                  <p class="slds-text-body--regular" style="margin-top: 7pt;">
+                  <aura:if isTrue="{!v.field4_type=='Decimal'}" >
+	                    <ui:outputNumber value="{!v.field4_data}" />
+                         <aura:set attribute="else">
+                             <aura:if isTrue="{!v.field4_type=='String'}" >
+      							<ui:outputRichText value="{!v.field4_data_st}" />
+                                 <aura:set attribute="else">
+                                     <aura:if isTrue="{!v.field4_type=='Date'}" >
+                                         <ui:outputDate value="{!v.field4_data_dt}" />
+                                         <aura:set attribute="else">
+                                             <ui:outputCurrency value="{!v.field4_data}" />                                           
+                                         </aura:set>
+                                     </aura:if>
+                                 </aura:set>
+                                     </aura:if>
+                                 </aura:set>
+                             </aura:if>
+                      </p></div>
+                </div>
+                <div class="slds-grid slds-nowrap slds-grid--pull-padded">
+                  <div class="slds-col--padded slds-size--1-of-2 slds-medium-size--1-of-1 slds-large-size--1-of-2">
+                  <p class="slds-text-body--regular" style="margin-top: 7pt;">{!v.header5}</p></div>
+                  <div class="slds-col--padded slds-size--1-of-2 slds-medium-size--1-of-1 slds-large-size--1-of-2">
+                  <p class="slds-text-body--regular" style="margin-top: 7pt;">
+                  <aura:if isTrue="{!v.field5_type=='Decimal'}" >
+	                    <ui:outputNumber value="{!v.field5_data}" />
+                         <aura:set attribute="else">
+                             <aura:if isTrue="{!v.field5_type=='String'}" >
+      							<ui:outputRichText value="{!v.field5_data_st}" />
+                                 <aura:set attribute="else">
+                                     <aura:if isTrue="{!v.field5_type=='Date'}" >
+                                         <ui:outputDate value="{!v.field5_data_dt}" />
+                                         <aura:set attribute="else">
+                                             <ui:outputCurrency value="{!v.field5_data}" />
+                                             
+                                         </aura:set>
+                                     </aura:if>
+                                 </aura:set>
+                                     </aura:if>
+                                 </aura:set>
+                             </aura:if>
+                  </p></div>
+                </div>
+                </div>
+            </div>        
+        </div>
+        </aura:if>
+        <!-- Section 4 -->
+        <aura:if isTrue="{!v.section4}" >
+        <div class="{!'slds-p-left--xx-small slds-text-heading--small slds-col--padded slds-col--padded slds-size--1-of-1 slds-medium-size--2-of-'+v.num+' slds-large-size--2-of-'+v.num}">      
+            
+            <div class="slds-grid">
+                <div class="slds-col--padded slds-theme--shade slds-text-align--left">{!v.title4}</div>
+            </div>
+            <div class="slds-grid slds-wrap slds-grid--vertical-stretch">
+                
+                <div class="slds-col--padded slds-size--1-of-1 slds-large-size--1-of-1" aura:id="section4" style="height:70px;">
+                <div class="slds-grid slds-nowrap slds-grid--pull-padded">
+                  <div class="slds-col--padded slds-size--1-of-2 slds-medium-size--1-of-1 slds-large-size--1-of-2 slds-nowrap">
+                  <p class="slds-text-body--regular" style="margin-top: 7pt;">{!v.header6}</p></div>
+                  <div class="slds-col--padded slds-size--1-of-2 slds-medium-size--1-of-1 slds-large-size--1-of-2 slds-nowrap">
+                  <p class="slds-text-body--regular" style="margin-top: 7pt;">
+                  <aura:if isTrue="{!v.field6_type=='Decimal'}" >
+	                    <ui:outputNumber value="{!v.field6_data}" />
+                         <aura:set attribute="else">
+                             <aura:if isTrue="{!v.field6_type=='String'}" >
+      							<ui:outputRichText value="{!v.field6_data_st}" />
+                                 <aura:set attribute="else">
+                                     <aura:if isTrue="{!v.field6_type=='Date'}" >
+                                         <ui:outputDate value="{!v.field6_data_dt}" />
+                                         <aura:set attribute="else">
+                                             <ui:outputCurrency value="{!v.field6_data}" />                                           
+                                         </aura:set>
+                                     </aura:if>
+                                 </aura:set>
+                                     </aura:if>
+                                 </aura:set>
+                             </aura:if>
+                      </p></div>
+                </div>
+                <div class="slds-grid slds-nowrap slds-grid--pull-padded">
+                  <div class="slds-col--padded slds-size--1-of-2 slds-medium-size--1-of-1 slds-large-size--1-of-2 slds-nowrap">
+                  <p class="slds-text-body--regular" style="margin-top: 7pt;">{!v.header7}</p></div>
+                  <div class="slds-col--padded slds-size--1-of-2 slds-medium-size--1-of-1 slds-large-size--1-of-2 slds-nowrap">
+                  <p class="slds-text-body--regular" style="margin-top: 7pt;">
+                  <aura:if isTrue="{!v.field7_type=='Decimal'}" >
+	                    <ui:outputNumber value="{!v.field7_data}" />
+                         <aura:set attribute="else">
+                             <aura:if isTrue="{!v.field7_type=='String'}" >
+      							<ui:outputRichText value="{!v.field7_data_st}" />
+                                 <aura:set attribute="else">
+                                     <aura:if isTrue="{!v.field7_type=='Date'}" >
+                                         <ui:outputDate value="{!v.field7_data_dt}" />
+                                         <aura:set attribute="else">
+                                             <ui:outputCurrency value="{!v.field7_data}" />                                        
+                                         </aura:set>
+                                     </aura:if>
+                                 </aura:set>
+                                     </aura:if>
+                                 </aura:set>
+                             </aura:if>
+                      </p></div>
+                </div>
+                
+                </div>
+            </div>
+        
+        </div>
+        </aura:if>
+   
+    <!-- / PRIMARY CONTENT WRAPPER -->    
+
+
+
+
+
+  </div>
+</aura:component>

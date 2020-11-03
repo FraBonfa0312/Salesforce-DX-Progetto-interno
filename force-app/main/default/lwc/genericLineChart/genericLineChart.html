@@ -1,0 +1,20 @@
+<template>
+    <lightning-card title="Burndown Chart">
+        <div class="slds-form-element burndownValueType">
+            <label class="slds-form-element__label" for="burndownValueType">Burndown Value Type</label>
+            <div class="slds-form-element__control">
+                <div class="slds-select_container">
+                    <select class="slds-select burndownValueTypeSelect" onchange={updateBurndownValueType}>
+                        <option value="Remaining Balance" selected="selected">Remaining Balance</option>
+                        <option value="Principal Paid">Principal Paid</option>
+                        <option value="Interest Paid">Interest Paid</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <p>&nbsp;</p>
+        <div class="lineChart">
+            <div class="line" lwc:dom="manual"></div>
+        </div>
+    </lightning-card>
+</template>

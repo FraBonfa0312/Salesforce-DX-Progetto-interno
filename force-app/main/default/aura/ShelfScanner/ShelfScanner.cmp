@@ -1,0 +1,61 @@
+<aura:component controller="ShelfScanner" access="global" implements="force:appHostable,flexipage:availableForAllPageTypes,lightning:availableForFlowScreens,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction">
+    
+    <aura:attribute name="spinnerWaiting" type="Boolean" default="false" />
+    <aura:attribute name="showDatatable" type="Boolean" default="false" />
+    
+    <aura:attribute name="modelId" type="String" default="5TO7QGRDSLC7MZZVFSJ3PQJQME" />
+    <aura:attribute name="imageType" type="String" />
+    <aura:attribute name="files" type="Object[]" />
+    <aura:attribute name="predictions" type="Einstein_PredictionResult" />
+    <aura:attribute name="rawPredictions" type="String" />
+    <aura:attribute name="shelfData" type="Object[]" />
+    <aura:attribute name="shelfDataColumns" type="List" />
+    <aura:attribute name="pictureSrc" type="String" />
+    <aura:attribute name="fileName" type="String" />
+    <aura:attribute name="totalCost" type="Integer" />
+    
+    <ltng:require scripts="{!$Resource.resize}" afterScriptsLoaded="{!c.loadResizeListener}" />
+    
+    <aura:handler name="init" value="{! this }" action="{! c.init }" />
+    
+    <lightning:card >
+        <center>
+            <!--<lightning:input aura:id="fileInput" type="file" name="file" multiple="false" accept="image/*;capture=camera" files="{!v.files}"
+                             onchange="{! c.readFile }" label="Image (max. 5MB):" />-->
+            
+            <lightning:input class="fileInput" aura:id="fileInput" type="file" name="file" multiple="false" accept="image/*;capture=camera" files="{!v.files}"
+                             label="Image (max. 5MB):" onchange="{!c.getFilename}"/>
+            
+            
+            <!--<div id="fname" style="display:none; padding-bottom:5px;">
+                <label style="color:white">{!v.fileName}</label>
+            </div>-->
+            
+            <pre></pre>
+            
+            <button class="slds-button slds-button_brand" onclick="{!c.readFile2}">Submit</button>
+            
+            <div class="image-container">
+                <img style="width:100%;height:100%;" aura:id="imgItself" src="{!v.pictureSrc}"/>
+                <div aura:id="imgContainer" class="after">
+                </div>
+            </div>
+        </center>
+        <div style="margin-top:5px;">
+            <aura:if isTrue="{!v.showDatatable}">
+                <lightning:datatable class="dataTable" keyField="label" hideCheckboxColumn="false" data="{!v.shelfData}" columns="{!v.shelfDataColumns}" onrowselection="{!c.getSelectedName }"/>
+            </aura:if>
+        </div>
+        <aura:if isTrue="{! v.spinnerWaiting }">
+            <lightning:spinner size="small" />
+        </aura:if>
+        <aura:set attribute="footer">
+            <div class="slds-text-align_right">
+                <!--<lightning:button label="Submit" onclick="{!c.store}" variant="brand"></lightning:button>-->
+                <h2>TOTAL COST: $ {!v.totalCost}</h2>
+            </div>
+        </aura:set>
+        
+    </lightning:card>
+    
+</aura:component>

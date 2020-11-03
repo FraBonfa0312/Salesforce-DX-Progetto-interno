@@ -1,0 +1,24 @@
+.THIS {
+}
+
+.THIS .acc-heading {
+	margin-bottom: .5rem;
+}
+
+.THIS .slds-text-title_caps.acc-name {
+    font-size: 1.125rem;
+    color: token(colorTextLink);
+}
+
+.THIS .acc-num {
+    font-size: .875rem;
+    margin-top: .25rem;
+}
+
+.THIS .acc-amount {
+    font-weight: 100;
+}
+
+.THIS .available-balance {
+    font-size: .825rem;
+}

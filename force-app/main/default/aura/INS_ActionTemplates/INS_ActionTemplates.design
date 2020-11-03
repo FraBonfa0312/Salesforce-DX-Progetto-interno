@@ -1,0 +1,3 @@
+<design:component>
+    <design:attribute name="actionPlanType" label="ActionPlan Type"/>
+</design:component>

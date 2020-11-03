@@ -1,0 +1,475 @@
+<!--THIS COMPONENT TAKES A CUSTOMISED STATIC CSS FILE THAT HAS BEEN USED IN DIFFERENT COMPONENTS-->
+<!--PLEASE DO NOT CHANGE THE STATIC FILE FOR ONLY ONE COMPONENT-->
+<!--PLEASE OVERWRITE ATTRIBUTES IN EACH COMPONENT-->
+
+<aura:component access="global" controller="INS_InsuranceQuoteController">
+    <ltng:require styles="{!join(',', 
+    $Resource.Q_GWScreenBaseCss,$Resource.GW_modulesCSS)}" afterScriptsLoaded="{!c.handleSelectQuoteInit}" />
+
+    <aura:attribute name="generalCovList" type="list" default="[
+    {
+        title: 'Liability - Bodily Injury and Property Damage',
+        description: 'Auto Liability Package',
+        baseHasExtraInfo: true,
+        hasSelectionList: true,
+        hasDescription: true,
+        options: [{value:'1',label:'15/30/5'},{value:'2',label:'25/50/25'},{value:'3',label:'50/100/50'},{value:'4',label:'100/200/50'},{value:'5',label:'250/500/100'},{value:'6',label:'100K CSL'},{value:'7',label:'250K CSL'},{value:'8',label:'500K CSL'},{value:'9',label:'1M CSL'}]
+    },
+    {
+        title: 'Mexico Coverage - Limited',
+        description: '',
+        baseHasExtraInfo: false,
+        hasSelectionList: false,
+        hasDescription: false,
+        options: []
+    },
+    {
+        title: 'Medical Payments',
+        description: 'Medical Limit',
+        baseHasExtraInfo: true,
+        hasSelectionList: true,
+        hasDescription: true,
+        options: [{value:'',label:'Please Select'},{value:'1',label:'5,000'},{value:'2',label:'10,000'},{value:'3',label:'15,000'},{value:'4',label:'20,000'},{value:'5',label:'25,000'}]
+    },{
+        title: 'Underinsured Motorist - Property Damages',
+        description: '',
+        baseHasExtraInfo: false,
+        hasSelectionList: false,
+        hasDescription: false,
+        options: []
+
+    },{
+        title: 'Uninsured Motorist - Bodily Injury',
+        description: 'Uninsured Motorist - BI Limits',
+        hasDescription: true,
+        baseHasExtraInfo: false,
+        hasSelectionList: true,
+        options: [{value:'',label:'Please Select'},{value:'1',label:'15/30'},{value:'2',label:'25/50'},{value:'3',label:'30/60'},{value:'4',label:'250/500'},{value:'5',label:'100K CSL'},{value:'6',label:'250K CSL'}]
+    },
+    {
+        title: 'Uninsured Motorist - Property Damage',
+        description: '',
+        baseHasExtraInfo: false,
+        hasSelectionList: false,
+        hasDescription: false,
+        options: []
+    }
+    ]" />
+
+    <aura:attribute name="vehicleSpecificCovList" type="list" default="[
+    {
+        title: 'Collision',
+        description: 'Collision Deductible',
+        baseHasExtraInfo: false,
+        hasSelectionList: true,
+        hasDescription: true,
+        options: [{value:'0',label:'Please Select'},{value:'1',label:'No Deductible'},{value:'2',label:'100'},{value:'3',label:'250'},{value:'4',label:'500'},{value:'5',label:'1,000'}]
+    },
+    {
+        title: 'Comprehensive',
+        description: 'Comprehensive Deductible',
+        baseHasExtraInfo: false,
+        hasSelectionList: true,
+        hasDescription: true,
+        options: [{value:'0',label:'Please Select'},{value:'1',label:'No Deductible'},{value:'2',label:'100'},{value:'3',label:'250'},{value:'4',label:'500'},{value:'5',label:'1,000'}]
+    },
+    {
+        title: 'Rental Reimbursement',
+        description: 'Rental Package',
+        baseHasExtraInfo: false,
+        hasSelectionList: true,
+        hasDescription: true,
+        options: [{value:'0',label:'Please Select'},{value:'1',label:'30 days x 15/day'},{value:'2',label:'30 days x 25/day'},{value:'3',label:'60 days x 20/day'}]
+    },
+    {
+        title: 'Towing and Labor',
+        description: 'Towing and Labor Limit',
+        baseHasExtraInfo: false,
+        hasSelectionList: true,
+        hasDescription: true,
+        options: [{value:'0',label:'Please Select'},{value:'1',label:'25'},{value:'2',label:'50'},{value:'3',label:'75'},{value:'4',label:'100'}]
+    }    
+    ]" />
+
+    <aura:attribute name="comparisonFeaturesDataFromServer" type="list" default="[]"/>
+    <aura:attribute name="comparisonProductsDataFromServer" type="list" default="[]"/>
+
+    <aura:attribute name="programName1" type="String" default="Basic Program"/>
+    <aura:attribute name="programName2" type="String" default="Premium Program"/>
+    <aura:attribute name="programName3" type="String" default="Standard Program"/>
+    <aura:attribute name="programPrice1" type="String" default="20.67"/>
+    <aura:attribute name="programPrice2" type="String" default="182.00"/>
+    <aura:attribute name="programPrice3" type="String" default="115.17"/>
+    <aura:attribute name="currencySymbol" type="String" default="$"/>
+    <aura:attribute name="programList" type="List" default=""/>
+    <aura:attribute name="selectedProgramIdx" type="String" default=""/>
+    <aura:attribute name="productFamily" type="String" default="Car Insurance"/>
+    <aura:attribute name="numbersOfProgram" type="Integer" default="3"/>
+    
+
+    <aura:registerEvent name="onSelectQuoteBuyNowEvt" type="c:Qsyd_GW_onSelectQuoteBuyNowEvt"/>
+
+
+    <div class="GWScreenContainer">
+        <lightning:layout multipleRows="true">
+            <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                <div class="sectionTitle">
+                    <span class="title">Quote</span>
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                <div>
+                    <lightning:buttonGroup class="btn-groupToggleButton slds-align_absolute-center">
+                        <lightning:button label="Monthly" name="monthly" aura:id="QuoteType" onclick="{!c.handleToggleBtnClick}" class="selectedToggleButtonType"/>
+                        <lightning:button label="Pay in Full" name="payInFull" aura:id="QuoteType" onclick="{!c.handleToggleBtnClick}" />
+                    </lightning:buttonGroup>
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" class="slds-m-top_small">
+                <!--HEADERROW  OLD-->
+                <lightning:layout multipleRows="true" class="tableHeaderRow slds-text-align--center">
+                    <aura:iteration items="" var="program" indexVar="idx">
+                    <lightning:layoutItem size="4">
+                        <!--CELL1-->
+                        <div class="tableHeaderCells">
+                            <lightning:layout>
+                                <lightning:layoutItem size="12">
+                                    <div class="cellProgramLabel slds-m-bottom_xx-small">
+                                        {!program.name}
+                                    </div>
+                                    <div class="cellProgramPrice">
+                                        <span>{!v.currencySymbol}</span>
+                                        <span id="{!program.name}" class="price">{!program.price}</span>
+                                        <aura:if isTrue="{!program.numOfMonth == 1}">
+                                            <span class="month"> / mo.</span>
+                                        </aura:if>
+                                    </div>
+                                    <div class="cellProgramBtn">
+                                        <lightning:button label="Buy Now" variant="brand" name="{!program.index}" onclick="{!c.handleBuyNow}"/>
+                                    </div>
+                                </lightning:layoutItem>
+                            </lightning:layout>
+                        </div>
+                    </lightning:layoutItem>
+                 </aura:iteration>
+                </lightning:layout>
+            </lightning:layoutItem>
+            <!--HEADERROW-->
+
+            <lightning:layoutItem size="12" class="slds-m-top_small">
+                <!--HEADERROW-->
+                <lightning:layout multipleRows="true" class="tableHeaderRow slds-text-align--center">
+                    <aura:iteration items="{!v.programList}" var="program" indexVar="idx">
+                    <lightning:layoutItem size="4">
+                        <!--CELL1-->
+                        <div class="tableHeaderCells">
+                            <lightning:layout>
+                                <lightning:layoutItem size="12">
+                                    <div class="cellProgramLabel slds-m-bottom_xx-small">
+                                        {!program.name}
+                                    </div>
+                                    <div class="cellProgramPrice">
+                                        <span>{!v.currencySymbol}</span>
+                                        <span id="{!program.name}" class="price">{!program.price}</span>
+                                        <aura:if isTrue="{!program.numOfMonth == 1}">
+                                            <span class="month"> / mo.</span>
+                                        </aura:if>
+                                    </div>
+                                    <div class="cellProgramBtn">
+                                        <lightning:button label="Buy Now" variant="brand" name="{!idx}" onclick="{!c.handleBuyNow}"/>
+                                    </div>
+                                </lightning:layoutItem>
+                            </lightning:layout>
+                        </div>
+                    </lightning:layoutItem>
+                    </aura:iteration>
+                </lightning:layout>
+            </lightning:layoutItem>
+            
+
+           
+            <lightning:layoutItem size="12">
+                <div class="sectionTitle slds-text-align_center">
+                    <span class="title" style="font-weight: 700">General Coverages - Apply to all vehicles</span>
+                </div>
+            </lightning:layoutItem>
+            
+
+            <!--NEW-->
+            <aura:iteration items="{!v.comparisonFeaturesDataFromServer}" var="item" indexVar="idx">
+                <!--ROW-->
+                <lightning:layoutItem size="12">
+                    <lightning:layout multipleRows="true">
+                        <lightning:layoutItem size="4" flexibility="auto">
+                            <div class="tableCells">
+                                <lightning:layout>
+                                    <lightning:layoutItem size="2">
+                                        <div class="div-checkbox">
+                                            <img class="{!item.coverages[0].Covered__c == true ? 'active': ''}" src="{!$Resource.Q_GWIconCheck_White}" onclick="{!c.handleCheckboxClick}"/>
+                                        </div>
+                                    </lightning:layoutItem>
+                                    <lightning:layoutItem size="10">
+                                        <div class="cellCheckboxLabel">
+                                            {!item.coverageName}
+                                        </div>
+                                    </lightning:layoutItem>
+                                </lightning:layout>
+                            </div>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="4" flexibility="auto">
+                            <div class="tableCells">
+                                <lightning:layout>
+                                    <lightning:layoutItem size="2">
+                                        <div class="div-checkbox">
+                                            <img class="{!item.coverages[1].Covered__c == true ? 'active': ''}" src="{!$Resource.Q_GWIconCheck_White}" onclick="{!c.handleCheckboxClick}"/>
+                                        </div>
+                                    </lightning:layoutItem>
+                                    <lightning:layoutItem size="10">
+                                        <div class="cellCheckboxLabel">
+                                            {!item.coverageName}
+                                        </div>
+                                    </lightning:layoutItem>
+                                </lightning:layout>
+                            </div>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="4" flexibility="auto">
+                            <div class="tableCells">
+                                <lightning:layout>
+                                    <lightning:layoutItem size="2">
+                                        <div class="div-checkbox">
+                                            <img class="{!item.coverages[2].Covered__c == true ? 'active': ''}" src="{!$Resource.Q_GWIconCheck_White}" onclick="{!c.handleCheckboxClick}"/>
+                                        </div>
+                                    </lightning:layoutItem>
+                                    <lightning:layoutItem size="10">
+                                        <div class="cellCheckboxLabel">
+                                            {!item.coverageName}
+                                        </div>
+                                    </lightning:layoutItem>
+                                </lightning:layout>
+                            </div>
+                        </lightning:layoutItem>
+                    </lightning:layout>
+                </lightning:layoutItem>
+                <!--ROW-->
+
+            </aura:iteration>
+
+
+            <!--OLD-->
+            <aura:iteration items="[]" var="item">
+                <!--ROW-->
+                <lightning:layoutItem size="12">
+                    <lightning:layout multipleRows="true">
+                        <lightning:layoutItem size="4" flexibility="auto">
+                            <div class="tableCells">
+                                <lightning:layout>
+                                    <lightning:layoutItem size="2">
+                                        <div class="div-checkbox">
+                                            <img src="{!$Resource.Q_GWIconCheck_White}" onclick="{!c.handleCheckboxClick}"/>
+                                        </div>
+                                    </lightning:layoutItem>
+                                    <lightning:layoutItem size="10">
+                                        <div class="cellCheckboxLabel">
+                                            {!item.title}
+                                        </div>
+                                        <aura:if isTrue="{!item.baseHasExtraInfo}">
+                                            <div class="cellSelectLabel">
+                                                <aura:if isTrue="{!item.hasDescription}">
+                                                    <div class="label">{!item.description}</div>
+                                                </aura:if>
+                                                <aura:if isTrue="{!item.hasSelectionList}">
+                                                    <select data-colName="basic" data-rowName="{!item.title}">
+                                                        <aura:iteration items="{!item.options}" var="itemOption">
+                                                            <option value="{!itemOption.value}">{!itemOption.label}</option>
+                                                        </aura:iteration>
+                                                    </select>
+                                                </aura:if>
+                                            </div>
+                                        </aura:if>
+                                    </lightning:layoutItem>
+                                </lightning:layout>
+                            </div>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="4" flexibility="auto">
+                            <div class="tableCells">
+                                <lightning:layout>
+                                    <lightning:layoutItem size="2">
+                                        <div class="div-checkbox">
+                                            <img src="{!$Resource.Q_GWIconCheck_White}" onclick="{!c.handleCheckboxClick}"/>
+                                        </div>
+                                    </lightning:layoutItem>
+                                    <lightning:layoutItem size="10">
+                                        <div class="cellCheckboxLabel">
+                                            {!item.title}
+                                        </div>
+                                        <div class="cellSelectLabel">
+                                            <aura:if isTrue="{!item.hasDescription}">
+                                                <div class="label">{!item.description}</div>
+                                            </aura:if>
+                                            <aura:if isTrue="{!item.hasSelectionList}">
+                                                <select data-colName="premium" data-rowName="{!item.title}">
+                                                    <aura:iteration items="{!item.options}" var="itemOption">
+                                                        <option value="{!itemOption.value}">{!itemOption.label}</option>
+                                                    </aura:iteration>
+                                                </select>
+                                            </aura:if>
+                                        </div>
+                                    </lightning:layoutItem>
+                                </lightning:layout>
+                            </div>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="4" flexibility="auto">
+                            <div class="tableCells">
+                                <lightning:layout>
+                                    <lightning:layoutItem size="2">
+                                        <div class="div-checkbox">
+                                            <img src="{!$Resource.Q_GWIconCheck_White}" onclick="{!c.handleCheckboxClick}"/>
+                                        </div>
+                                    </lightning:layoutItem>
+                                    <lightning:layoutItem size="10">
+                                        <div class="cellCheckboxLabel">
+                                            {!item.title}
+                                        </div>
+                                        <div class="cellSelectLabel">
+                                            <aura:if isTrue="{!item.hasDescription}">
+                                                <div class="label">{!item.description}</div>
+                                            </aura:if>
+                                            <aura:if isTrue="{!item.hasSelectionList}">
+                                                <select data-colName="standard" data-rowName="{!item.title}">
+                                                    <aura:iteration items="{!item.options}" var="itemOption">
+                                                        <option value="{!itemOption.value}">{!itemOption.label}</option>
+                                                    </aura:iteration>
+                                                </select>
+                                            </aura:if>
+                                        </div>
+                                    </lightning:layoutItem>
+                                </lightning:layout>
+                            </div>
+                        </lightning:layoutItem>
+                    </lightning:layout>
+                </lightning:layoutItem>
+                <!--ROW-->
+
+            </aura:iteration>
+
+            <!--
+            <lightning:layoutItem size="12">
+                <div class="sectionTitle slds-text-align_center">
+                    <span class="title" style="font-weight: 700">Vehicle-Specific Coverage</span>
+                </div>
+            </lightning:layoutItem>
+            -->
+
+            <!--OLD-->
+            <!--ROW-->
+            <aura:iteration items="[]" var="vehicleItem">
+                <!--ROW-->
+                <lightning:layoutItem size="12">
+                    <lightning:layout multipleRows="true">
+                        <lightning:layoutItem size="4">
+                            <div class="tableCells">
+                                <lightning:layout>
+                                    <lightning:layoutItem size="2">
+                                        <div class="div-checkbox">
+                                            <img src="{!$Resource.Q_GWIconCheck_White}" onclick="{!c.handleCheckboxClick}"/>
+                                        </div>
+                                    </lightning:layoutItem>
+                                    <lightning:layoutItem size="10">
+                                        <div class="cellCheckboxLabel">
+                                            {!vehicleItem.title}
+                                        </div>
+                                        <aura:if isTrue="{!vehicleItem.baseHasExtraInfo}">
+                                            <div class="cellSelectLabel">
+                                                <aura:if isTrue="{!vehicleItem.hasDescription}">
+                                                    <div class="label">{!vehicleItem.description}</div>
+                                                </aura:if>
+                                                <aura:if isTrue="{!vehicleItem.hasSelectionList}">
+                                                    <select data-colName="basic" data-rowName="{!vehicleItem.title}">
+                                                        <aura:iteration items="{!vehicleItem.options}" var="itemOption">
+                                                            <option value="{!itemOption.value}">{!itemOption.label}</option>
+                                                        </aura:iteration>
+                                                    </select>
+                                                </aura:if>
+                                            </div>
+                                        </aura:if>
+                                    </lightning:layoutItem>
+                                </lightning:layout>
+                            </div>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="4">
+                            <div class="tableCells">
+                                <lightning:layout>
+                                    <lightning:layoutItem size="2">
+                                        <div class="div-checkbox">
+                                            <img src="{!$Resource.Q_GWIconCheck_White}" onclick="{!c.handleCheckboxClick}"/>
+                                        </div>
+                                    </lightning:layoutItem>
+                                    <lightning:layoutItem size="10">
+                                        <div class="cellCheckboxLabel">
+                                            {!vehicleItem.title}
+                                        </div>
+                                        <div class="cellSelectLabel">
+                                            <aura:if isTrue="{!vehicleItem.hasDescription}">
+                                                <div class="label">{!vehicleItem.description}</div>
+                                            </aura:if>
+                                            <aura:if isTrue="{!vehicleItem.hasSelectionList}">
+                                                <select data-colName="premium" data-rowName="{!vehicleItem.title}">
+                                                    <aura:iteration items="{!vehicleItem.options}" var="itemOption">
+                                                        <option value="{!itemOption.value}">{!itemOption.label}</option>
+                                                    </aura:iteration>
+                                                </select>
+                                            </aura:if>
+                                        </div>
+                                    </lightning:layoutItem>
+                                </lightning:layout>
+                            </div>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="4">
+                            <div class="tableCells">
+                                <lightning:layout>
+                                    <lightning:layoutItem size="2">
+                                        <div class="div-checkbox">
+                                            <img src="{!$Resource.Q_GWIconCheck_White}" onclick="{!c.handleCheckboxClick}"/>
+                                        </div>
+                                    </lightning:layoutItem>
+                                    <lightning:layoutItem size="10">
+                                        <div class="cellCheckboxLabel">
+                                            {!vehicleItem.title}
+                                        </div>
+                                        <div class="cellSelectLabel">
+                                            <aura:if isTrue="{!vehicleItem.hasDescription}">
+                                                <div class="label">{!vehicleItem.description}</div>
+                                            </aura:if>
+                                            <aura:if isTrue="{!vehicleItem.hasSelectionList}">
+                                                <select data-colName="standard" data-rowName="{!vehicleItem.title}">
+                                                    <aura:iteration items="{!vehicleItem.options}" var="itemOption">
+                                                        <option value="{!itemOption.value}">{!itemOption.label}</option>
+                                                    </aura:iteration>
+                                                </select>
+                                            </aura:if>
+                                        </div>
+                                    </lightning:layoutItem>
+                                </lightning:layout>
+                            </div>
+                        </lightning:layoutItem>
+                    </lightning:layout>
+                </lightning:layoutItem>
+            </aura:iteration>
+            <!--ROW-->
+        </lightning:layout>
+
+        <!-- <div class="div-footer">
+            <div class="slds-p-vertical_small">
+                <div class="btn-footer">
+                    <a style="float:left">Cancel</a>
+                    <lightning:button label="Previous" variant="neutral" class="slds-p-vertical_xx-small slds-m-left_xx-small" aura:id="S3FooterPrevious"
+                        onclick="{!c.handlePrevious}" />
+                    <lightning:button label="Next" variant="brand" class="slds-p-vertical_xx-small slds-m-left_xx-small" aura:id="S3FooterNext"
+                        onclick="{!c.handleNext}" />
+                </div>
+            </div>
+        </div> -->
+    </div>
+
+
+</aura:component>

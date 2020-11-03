@@ -1,0 +1,4 @@
+<design:component label="Shelf Scanner">
+    <design:attribute name="modelId"   default="5TO7QGRDSLC7MZZVFSJ3PQJQME" label="Model ID" description="Model ID of the trained Object Detection model" />
+    <design:attribute name="totalCost" default="0" label="Total Cost" description="Total cost of a claim" />
+</design:component>

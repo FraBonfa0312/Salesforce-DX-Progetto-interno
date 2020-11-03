@@ -1,0 +1,9 @@
+<aura:component implements="lightning:availableForFlowScreens,flexipage:availableForAllPageTypes" access="global" >
+
+  <div class="slds-box slds-theme_default">
+
+    <a target="_blank" href="https://grsgbinsurance2019.my.salesforce.com/sfc/p/3j000000hiHq/a/3j0000008rWw/WP_tUUh.0c2tdVkxaTLPNnO27Ln43JdMjma0rnm8BuA"> <img src="{!$Resource.IGO_App_Screenshot_4}"/> </a> 
+
+  </div>
+
+</aura:component>

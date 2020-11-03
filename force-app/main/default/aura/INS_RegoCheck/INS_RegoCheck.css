@@ -1,0 +1,22 @@
+.THIS .rego-plate-container {
+    color: #000000;
+    font-size: 40px;
+    font-weight: bold;
+    font-family: Helvetica, Arial , sans-serif ;
+    text-transform: uppercase;
+    /* background: #FCD733; */
+    background-image: white;
+    border-radius: 5px;
+    box-shadow: 1px 1px 3px 0px rgba(0,0,0,0.75);
+    height: 100px;
+    max-width: 400px;
+    margin: 0 auto 1rem auto;
+}
+
+.THIS .rego-plate-inner-container {
+    border: 3px solid #000000;
+    border-radius: 3px;
+    height: calc(100px - 0.5rem);
+    line-height: calc(100px - 0.5rem);
+    box-shadow: 1px 1px 3px 0px rgba(0,0,0,0.75);
+}

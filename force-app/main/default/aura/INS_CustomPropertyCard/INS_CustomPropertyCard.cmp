@@ -1,0 +1,98 @@
+<aura:component controller="INS_InsuranceQuoteController" implements="lightning:availableForFlowScreens,force:hasRecordId" access="global">
+    <aura:attribute name="recordId"     type="String" />
+    <aura:attribute name="simpleRecord" type="Object" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+    <div>
+        <lightning:spinner variant="brand" aura:id="xSpinner" class="ins-spinner"  />
+    </div>
+    <aura:if isTrue="{!not(empty(v.simpleRecord))}">
+        <div style="width: 80%; margin:auto;">
+            <lightning:layout horizontalAlign="spread" multipleRows="true" class="slds-m-top_small slds-m-bottom_large">
+                <lightning:layoutItem>
+                    <h2 class="slds-text-heading_large">{!v.simpleRecord.Street + ' ' + v.simpleRecord.City + ' ' + v.simpleRecord.State + ' ' + v.simpleRecord.PostalCode}</h2>
+                </lightning:layoutItem>
+                <lightning:layoutItem class="ins-property-summary">
+                    <span class="ins-text-title">
+                        <span>
+                            <img class="ins-header-icon-container" src="{!$Resource.INS_PropertyIcons + '/bedroom.svg'}" />
+                            {!v.simpleRecord.BedroomCount}
+                        </span>
+                        <span>
+                            <img class="ins-header-icon-container" src="{!$Resource.INS_PropertyIcons + '/bath.svg'}" />
+                            {!v.simpleRecord.BathroomCount}
+                        </span>
+                        <span>
+                            <img class="ins-header-icon-container" src="{!$Resource.INS_PropertyIcons + '/garage.svg'}" />
+                            {!v.simpleRecord.GarageSpaceCount}
+                        </span>
+                        <!--<span>
+                            <img class="ins-header-icon-container" src="{!$Resource.INS_PropertyIcons + '/area.svg'}" />
+                            {!v.simpleRecord.BuiltUpArea + ' sq'}
+                        </span>-->
+                    </span>
+                </lightning:layoutItem>
+            </lightning:layout>
+            <img src="{!v.simpleRecord.Main_Image__c}" class="ins-image-container" />
+            <lightning:layout multipleRows="true" pullToBoundary="large" horizontalAlign="spread" class="slds-m-vertical_small ins-property-details">
+                <lightning:layoutItem  padding="around_small">
+                    <div class="slds-m-around_small slds-text-align_center">
+                        <img src="{!$Resource.INS_PropertyIcons + '/ceiling.svg'}" class="ins-icon-container" />
+                        <p class="slds-m-vertical_small slds-text-title_caps">Celing Type</p>
+                        <span class="ins-text-title">{!v.simpleRecord.CeilingType}</span>
+                    </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem  padding="around_small">
+                    <div class="slds-m-around_small slds-text-align_center">
+                        <img src="{!$Resource.INS_PropertyIcons + '/floor.svg'}" class="ins-icon-container"  />
+                        <p class="slds-m-vertical_small slds-text-title_caps">Floor Type</p>
+                        <span class="ins-text-title">{!v.simpleRecord.FloorType}</span>
+                    </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem  padding="around_small">
+                    <div class="slds-m-around_small slds-text-align_center">
+                        <img src="{!$Resource.INS_PropertyIcons + '/foundation.svg'}" class="ins-icon-container"  />
+                        <p class="slds-m-vertical_small slds-text-title_caps">Foundation Type</p>
+                        <span class="ins-text-title">{!v.simpleRecord.FoundationType}</span>
+                    </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem  padding="around_small">
+                    <div class="slds-m-around_small slds-text-align_center">
+                        <img src="{!$Resource.INS_PropertyIcons + '/roof.svg'}" class="ins-icon-container"  />
+                        <p class="slds-m-vertical_small slds-text-title_caps">Roof Type</p>
+                        <span class="ins-text-title">{!v.simpleRecord.RoofType}</span>
+                    </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem  padding="around_small">
+                    <div class="slds-m-around_small slds-text-align_center">
+                        <img src="{!$Resource.INS_PropertyIcons + '/garage_type.svg'}" class="ins-icon-container"  />
+                        <p class="slds-m-vertical_small slds-text-title_caps">Garage Type</p>
+                        <span class="ins-text-title">{!v.simpleRecord.GarageType}</span>
+                    </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem  padding="around_small">
+                    <div class="slds-m-around_small slds-text-align_center">
+                        <img src="{!$Resource.INS_PropertyIcons + '/dwelling_type.svg'}" class="ins-icon-container"  />
+                        <p class="slds-m-vertical_small slds-text-title_caps ">Dwelling Type</p>
+                        <span class="ins-text-title">{!v.simpleRecord.DwellingType}</span>
+                    </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem  padding="around_small">
+                    <div class="slds-m-around_small slds-text-align_center">
+                        <img src="{!$Resource.INS_PropertyIcons + '/built_area.svg'}" class="ins-icon-container"  />
+                        <p class="slds-m-vertical_small slds-text-title_caps ">Built-up Area</p>
+                        <span class="ins-text-title">{!v.simpleRecord.BuiltUpArea + ' sq'}</span>
+                    </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem  padding="around_small">
+                    <div class="slds-m-around_small slds-text-align_center">
+                        <img src="{!$Resource.INS_PropertyIcons + '/year.svg'}" class="ins-icon-container"  />
+                        <p class="slds-m-vertical_small slds-text-title_caps">Year Built</p>
+                        <span class="ins-text-title">{!v.simpleRecord.YearBuilt}</span>
+                    </div>
+                </lightning:layoutItem>
+            </lightning:layout>
+        </div>
+    </aura:if>
+</aura:component>

@@ -1,0 +1,52 @@
+<aura:component>
+    <aura:attribute name="thing" type="String" />
+    <aura:attribute name="toggleClass" type="String" default="slds-is-close" />
+    <aura:attribute name="filterIconName" type="String" default="utility:chevronright" />
+
+    <div class="section1">
+        <div class="{! 'slds-section slds-p-left_small slds-p-right_small ' +  v.toggleClass }" aura:id="filterSection">
+            <h3 class="slds-section__title">
+                <lightning:button onclick="{!c.toggleSection}" class="slds-section__title-action" iconPosition="left"
+                    label="{!v.thing.Title}" iconName="{!v.filterIconName}">
+                </lightning:button>
+            </h3>
+            <div class="slds-section__content slds-p-left_small slds-p-top_small">
+                <div class="slds-grid slds-wrap slds-p-top_medium">
+                    <div class="slds-col slds-size_1-of-3">
+                        <span>
+                            <lightning:badge label="{!v.thing.Title}" class="squareBadge"/>
+                        </span>
+                    </div>
+                    <div class="slds-col slds-size_1-of-3">
+                        <span>
+                            <lightning:badge label="{!v.thing.Duration}" class="squareBadge" />
+                        </span>
+                    </div>
+                    <div class="slds-col slds-size_1-of-3">
+                        <span>
+                            <lightning:badge label="{!v.thing.Topics}" class="normalBadge"/>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="">
+                    <article
+                        class="slds-box slds-timeline__item_details slds-theme_shade slds-m-top_x-small "
+                        id="event-item-expanded" aria-hidden="false">
+                        <div class="slds-media slds-m-bottom_small slds-media_center">
+                            <div class="slds-media__figure">
+                                <lightning:icon iconName="utility:warning" size="x-small">
+                                </lightning:icon>
+                            </div>
+                            <div class="slds-media__body">
+                                <div style="font-size: 0.8125rem;"><b>{!v.thing.Description}</b>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</aura:component>

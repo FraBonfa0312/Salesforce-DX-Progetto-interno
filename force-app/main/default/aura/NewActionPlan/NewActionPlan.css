@@ -1,0 +1,74 @@
+.THIS {
+}
+.THIS.red, .THIS .red{
+    color:blue;
+}
+
+.THIS .template_button {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.THIS .template_name {
+    padding: 5px;
+    font-weight: bold;
+}
+
+.THIS .image_icon{
+    width: 60px;
+    padding: 5px;
+}
+
+/* Side styleing */
+.THIS .template_image {
+    /*background: #38cbec;*/
+    /*height: 41px;*/
+    padding: 0.5rem;
+    width: 80px !important;
+    border-radius: 0.25rem;
+    /*border: 1px solid #2ec1e2;*/
+    display: inline-block;
+    width:20% !important;
+    text-align:center;
+}
+
+.THIS .template_name {
+    padding: 5px;
+    font-weight: bold;
+    display: inline-block;
+    border-left: 1px solid #ccc;
+    margin-left: 10px;
+    height: 41px;
+    vertical-align: top;
+    width:75%;
+    padding-top: 11px;
+}
+
+.THIS .template_button {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding:10px;
+    transition: 0.2s;
+}
+
+.THIS .template_button:hover {
+    box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.16); 
+    cursor: pointer;
+}
+
+.THIS .templateSelected{
+    box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.16);
+}
+
+.THIS .chooseTemplateMsg{
+    color: #c23934 !important;
+    padding: .5rem;
+    border: 1px solid #c23934;
+}
+
+.THIS .slds-text-heading_medium {
+    /*margin-top: 7px;*/
+    font-weight: bold;
+    font-size: 19px;
+    color: white;
+}

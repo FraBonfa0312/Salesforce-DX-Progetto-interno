@@ -1,0 +1,67 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <div class="slds-grid slds-wrap">
+        <div class="slds-grid slds-box slds-theme_shade slds-wrap slds-size_12-of-12 slds-p-bottom_small slds-p-top_small slds-align_absolute-center">
+            <div class="slds-col slds-size_10-of-12">
+                <div class="slds-align_absolute-center slds-p-left_large slds-p-right_large">
+                    <input type="text" id="text-input-id-1" placeholder="Enter Phone" required="" class="slds-input" />
+                </div>
+            </div>
+            <div class="slds-col slds-size_2-of-12">
+                <div class="slds-align_absolute-center slds-p-right_large">
+                    <lightning:icon iconName="standard:apps" size="xx_small"/>
+                </div>
+            </div>
+        </div>
+        <div class="slds-col slds-size_4-of-12 slds-box slds-info">
+            <div class="slds-align_absolute-center slds-text-heading_large">1</div>
+            <div class="slds-align_absolute-center">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+        </div>
+        <div class="slds-col slds-size_4-of-12 slds-box slds-info">
+            <div class="slds-align_absolute-center slds-text-heading_large">2</div>
+            <div class="slds-align_absolute-center">A B C</div>
+        </div>
+        <div class="slds-col slds-size_4-of-12 slds-box slds-info">
+            <div class="slds-align_absolute-center slds-text-heading_large">3</div>
+            <div class="slds-align_absolute-center">D E F</div>
+        </div>
+        <div class="slds-col slds-size_4-of-12 slds-box slds-info">
+            <div class="slds-align_absolute-center slds-text-heading_large">4</div>
+            <div class="slds-align_absolute-center">G H I</div>
+        </div>
+        <div class="slds-col slds-size_4-of-12 slds-box slds-info">
+            <div class="slds-align_absolute-center slds-text-heading_large">5</div>
+            <div class="slds-align_absolute-center">J K L</div>
+        </div>
+        <div class="slds-col slds-size_4-of-12 slds-box slds-info">
+            <div class="slds-align_absolute-center slds-text-heading_large">6</div>
+            <div class="slds-align_absolute-center">M N O</div>
+        </div>
+        <div class="slds-col slds-size_4-of-12 slds-box slds-info">
+            <div class="slds-align_absolute-center slds-text-heading_large">7</div>
+            <div class="slds-align_absolute-center">P Q R S</div>
+        </div>
+        <div class="slds-col slds-size_4-of-12 slds-box slds-info">
+            <div class="slds-align_absolute-center slds-text-heading_large">8</div>
+            <div class="slds-align_absolute-center">T U V</div>
+        </div>
+        <div class="slds-col slds-size_4-of-12 slds-box slds-info">
+            <div class="slds-align_absolute-center slds-text-heading_large">9</div>
+            <div class="slds-align_absolute-center">W X Y Z</div>
+        </div>
+        <div class="slds-col slds-size_4-of-12 slds-box slds-info">
+            <div class="slds-align_absolute-center slds-text-heading_large">*</div>
+            <div class="slds-align_absolute-center">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+        </div>
+        <div class="slds-col slds-size_4-of-12 slds-box slds-info">
+            <div class="slds-align_absolute-center slds-text-heading_large">0</div>
+            <div class="slds-align_absolute-center">+</div>
+        </div>
+        <div class="slds-col slds-size_4-of-12 slds-box slds-info">
+            <div class="slds-align_absolute-center slds-text-heading_large">#</div>
+            <div class="slds-align_absolute-center">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+        </div>
+        <div class="slds-col slds-size_12-of-12 slds-info slds-p-top_x-small">
+            <div class="slds-align_absolute-center"><button class="slds-button slds-button_brand slds-button_stretch">Call</button></div>
+        </div>
+    </div>
+</aura:component>

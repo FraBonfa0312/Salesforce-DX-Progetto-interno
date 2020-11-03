@@ -1,0 +1,25 @@
+<aura:component >
+    
+    <aura:attribute name="Icon" type="String" />
+    <aura:attribute name="Title" type="String" />
+    <aura:attribute name="SubTitle" type="String" />
+
+    
+    <div class="slds-m-bottom_small slds-page-header">
+        <div class="slds-media">
+            <div class="slds-media__figure">
+                <lightning:icon iconName="{!v.Icon}" size="medium" variant="slds-icon-inverse"></lightning:icon>
+            </div>
+            <div class="slds-media__body">
+                <div class="slds-page-header__title slds-text-heading_small">{!v.Title}</div>
+                <ul class="slds-list_horizontal slds-has-dividers_left">
+                    <li class="slds-item">
+                        <div style="font-size: 0.8125rem;">{!v.SubTitle}</div>
+                    </li>
+                </ul>
+            </div>
+            <div class="slds-media__figure slds-media__figure_reverse"></div>
+        </div>
+    </div>
+    
+</aura:component>

@@ -1,0 +1,4 @@
+<design:component >
+    <design:attribute label="Financial Account RecordType" name="finAccRecType" description="Financial Account RecordType" datasource="Bank Account,Credit Card,Savings Account,Loan Account,Insurance Policy,Investment Account" default="Bank Account" />
+	<design:attribute label="Display Accounts as..." name="displayAs" description="Display Accounts as cards or in a table" datasource="Cards,Table" default="Cards" />  
+</design:component>

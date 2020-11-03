@@ -1,0 +1,55 @@
+<aura:component implements="lightning:availableForFlowScreens">
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="message" type="String" />
+    
+    <aura:attribute name="record"       type="Object" description="The record object to be displayed" />
+    <aura:attribute name="simpleRecord" type="Object" description="A simplified view record object to be displayed" />
+    <aura:attribute name="recordError"  type="String" description="An error message bound to force:recordData" />
+    
+    <aura:attribute name="canPause"  type="Boolean" />
+    <aura:attribute name="canBack"   type="Boolean" />
+    <aura:attribute name="canNext"   type="Boolean" />
+    <aura:attribute name="canFinish" type="Boolean" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    
+    <force:recordData aura:id="recordData"
+                      recordId="{!v.recordId}"
+                      layoutType="FULL"
+                      fields="Name"
+                      mode="VIEW"
+                      targetRecord="{!v.record}"
+                      targetFields="{!v.simpleRecord}"
+                      targetError="{!v.error}" />
+    
+    <div class="slds-text-align_center">
+        <lightning:icon iconName="action:approval" size="large" />
+        <h2 class="slds-m-vertical_medium slds-text-heading_medium">{!v.message}</h2>
+        <p class="slds-m-vertical_small slds-text-title_caps">Here is your reference number: {!v.simpleRecord.Name}</p>
+    </div>
+    
+    <div aura:id="actionButtonBar" class="slds-clearfix slds-p-top_medium">
+        <!-- If Previous is available, display to the left -->
+        <div class="slds-float_left">
+            <aura:if isTrue="{!v.canBack}">
+                <lightning:button aura:id="BACK" label="Previous"
+                                  variant="neutral" onclick="{!c.onButtonPressed}" />
+            </aura:if>
+        </div>
+        <div class="slds-float_right">
+            <!-- If Pause, Next, or Finish are available, display to the right -->
+            <aura:if isTrue="{!v.canPause}">
+                <lightning:button aura:id="PAUSE" label="Pause"
+                                  variant="neutral" onclick="{!c.onButtonPressed}" />
+            </aura:if>
+            <aura:if isTrue="{!v.canNext}">
+                <lightning:button aura:id="NEXT" label="Next" 
+                                  variant="brand" onclick="{!c.onButtonPressed}" />
+            </aura:if>
+            <aura:if isTrue="{!v.canFinish}">
+                <lightning:button aura:id="FINISH" label="Done"
+                                  variant="brand" onclick="{!c.onButtonPressed}" />
+            </aura:if>
+        </div>
+    </div>
+</aura:component>

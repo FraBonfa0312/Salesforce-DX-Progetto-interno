@@ -1,0 +1,28 @@
+<aura:component controller="IDO_CurrentFinancialAccounts" implements="flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+    
+    <aura:attribute name="accountTypes" type="List" />
+    <aura:attribute name="numberToShow" type="Integer" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+    
+    <lightning:card title="{!$Label.c.IDO_CurrentAccountsHeader}" iconName="standard:product">
+        <div class="c-container">
+            <lightning:layout horizontalAlign="spread">   
+                <aura:iteration items="{!v.accountTypes}" var="accountType">
+                    
+                    <lightning:layoutItem flexibility="auto" padding="around-small" size="2" class="slds-text-align_center"> 
+                      
+                        <div><img src="{!accountType.imageUrl}" width="40" class="{!accountType.status}"/></div>
+                        <div class="slds-text-body_small"> <span class="{! 'text-' + accountType.status}">{!accountType.recordName}</span> </div>                        
+                    </lightning:layoutItem>
+                    
+                </aura:iteration>
+            </lightning:layout>
+        </div>
+    </lightning:card>
+    
+    
+    
+    
+</aura:component>

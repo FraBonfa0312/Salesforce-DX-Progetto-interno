@@ -1,0 +1,23 @@
+.THIS {
+}
+
+/*OVERWRITE THE STATIC RESOURCES CSS*/
+.THIS .inputElement {
+    width: 60% !important;
+}
+
+.THIS .inputLabel {
+    width: 40% !important;
+}
+
+.THIS .grey {
+    color: #999;
+}
+
+.THIS .bold {
+    font-weight: 600;
+}
+
+.THIS .readonly {
+    border: none !important;
+}

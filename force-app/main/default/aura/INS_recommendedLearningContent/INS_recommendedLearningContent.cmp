@@ -1,0 +1,124 @@
+<!-- Developer Notes:
+*Author: Jake Hendrix
+*Date: August 6, 2019
+*Comments:
+*Planned Revisions:
+ -Connect functionality to object model (not yet defined)
+ -Revise cmp structure to iteration based constructor once connected above
+ -Produce recommended learnings via process builder to support the story
+ -Take recommendations, once accepted, and turn into tasks or some form of thing to send via community to end user
+*Completed Revisions:
+ -Updated styling to align with standard cmps seen
+
+-->
+
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:appHostable" access="global" >
+    <aura:attribute name="title" type="string" default="Recommended Learning"/>
+    <aura:attribute name="trail1Title" type="string"/>
+    <aura:attribute name="trail1URL" type="string" />
+    <aura:attribute name="trail2Title" type="string" />
+    <aura:attribute name="trail2URL" type="string"/>
+    <aura:attribute name="trail3Title" type="string" />
+    <aura:attribute name="trail3URL" type="string" />
+    
+    
+    
+    <lightning:card>
+        <aura:set attribute="title">
+            <div class= "slds-media slds-media_center">
+                <div class = "slds-media_figure">
+                    <img src="https://sfdc-core-images-and-icons.s3.amazonaws.com/trailhead-logo-86df2c10154e03fb8b18110597a115ecce58d8bb2887e33a155ae8784cca5784.svg" class="iconClass"/>
+                    <!-- <lightning:icon iconName="standard:article" class="hammer1"/> -->
+                </div>
+                <div class = "slds-media_body slds-m-left_small">                    
+                    <span class ="slds-text-heading_small " style="font-weight:bold;">{!v.title} (3+)</span>                    
+                </div>
+            </div>           
+        </aura:set> 
+        <aura:set attribute="actions">
+            <lightning:buttonGroup>
+                <lightning:buttonMenu variant="bare" menuAlignment="right" iconName="utility:down" iconSize="medium">
+                    <lightning:menuItem label="Open MyTrailhead"></lightning:menuItem>
+                    <lightning:menuItem label="Search for Content"></lightning:menuItem>
+                    <lightning:menuItem label="Snooze All"></lightning:menuItem>
+                </lightning:buttonMenu>
+            </lightning:buttonGroup>
+        </aura:set>
+        <aura:set attribute="footer"><a href="https://trailhead.salesforce.com/" class=" slds-text-link">myTrailhead</a></aura:set>
+        
+        <div class="slds-card__body_inner">
+            <div class="slds-media slds-m-bottom_medium" aura:id="firstRecco">
+                <div class="slds-media__figure">
+                    <img src="{!v.trail1URL}" class="badgeIcon">
+                    </img>
+                </div>
+                <div class="slds-media__body">
+                    <div style="color: rgb(112, 110, 107); font-size: 13px;">Module</div>
+                    <div>
+                        <a href="javascript:void(0);" class=" slds-text-link" style="font-size: .875rem;">{!v.trail1Title}</a>
+                        <span>
+                            <lightning:buttonIcon alternativeText="" class="slds-float_right" variant="border-filled"
+                                                  type="button" iconName="utility:add" size="small"
+                                                  onclick="{!c.addRecommendation}"/>
+                        </span>
+                    </div>
+                    <lightning:layout horizontalAlign="spread" verticalAlign="center">
+                        <lightning:layoutItem>
+                            <ul class="slds-list_horizontal slds-has-dividers_left">
+                                <!-- <div class="slds-text-title slds-text-color_weak">45 mins</div> -->
+                                <lightning:badge label="98% relevance"></lightning:badge>
+                            </ul>
+                        </lightning:layoutItem>
+                    </lightning:layout>
+                </div>
+                <div class="slds-media__figure slds-media__figure_reverse"></div>
+            </div>
+            <div class="slds-media slds-m-bottom_medium">
+                <div class="slds-media__figure"><img src="{!v.trail2URL}" class="badgeIcon"></img>
+                </div>
+                <div class="slds-media__body">
+                    <div style="color: rgb(112, 110, 107); font-size: 13px;">Module</div>
+                    <div>
+                        <a href="javascript:void(0);" class=" slds-text-link" style="font-size: .875rem;">{!v.trail2Title}</a>
+                        <span>
+                            <lightning:buttonIcon alternativeText="" class="slds-float_right" variant="border-filled"
+                                                  type="button" iconName="utility:add" size="small"
+                                                  onclick="{!c.addRecommendation}"/>
+                        </span>
+                    </div>
+                    <lightning:layout horizontalAlign="spread" verticalAlign="center">
+                        <lightning:layoutItem>
+                            <ul class="slds-list_horizontal slds-has-dividers_left">
+                                <lightning:badge label="92% relevance"/>
+                            </ul>
+                        </lightning:layoutItem>
+                    </lightning:layout>
+                </div>
+                <div class="slds-media__figure slds-media__figure_reverse"></div>
+            </div>
+            <div class="slds-media slds-m-bottom_medium">
+                <div class="slds-media__figure"><img src="{!v.trail3URL}" class="badgeIcon"></img>
+                </div>
+                <div class="slds-media__body">
+                    <div style="color: rgb(112, 110, 107); font-size: 13px;">Module</div>
+                    <div>
+                        <a href="javascript:void(0);" class=" slds-text-link" style="font-size: .875rem;">{!v.trail3Title}</a>
+                        <span>
+                            <lightning:buttonIcon alternativeText="" class="slds-float_right" variant="border-filled"
+                                                  type="button" iconName="utility:add" size="small"
+                                                  onclick="{!c.addRecommendation}"/>
+                        </span>
+                    </div>
+                    <lightning:layout horizontalAlign="spread" verticalAlign="center">
+                        <lightning:layoutItem>
+                            <ul class="slds-list_horizontal slds-has-dividers_left">
+                                <lightning:badge label="88% relevance"/>
+                            </ul>
+                        </lightning:layoutItem>
+                    </lightning:layout>
+                </div>
+                <div class="slds-media__figure slds-media__figure_reverse"></div>
+            </div>
+        </div>
+    </lightning:card>
+</aura:component>

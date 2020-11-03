@@ -1,0 +1,40 @@
+<aura:component controller="JH_ProductionGoalCtrl" implements="flexipage:availableForAllPageTypes,force:recordTab,force:hasRecordId,force:lightningQuickAction" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.loadRecords}"/>
+    <aura:handler event="force:showToast" action="{!c.loadRecords}"/>  
+    <aura:attribute name="AG" type="Account_Goal__c[]"/>
+    <aura:attribute name="title" type="String" default="Production Goals"/>
+    <ltng:require styles="/resource/PDE_SLDS100/assets/styles/salesforce-lightning-design-system-ltng.css" />	
+    
+    <lightning:card>
+        <aura:set attribute="title">
+            <div class="slds-media slds-media_center">
+            	<div class="slds-media_figure">
+                    <lightning:icon iconName="standard:goals" size="small"/>
+                </div>
+                <div class = "slds-media_body slds-m-left_small">                    
+                    <span class ="slds-text-heading_small " style="font-weight:bold;">{!v.title}</span>                    
+                </div>
+            </div>
+        </aura:set>
+        <aura:set attribute="actions">
+            <lightning:buttonGroup>
+                <lightning:button label="New" onclick="{!c.createRecord}" variant="neutral" />
+            </lightning:buttonGroup>
+        
+        </aura:set>
+        <!-- Body of the Component -->
+        <div> 
+            <aura:iteration items="{!v.AG}" var="item">
+                <span>
+                    <div style="margin-top:1rem;">
+                        <c:JH_productionGoalCard GoalName="{!item.Name}" Status="{!item.Status__c}" Description="{!item.Description__c}"
+                                                 Percentage="{!item.Progress__c}" TargetValue="{!item.Target_Value__c}" ActualValue="{!item.Actual_Value__c}"
+                                                 TargetDate="{!item.Target_Date__c}" GoalId="{!item.Id}" Type="{!item.Type__c}"/>
+                    </div>
+                </span>
+            </aura:iteration>
+        </div>
+    </lightning:card>
+    
+    
+</aura:component>

@@ -1,0 +1,29 @@
+.THIS .warning.border {
+    border-color: #ffb75d;
+    border-style: solid;
+    border-width: 1px 0;
+}
+
+.THIS .error.border {
+    border-color: #a84638;
+    border-style: solid;
+    border-width: 1px 0;
+}
+
+.THIS .info.border {
+    border-color: #54698d;
+    border-style: solid;
+    border-width: 1px 0;
+}
+
+.THIS .warning {
+    background-color: #fdf6ed;
+}
+
+.THIS .error {
+    background-color: #faf5f5;
+}
+
+.THIS .info {
+    background-color: #f1f5fc;
+}

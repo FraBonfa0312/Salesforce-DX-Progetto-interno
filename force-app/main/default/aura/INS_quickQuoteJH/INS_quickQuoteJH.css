@@ -1,0 +1,41 @@
+.THIS #spinner {
+    display: none;
+    height: 10em;
+    color: blue;
+}
+.THIS .calcPremium {
+    color: #009900;
+    font-weight: bold;
+}
+
+.THIS .maxLimit { 
+    color: #0000ff;
+    font-weight: bold;
+}
+
+.THIS .mule {
+   height: 30px;
+   width: auto;
+}
+
+.THIS .jake1 {
+    background-color: rgb(255, 255, 255);
+    border-radius: .5rem;
+    box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.1);
+    border-top: .5rem solid;
+    border-top-style: solid;
+    border-top-color: #159bd7;
+}
+
+.THIS .jake2 {
+    padding-right: 15px;
+}
+
+.THIS .gifClass {
+    max-height: 100px;
+    width: auto;
+   	display: block;
+  	margin-left: auto;
+  	margin-right: auto;
+    opacity: .5;
+}

@@ -1,0 +1,55 @@
+.THIS .slds-card__body{
+    border-bottom: 1px #c00000 solid;
+    padding: 30px;
+    width:80%;
+    margin-left:10%;
+}
+
+.THIS .slds-card__footer {
+    text-align:center;
+}
+
+.THIS .subS {
+    width:50%;
+    float:left;
+}
+
+.THIS .slds-form-element__label {
+    color: rgb(255, 255, 255) !important;
+}
+
+.THIS .hgrey {
+    width:50%;
+    height:200px;
+    float:left;
+    background:no-repeat url("https://i.imgur.com/MRKtdKI.png");
+}
+
+.THIS .hgreen {
+    width:50%;
+    height:200px;
+    float:left;
+    background:no-repeat url("https://i.imgur.com/suDkTqO.png");
+}
+
+.THIS .pgreen {
+    width:50%;
+    height:163px;
+    float:left;
+    background:no-repeat url("https://i.imgur.com/mig23aJ.png");
+}
+
+.THIS .pgrey {
+    width:50%;
+    height:163px;
+    float:left;
+    background:no-repeat url("https://i.imgur.com/5DnBGlo.png");
+}
+
+.THIS .midLayer{
+    float:left;
+}
+
+.THIS .slds-slider__value{
+    display:none;
+}

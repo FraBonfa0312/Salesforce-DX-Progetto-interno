@@ -1,0 +1,13 @@
+.announcement-message {
+    font-size: 1.2em;
+}
+
+.embedImg {
+    height: 30px;
+    width: auto;
+}
+
+.alert {
+    padding-left: 10px;
+    padding-right: 20px;
+}

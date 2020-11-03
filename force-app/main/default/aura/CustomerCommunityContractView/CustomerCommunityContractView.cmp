@@ -1,0 +1,106 @@
+<aura:component controller="ContractViewCtrl" implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes"
+    access="global">
+    <aura:attribute name="showSpinner" type="Boolean" default="false" />
+    <aura:attribute name="contracts" type="List" />
+    <aura:attribute name="contractId" type="String" />
+    <aura:attribute name="quoteId" type="String" />
+    <aura:attribute name="rendered" type="boolean" default="true" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <article class="slds-card">
+        <aura:if isTrue="{!v.showSpinner}">
+            <lightning:spinner variant="brand" size="small" alternativeText="Modifying Contract" />
+        </aura:if>
+        <div class="slds-page-header">
+            <div class="slds-media">
+                <div class="slds-media__figure">
+                    <span class="slds-icon_container slds-icon-standard-opportunity" title="Description of icon when needed">
+                        <lightning:icon iconName="standard:contract" size="medium" alternativeText="Contracts" />
+                    </span>
+                </div>
+                <div class="slds-media__body">
+                    <h1 class="slds-page-header__title slds-truncate slds-align-middle" title="">My Contracts</h1>
+                    <p class="slds-text-body_small slds-line-height_reset">To View a contract click on the contract number. To make changes to a contract click 'Modify'.</p>
+                </div>
+            </div>
+        </div>
+        <aura:renderIf isTrue="{!v.rendered}">
+
+            <table class="slds-table slds-table--bordered slds-table--striped slds-table--cell-buffer slds-table--fixed-layout">
+                <thead>
+                    <tr class="slds-text-heading--label">
+                        <th scope="col">
+                            <div class="slds-truncate" title="ContractNumber">Contract</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Status">Status</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Start Date">Start Date</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="End Date">End Date</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Contract Term">Term</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate slds-m-around_none" title="Modify"></div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate slds-m-around_none" title="Cancel"></div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <!-- Use the Apex model and controller to fetch server side data -->
+                    <aura:iteration items="{!v.contracts}" var="contract">
+                        <tr>
+                            <td>
+                                <div>
+                                    <a onclick="{!c.handleView}" id="{!contract.Id}">{!contract.ContractNumber}</a>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="slds-truncate" title="{!contract.Status}">{!contract.Status}</div>
+                            </td>
+                            <td>
+                                <div class="slds-truncate" title="{!contract.StartDate}">
+                                    <ui:outputDate value="{!contract.StartDate}" />
+                                </div>
+                            </td>
+                            <td>
+                                <div class="slds-truncate" title="{!contract.EndDate}">
+                                    <ui:outputDate value="{!contract.EndDate}" /> </div>
+                            </td>
+                            <td>
+                                <div class="slds-truncate" title="{!contract.ContractTerm}">{!contract.ContractTerm}</div>
+                            </td>
+                            <td colspan="2">
+                                <div class="slds-m-around--none slds-p-around--none slds-truncate slds-clearfix">
+                                    <div class="slds-float--left">
+                                        <ul class="slds-button-group-list">
+                                            <li>
+                                                <button type="button" onclick="{!c.handleClick}" id="{!contract.Id}" class="slds-button slds-button_neutral">Modify</button>
+                                            </li>
+                                            <li>
+                                                <button type="button" onclick="{!c.handleCancel}" id="{!contract.Id}" class="slds-button slds-button_neutral">Cancel</button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </td>
+
+                        </tr>
+                    </aura:iteration>
+                </tbody>
+            </table>
+        </aura:renderIf>
+        <aura:renderIf isTrue="{!!v.rendered}">
+
+            <div class="slds-text-color_weak slds-text-align--center slds-p-bottom--card-wrapper-spacing">No Contracts to display. To view Contracts please log in.</div>
+
+        </aura:renderIf>
+    </article>
+</aura:component>

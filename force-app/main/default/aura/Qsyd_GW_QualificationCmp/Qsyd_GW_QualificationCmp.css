@@ -1,0 +1,19 @@
+.THIS {
+}
+
+/*OVERWRITE THE STATIC RESOURCES CSS*/
+.THIS .inputLabel {
+    width: 70% !important;
+}
+
+.THIS .inputLabel span.label {
+    direction: rtl;
+}
+
+.THIS .inputElement {
+    width: 30% !important;
+}
+
+.THIS .btn-groupToggleButton .slds-button {
+    width: 80px;
+}

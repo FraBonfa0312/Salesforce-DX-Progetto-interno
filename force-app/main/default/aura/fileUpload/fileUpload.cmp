@@ -1,0 +1,19 @@
+<aura:component controller="FileController">
+    <aura:attribute name="parentId" type="Id"/>
+    
+    <aura:handler event="aura:waiting" action="{!c.waiting}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.doneWaiting}"/>
+    
+    <div class="container">
+        <div class="flexContainer"><lightning:button variant="neutral" label="Link Document To Condition" iconName="utility:down" iconPosition="right" onclick="{! c.handleClick }" />
+            <a id="fileName" href="#"></a>
+        </div>
+        <input type="file" class="file hidden" aura:id="file" />
+        <ui:button label="Save" press="{!c.save}" aura:id="saveBtn" class="btn"/>
+        
+        <div aura:id="uploading" class="notUploading">
+            <!--<img src="/resource/paura__images/loading-gray.gif" alt="uploading" class="small-spinner" />--> Uploading...
+    	</div>
+    </div>
+    
+</aura:component>

@@ -1,0 +1,129 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" 
+                access="global" controller="InteractionSummaryCtrl">
+    <aura:attribute name="summary" type="Interaction_Summary__c"/>
+    <aura:attribute name="searchText" type="String"/>
+    <aura:attribute name="iconText" type="String" default="utility:chevronright"/>
+    <aura:attribute name="reportWrapperList" type="InteractionSummaryCtrl.InteractionReportEvent[]"/>
+    
+    <aura:registerEvent name="renderEinsteinEvent" type="c:RenderEinstein"/>
+    
+    <lightning:workspaceAPI aura:id="workspace"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <div class="slds-box">
+        <lightning:card class="summaryCard" iconName="utility:list">
+            <aura:set attribute="title">
+                Interaction Summary
+            </aura:set>
+            <div class="slds-grid slds-grid_pull-padded-medium">
+                <div class="slds-col slds-p-horizontal_medium">    
+                    <dl class="slds-list_vertical slds-wrap">
+                        <dt class="slds-item_label slds-text-color_weak" title="Last Interaction Date" style="width:11em;"><b>Last Interaction Date:</b></dt>
+                        <dd class="slds-item_detail slds-truncate" title="">{!v.summary.Last_Interaction__c}</dd>
+                    </dl>
+                </div>
+                <div class="slds-col slds-p-horizontal_medium">    
+                    <dl class="slds-list_vertical slds-wrap">
+                        <dt class="slds-item_label slds-text-color_weak" title="Last Interaction Date" style="width:11em;"><b>Next  Interaction Date:</b></dt>
+                        <dd class="slds-item_detail slds-truncate" title="">{!v.summary.Next_Interaction__c}</dd>
+                    </dl>
+                </div>
+            </div>
+            <div class="slds-grid slds-grid_vertical-align-start">
+                <div class="slds-col slds-p-vertical_medium">    
+                    <dl class="slds-list_horizontal slds-wrap">
+                        <dt class="slds-item_label slds-text-color_weak" style="width:14em;" title="Recommended Activity"><b>Recommended Activity:</b></dt>
+                        <dd class="slds-item_detail" title="" style="width:14em;">{!v.summary.Recommended_Activity__c}</dd>
+                    </dl>
+                    <dl class="slds-list_horizontal slds-wrap">
+                        <dt class="slds-item_label slds-text-color_weak" title="" style="width:14em;"><b>What supports this Insight:</b></dt>
+                        <dd class="slds-item_detail" title="">{!v.summary.What_Supports_This_Insight__c}</dd>
+                    </dl>
+                </div>
+            </div><hr/>    
+        </lightning:card>	
+        
+        <lightning:card class="reportCard" iconName="utility:notebook">
+            <aura:set attribute="title">
+                Interaction Report
+            </aura:set>
+            <aura:set attribute="actions">
+
+                	<lightning:input type="search" placeholder="Search Reports" value="{!v.searchText}" name="search" class="search-text" onchange="{!c.performSearch}"/>
+
+
+           		<lightning:button label="New" onclick="{!c.createReportRecordCtrl}"/>         
+            </aura:set>
+            <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+                <thead>
+                    <tr class="slds-text-title_caps">
+                        <th scope="col"></th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Created by</th>
+                        <th scope="col">Updated on</th>
+                        <th scope="col">Report Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <aura:iteration items="{!v.reportWrapperList}" var="reportWrap" indexVar="iVar">
+                        <tr>
+                            <td>
+                                <lightning:buttonIcon aura:id="toggleIcon" onclick="{!c.expandCtrl}" class="reportChevron" iconName="utility:chevronright" size="x-small" alternativeText="Expand" value="{!iVar}"/>
+                            </td>
+                            <td><!--<a href="{!'/one/one.app?#/sObject/'+ reportWrap.report.Id + '/view'}" target="_blank">{!reportWrap.report.Name__c}</a>-->
+                                <a href="#" onclick="{!c.openRecordinSubtab}" data-recordId="{!reportWrap.report.Id}">{!reportWrap.report.Name__c}</a>
+                            </td>
+                            <td>{!reportWrap.report.CreatedBy.Name}</td>
+                            <td>
+                                <lightning:formattedDateTime value="{!reportWrap.report.LastModifiedDate}" timeZone="{!$Locale.timezone}" year="numeric" month="numeric" day="numeric" hour="2-digit" minute="2-digit" />
+                            </td>
+                            <td><lightning:badge label="{!reportWrap.report.Report_Status__c}" class="{!reportWrap.report.Report_Status__c == 'Completed' ? 'badge-completed' :
+                                                                                                      	(reportWrap.report.Report_Status__c == 'In Progress' ? 'badge-inprogress' : 
+                                                                                                        (reportWrap.report.Report_Status__c == 'Over due' ? 'badge-overdue' : 'badge-notstarted'))}"/></td>
+                        </tr>
+                        <tr aura:id="detailTr" class="slds-hide nested-card">
+                            <td colspan="5">
+                                <div class="slds-grid slds-wrap" style="background:#fafaf9;">
+                                    <div class="slds-size_1-of-3">
+                                        
+                                        <aura:iteration items="{!reportWrap.evts}" var="event">
+                                            <lightning:card iconName="utility:event" class="eventcard">
+                                                <aura:set attribute="title">
+                                                    <span class="nested-card">Event Details</span>
+                                                </aura:set>
+                                                <div class="slds-size_1-of-1 nested-card">
+                                                    <a href="#" onclick="{!c.openRecordinSubtab}" data-recordId="{!event.Id}">{!event.Subject}</a>
+                                                </div>
+                                                <div class="slds-size_1-of-1 nested-card">{!event.Location}</div>
+                                            </lightning:card> 
+                                        </aura:iteration>
+                                    </div>
+                                    <div class="slds-size_1-of-3">
+                                        <lightning:card iconName="utility:user" class="attendeecard">
+                                            <aura:set attribute="title">
+                                                <span class="nested-card">Attendees</span>
+                                            </aura:set>    
+                                            <aura:iteration items="{!reportWrap.cons}" var="contact">
+                                                <div class="slds-size_1-of-1 nested-card">
+                                                  <a href="#" onclick="{!c.openRecordinSubtab}" data-recordId="{!contact.Id}">{! contact.Name }</a>
+                                                </div>
+                                            </aura:iteration>
+                                        </lightning:card>    
+                                    </div>
+                                    <div class="slds-size_1-of-3">
+                                        <lightning:card iconName="standard:quip" class="quipdoc">
+                                            <aura:set attribute="title">
+                                                <span class="nested-card">Quip Document</span>
+                                             </aura:set>  
+                                            <a href="{!reportWrap.report.Quip_Document__c}" onclick="{!c.renderEinstein}" target="_blank">{!reportWrap.report.Name__c}</a>
+
+                                        </lightning:card>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </aura:iteration>  
+                </tbody>
+            </table>
+        </lightning:card>
+    </div>    
+</aura:component>

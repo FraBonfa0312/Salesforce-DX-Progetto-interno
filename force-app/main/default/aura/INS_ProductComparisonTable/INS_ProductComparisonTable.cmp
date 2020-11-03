@@ -1,0 +1,89 @@
+<aura:component implements="lightning:availableForFlowScreens" controller="INS_InsuranceQuoteController" access="global">
+    <aura:attribute name="products"        type="List"   />
+    <aura:attribute name="features"        type="List"   />
+    <aura:attribute name="selectedProduct" type="String" />
+    <aura:attribute name="productFamily"   type="String" />
+    
+    <!-- Mobile experience attributes -->
+    <aura:attribute name="selectedIndex"   type="Integer" default="0" />
+    <aura:attribute name="mobile"          type="Boolean" />
+    <aura:attribute name="colSpan"         type="Integer" default="1" />
+    <aura:attribute name="colSpanHeading"  type="Integer" default="1" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+    
+    <article class="slds-m-around_small" id="comparison-table">
+    	<ul>
+        	<aura:iteration items="{!v.products}" var="product" indexVar="index">
+                <li class="{!(v.selectedProduct == product.Id ? 'bg-purple ' : 'bg-blue ') + (v.selectedIndex == index ? 'active' : '')}">
+                    <div class="slds-text-align_center ins-product-mobile" data-index="{!index}" id="{!product.Id}" onclick="{!c.handleSelectMobile}">
+                        <div class="ins-product-name">{!product.Name}</div>
+                    </div>
+                </li>
+            </aura:iteration>
+        </ul>
+        <aura:if isTrue="{!v.mobile}">
+            <aura:iteration items="{!v.products}" var="product" indexVar="index">
+                <lightning:button iconName="{!(v.selectedProduct == product.Id ? 'utility:check' : 'utility:add')}" 
+                                  class="{!(v.selectedIndex == index ? '' : 'slds-hide') + ' ins-mobile-select-button slds-m-vertical_small'}" 
+                                  label="{!(v.selectedProduct == product.Id ? 'Selected' : 'Select')}" 
+                                  name="{!product.Id}" onclick="{!c.handleSelect}"
+                                  variant="{!(v.selectedProduct == product.Id ? 'brand' : 'neutral')}" />
+            </aura:iteration>
+        </aura:if>
+        <table>
+        	<thead>
+                <tr>
+                    <th class="hide" />
+                    <aura:iteration items="{!v.products}" var="product">
+                        <th class="{!(v.selectedProduct == product.Id ? 'bg-purple' : 'bg-blue')}">
+                            <div class="slds-text-heading_medium ins-product-name">
+                                {!product.Name}
+                            </div>
+                            <lightning:button iconName="{!(v.selectedProduct == product.Id ? 'utility:check' : 'utility:add')}" class="slds-m-vertical_small" 
+                                              label="{!(v.selectedProduct == product.Id ? 'Selected' : 'Select')}" 
+                                              name="{!product.Id}" onclick="{!c.handleSelect}"
+                                              variant="{!(v.selectedProduct == product.Id ? 'brand' : 'neutral')}" />
+                        </th>
+                    </aura:iteration>
+                </tr>
+            </thead>
+            <tbody>
+            	<tr>
+                	<td colspan="{!v.mobile? v.colSpanHeading : 1}">Monthly Price</td>
+                    <aura:iteration items="{!v.products}" var="product" indexVar="index">
+                        <td class="{!(v.selectedIndex == index ? 'ins-product-selected' : '')}" colspan="{!v.mobile ? v.colSpan : 1}">
+                            <lightning:formattedNumber class="slds-text-heading_medium ins-product-price" 
+                                                       value="{!product.Premium__c / 12}" 
+                                                       style="currency" currencyDisplayAs="symbol"  />
+                        </td>
+                    </aura:iteration>
+                </tr>
+                <tr>
+                    <td colspan="{!v.products.length + 1}" class="sep">Get started easily</td>
+                </tr>
+                <aura:iteration items="{!v.features}" var="feature">
+                    <tr>
+                        <td colspan="{!v.mobile? v.colSpanHeading : 1}"><b>{!feature.coverageName}</b></td>
+                        <aura:iteration items="{!feature.coverages}" var="coverage" indexVar="index">
+                            <td class="{!(v.selectedIndex == index ? 'ins-product-selected' : '')}" colspan="{!v.mobile ? v.colSpan : 1}">
+                                <aura:if isTrue="{!not(empty(coverage.Product_Coverage__r.Comparison_Text__c))}">
+                                    <span>{!coverage.Product_Coverage__r.Comparison_Text__c}</span>
+                                    <aura:set attribute="else">
+                                        <aura:if isTrue="{!coverage.Covered__c}">
+                                            <lightning:icon iconName="utility:check" size="x-small" />
+                                            <aura:set attribute="else">
+                                                <lightning:icon iconName="utility:close" size="x-small" />
+                                            </aura:set>
+                                        </aura:if>
+                                    </aura:set>
+                                </aura:if>
+                            </td>
+                        </aura:iteration>
+                    </tr>
+                </aura:iteration>
+            </tbody>
+        </table>
+    </article>
+</aura:component>

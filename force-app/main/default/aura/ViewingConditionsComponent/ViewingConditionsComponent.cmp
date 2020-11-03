@@ -1,0 +1,121 @@
+<aura:component controller="ViewingConditionsController" implements="force:hasRecordId,force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" >
+    <aura:attribute name="viewingConditions" type="Viewing_Condition__c[]" />
+    <aura:attribute name="reviewingFees" type="Reviewing_Fee__c[]" />
+    <aura:attribute name="recordId" type="String" />
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <div>
+            <h1> Conditions</h1>
+    <div class="container">
+        <div  class="filterContainer">
+            <div class="filterDetails filterText"> Filter By: </div>
+            <div class="filterDetails">
+                <lightning:select name="selectItem" label="" onchange="{!c.doSomething}">    
+                    <option value="">All</option>                    
+                    <option value="1">Prior To</option>                    
+                </lightning:select>
+            </div>
+            <div class="filterDetails">
+                <lightning:select name="selectItem" label="" onchange="{!c.doSomething}">    
+                    <option value="">All</option>                    
+                </lightning:select>
+            </div>
+            <div class="btnContainer">
+                <button class="slds-button slds-button_brand" onclick="{!c.expandAll}">Expand All</button>
+                <button class="slds-button slds-button_brand" onclick="{!c.expandAll}">Collapse All</button>
+            </div>
+
+        </div>
+    <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+        <thead class="greyBackground">
+            <tr class="slds-text-title_caps">
+                <th scope="col" class="slds-cell-buffer_left">
+                    <div class="slds-truncate" title="Opportunity Name"></div>
+                </th>
+                <th scope="col" class="slds-cell-buffer_left">
+                    <div class="slds-truncate" title="Opportunity Name">Category</div>
+                </th>
+                <th scope="col" class="slds-cell-buffer_left">
+                    <div class="slds-truncate" title="Account Name">Condition</div>
+                </th>
+                <th scope="col" class="slds-cell-buffer_left">
+                    <div class="slds-truncate" title="Close Date">Prior To</div>
+                </th>
+                <th scope="col" class="slds-cell-buffer_left">
+                    <div class="slds-truncate" title="Stage">Borrower Pair</div>
+                </th>
+                <th scope="col" class="slds-cell-buffer_left">
+                    <div class="slds-truncate" title="Confidence">Status</div>
+                </th>
+                <th scope="col" class="slds-cell-buffer_left">
+                    <div class="slds-truncate" title="Amount">Start Date</div>
+                </th>
+                <th scope="col" class="slds-cell-buffer_left">
+                    <div class="slds-truncate" title="Contact">comments</div>
+                </th>
+                <th scope="col" class="slds-cell-buffer_left">
+                    <div class="slds-truncate" title="Contact">Action</div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <aura:iteration items="{!v.viewingConditions}" var="vc" indexVar="index">                
+                <tr>
+                    <td data-label=">" class="slds-cell-buffer_left">
+                        <div class="slds-truncate expandBtns" title="View More" >
+                            <button id="{!index}" onclick="{!c.expand}">+</button>
+                        </div>
+                    </td>
+                    <th scope="row" data-label="{!vc.Category__c}" class="slds-cell-buffer_left">
+                        <div class="slds-truncate" title="{!vc.Category__c}"><a href="javascript:void(0);">{!vc.Category__c}</a></div>
+                    </th>
+                    <td data-label="{!vc.Condition__c}" class="slds-cell-buffer_left">
+                        <div class="slds-truncate bold" title="{!vc.Condition__c}">{!vc.Condition__c}</div>
+                        <div class="slds-truncate description">  {!vc.Description__c}</div>
+                    </td>
+                    <td data-label="{!vc.Prior_to__c}" class="slds-cell-buffer_left">
+                        <div class="slds-truncate" title="{!vc.Prior_to__c}">{!vc.Prior_to__c}</div>
+                    </td>
+                    <td data-label="{!vc.Borrower_Pair__c}" class="slds-cell-buffer_left">
+                        <div class="slds-truncate" title="{!vc.Borrower_Pair__c}">{!vc.Borrower_Pair__c}</div>
+                    </td>
+                    <td data-label="{!vc.Status__c}" class="slds-cell-buffer_left">
+                        <div class="slds-truncate" title="{!vc.Status__c}">{!vc.Status__c}</div>
+                    </td>
+                    <td data-label="{!vc.Status_Date__c}" class="slds-cell-buffer_left">
+                        <div class="slds-truncate" title="{!vc.Status_Date__c}">{!vc.Status_Date__c}</div>
+                    </td>
+                    <td data-label="Comments" class="slds-cell-buffer_left">
+                        <div class="slds-truncate" title="Comments"><a href="{!'/one/one.app#/sObject/' + vc.Id + '/rlName/AttachedContentDocuments/view'}">{!vc.Comments__c}</a></div>
+                    </td>
+                    <td data-label="{!vc.Action__c}" class="slds-cell-buffer_left">
+                        <div class="slds-truncate" title="{!vc.Action__c}"><a href="javascript:void(0);">{!vc.Action__c}</a></div>
+                    </td>
+                </tr>
+                <tr class="dropdown hidden" id="{!'more' + index}">
+                    <td></td>
+                    <td></td>
+                    <td class="slds-cell-buffer_left">
+                        <p class="bold">Conditions most recent comment: </p>
+                        <div>Link Document to Condition
+
+                            <c:fileUpload parentId="{!vc.Id}"/></div>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                   
+                </tr>
+            </aura:iteration>
+
+
+        </tbody>
+    </table>
+    </div>
+        </div>
+
+
+</aura:component>

@@ -1,0 +1,183 @@
+<aura:component>
+    <aura:attribute name="Title" type="String"
+        default="We won't bore you with instructions, but take a look at the overview below for a few helpful hints! " />
+    <aura:attribute name="sectionOneTitle" type="String" default="STEP 1: SELECT MEETING TOPICS" />
+    <aura:attribute name="sectionOneSubTitle" type="String" default="" />
+    <aura:attribute name="sectionOneBody" type="String" default="" />
+    <aura:attribute name="sectionOneImg" type="String"
+        default="https://general-demo-content-gif-storage.s3.amazonaws.com/carDrivingGif.gif" />
+    <aura:attribute name="sectionTwoTitle" type="String" default="STEP 2: VERIFY ATTENDEES" />
+    <aura:attribute name="sectionTwoSubTitle" type="String" default="Sub-Title" />
+    <aura:attribute name="sectionTwoBody" type="String" default="" />
+    <aura:attribute name="sectionTwoImg" type="String"
+        default="https://general-demo-content-gif-storage.s3.amazonaws.com/holiday_800x600.gif" />
+    <aura:attribute name="sectionThreeTitle" type="String" default="STEP 3: REVIEW AND TAKE ACTION" />
+    <aura:attribute name="sectionThreeSubTitle" type="String" default="Sub-Title" />
+    <aura:attribute name="sectionThreeBody" type="String" default="" />
+    <aura:attribute name="sectionThreeImg" type="String"
+        default="https://general-demo-content-gif-storage.s3.amazonaws.com/thingProcessing2.gif" />
+
+
+
+    <div class="slds-m-around_medium slds-align_absolute-center">
+        <ul class="slds-list_vertical-space">
+            <li class="slds-item">
+                <div class="slds-media slds-media_center">
+                    <div class="slds-media__figure">
+                        <lightning:icon iconName="standard:dynamic_record_choice" size="medium" class="blue-icon"/>
+                    </div>
+                    <div class="slds-media__body">
+                        <div style="font-size: 0.8125rem;">1) Build your discussion topics</div>
+                    </div>
+                    <div class="slds-media__figure slds-media__figure_reverse"></div>
+                </div>
+            </li>
+            <li class="slds-item">
+                <div class="slds-media slds-media_center">
+                    <div class="slds-media__figure">
+                            <lightning:icon iconName="standard:people" size="medium" class="blue-icon"/>
+                        </div>
+                    <div class="slds-media__body">
+                        2) Verify attendees from Lightning Scheduler
+                        <a href="javascript:void(0);" class=" slds-text-link"></a>
+                        <div style="font-size: 0.8125rem;"></div>
+                    </div>
+                    <div class="slds-media__figure slds-media__figure_reverse"></div>
+                </div>
+            </li>
+            <li class="slds-item">
+                <div class="slds-media slds-media_center">
+                    <div class="slds-media__figure">
+                            <lightning:icon iconName="standard:actions_and_buttons" size="medium" class="blue-icon"/>
+                    </div>
+                    <div class="slds-media__body">
+                        <div style="font-size: 0.8125rem;">3) Review and take action!</div>
+                    </div>
+                    <div class="slds-media__figure slds-media__figure_reverse"></div>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+
+    <!-- <div class="slds-p-around_medium slds-card slds-card_boundary">
+         <div class="slds-m-bottom_medium">
+            <div class="slds-media slds-media_center">
+                <div class="slds-media_figure">
+                    <lightning:icon iconName="utility:light_bulb" size="small" class="yellow-icon" />
+                </div>
+                <div class="slds-media_body slds-m-left_small">
+                    <span class="slds-text-heading_x-small " style="font-size: 0.8125rem;">{!v.Title}</span>
+                </div>
+            </div>
+             <div class="slds-m-right_x-large" style="font-size: 0.8125rem;">
+                <h3>{!v.Title}</h3>
+            </div>
+        </div>
+        <div class="slds-m-bottom_xx-small slds-p-around_xxx-small">
+            <div
+                class="slds-m-bottom_xx-small slds-p-around_x-small slds-theme_shade slds-card slds-card_boundary miniHeader">
+                <div style="color: rgb(112, 110, 107); font-size: 0.8125rem;">{!v.sectionOneTitle}</div>
+            </div>
+            <div class="slds-p-right_small slds-p-left_small">
+                <lightning:layout>
+                    <lightning:layoutItem size="12">
+                        <div class="slds-p-around_x-small">
+                            <div class="slds-m-bottom_small" style="font-size: 13px;">{!v.sectionOneSubTitle}</div>
+                            <ul class="slds-list_vertical-space">
+                                <li class="slds-item">
+                                    <div class="slds-media slds-media_center">
+                                        <div class="slds-media__figure">
+                                            <lightning:icon iconName="standard:dynamic_record_choice" size="medium"
+                                                class="blue-icon" />
+                                        </div>
+                                        <div class="slds-media__body">
+                                            <div style="font-size: 13px;">Your Choice - You know the customer, add
+                                                your own meeting topics as desired.</div>
+                                        </div>
+                                        <div class="slds-media__figure slds-media__figure_reverse"></div>
+                                    </div>
+                                </li>
+                                <li class="slds-item">
+                                    <div class="slds-media slds-media_center">
+                                        <div class="slds-media__figure">
+                                            <lightning:icon iconName="standard:endorsement" size="medium"
+                                                class="blue-icon" />
+                                        </div>
+                                        <div class="slds-media__body">
+                                            <div style="font-size: 0.8125rem;"> Recommendations - Einstein is a pretty smart dude. His recommendations will help put the cherry top.</div>
+                                        </div>
+                                        <div class="slds-media__figure slds-media__figure_reverse"></div>
+                                    </div>
+                                </li>
+                                
+                            </ul>
+                        </div>
+                    </lightning:layoutItem>
+                </lightning:layout>
+            </div>
+        </div>
+        <div class="slds-m-bottom_x-small slds-p-around_xx-small">
+            <div
+                class="slds-m-bottom_xx-small slds-p-around_x-small slds-theme_shade slds-card slds-card_boundary miniHeader">
+                <div style="color: rgb(112, 110, 107); font-size: 0.8125rem;">{!v.sectionTwoTitle}</div>
+            </div>
+            <div class="slds-p-right_small slds-p-left_small">
+                <lightning:layout>
+                    <lightning:layoutItem size="12">
+                        <div class="slds-p-around_x-small">
+                            <div class="slds-m-bottom_small" style="font-size: 13px;">{!v.sectionOneSubTitle}</div>
+                            <ul class="slds-list_vertical-space">
+                                <li class="slds-item">
+                                    <div class="slds-media slds-media_center">
+                                        <div class="slds-media__figure">
+                                            <lightning:icon iconName="standard:groups" size="medium" class="blue-icon" />
+                                        </div>
+                                        <div class="slds-media__body">
+                                            <div style="font-size: 13px;"><a href="javascript:void(0);">Lightning Scheduler</a> takes care of this for you, but it never hurts to double check!</div>
+                                        </div>
+                                        <div class="slds-media__figure slds-media__figure_reverse"></div>
+                                    </div>
+                                </li>
+                                
+                            </ul>
+                        </div>
+                    </lightning:layoutItem>
+                </lightning:layout>
+               
+            </div>
+        </div>
+        <div class="slds-m-bottom_xx-small slds-p-around_xxx-small">
+            <div class="slds-m-bottom_xx-small slds-p-around_x-small slds-theme_shade slds-card slds-card_boundary miniHeader">
+                <div style="color: rgb(112, 110, 107); font-size: 0.8125rem;">{!v.sectionThreeTitle}</div>
+            </div>
+            <div class="slds-p-right_small slds-p-left_small">
+                <lightning:layout>
+                    <lightning:layoutItem size="12">
+                        <div class="slds-p-around_x-small">
+                            <div class="slds-m-bottom_small" style="font-size: 13px;">{!v.sectionOneSubTitle}</div>
+                            <ul class="slds-list_vertical-space">
+                                <li class="slds-item">
+                                    <div class="slds-media slds-media_center">
+                                        <div class="slds-media__figure">
+                                            <lightning:icon iconName="standard:actions_and_buttons" size="medium" class="blue-icon" />
+                                        </div>
+                                        <div class="slds-media__body">
+                                            <div style="font-size: 13px;">Manual work sucks- we know. This section is where you get to wave as it goes by. Automate things like creating and sending calendar invites, meeting reminders, directions, etc. 
+                                            </div>
+                                        </div>
+                                        <div class="slds-media__figure slds-media__figure_reverse"></div>
+                                    </div>
+                                </li>
+                                
+                            </ul>
+                        </div>
+                    </lightning:layoutItem>
+                </lightning:layout>
+        
+            </div>
+        </div>
+    
+    </div>-->
+
+</aura:component>

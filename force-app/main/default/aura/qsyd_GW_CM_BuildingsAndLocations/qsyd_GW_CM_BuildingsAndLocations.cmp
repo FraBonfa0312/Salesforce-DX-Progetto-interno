@@ -1,0 +1,640 @@
+<aura:component access="global" controller="Qsyd_GW_Controller">
+    <ltng:require styles="{!$Resource.Q_GWScreenBaseCss}" afterScriptsLoaded="{!c.handleCMBuildingInit}" />
+    <aura:registerEvent name="onFromBuildingLocationScreenToMasterEvt" type="c:qsyd_GW_CM_buildingToMasterEvt" />
+
+    <aura:attribute name="oppty" type="Opportunity" />
+    <aura:attribute name="currentStep" type="Integer" default="1" />
+    <aura:attribute name="showSpinner" type="Boolean" default="fales" />
+    <aura:attribute name="hasExistingProperty" type="Boolean" default="false" />
+    <aura:attribute name="isExistingProperty" type="Boolean" default="true" />
+    <aura:attribute name="existingCPcommercialPropertyList" type="List" />
+    <aura:attribute name="selectedCPCommercialProperty" type="Object" />
+
+
+    <aura:attribute name="buildingCategoryList" type="List" default="[{
+        category: 'Building/Contents Category',
+        inputItems: [{
+            label: 'Exclude Sprinkler',
+            required: 'false',
+            type: 'select',
+            value: 'No'
+        },{
+            label: 'Exclude Vandalism',
+            required: 'false',
+            type: 'select',
+            value: 'No'
+        },{
+            label: 'Limit',
+            required: 'true',
+            type: 'text',
+            value: '100000'
+        },{
+            label: 'Cause of Loss',
+            required: 'true',
+            type: 'select',
+            value: 'Basic',
+            multivalue:['Basic', 'Broad', 'Special']
+        },{
+            label: 'Deductible',
+            required: 'false',
+            type: 'select',
+            value: '2500'
+        },{
+            label: 'Wind Deductible %',
+            required: 'false',
+            type: 'select',
+            value: '2'
+        },{
+            label: 'Valuation Method',
+            required: 'true',
+            type: 'select',
+            value: 'Replacement Cost'
+        },{
+            label: 'Coinsurance %',
+            required: 'true',
+            type: 'select',
+            value: '80%'
+        },{
+            label: 'Auto Increase',
+            required: 'false',
+            type: 'select',
+            value: '4%'
+        }
+        ]
+    },{
+        category: 'Business Personal Property Coverage',
+        inputItems: [{
+            label: 'Limit',
+            type: 'text',
+            required: 'true',
+            value: '10000'
+        },{
+            label: 'Cause of Loss',
+            required: 'true',
+            type: 'select',
+            value: 'Basic',
+            multivalue:['Basic', 'Broad', 'Special']
+        },{
+            label: 'Exclude Vandalism',
+            required: 'false',
+            type: 'select',
+            value: 'No'
+        },{
+            label: 'Exclude Sprinkler',
+            required: 'false',
+            type: 'select',
+            value: 'No'
+        },{
+            label: 'Deductible',
+            required: 'false',
+            type: 'select',
+            value: '2500'
+        },{
+            label: 'Wind Deductible %',
+            required: 'false',
+            type: 'select',
+            value: '2'
+        },{
+            label: 'Valuation Method',
+            required: 'true',
+            type: 'select',
+            value: 'Replacement Cost'
+        },{
+            label: 'Coinsurance %',
+            required: 'true',
+            type: 'select',
+            value: '80%'
+        },{
+            label: 'Report Form',
+            required: 'false',
+            type: 'select',
+            value: 'Non Reporting'
+        }
+        ]
+    },
+    ]" />
+
+    <div class="GWScreenContainer">
+        <aura:if isTrue="{!v.showSpinner}">
+            <lightning:spinner size="small" />
+        </aura:if>
+        <lightning:layout multipleRows="true">
+            <aura:if isTrue="{!v.currentStep != 6}">
+                <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                    <div class="sectionTitle">
+                        <span class="title">Buildings and Locations</span>
+                    </div>
+                </lightning:layoutItem>
+            </aura:if>
+
+            <aura:if isTrue="{!v.currentStep == 6}">
+                <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                    <div class="sectionTitle">
+                        <div class="slds-grid slds-grid_align-spread">
+                            <div class="slds-col slds-size_2-of-4">
+                                <span class="title">Buildings and Locations</span>
+                            </div>
+                            <div class="slds-col slds-size_2-of-4" style="text-align:right">
+                                <lightning:button label="Use a Spreadsheet" variant="neutral"
+                                    class="slds-m-vertical_xx-small" />
+                                <lightning:button label="Add Building" variant="neutral"
+                                    class="slds-m-vertical_xx-small slds-m-horizontal_xx-small" />
+                            </div>
+                        </div>
+                    </div>
+                </lightning:layoutItem>
+            </aura:if>
+
+
+            <aura:if isTrue="{!v.currentStep == 1}">
+                <lightning:layoutItem size="12" class="slds-p-vertical_small">
+                    <div class="slds-p-vertical_small" style="display:inline-flex">
+                        <div>
+                            <div class="slds-box slds-box_x-small">
+                                <div class="buildingbox">
+                                    <div>
+                                        <div class="slds-text-heading_medium slds-p-bottom_small">Use spreadsheet?</div>
+                                        <lightning:button label="Get Started" variant="brand" />
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="grey">Add buildings and locations using Excel spreedsheets.</span>
+                        </div>
+                        <div class="buildingor">
+                            - or -
+                        </div>
+                        <div>
+                            <div class="slds-box slds-box_x-small">
+                                <div class="buildingbox">
+                                    <div>
+                                        <div class="slds-text-heading_medium slds-p-bottom_small">Enter information
+                                            manually?</div>
+                                        <lightning:button label="Add Building" variant="brand"
+                                            onclick="{!c.handleAddBuildingClick}" />
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="grey">Add buildings and locations by filling in their details in the
+                                form.</span>
+                        </div>
+
+                    </div>
+                </lightning:layoutItem>
+            </aura:if>
+            <aura:if isTrue="{! and(v.currentStep == 2, not(v.showSpinner))}">
+                <lightning:layoutItem size="12">
+                    <span style="margin-right:5px">Account: <span
+                            class="customblue">{!v.oppty.Account.Name}&nbsp;</span>|</span> <span>Commercial Property -
+                        Quote </span>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="12">
+                    <div class="slds-grid slds-grid_align-spread">
+                        <div class="slds-col slds-size_5-of-12" style="font-size:35px; font-weight:100">Add Building
+                        </div>
+                        <div class="slds-col slds-size_5-of-12">
+                            <img src="{!$Resource.qsyd_AddBuildingIcons + '/Location.png'}" style="width:250px" />
+                        </div>
+                    </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                    <div class="inputLabel">
+                        <span class="label">Location</span>
+                    </div>
+                    <div class="inputElement">
+                        <lightning:buttonGroup class="btn-groupToggleButton">
+                            <lightning:button label="Existing Location" name="ExistingLocation"
+                                class="{! v.isExistingProperty == true ? 'selectedToggleButtonType' : ''}"
+                                onclick="{!c.handleToggleBtnClick}" />
+                            <lightning:button label="New Location" name="NewLocation"
+                                class="{! v.isExistingProperty == false ? 'selectedToggleButtonType' : ''}"
+                                onclick="{!c.handleToggleBtnClick}" />
+                        </lightning:buttonGroup>
+                    </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                    <hr style="margin:5px" />
+                </lightning:layoutItem>
+
+                <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                    <aura:if isTrue="{!v.isExistingProperty}">
+                        <div class="inputLabel">
+                            <span class="label">Existing Location</span>
+                        </div>
+                        <div class="inputElement">
+                            <select class="slds-select" id="existingLocationSelect">
+                                <aura:if isTrue="{! v.hasExistingProperty}">
+                                    <aura:iteration items="{!v.existingCPcommercialPropertyList}" var="CP"
+                                        indexVar="CPIdx">
+                                        <option value="{!CP.Id}" data-idx="{!CPIdx}">
+                                            <span class="label">{! CP.Street + ' ' + CP.City + ' ' +
+                                                CP.State
+                                                + ' ' + CP.PostalCode + ' ' + CP.Country}</span>
+                                        </option>
+                                    </aura:iteration>
+                                    <aura:set attribute="else">
+                                        <option value="">
+                                            <span class="label">No Existing Location Available</span>
+                                        </option>
+                                    </aura:set>
+                                </aura:if>
+                            </select>
+                        </div>
+                        <aura:set attribute="else">
+                            <div class="slds-p-around_medium" style="overflow:hidden">
+                                <DV_Flow_AP:AddressValidation aura:id="newLocationAddressPicker"
+                                    showAddressFields="true" showMap="false" showTitle="false"
+                                    showCountyField="false" />
+                            </div>
+                        </aura:set>
+
+                    </aura:if>
+
+                </lightning:layoutItem>
+
+            </aura:if>
+
+            <aura:if isTrue="{!v.currentStep == 3}">
+                <lightning:layoutItem size="12">
+                    <span style="margin-right:5px">Account: <span
+                            class="customblue">{!v.oppty.Account.Name}&nbsp;</span>|</span> <span>Commercial Property -
+                        Quote </span>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="12">
+                    <div class="slds-grid slds-grid_align-spread">
+                        <div class="slds-col slds-size_5-of-12" style="font-size:35px; font-weight:100">Add Building
+                        </div>
+                        <div class="slds-col slds-size_5-of-12">
+                            <img src="{!$Resource.qsyd_AddBuildingIcons + '/Building.png'}" style="width:250px" />
+                        </div>
+                    </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                    <div class="inputLabel">
+                        <span>
+                            <lightning:icon size="xx-small" iconName="utility:check" alternativeText="Check" />
+                        </span><span class="label inputLabelBlack"><b>Location</b></span>
+                    </div>
+                    <div class="inputElement">
+                        <span style="flex:auto">{!v.selectedCPCommercialProperty.Street + ' ' +
+                            v.selectedCPCommercialProperty.City + ' ' + v.selectedCPCommercialProperty.State + ' ' +
+                            v.selectedCPCommercialProperty.PostalCode}</span>
+                        <span>
+                            <lightning:icon size="xx-small" iconName="utility:chevrondown" alternativeText="down" />
+                        </span>
+                    </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                    <hr style="margin:5px" />
+                </lightning:layoutItem>
+
+                <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                    <div class="inputLabel">
+                        <span class="label">Property Class Code
+                            <span class="asterisk">*</span>
+                        </span>
+                    </div>
+                    <div class="inputElement">
+                        <input id="step2PropertyClassCodeInput" type="text" class="slds-input"
+                            value='0044 - Offices Non-Governmental' />
+                    </div>
+                </lightning:layoutItem>
+
+                <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                    <div class="inputLabel">
+                        <span class="label">Building Description
+                            <span class="asterisk"></span>
+                        </span>
+                    </div>
+                    <div class="inputElement">
+                        <input id="step2BuildingDescInput" type="text" class="slds-input"
+                            value="{!v.selectedCPCommercialProperty.Description}" />
+                    </div>
+                </lightning:layoutItem>
+
+                <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                    <div class="inputLabel">
+                        <span class="label">Year Built
+                            <span class="asterisk"></span>
+                        </span>
+                    </div>
+                    <div class="inputElement">
+                        <input id="step2YearBuiltInput" type="number" min="1500" class="slds-input"
+                            value="{!v.selectedCPCommercialProperty.YearBuilt}" />
+                    </div>
+                </lightning:layoutItem>
+
+                <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                    <div class="inputLabel">
+                        <span class="label">Construction Type</span>
+                    </div>
+                    <div class="inputElement">
+                        <select class="slds-select" id="step2ConstructionTypeSelect">
+                            <option selected="true" value="Basic">Basic</option>
+                            <option value="Custom">Custom</option>
+                            <option value="Designer">Designer</option>
+                        </select>
+                    </div>
+                </lightning:layoutItem>
+
+                <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                    <div class="inputLabel">
+                        <span class="label">Number of Stories
+                            <span class="asterisk"></span>
+                        </span>
+                    </div>
+                    <div class="inputElement">
+                        <input id="step2NoOfStoryInput" type="number" class="slds-input" min="1"
+                            value="{!v.selectedCPCommercialProperty.FloorCount}" />
+                    </div>
+                </lightning:layoutItem>
+
+                <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                    <div class="inputLabel">
+                        <span class="label">Total Area Excluding Basement
+                            <span class="asterisk"></span>
+                        </span>
+                    </div>
+                    <div class="inputElement">
+                        <input id="step2TotalAreaInput" type="text" class="slds-input"
+                            value="{!v.selectedCPCommercialProperty.BuiltUpArea}" />
+                    </div>
+                </lightning:layoutItem>
+
+                <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                    <div class="inputLabel">
+                        <span class="label">Percentage Sprinklered</span>
+                    </div>
+                    <div class="inputElement">
+                        <select class="slds-select">
+                            <option selected="true" value="100">100%</option>
+                            <option value="75">75%</option>
+                        </select>
+                    </div>
+                </lightning:layoutItem>
+
+                <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                    <div class="inputLabel">
+                        <span class="label">Exposure</span>
+                    </div>
+                    <div class="inputElement">
+                        <input type="text" class="slds-input" />
+                    </div>
+                </lightning:layoutItem>
+
+                <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                    <div class="inputLabel">
+                        <span class="label">Alarm</span>
+                    </div>
+                    <div class="inputElement">
+                        <lightning:buttonGroup class="btn-groupToggleButton insideLayout">
+                            <lightning:button label="Yes" name="Yes" aura:id="alarmType"
+                                class="selectedToggleButtonType" onclick="{!c.handleAlarmTypeToggleBtnClick}" />
+                            <lightning:button label="No" name="No" aura:id="alarmType"
+                                onclick="{!c.handleAlarmTypeToggleBtnClick}" />
+                        </lightning:buttonGroup>
+                    </div>
+                </lightning:layoutItem>
+
+                <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                    <div class="inputLabel">
+                        <span class="label">Alarm Type</span>
+                    </div>
+                    <div class="inputElement">
+                        <select class="slds-select">
+                            <option selected="true" value="local">Local</option>
+                        </select>
+                    </div>
+                </lightning:layoutItem>
+            </aura:if>
+
+
+            <aura:if isTrue="{!v.currentStep == 4}">
+                <lightning:layoutItem size="12">
+                    <span style="margin-right:5px">Account: <span
+                            class="customblue">{!v.oppty.Account.Name}&nbsp;</span>|</span> <span>Commercial Property -
+                        Quote </span>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="12">
+                    <div class="slds-grid slds-grid_align-spread">
+                        <div class="slds-col slds-size_5-of-12" style="font-size:35px; font-weight:100">Add Building
+                        </div>
+                        <div class="slds-col slds-size_5-of-12">
+                            <img src="{!$Resource.qsyd_AddBuildingIcons + '/Coverages.png'}" style="width:250px" />
+                        </div>
+                    </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                    <div class="inputLabel">
+                        <span>
+                            <lightning:icon size="xx-small" iconName="utility:check" alternativeText="Check" />
+                        </span><span class="label inputLabelBlack"><b>Location</b></span>
+                    </div>
+                    <div class="inputElement">
+                        <span style="flex:auto">{!v.selectedCPCommercialProperty.Street + ' ' +
+                            v.selectedCPCommercialProperty.City + ' ' + v.selectedCPCommercialProperty.State + ' ' +
+                            v.selectedCPCommercialProperty.PostalCode}</span>
+                        <span>
+                            <lightning:icon size="xx-small" iconName="utility:chevrondown" alternativeText="down" />
+                        </span>
+                    </div>
+                </lightning:layoutItem>
+
+                <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                    <div class="inputLabel">
+                        <span>
+                            <lightning:icon size="xx-small" iconName="utility:check" alternativeText="Check" />
+                        </span><span class="label inputLabelBlack"><b>Building</b></span>
+                    </div>
+                    <div class="inputElement">
+                        <span style="flex:auto">{!v.selectedCPCommercialProperty.Description}</span>
+                        <span>
+                            <lightning:icon size="xx-small" iconName="utility:chevrondown" alternativeText="down" />
+                        </span>
+                    </div>
+                </lightning:layoutItem>
+
+                <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                    <hr style="margin:5px" />
+                </lightning:layoutItem>
+
+                <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                    <div style="font-size:18px">Building/Contents Category</div>
+                </lightning:layoutItem>
+
+                <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                    <aura:iteration items="{!v.buildingCategoryList}" var="item" indexVar="idx">
+                        <div class="slds-box slds-m-vertical_x-small">
+                            <lightning:layout multipleRows="true">
+                                <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                                    <span class="checkbox">
+                                        <img src="{!$Resource.Q_GWIconCheck_White}" class="active"
+                                            onclick="{!c.handleCheckboxClick}" />
+                                    </span>
+                                    <span class="checkboxtitle">{!item.category}</span>
+                                </lightning:layoutItem>
+                                <aura:iteration items="{!item.inputItems}" var="inputItems">
+                                    <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                                        <div class="inputLabel">
+                                            <span class="label">{!inputItems.label}<span
+                                                    class="{! inputItems.required == 'true' ? 'asterisk' : 'hide'}">*</span></span>
+                                        </div>
+                                        <div class="inputElement">
+                                            <input type="text"
+                                                class="{! inputItems.type == 'text' ? 'slds-input' : 'hide'}"
+                                                value="{!inputItems.value}" />
+                                            <select class="{! inputItems.type == 'select' ? 'slds-select' : 'hide'}"
+                                                value="{!inputItems.value}">
+
+                                                <aura:if isTrue="{!inputItems.multivalue != null}">
+                                                    <aura:iteration items="{!inputItems.multivalue}" var="item">
+                                                        <option value="{!item}">{!item}</option>
+                                                    </aura:iteration>
+                                                    <aura:set attribute="else">
+                                                        <option value="{!inputItems.value}">{!inputItems.value}</option>
+                                                    </aura:set>
+                                                </aura:if>
+                                            </select>
+                                        </div>
+                                    </lightning:layoutItem>
+                                </aura:iteration>
+                            </lightning:layout>
+                        </div>
+                    </aura:iteration>
+                </lightning:layoutItem>
+            </aura:if>
+
+
+            <aura:if isTrue="{!v.currentStep == 5}">
+                <lightning:layoutItem size="12">
+                    <span style="margin-right:5px">Account: <span class="customblue">
+                            {!v.oppty.Account.Name}&nbsp;</span>|</span> <span>Commercial Property - Quote </span>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="12">
+                    <div class="slds-grid slds-grid_align-spread">
+                        <div class="slds-col slds-size_5-of-12" style="font-size:35px; font-weight:100">Add Building
+                        </div>
+                    </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                    <div class="inputLabel">
+                        <span>
+                            <lightning:icon size="xx-small" iconName="utility:check" alternativeText="Check" />
+                        </span><span class="label inputLabelBlack"><b>Location</b></span>
+                    </div>
+                    <div class="inputElement">
+                        <span style="flex:auto">{!v.selectedCPCommercialProperty.Street + ' ' +
+                            v.selectedCPCommercialProperty.City + ' ' + v.selectedCPCommercialProperty.State + ' ' +
+                            v.selectedCPCommercialProperty.PostalCode}</span>
+                        <span>
+                            <lightning:icon size="xx-small" iconName="utility:chevrondown" alternativeText="down" />
+                        </span>
+                    </div>
+                </lightning:layoutItem>
+
+                <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                    <div class="inputLabel">
+                        <span>
+                            <lightning:icon size="xx-small" iconName="utility:check" alternativeText="Check" />
+                        </span><span class="label inputLabelBlack"><b>Building</b></span>
+                    </div>
+                    <div class="inputElement">
+                        <span style="flex:auto">{!v.selectedCPCommercialProperty.Description}</span>
+                        <span>
+                            <lightning:icon size="xx-small" iconName="utility:chevrondown" alternativeText="down" />
+                        </span>
+                    </div>
+                </lightning:layoutItem>
+
+                <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                    <div class="inputLabel">
+                        <span>
+                            <lightning:icon size="xx-small" iconName="utility:check" alternativeText="Check" />
+                        </span><span class="label inputLabelBlack"><b>Coverages</b></span>
+                    </div>
+                    <div class="inputElement">
+                        <span style="flex:auto">Exclude Sprinkler: No</span>
+                        <span>
+                            <lightning:icon size="xx-small" iconName="utility:chevrondown" alternativeText="down" />
+                        </span>
+                    </div>
+                </lightning:layoutItem>
+
+                <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                    <div class="infodiv">
+                        <lightning:icon size="small" iconName="utility:info" alternativeText="Info" /><span>Building
+                            saved.</span>
+                    </div>
+                </lightning:layoutItem>
+            </aura:if>
+
+            <aura:if isTrue="{!v.currentStep == 6}">
+                <lightning:button class="slds-m-vertical_small" label="Search for buildings or locations"
+                    variant="neutral" />
+
+                <lightning:layout multipleRows="true" verticalAlign="stretch">
+                    <lightning:layoutItem size="12" class="slds-p-vertical_small borderbottom">
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="1" class="slds-p-vertical_small borderbottom">
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="4" class="slds-p-vertical_small borderbottom">
+                        <div class="tabletitle">Building Description</div>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="3" class="slds-p-vertical_small borderbottom">
+                        <div class="tabletitle">Building Class Code</div>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="4" class="slds-p-vertical_small borderbottom">
+                        <div class="tabletitle">Location</div>
+                    </lightning:layoutItem>
+
+                    <lightning:layoutItem size="1" class="slds-p-vertical_small borderbottom">
+                        <span class="slds-badge" style="background:#c3ece0 !important">new</span>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="4" class="slds-p-vertical_small borderbottom">
+                        <div class="customblue">{!v.selectedCPCommercialProperty.Description}</div>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="3" class="slds-p-vertical_small borderbottom">
+                        <div>0044</div>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="4" class="slds-p-vertical_small borderbottom">
+                        <div class="customblue">{!v.selectedCPCommercialProperty.Street + ' ' +
+                            v.selectedCPCommercialProperty.City + ' ' + v.selectedCPCommercialProperty.State + ' ' +
+                            v.selectedCPCommercialProperty.PostalCode}</div>
+                    </lightning:layoutItem>
+
+
+                </lightning:layout>
+            </aura:if>
+
+        </lightning:layout>
+
+        <aura:if isTrue="{! not(or(v.currentStep == 1, v.currentStep == 6))}">
+            <div class="btn-footer slds-m-top_medium">
+                <div class="slds-grid slds-grid_align-space">
+                    <div class="slds-col slds-size_3-of-12"><a>{!v.currentStep == 5 ? 'add another Building' :
+                            'Cancel'}</a></div>
+                    <div class="slds-col slds-size_9-of-12 slds-text-align_right">
+                        <lightning:button label="{!v.currentStep == 5 ? 'Done' : 'Next'}" variant="brand"
+                            class="slds-p-vertical_xx-small slds-m-left_xx-small" onclick="{!c.handleNext}" />
+                    </div>
+                </div>
+
+            </div>
+        </aura:if>
+        <aura:if isTrue="{! v.currentStep == 6 }">
+            <div class="btn-footer slds-m-top_medium">
+                <div class="slds-grid slds-grid_align-space">
+                    <div class="slds-col slds-size_3-of-12"><a>Cancel</a></div>
+                    <div class="slds-col slds-size_9-of-12 slds-text-align_right">
+                        <lightning:button label="Previous" variant="neutral"
+                            class="slds-p-vertical_xx-small slds-m-left_xx-small" aura:id="footerPrevious"
+                            onclick="{!c.handlePrevious}" />
+                        <lightning:button label="Next" variant="brand"
+                            class="slds-p-vertical_xx-small slds-m-left_xx-small" onclick="{!c.handleFinish}" />
+                    </div>
+                </div>
+
+            </div>
+        </aura:if>
+    </div>
+
+</aura:component>

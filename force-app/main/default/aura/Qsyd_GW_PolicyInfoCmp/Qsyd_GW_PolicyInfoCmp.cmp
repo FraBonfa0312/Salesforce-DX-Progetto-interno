@@ -1,0 +1,211 @@
+<!--THIS COMPONENT TAKES A CUSTOMISED STATIC CSS FILE THAT HAS BEEN USED IN DIFFERENT COMPONENTS-->
+<!--PLEASE DO NOT CHANGE THE STATIC FILE FOR ONLY ONE COMPONENT-->
+<!--PLEASE ADD/OVERWRITE CSS IN EACH COMPONENT IF NEEDED-->
+
+
+<aura:component access="global">
+    <ltng:require styles="{!join(',', 
+    $Resource.Q_GWScreenBaseCss)}" afterScriptsLoaded="{!c.handlePolicyInfoInit}" />
+    <aura:attribute name="coverageStartDate" type="String" />
+    <aura:attribute name="oppty" type="Opportunity" default="" />
+
+    <aura:attribute name="vehiclesList" type="list" default=""/>
+    <aura:attribute name="driversList" type="list" default=""/>
+
+    <!-- <aura:attribute name="vehiclesList" type="list" default="[
+    {
+        VIN: '1VWAP7A36DC047911',
+        state:'IL',
+        deletable: false,
+        make:'Lexus',
+        model:'GS350',
+        year:'2018',
+        licensePlate:'Rechel3451',
+        costNew:35000
+    }
+    ]" /> -->
+
+    <!-- <aura:attribute name="driversList" type="list" default="[
+    {
+        firstName: 'Rachel',
+        lastName: 'Adams',
+        readonly: true,
+        deletable: false,
+        isPrimary: true,
+        gender:'',
+        licenseState:'',
+        dateOfBirth:'',
+        yearLicensed:2018,
+        licenseNumber:''
+    }
+    ]" /> -->
+
+    <div class="GWScreenContainer">
+        <lightning:layout multipleRows="true">
+            <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                <div class="sectionTitle">
+                    <span class="title">Policy Information</span>
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" class="slds-p-vertical_small">
+                <div class="inputLabel">
+                    <span class="label">Coverage Start Date
+                    </span>
+                </div>
+                <div class="inputElement">
+                    {!v.coverageStartDate}
+                </div>
+            </lightning:layoutItem>
+
+            <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                <div class="sectionTitle">
+                    <span class="title">Vehicles</span>
+                </div>
+            </lightning:layoutItem>
+
+            <lightning:layoutItem size="12" class="slds-p-vertical_x-small slds-text-align--center">
+                <!--Vehicles Header-->
+                <lightning:layout>
+                    <!--Vehicles Header-->
+                    <lightning:layoutItem size="2">
+                        <div class="bold">Make</div>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="2">
+                        <div class="bold">Model</div>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="2">
+                        <div class="bold">Year</div>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="3">
+                        <div class="bold">License Plate</div>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="3">
+                        <div class="bold">License State</div>
+                    </lightning:layoutItem>
+                    <!--Vehicles Header/-->
+                </lightning:layout>
+                <!--Vehicles Header/-->
+                <hr style="margin:0.15rem" />
+            </lightning:layoutItem>
+
+            <lightning:layoutItem size="12" class="slds-p-vertical_x-small slds-text-align--center">
+                <!--Vehicles contents-->
+                <lightning:layout multipleRows="true">
+                    <aura:iteration items="{!v.vehiclesList}" var="item">
+                        <!--Vehicles contents-->
+                        <lightning:layoutItem size="2">
+                            <div class="grey">{!item.make}</div>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="2">
+                            <div class="grey">{!item.model}</div>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="2">
+                            <div class="grey">{!item.year}</div>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="3">
+                            <div class="grey">{!item.licensePlate}</div>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="3">
+                            <div class="grey">{!item.state}</div>
+                        </lightning:layoutItem>
+                    </aura:iteration>
+                    <!--Vehicles contents/-->
+                </lightning:layout>
+                <!--Vehicles contents/-->
+            </lightning:layoutItem>
+
+            <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                <div class="sectionTitle">
+                    <span class="title">Drivers</span>
+                </div>
+            </lightning:layoutItem>
+
+            <lightning:layoutItem size="12" class="slds-p-vertical_x-small slds-text-align--center">
+                <!--Drivers Header-->
+                <lightning:layout>
+                    <!--Drivers Header-->
+                    <lightning:layoutItem size="4">
+                        <div class="bold">Name</div>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="4">
+                        <div class="bold">License Number</div>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="4">
+                        <div class="bold">License State</div>
+                    </lightning:layoutItem>
+                    <!--Drivers Header/-->
+                </lightning:layout>
+                <!--Drivers Header/-->
+                <hr style="margin:0.15rem" />
+            </lightning:layoutItem>
+
+            <lightning:layoutItem size="12" class="slds-p-vertical_x-small slds-text-align--center">
+                <!--Drivers contents-->
+                <lightning:layout multipleRows="true">
+                    <aura:iteration items="{!v.driversList}" var="item">
+                        <!--Drivers contents-->
+                        <lightning:layoutItem size="4">
+                            <div class="grey">{!item.firstName +' '+ item.lastName}</div>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="4">
+                            <div class="grey">{!item.licenseNumber}</div>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="4">
+                            <div class="grey">{!item.licenseState}</div>
+                        </lightning:layoutItem>
+                    </aura:iteration>
+                    <!--Drivers contents/-->
+                </lightning:layout>
+                <!--Drivers contents/-->
+            </lightning:layoutItem>
+
+            <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                <div class="sectionTitle">
+                    <span class="title">Primary Driver Contact Details</span>
+                </div>
+            </lightning:layoutItem>
+
+            <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                <div class="inputLabel">
+                    <span class="label">Name</span>
+                </div>
+                <div class="inputElement">
+                    <input class="readonly" value="{! v.oppty.Account.FirstName +' '+ v.oppty.Account.LastName}" readonly="true" />
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                <div class="inputLabel">
+                    <span class="label">Phone Number
+                        <span class="asterisk">*</span>
+                    </span>
+                </div>
+                <div class="inputElement">
+                    <input class="slds-input" value="{!v.oppty.Account.Phone}" />
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                <div class="inputLabel">
+                    <span class="label">Email Address
+                        <span class="asterisk">*</span>
+                    </span>
+                </div>
+                <div class="inputElement">
+                    <input class="slds-input" value="{!v.oppty.Account.PersonEmail}" />
+                </div>
+            </lightning:layoutItem>
+        </lightning:layout>
+
+        <!-- <div class="div-footer">
+            <div class="slds-p-vertical_small">
+                <div class="btn-footer">
+                    <a style="float:left">Cancel</a>
+                    <lightning:button label="Previous" variant="neutral" class="slds-p-vertical_xx-small slds-m-left_xx-small" aura:id="S3FooterPrevious"
+                        onclick="{!c.handlePrevious}" />
+                    <lightning:button label="Next" variant="brand" class="slds-p-vertical_xx-small slds-m-left_xx-small" aura:id="S3FooterNext"
+                        onclick="{!c.handleNext}" />
+                </div>
+            </div>
+        </div> -->
+    </div>
+
+</aura:component>

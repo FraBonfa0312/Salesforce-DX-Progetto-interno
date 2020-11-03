@@ -1,0 +1,505 @@
+<aura:component controller="GetIntegratedTransactions" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+    <aura:handler name="init" action="{!c.myAction}" value="{!this}" />
+    <aura:attribute name="myOutputs" type="Transaction__b[]" />
+    <aura:attribute name="showMe" type="Boolean" default="false"/>
+    <aura:attribute name="showPrevious" type="Boolean" default="false"/>
+    <aura:attribute name="myLatestDateTime" type="DateTime" />
+    <aura:attribute name="myMostRecentDateTime" type="DateTime" />
+    <aura:attribute name="myDateTimes" type="DateTime[]" />
+    <aura:attribute name="myOriginalPrior" type="DateTime" />
+    <aura:attribute name="DateTimePrior" type="DateTime" />
+    <aura:attribute name="myPriorChecker" type="Integer" default="0"/>
+    <aura:attribute name="recordId" type="Id" />
+    <aura:attribute name="myTitle" type="String" default="Recent Touchpoints"/>
+    <aura:attribute name="myIcon" type="String" default="custom:custom96"/>
+    <aura:attribute name="myTransactionName" type="String" default="ID"/>
+    <aura:attribute name="myTransactionAmount" type="String" default="Status"/>
+    <aura:attribute name="myTransactionType" type="String" default="Type"/>
+    <aura:attribute name="myTransactionDate" type="String" default="Date/Time of Event"/>
+    <aura:attribute name="myValue1" type="String" default="Description"/>
+    <aura:attribute name="myValue2" type="String" default="Other Info 2"/>
+    <aura:attribute name="myValue3" type="String" default="Other Info 4"/>
+    <aura:attribute name="InherentInfo" type="String" default="Inherent Info"/>
+    <aura:attribute name="testString1" type="String" />
+    <aura:attribute name="testString2" type="String" />
+    <aura:attribute name="testString3" type="String" />
+    <aura:attribute name="testString4" type="String" />
+    <aura:attribute name="testString5" type="String" />
+    <aura:attribute name="testString6" type="String" />
+    <aura:attribute name="testString7" type="String" />
+    <aura:attribute name="testString8" type="String" />
+    <aura:attribute name="testString1b" type="String" />
+    <aura:attribute name="testString2b" type="String" />
+    <aura:attribute name="testString3b" type="String" />
+    <aura:attribute name="testString4b" type="String" />
+    <aura:attribute name="testString5b" type="String" />
+    <aura:attribute name="testString6b" type="String" />
+    <aura:attribute name="testString7b" type="String" />
+    <aura:attribute name="testString8b" type="String" />
+    <aura:attribute name="testString9b" type="String" />
+    <aura:attribute name="myCurrentCounterStart" type="Integer"/>
+    <aura:attribute name="myCurrentCounterEnd" type="Integer"/>
+    <aura:attribute name="displayMenu" type="Boolean" default="False"/>
+    <aura:attribute name="actions" type="List"/>
+    <aura:attribute name="capturedID" type="String" />
+    <aura:attribute name="showModal" type="String" default="false" access="global"/>
+    <aura:attribute name="modalHeaderText" type="String" default="Triage Request" access="global"/>
+    <aura:attribute name="showNBAModal" type="String" default="false" access="global"/>
+    <aura:attribute name="modalNBAHeaderText" type="String" default="Next Best Action" access="global"/>    
+    <aura:attribute name="showModalBilling" type="String" default="false" access="global"/>
+    <aura:attribute name="outputInfo" type="Boolean" default="false"/>
+    <aura:attribute name="allowRetries" type="Boolean" default="true"/>
+    <aura:attribute name="checkAI" type="Boolean" default="false"/>
+    <aura:attribute name="transactionAI" type="String"/>    
+    <aura:attribute name="furtherDetailsOpen" type="Boolean" default="false"/>              
+    
+    <aura:if isTrue="{! empty(v.myOutputs)}">
+        <aura:if isTrue="{!v.myCurrentCounterStart == 1}">            
+            <article class="slds-card slds-card_boundary">
+                <div class="slds-card__header slds-grid">
+                    <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                        <div class="slds-media__figure">
+                            <span>                
+                                <lightning:icon iconName="{!v.myIcon}" size="small"/>
+                            </span>
+                        </div>
+                        <div class="slds-media__body">
+                            <h2 class="slds-card__header-title">
+                                <a href="javascript:void(0);" class="slds-card__header-link slds-truncate" title="Accounts">
+                                    <span>{!v.myTitle} (0)</span>
+                                </a>
+                            </h2>
+                        </div>
+                        <div class="slds-no-flex slds-p-right_xx-small">
+                            <lightning:button class="slds-button slds-button_neutral" label="Generate" onclick="{!c.generateData}"/>
+                        </div> 
+                    </header>
+                </div>
+                <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+                    <thead>
+                        <tr class="slds-text-title_caps">
+                            <th scope="col" class="slds-cell-wrap">
+                                <div class="slds-truncate" title="ID">ID</div>
+                            </th>
+                            <th scope="col" class="slds-cell-wrap">
+                                <div class="slds-truncate" title="Type">Type</div>
+                            </th>
+                            <th scope="col" class="slds-cell-wrap">
+                                <div class="slds-truncate" title="Status">Status</div>
+                            </th>
+                            <th scope="col" class="slds-cell-wrap">
+                                <div class="slds-truncate" title="Description">Description</div>
+                            </th>   
+                            <th scope="col" class="slds-cell-wrap">
+                                <div class="slds-truncate" title="Date">Date/Time of Event</div>
+                            </th>
+                            <th scope="col" class="slds-cell-wrap">
+                                <div class="slds-truncate" title="Flag">Flag</div>
+                            </th>
+                            <th scope="col" class="slds-cell-wrap">
+                                <div class="slds-truncate" title="Action">Action</div>
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+                <br/>
+                <div class="slds-text-heading_medium slds-align_absolute-center">                        
+                    Click&nbsp;<a onclick="{!c.generateData}">Generate</a>&nbsp;to seed demo data. Then refresh the page.
+                </div>
+                <br/>                
+            </article>            
+        </aura:if>
+        <aura:if isTrue="{!v.myCurrentCounterStart != 1}">
+            <article class="slds-card slds-card_boundary">
+                <div class="slds-card__header slds-grid">
+                    <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                        <div class="slds-media__figure">
+                            <span>                
+                                <lightning:icon iconName="{!v.myIcon}" size="small"/>
+                            </span>
+                        </div>
+                        <div class="slds-media__body">
+                            <h2 class="slds-card__header-title">
+                                <a href="javascript:void(0);" class="slds-card__header-link slds-truncate" title="Transactions">
+                                    <span class="slds-text-heading_small">{!v.myTitle} (End)</span>
+                                </a>
+                            </h2>
+                        </div>
+                        <aura:if isTrue="{!v.myCurrentCounterStart != 1}">
+                            <div class="slds-no-flex slds-p-right_xx-small">
+                                <lightning:button class="slds-button slds-button_neutral" label="Back" onclick="{!c.getPrior}"/>
+                            </div>
+                        </aura:if>
+                        <aura:if isTrue="{!v.myOutputs.length == 5}">
+                            <div class="slds-no-flex slds-p-left_xx-small">
+                                <lightning:button class="slds-button slds-button_neutral" label="Next" onclick="{!c.getNext}"/>
+                            </div>
+                        </aura:if>
+                    </header>
+                </div>
+                <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+                    <thead>
+                        <tr class="slds-text-title_caps">
+                            <th scope="col" class="slds-cell-wrap">
+                                <div class="slds-truncate" title="ID">ID</div>
+                            </th>
+                            <th scope="col" class="slds-cell-wrap">
+                                <div class="slds-truncate" title="Type">Type</div>
+                            </th>
+                            <th scope="col" class="slds-cell-wrap">
+                                <div class="slds-truncate" title="Status">Status</div>
+                            </th>
+                            <th scope="col" class="slds-cell-wrap">
+                                <div class="slds-truncate" title="Description">Description</div>
+                            </th>   
+                            <th scope="col" class="slds-cell-wrap">
+                                <div class="slds-truncate" title="Date">Date/Time of Event</div>
+                            </th>
+                            <th scope="col" class="slds-cell-wrap">
+                                <div class="slds-truncate1" title="Flag" onclick="{!c.onSort}">Flag</div>
+                            </th>
+                            <th scope="col" class="slds-cell-wrap">
+                                <div class="slds-truncate" title="Action">Action</div>
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+                <br/>
+                <div class="slds-text-heading_medium slds-align_absolute-center">                        
+                    You've Reached The End.&nbsp;<a onclick="{!c.getPrior}"> Go Back.</a>
+                </div>
+                <br/>                
+            </article>
+        </aura:if>
+    </aura:if>
+    
+    <aura:if isTrue="{! !empty(v.myOutputs)}">        
+        <article class="slds-card slds-card_boundary">
+            <div class="slds-card__header slds-grid">
+                <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                    <div class="slds-media__figure">
+                        <span>                
+                            <lightning:icon iconName="{!v.myIcon}" size="small"/>
+                        </span>
+                    </div>
+                    <div class="slds-media__body">
+                        <h2 class="slds-card__header-title">
+                            <a href="javascript:void(0);" class="slds-card__header-link slds-truncate" title="Transactions">
+                                <span class="slds-text-heading_small">{!v.myTitle} ({!v.myCurrentCounterStart} - {!v.myCurrentCounterEnd})</span>
+                            </a>
+                        </h2>
+                    </div>
+                    <aura:if isTrue="{!v.myCurrentCounterStart != 1}">
+                        <div class="slds-no-flex slds-p-right_xx-small">
+                            <lightning:button class="slds-button slds-button_neutral" label="Back" onclick="{!c.getPrior}"/>
+                        </div>
+                    </aura:if>
+                    <aura:if isTrue="{!v.myOutputs.length == 5}">
+                        <div class="slds-no-flex slds-p-left_xx-small">
+                            <lightning:button class="slds-button slds-button_neutral" label="Next" onclick="{!c.getNext}"/>
+                        </div>
+                    </aura:if>
+                </header>
+            </div>
+            
+            <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+                <thead>
+                    <tr class="slds-text-title_caps">
+                        <th scope="col" class="slds-cell-wrap">
+                            <div class="slds-truncate slds-align_absolute-center" title="ID">ID</div>
+                        </th>
+                        <th scope="col" class="slds-cell-wrap">
+                            <div class="slds-truncate slds-align_absolute-center" title="Type">Type</div>
+                        </th>
+                        <th scope="col" class="slds-cell-wrap">
+                            <div class="slds-truncate slds-align_absolute-center" title="Status">Status</div>
+                        </th>
+                        <th scope="col" class="slds-cell-wrap">
+                            <div class="slds-truncate slds-align_absolute-center" title="Description">Description</div>
+                        </th>
+                        <th scope="col" class="slds-cell-wrap">
+                            <div class="slds-truncate" title="Date">Date/Time of Event</div>
+                        </th>
+                        <th scope="col" class="slds-cell-wrap">
+                            <div class="slds-truncate1" title="Disposition Flag" onclick="{!c.onSort}">Flag</div>
+                        </th>
+                        <th scope="col" class="slds-cell-wrap">
+                            <div class="slds-truncate" title="Date"></div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>   
+                    <aura:iteration aura:id="myFive" items="{!v.myOutputs}" var="myOutput" indexVar="index">                    
+                        <tr>
+                            <th scope="row" data-label="ID__c" class="slds-cell-wrap">
+                                <div class="slds-truncate slds-align_absolute-center" title="ID__c"><a href="javascript:void(0);" 
+                                                                                                       data-conId1="{!myOutput.Transaction_ID__c}" 
+                                                                                                       data-conId2="{!myOutput.Amount__c}" 
+                                                                                                       data-conId3="{!myOutput.Type__c}" 
+                                                                                                       data-conId4="{!myOutput.Transaction_Date__c}" 
+                                                                                                       data-conId5="{!myOutput.Value_1__c}" 
+                                                                                                       data-conId6="{!myOutput.Value_2__c}" 
+                                                                                                       data-conId7="{!myOutput.Inherent_Info__c}" 
+                                                                                                       data-conId8="{!myOutput.Value_3__c}" 
+                                                                                                       aura:id="myFiveInScope" 
+                                                                                                       onclick="{!c.getInfo}">{!myOutput.Transaction_ID__c}</a></div>
+                            </th>
+                            <td data-label="Type" class="slds-cell-wrap">
+                                <div class="slds-truncate slds-align_absolute-center" title="Type">
+                                    <aura:if isTrue="{!myOutput.Type__c == 'Claim' }">
+                                        <lightning:icon iconName="custom:custom86" title="{!myOutput.Type__c}" size="small"/>
+                                    </aura:if>   
+                                    <aura:if isTrue="{!myOutput.Type__c == 'Account Action' }">
+                                        <lightning:icon iconName="custom:custom41" title="{!myOutput.Type__c}" size="small"/>
+                                    </aura:if> 
+                                    <aura:if isTrue="{!myOutput.Type__c == 'Transaction' }">
+                                        <lightning:icon iconName="custom:custom87" title="{!myOutput.Type__c}" size="small"/>
+                                    </aura:if> 
+                                </div>
+                            </td>
+                            <td data-label="Type" class="slds-cell-wrap">
+                                <div class="slds-truncate slds-align_absolute-center" title="Type">{!myOutput.Value_1__c}</div>
+                            </td>
+                            <td data-label="Type" class="slds-cell-wrap">
+                                <div class="slds-truncate slds-align_absolute-center" title="Type">{!myOutput.Value_3__c}</div>
+                            </td>
+                            <td data-label="Type" class="slds-cell-wrap">
+                                <lightning:formattedDateTime value="{!myOutput.Transaction_Date__c}" year="numeric" 
+                                                             month="numeric" day="numeric"
+                                                             hour="2-digit" minute="2-digit" 
+                                                             hour12="true">
+                                </lightning:formattedDateTime>
+                            </td>                            
+                            <td data-label="Type" class="slds-cell-wrap">
+                                <div class="slds-truncate slds-align_absolute-center" title="Type">
+                                    <aura:if isTrue="{!myOutput.Value_2__c == 'Resolved' }">
+                                        <lightning:icon iconName="standard:task2" title="{!myOutput.Value_2__c}" size="small"/>
+                                    </aura:if>
+                                    <aura:if isTrue="{!myOutput.Value_2__c == 'Issue' }">
+                                        <lightning:icon iconName="standard:first_non_empty" title="{!myOutput.Value_2__c}" size="small"/>
+                                    </aura:if>
+                                    <aura:if isTrue="{!myOutput.Value_2__c == 'Warning' }">
+                                        <lightning:icon iconName="standard:opportunity_splits" title="{!myOutput.Value_2__c}" size="small"/>
+                                    </aura:if>
+                                </div>
+                            </td>
+                            <td data-label="Type" class="slds-cell-wrap">
+                                <a href="javascript:void(0);" data-conId1b="{!myOutput.Transaction_ID__c}" 
+                                   data-conId2b="{!myOutput.Amount__c}" 
+                                   data-conId3b="{!myOutput.Type__c}" 
+                                   data-conId4b="{!myOutput.Transaction_Date__c}" 
+                                   data-conId5b="{!myOutput.Value_1__c}" 
+                                   data-conId6b="{!myOutput.Value_2__c}" 
+                                   data-conId7b="{!myOutput.Inherent_Info__c}" 
+                                   data-conId8b="{!myOutput.Value_3__c}"
+                                   data-conId9b="{!myOutput.Value_4__c}"
+                                   aura:id="myFiveInScopeInfo" onclick="{!c.handleMenu}"> 
+                                    <lightning:buttonMenu iconSize="x-small" aura:id="menu" onselect="{! c.handleSelect }" alternativeText="Show menu">                                            
+                                        <aura:iteration var="action" items="{! v.actions }">
+                                            <lightning:menuItem aura:id="actionMenuItems" label="{! action.label }" value="{! action.value }"/>
+                                        </aura:iteration>											
+                                    </lightning:buttonMenu> 
+                                </a>                               
+                            </td>                            
+                        </tr>
+                    </aura:iteration>
+                </tbody>
+            </table>
+            
+            <aura:if isTrue="{! !v.showMe}">
+                <footer class="slds-card__footer">
+                    <div class="slds-card__footer-action">
+                        <a onclick="{!c.expandFurtherDetails}">Further Details</a>
+                        <aura:if isTrue="{!v.furtherDetailsOpen}">
+                            <div class="slds-text-heading_small slds-align_absolute-center slds-p-top_small">
+                                <div>
+                                    <ul class="slds-p-bottom_small">
+                                        <li><a onclick="{!c.getScript}">Demo script</a></li>
+                                        <li><a onclick="{!c.getDiagram}">Architecture diagram and deck</a></li>
+                                        <li><a onclick="{!c.deleteCurrentSeeded}">Delete seeded data</a></li>
+                                    </ul>
+                                    <button class="slds-button slds-button_brand" onclick="{!c.hideFurtherDetails}">Hide This</button>
+                                </div>
+                            </div>
+                        </aura:if>
+                    </div>    
+                </footer>
+            </aura:if>
+            
+            <aura:if isTrue="{!v.showMe}">        
+                <footer class="slds-card__footer slds-theme_shade">            
+                    <div class="slds-grid slds-gutters slds-p-bottom_small">
+                        <div class="slds-col slds-border_left slds-border_right">
+                            <span>
+                                <div class="slds-text-title slds-truncate" title="transactionName">ID</div>
+                                <div title="transactionName"><strong>{!v.testString1}</strong></div>
+                            </span>
+                        </div>
+                        <div class="slds-col slds-border_right">
+                            <span>
+                                <div class="slds-text-title slds-truncate" title="Amt">Amount</div>
+                                <strong><lightning:formattedNumber value="{!v.testString2}" style="currency" currencyCode="USD"/></strong>
+                            </span>
+                        </div>
+                        <div class="slds-col slds-border_right">
+                            <span>
+                                <div class="slds-text-title slds-truncate" title="Type">Description</div>
+                                <div title="TypeOutput"><strong>{!v.testString3}</strong></div>
+                            </span>
+                        </div>
+                        <div class="slds-col slds-border_right">
+                            <span>
+                                <div class="slds-text-title slds-truncate" title="Date">Date/Time of Event</div>
+                                <div title="DateOutput">
+                                    <strong>
+                                        <lightning:formattedDateTime value="{!v.testString4}" year="numeric" 
+                                                                     month="numeric" day="numeric"
+                                                                     hour="2-digit" minute="2-digit" 
+                                                                     hour12="true">
+                                        </lightning:formattedDateTime>
+                                        
+                                    </strong>
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="slds-border_top slds-p-bottom_xxx-small slds-p-top_small">
+                    </div>
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-border_left slds-border_right">
+                            <span>
+                                <div class="slds-text-title slds-truncate" title="myVal1">Status</div>
+                                <div title="myVal1"><strong>{!v.testString5}</strong></div>
+                            </span>
+                        </div>
+                        <div class="slds-col slds-border_right">
+                            <span>
+                                <div class="slds-text-title slds-truncate" title="myVal2">Other Info</div>
+                                <div title="Val2"><strong>{!v.testString6}</strong></div>
+                            </span>
+                        </div>
+                        <div class="slds-col slds-border_right">
+                            <span>
+                                <div class="slds-text-title slds-truncate" title="InherentInfo">Inherent Info</div>
+                                <div title="InherentInfo">
+                                    <aura:if isTrue="{! !empty(v.testString7)}">
+                                        <strong>
+                                            <a onclick="{!c.getClick}">Click Here</a>
+                                        </strong>
+                                    </aura:if>
+                                    <aura:if isTrue="{! empty(v.testString7)}">
+                                        <strong>
+                                            Not Applicable
+                                        </strong>
+                                    </aura:if>
+                                </div>
+                            </span>
+                        </div>
+                        <div class="slds-col slds-border_right">
+                            <span>
+                                <div class="slds-text-title slds-truncate" title="myVal3">Last Loaded Time</div>
+                                <div title="myVal3"><strong>2 hours ago</strong></div>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="slds-p-top_small slds-border_bottom">
+                    </div>                  
+                </footer>        
+            </aura:if>
+        </article>        
+    </aura:if>
+    
+    <aura:if isTrue="{!v.allowRetries}">
+        <aura:if isTrue="{!v.outputInfo}">
+            <div class="slds-p-around_x-large">
+                <div class="slds-box">
+                    <div class="slds-grid slds-einstein-header slds-card__header">
+                        <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                            <div class="slds-grid slds-grid_vertical-align-center slds-size_3-of-4 slds-medium-size_2-of-3 slds-p-top_small">
+                                <div class="slds-media__figure slds-p-left_small">
+                                    <span class="slds-icon_container slds-icon-utility-salesforce1">
+                                        <lightning:icon iconName="utility:salesforce1" size="small"/>
+                                    </span>
+                                </div>
+                                <div class="slds-media__body">
+                                    <h2 class="slds-truncate" title="Einstein (10+)">
+                                        <a href="javascript:void(0);" class="slds-card__header-link" title="Einstein (10+)">
+                                            <span class="slds-text-heading_small">Next Best Action</span>
+                                        </a>
+                                    </h2>
+                                </div>
+                            </div>
+                            <div class="slds-einstein-header__figure slds-size_1-of-4 slds-medium-size_1-of-3"></div>
+                        </header>
+                    </div>
+                    <div class="slds-card__body slds-card__body_inner">
+                        <div class="slds-box">
+                            <div class="slds-text-color_weak slds-text-body_small">
+                                Touchpoint of ID <strong>{!v.transactionAI}</strong> was deemed by the AI model to have a quick fix! Click 'Accept' to resolve!
+                            </div>
+                            <div class="slds-p-top_small">                
+                                <button class="slds-button slds-button_neutral" onclick="{!c.handleNBAAccept}">Accept</button>
+                                <button class="slds-button slds-p-left_x-small" onclick="{!c.closeNBA}">Reject</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aura:if> 
+    </aura:if>
+    
+    <!--> Modal with the selected Next Best Action Flow <!-->
+    <aura:if isTrue="{!v.showNBAModal == 'true'}">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_medium">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <lightning:buttonIcon iconName="utility:close" class="slds-modal__close slds-button_icon-inverse" onclick="{!c.closeNBAFlowModal}"/>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{!v.modalNBAHeaderText}</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <lightning:flow aura:id="flowNBAData" onstatuschange="{!c.closeNBAModalOnFinish}" /> 
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+    
+    <!--> Modal with the selected Flow <!-->
+    <aura:if isTrue="{!v.showModal == 'true'}">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_medium">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <lightning:buttonIcon iconName="utility:close" class="slds-modal__close slds-button_icon-inverse" onclick="{!c.closeFlowModal}"/>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{!v.modalHeaderText}</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <lightning:flow aura:id="flowData" onstatuschange="{!c.closeModalOnFinish}" /> 
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>    
+    
+    <!--> Modal with the selected route-to-billing <!-->
+    <aura:if isTrue="{!v.showModalBilling == 'true'}">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_medium">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <lightning:buttonIcon iconName="utility:close" class="slds-modal__close slds-button_icon-inverse" onclick="{!c.closeModal}"/>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Routed To Billing (BIL-22343238)</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <div class="slds-text-heading_large">                        
+                        <div class="slds-p-top_x-small slds-align_absolute-center"><strong>Keep</strong></div>
+                        <div class="slds-p-top_x-small slds-align_absolute-center"><strong>Calm</strong></div>
+                        <div class="slds-p-top_x-small slds-align_absolute-center"><strong>And</strong></div>
+                        <div class="slds-p-top_x-small slds-align_absolute-center"><strong>This Has Been</strong></div>
+                        <div class="slds-p-top_x-small slds-align_absolute-center slds-p-bottom_x-small"><strong>Routed To Billing</strong></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>    
+    
+</aura:component>

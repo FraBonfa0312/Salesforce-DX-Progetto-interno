@@ -1,0 +1,31 @@
+.THIS img {
+    transition: all .2s ease-in-out;
+}
+
+.THIS img:hover,
+.THIS img:focus {
+    transform: scale(1.1);
+}
+
+.THIS .ins-is-selected > .ins-icon-container {
+    border: 1px solid #1589ee;
+    box-shadow: inset 0 0 0 1px #1589ee;
+}
+
+.THIS .ins-is-selected > .slds-theme_shade {
+    background-color: #1589ee;
+}
+
+.THIS .ins-is-selected .slds-text-link,
+.THIS .ins-is-selected .slds-text-title {
+    color: #fff;
+}
+
+.THIS .slds-text-link,
+.THIS .slds-text-title {
+	transition: color .2s ease-out;
+}
+
+.THIS .slds-theme_shade {
+    background-color: #f3f2f2;
+}

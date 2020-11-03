@@ -1,0 +1,14 @@
+<aura:component controller="INS_PolicyListController" implements="lightning:availableForFlowScreens" access="global" >
+    <aura:attribute name="recordId"         access="global" type="String" />
+    <aura:attribute name="policies"         access="global" type="InsurancePolicy" />
+    <aura:attribute name="selectedPolicyId" access="global" type="String" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler name="selectPolicyEvent" event="c:SelectRecordId" action="{!c.handleSelect}"/>
+    
+    <div class="slds-theme_default">
+        <aura:iteration items="{!v.policies}" var="policy">
+            <c:INS_PolicyTile recordId="{!policy.Id}" selected="{!v.selectedPolicyId == policy.Id}" />
+        </aura:iteration>
+    </div>
+</aura:component>

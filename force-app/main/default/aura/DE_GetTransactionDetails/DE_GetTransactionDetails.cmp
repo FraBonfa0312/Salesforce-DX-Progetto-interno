@@ -1,0 +1,19 @@
+<aura:component controller="GetTransactionsClass" implements="force:hasRecordId,flexipage:availableForAllPageTypes" access="global">
+    
+    <!-- attributes -->
+    <aura:attribute name="data" type="Object"/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="recordId" type="Id" />
+    
+    <!-- handlers-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    
+    <!-- the container element determine the height of the datatable -->
+    <lightning:datatable
+                         class="table-test"
+                         keyField="id"
+                         data="{! v.data }"
+                         columns="{! v.columns }"
+                         hideCheckboxColumn="false"/>
+</aura:component>

@@ -1,0 +1,7 @@
+<design:component >
+
+    <design:attribute name="flowID" label="The FlowInterview ID" default="" />
+    <design:attribute name="showAsCard" label="Show in Card"  default="true" />
+    <design:attribute name="pathTitle" label="Title of Path" default="" description="Only shows if showAsCard is checked" />
+    
+</design:component>

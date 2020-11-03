@@ -1,0 +1,109 @@
+<aura:component controller="INS_InsuranceQuoteController" implements="lightning:availableForFlowScreens" access="global">
+    <aura:attribute name="selected"       type="String" />
+    <aura:attribute name="propertyIdList" type="String" />
+    <aura:attribute name="accountId"      type="String" />
+    <aura:attribute name="items"          type="List"   />
+    
+    <aura:attribute name="canPause"  type="Boolean" />
+    <aura:attribute name="canBack"   type="Boolean" />
+    <aura:attribute name="canNext"   type="Boolean" />
+    <aura:attribute name="canFinish" type="Boolean" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+    <lightning:layout multipleRows="true" verticalAlign="stretch">
+        <aura:iteration items="{!v.items}" var="item">
+            <lightning:layoutItem size="12" padding="around-small" smallDeviceSize="6">
+                <div class="slds-box">
+                    <lightning:card>
+                        <aura:set attribute="title">
+                            <!-- TODO: Fix this -->
+                            <aura:if isTrue="{!equals(item.Description, 'Bicycle')}">
+                                <img src="{!$Resource.INS_InsuranceMoreIcons + '/Bicycle.svg'}" class="ins-icon-container"/>
+                            </aura:if>
+                            <aura:if isTrue="{!equals(item.Description, 'Clothing')}">
+                                <img src="{!$Resource.INS_InsuranceMoreIcons + '/Clothing.svg'}" class="ins-icon-container"/>
+                            </aura:if>
+                            <aura:if isTrue="{!equals(item.Description, 'Jewellery / Watch')}">
+                                <img src="{!$Resource.INS_InsuranceMoreIcons + '/Jewellery_Watch.svg'}" class="ins-icon-container"/>
+                            </aura:if>
+                            <aura:if isTrue="{!equals(item.Description, 'Musical Instrument')}">
+                                <img src="{!$Resource.INS_InsuranceMoreIcons + '/Musical_Instrument.svg'}" class="ins-icon-container"/>
+                            </aura:if>
+                            <aura:if isTrue="{!equals(item.Description, 'Photographic Equipment')}">
+                                <img src="{!$Resource.INS_InsuranceMoreIcons + '/Photographic_Equipment.svg'}" class="ins-icon-container"/>
+                            </aura:if>
+                            <aura:if isTrue="{!equals(item.Description, 'Sporting Equipment')}">
+                                <img src="{!$Resource.INS_InsuranceMoreIcons + '/Sporting_Equipment.svg'}" class="ins-icon-container"/>
+                            </aura:if>
+                            {!item.Description}
+                        </aura:set>
+                        <div>
+                            <lightning:layout multipleRows="true">
+                                <lightning:layoutItem size="12" smallDeviceSize="6" padding="around-small">    
+                                    <lightning:input class="slds-m-vertical_small" label="Brand" value="{!item.ModelName}" />
+                                </lightning:layoutItem>
+                                <lightning:layoutItem size="12" smallDeviceSize="6" padding="around-small">
+                                    <lightning:input class="slds-m-vertical_small" label="Description" value="{!item.Make}" />
+                                </lightning:layoutItem>
+                                <lightning:layoutItem size="12" smallDeviceSize="6">
+                                    <lightning:slider class="slds-m-vertical_small" label="Estimated value ($)" value="{!item.PurchasePrice}" step="100" max="5000" />                           
+                                </lightning:layoutItem>
+                                
+                            </lightning:layout>
+                            <div class="slds-m-vertical_small">
+                                <lightning:fileUpload label="Attach images of your item:"
+                                                      name="{!item.Id}"
+                                                      multiple="true"
+                                                      accept=".jpg,.jpeg,.png,.gif"
+                                                      recordId="{!item.Id}"
+                                                      onuploadfinished="{!c.handleUploadFinished}" />
+                            </div>
+                            <aura:if isTrue="{!not(empty(item.images))}">
+                                <lightning:layout class="slds-m-vertical_small" multipleRows="true">
+                                    <aura:iteration items="{!item.images}" var="image">
+                                        <lightning:layoutItem>
+                                            <lightning:fileCard fileId="{!image[0].documentId}" 
+                                                                description="{!image[0].name}" />
+                                        </lightning:layoutItem>
+                                    </aura:iteration>
+                                </lightning:layout>
+                                <aura:set attribute="else">
+                                    <div class="slds-file slds-file--card" style="max-width: 20rem; height: 178.8px;">
+                                        <p class="slds-align_absolute-center" style="height: 100%">No image</p>
+                                    </div>
+                                </aura:set>
+                            </aura:if>
+                            
+                        </div>
+                    </lightning:card>
+                </div>
+            </lightning:layoutItem>
+            
+        </aura:iteration>
+    </lightning:layout>
+    <div aura:id="actionButtonBar" class="slds-clearfix slds-p-top_large actionButtonBar">
+        <!-- If Previous is available, display to the left -->
+        <div class="slds-float_left">
+            <aura:if isTrue="{!v.canBack}">
+                <lightning:button aura:id="BACK" class="slds-m-right_x-small" label="Previous"
+                                  variant="neutral" onclick="{!c.onButtonPressed}" />
+            </aura:if>
+        </div>
+        <div class="slds-float_right">
+            <!-- If Pause, Next, or Finish are available, display to the right -->
+            <aura:if isTrue="{!v.canPause}">
+                <lightning:button aura:id="PAUSE" label="Pause"
+                                  variant="neutral" onclick="{!c.onButtonPressed}" />
+            </aura:if>
+            <aura:if isTrue="{!v.canNext}">
+                <lightning:button aura:id="NEXT" label="Next" 
+                                  variant="brand" onclick="{!c.onButtonPressed}" />
+            </aura:if>
+            <aura:if isTrue="{!v.canFinish}">
+                <lightning:button aura:id="FINISH" label="Finish"
+                                  variant="brand" onclick="{!c.onButtonPressed}" />
+            </aura:if>
+        </div>
+    </div>
+</aura:component>

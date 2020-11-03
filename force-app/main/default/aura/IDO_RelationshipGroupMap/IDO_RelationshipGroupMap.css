@@ -1,0 +1,18 @@
+.THIS .slds-badge{
+    line-height: 0.5 !important;
+}
+
+/*toggleCss.css*/
+.THIS .toggle {
+    display: none;
+}
+
+.THIS .grayBackground{
+    background: #F7F9FB;
+}
+
+.THIS .toggleButtons{
+    line-height: 1;
+    vertical-align: middle;
+    fill: rgb(112, 110, 107);
+}

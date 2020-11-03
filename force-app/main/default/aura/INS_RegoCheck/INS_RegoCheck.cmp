@@ -1,0 +1,145 @@
+<aura:component implements="lightning:availableForFlowScreens" 
+                access="global" controller="INS_RegoCheckController">
+    <!-- Component Attributes -->
+    <aura:attribute name="isSearching" type="Boolean" default="false"/>
+    <aura:attribute name="showState" type="Boolean" default="false" />
+    <aura:attribute name="countryOptions" type="List" default="[]" />
+    <aura:attribute name="regoNumber" type="String" />
+    
+    <!-- Data Attributes -->
+    <aura:attribute name="regoDetails" type="Map" />
+    
+    <!-- Input Design Attributes -->
+    <aura:attribute name="username" type="String" default="yourUsername" required="true" />
+    <aura:attribute name="checkCountry" type="String" default="Demo" required="true" />
+    
+    <!-- Output Design Attributes -->
+    <aura:attribute name="description" type="String" />
+    <aura:attribute name="vehicleIdentificationNumber" type="String" />
+    <aura:attribute name="imageUrl" type="String" />
+    <aura:attribute name="bodyDescription" type="String" />
+    <aura:attribute name="bodyType" type="String" />
+    <aura:attribute name="capacityUnit" type="String" />
+    <aura:attribute name="capacityValue" type="String" />
+    <aura:attribute name="code" type="String" />
+    <aura:attribute name="cylinders" type="String" />
+    <aura:attribute name="driveType" type="String" />
+    <aura:attribute name="engineDescription" type="String" />
+    <aura:attribute name="family" type="String" />
+    <aura:attribute name="fuelType" type="String" />
+    <aura:attribute name="make" type="String" />
+    <aura:attribute name="model" type="String" />
+    <aura:attribute name="nvic" type="String" />
+    <aura:attribute name="series" type="String" />
+    <aura:attribute name="transmissionType" type="String" />
+    <aura:attribute name="variant" type="String" />
+    <aura:attribute name="year" type="String" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+    <lightning:layout multipleRows="true" >
+        
+        <lightning:layoutItem size="12" mediumDeviceSize="6" padding="around-large">
+            <div class="rego-plate-container slds-p-around_xx-small slds-text-align_center slds-m-bottom_medium">
+                <div class="rego-plate-inner-container">
+                    <span>{!v.regoNumber}</span>
+                </div>
+            </div>
+            
+        </lightning:layoutItem>
+        
+        <lightning:layoutItem size="12" mediumDeviceSize="6" padding="around-large" class=" slds-p-bottom_medium">        
+            <div onkeyup="{! c.handleKeyUp }">
+                <aura:if isTrue="{!v.showState}">
+                    <lightning:input type="text"
+                                     aura:id="State"
+                                     label="State"
+                                     required="true"
+                                     title="Use the acronym of the state if available, e.g. New South Wales is NSW, Calafornia is CA" />
+                </aura:if>
+                <lightning:input
+                                 aura:id="rego-search"
+                                 name="rego-search"
+                                 label="Registration Number"
+                                 readonly="true"
+                                 value="{!v.regoNumber}"
+                                 isLoading="{! v.isSearching }"
+                                 />
+                
+            </div>
+        </lightning:layoutItem>
+        
+        <lightning:layoutItem size="12" mediumDeviceSize="6" padding="around-large">
+            <div class=" rego-details-container">
+                <aura:if isTrue="{!v.regoDetails}">
+                    <aura:if isTrue="{!v.description}">
+                        <div class="slds-text-heading_medium slds-p-bottom_x-small">
+                            {!v.description}
+                        </div>
+                    </aura:if>
+                    <aura:if isTrue="{!v.vehicleIdentificationNumber}">
+                        <div class="slds-text-body_regular">
+                            VIN: {!v.vehicleIdentificationNumber}
+                        </div>
+                    </aura:if>
+                    <aura:if isTrue="{!v.make}">
+                        <div class="slds-text-body_regular">
+                            Make: {!v.make}
+                        </div>
+                    </aura:if>
+                    <aura:if isTrue="{!v.family}">
+                        <div>
+                            Family: {!v.family}
+                        </div>
+                    </aura:if>
+                    <aura:if isTrue="{!v.model}">
+                        <div>
+                            Model: {!v.model}
+                        </div>
+                    </aura:if>
+                    <aura:if isTrue="{!v.year}">
+                        <div>
+                            Year: {!v.year}
+                        </div>
+                    </aura:if>
+                    <aura:if isTrue="{!v.driveType}">
+                        <div>
+                            Drive Type: {!v.driveType}
+                        </div>
+                    </aura:if>
+                    <aura:if isTrue="{!v.engineDescription}">
+                        <div>
+                            Engine: {!v.engineDescription}
+                        </div>
+                    </aura:if>
+                    <aura:if isTrue="{!v.transmissionType}">
+                        <div>
+                            Transmission: {!v.transmissionType}
+                        </div>
+                    </aura:if>
+                    <aura:set attribute="else">
+                        <div class="slds-text-heading_medium slds-p-bottom_x-small">
+                            Vehicle Registration Details
+                        </div>
+                    </aura:set>
+                </aura:if>
+            </div>
+            
+        </lightning:layoutItem>
+        
+        <lightning:layoutItem size="12" mediumDeviceSize="6" padding="around-large">
+            <aura:if isTrue="{!v.imageUrl}">
+                <div class="slds-p-around_xx-small slds-text-align_center slds-m-bottom_medium">
+                    
+                    <img src="{!v.imageUrl}" alt="Car Image" height="100" width="400"></img>
+                    
+                </div>
+                <aura:set attribute="else">
+                    <div></div>
+                </aura:set>
+            </aura:if>
+        </lightning:layoutItem>
+        
+        
+    </lightning:layout>
+</aura:component>

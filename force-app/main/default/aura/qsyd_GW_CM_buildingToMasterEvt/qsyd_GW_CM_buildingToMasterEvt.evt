@@ -1,0 +1,4 @@
+<aura:event type="COMPONENT"
+    description="Notify the master component to go to the next step from Building and Location screens">
+    <aura:attribute name="selectedCPCommercialPropertyList" type="List" />
+</aura:event>

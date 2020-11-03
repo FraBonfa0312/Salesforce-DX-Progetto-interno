@@ -1,0 +1,108 @@
+<!-- Developer Notes:
+*Author
+*Date
+*Explanation:
+*Revisions Planned
+	-Connect edit and delete controller functions to menu items
+*Revisions Completed
+	-Removed excess vertical padding from chart component to condense the layout
+
+-->
+
+<aura:component controller="JH_GoalCardCtrl" implements="force:recordTab,force:hasRecordId" access="global">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <!--<aura:handler event="force:showToast" action="{!c.handleSave}"/> -->
+    <ltng:require styles="/resource/PDE_SLDS100/assets/styles/salesforce-lightning-design-system-ltng.css" />	
+    
+    
+    <aura:attribute name="GoalName" type="String" default="Sample Goal Name"/>
+    <aura:attribute name="Status" type="String" default="In Progress" />
+    <aura:attribute name="Description" type="String" default="Sample Description"/>        
+    <aura:attribute name="Percentage" type="Integer" description="Progress" default="50" />
+    <aura:attribute name="TargetValue" type="Integer" default="100000" />
+    <aura:attribute name="ActualValue" type="Integer" default="50000"/>    
+    <aura:attribute name="TargetDate" type="Date" default="2017-01-01" />    
+    <aura:attribute name="CurrencySymbol" type="String" default="$" />
+    <aura:attribute name="Type" type="String" default=""/>
+    <aura:attribute name="Icon" type="string" default="" />
+    
+    <aura:attribute name="GoalId" type="String"/>
+    
+    <lightning:card class="slds-card_boundary cardMain">
+        <aura:set attribute="title">
+            <div class="slds-media slds-media_center" id="goalDetail">
+                <div class="slds-media_figure" >
+                    <img src="{!v.Icon}" class="imgIcons"/>
+                </div>
+                <div class="slds-media_body slds-m-left_small">
+                    <h5 class="slds-text-heading--medium slds-media--rec-home__title slds-truncate">
+						<a href="" onclick="{!c.openRecord}" class="headingText">{!v.GoalName}</a>                        
+                        	<lightning:badge label="{!v.Status}" class="slds-align-middle slds-m-left_small"/>
+                        <span class="color-grey" ></span>
+                    </h5>
+                </div>
+            </div>
+        </aura:set>
+        <aura:set attribute="actions">
+            <lightning:buttonGroup>
+                <lightning:buttonMenu alternativeText="Show menu" class="slds-button_last" menuAlignment="right" iconSize="small">
+                    <lightning:menuItem label="Edit" value="item1" />
+                    <lightning:menuItem label="Delete" value="item2" />
+                </lightning:buttonMenu>
+            </lightning:buttonGroup>
+        </aura:set>
+        
+        <section class="slds-card__body" >
+            <div class="slds-grid slds-wrap slds-p-left_medium" >
+                <div class="slds-col" >
+                    <div class="slds-grid slds-col slds-p-top_x-small" >
+                        <span >{!v.Description}</span>
+                    </div>
+                    <div class="slds-grid slds-wrap slds-grid--align-spread slds-p-top_small" >
+                        <div class="slds-col" id="targetDate" >
+                            <ul >
+                                <li >
+                                    <span class="slds-text-heading--label textTitles" >Target Value</span>
+                                </li>
+                                <li >
+                                    <span class="positiveNumber uiOutputCurrency" >{!v.CurrencySymbol}&nbsp; 
+                                    	<ui:outputNumber value="{!v.TargetValue}" class="textValues"/>
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="slds-col" id="targetDate" >
+                            <ul >
+                                <li >
+                                    <span class="slds-text-heading--label textTitles" >Actual Value</span>
+                                </li>
+                                <li >
+                                    <span class="positiveNumber uiOutputCurrency" >{!v.CurrencySymbol}&nbsp; 
+                                        <ui:outputNumber value="{!v.ActualValue}" class="textValues"/>
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="slds-col" id="targetDate" >
+                            <ul >
+                                <li >
+                                    <span class="slds-text-heading--label textTitles" >Target Date</span>
+                                </li>
+                                <li >
+                                    <span  class="">
+                                        <ui:outputDate aura:id="oDate" value="{!v.TargetDate}" class="textValues"/>
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-col slds-size--1-of-2 slds-medium-size--1-of-6 slds-large-size--3-of-12 slds-p-left--xx-large" id="goalDial" >
+                    <div>
+                        <c:JH_productionDonutChart size="80" percentage="{!v.Percentage}"  /> 
+                    </div>
+                </div>
+            </div>
+        </section>
+    </lightning:card>
+</aura:component>

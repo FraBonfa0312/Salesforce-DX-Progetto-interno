@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>47.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Amortization Calculator</masterLabel>
+    <targets>
+        <target>lightning__AppPage</target>
+        <target>lightning__HomePage</target>
+        <target>lightning__RecordPage</target>
+        <target>lightning__UtilityBar</target>
+        <target>lightning__FlowScreen</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="purchasePrice" type="Integer"/>
+            <property name="downPayment" type="Integer"/>
+            <property name="loanAPR" type="Integer"/>
+            <property name="monthlyPayment" type="Integer"/>
+            <property name="monthlyPaymentTimes100" type="Integer"/>
+            <property name="xAxisLabel" type="String" label="xAxis Label" description="Label for the x-axis for the burndown chart." role="inputOnly"/>
+        </targetConfig>
+        <targetConfig targets="lightning__RecordPage">
+            <property name="purchasePrice" type="Integer"/>
+            <property name="xAxisLabel" type="String"/>
+        </targetConfig>
+        <targetConfig targets="lightning__AppPage,lightning__HomePage,lightning__UtilityBar">
+            <property name="xAxisLabel" label="xAxis Label" type="String" description="Label for the x-axis for the burndown chart."/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

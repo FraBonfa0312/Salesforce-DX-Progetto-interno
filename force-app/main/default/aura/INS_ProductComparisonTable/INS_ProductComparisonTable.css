@@ -1,0 +1,109 @@
+.THIS {
+    box-sizing:border-box;
+    padding:0;
+    margin:0;
+    outline: 0;
+}
+.THIS .ins-product-name {
+    font-weight: bold;
+    font-size: 15px;
+}
+.THIS .ins-product-selected {
+    display: table-cell;
+}
+.THIS .ins-product-price {
+    font-weight: 550;
+    color: rgb(42, 148, 214);
+    font-size: 1.5rem;
+}
+
+.THIS#comparison-table {
+    width:110%;
+    /*max-width:1000px;*/
+    /*margin:0 auto;*/
+    /*height:1000px;*/
+    position:relative;
+}
+.THIS ul {
+    display:flex;
+    top:0px;
+    z-index:10;
+    padding-bottom:10px;
+}
+.THIS li {
+    list-style:none;
+    flex:1;
+}
+.THIS li:last-child {
+    border-right:1px solid #DDD;
+}
+.THIS .ins-product-mobile {
+    width:100%;
+    border: 1px solid #DDD;
+    border-right:0;
+    border-top:0;
+    padding: 7px;
+    background:#FFF;
+    font-size:9px;
+    font-weight:bold;
+    height:100%;
+    color:#999
+}
+.THIS li.active .ins-product-mobile {
+    background:#F5F5F5;
+    color:#000;
+}
+.THIS .ins-mobile-select-button {
+    width: 100%;
+    height: 50px;
+    font-size: 20px; 
+}
+.THIS table { border-collapse:collapse; table-layout:fixed; width:100%; }
+.THIS th { background:#F5F5F5; display:none; }
+.THIS td, .THIS th {
+    height:38px
+}
+.THIS td,.THIS th { border:1px solid #DDD; padding:10px; empty-cells:show; }
+.THIS td,.THIS th {
+    text-align:left;
+}
+.THIS td+td, .THIS th+th {
+    text-align:center;
+    display:none;
+}
+.THIS td.default {
+    display:table-cell;
+}
+.THIS .bg-purple {
+    border-top:3px solid #A32362;
+}
+.THIS .bg-blue {
+    border-top:3px solid #0097CF;
+}
+.THIS .sep {
+    background:#F5F5F5;
+    font-weight:bold;
+}
+.THIS .txt-l { font-size:14px; font-weight:bold; }
+.THIS .txt-top { position:relative; top:-5px; left:-2px; }
+.THIS .tick { font-size:5px; color:#2CA01C; }
+.THIS .hide {
+    border:0;
+    background:none;
+}
+
+@media (min-width: 320px) {
+    .THIS ul {
+        display:none;
+    }
+    .THIS td,.THIS th {
+        display:table-cell !important;
+    }
+    .THIS td,.THIS th {
+        width: 100px;
+        
+    }
+    .THIS td+td, .THIS th+th {
+        width: auto;
+    }
+}

@@ -1,0 +1,119 @@
+<aura:component implements="flexipage:availableforallpagetypes" access="global">
+    <aura:attribute name="state1" type="Boolean" default="" />
+    <aura:attribute name="state2" type="Boolean" default="" />
+    <aura:attribute name="agencyVisits" type="Object[]" default="" />
+    <aura:attribute name="toggleClass" type="String" default="slds-is-open" />
+    <aura:attribute name="toggleClass2" type="String" default="" />
+    <aura:attribute name="filterIconName" type="String" default="utility:chevrondown" />
+    <aura:attribute name="section2Icon" type="String" default="utility:chevronright" />
+    <aura:attribute name="today" type="Date" />
+    <aura:attribute name="completedVisits" type="String" default="24" />
+    <aura:attribute name="targetProgress" type="String" default="78" />
+    <aura:attribute name="upcomingVisits" type="String" default="13" />
+    <aura:attribute name="mapLink" type="String" />
+    <aura:attribute name="mapHome" type="String" default="https://insuretech2019.lightning.force.com/lightning/n/maps__Maps"/>
+
+
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+
+    <div class=" slds-p-around_small container">
+        <div class="slds-text-heading_large">
+            <!-- Today's Date -->
+            <ui:outputDate value="{!v.today}" />
+        </div>
+
+        <div class="slds-p-bottom_large">
+            <!-- Summary/Completion Metrics Section -->
+            <lightning:layout class="slds-p-top_large">
+                <lightning:layoutItem flexibility="grow">
+                    <div class="slds-media slds-p-right_small slds-media_center slds-border_right">
+                        <div class="slds-media__figure">
+                            <div class="slds-text-heading_medium">{!v.completedVisits}</div>
+                            <div style="color: rgb(112, 110, 107); font-size: 0.8125rem;">Completed Visits</div>
+                        </div>
+                        <div class="slds-media__body">
+                            <lightning:progressBar variant="circular" value="{!v.targetProgress}" size="large"
+                                class="progress-bar-green" />
+                        </div>
+                        <div class="slds-media__figure slds-media__figure_reverse"></div>
+                    </div>
+                </lightning:layoutItem>
+
+                <lightning:layoutItem flexibility="grow">
+                    <div class="slds-media slds-p-right_xx-small slds-p-left_small slds-media_center">
+                        <div class="slds-media__figure">
+                            <div class="slds-text-heading_medium">{!v.upcomingVisits}</div>
+                            <div style="color: rgb(112, 110, 107); font-size: 0.8125rem;">Upcoming Visits</div>
+                        </div>
+                        <div class="slds-media__body">
+                            <lightning:progressBar variant="circular" value="25" size="large"
+                                class="progress-bar-green" />
+                        </div>
+                        <div class="slds-media__figure slds-media__figure_reverse"></div>
+                    </div>
+                </lightning:layoutItem>
+            </lightning:layout>
+        </div>
+
+        <!-- Break section introducing the actual visits breakdown -->
+        <!-- <div class="slds-p-bottom_small">
+            <div class="slds-text-heading_medium">Upcoming Agency Visits</div>
+        </div> -->
+
+        <!-- Agency visit breakout section -->
+        <div class="body content">
+            <div class="section1">
+                <div class="{! 'slds-section ' +  v.toggleClass }" aura:id="filterSection">
+                    <h3 class="slds-section__title">
+                        <lightning:button onclick="{!c.toggleSection}" class="slds-section__title-action"
+                            iconPosition="left" label="Today" iconName="{!v.filterIconName}"></lightning:button>
+                    </h3>
+                    <div class="slds-p-around_small slds-section__content">
+                        <div class="slds-wrap slds-grid ">
+                            <aura:iteration items="{!v.agencyVisits}" var="visit">
+                                <div class="slds-size--1-of-3 slds-p-around_small">
+                                    <c:INS_agencyVisitCard thing="{!visit}" />
+                                    <!-- <c:tile3 object="{!obj}"></c:tile3> -->
+                                </div>
+                            </aura:iteration>
+                        </div>
+                        <!-- Insights section -->
+                        <div class="alert">
+                            <div class="slds-m-top_medium slds-p-around_small slds-p-right_xx-large slds-card slds-card_boundary"
+                                style="background-color: rgb(253, 250, 218);">
+                                <div class="slds-media slds-p-left_medium">
+                                    <div class="slds-media__figure">
+                                        <img src="https://sfdc-demo-images-jake.s3.amazonaws.com/sfmaps-logo.png"
+                                            class="embedImg" />
+                                    </div>
+                                    <div class="slds-media__body">
+                                        <div style="font-size: 0.8125rem;">
+
+                                            <b>Traffic Alert!</b>
+                                        </div>
+                                        <div style="font-size: 0.8125rem;">Heavy congestion reported on I-94 West.
+                                            Consider <a onclick="{!c.doMapAlert}">optimizing</a> your morning route.</div> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section2">
+                <div class="slds-section" aura:id="filterSection2">
+                    <h3 class="slds-section__title">
+                        <lightning:button onclick="{!c.toggleSection2}" class="slds-section__title-action"
+                            iconPosition="left" label="Tomorrow" iconName="{!v.section2Icon}"></lightning:button>
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</aura:component>

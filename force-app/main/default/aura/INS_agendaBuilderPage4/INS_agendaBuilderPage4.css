@@ -1,0 +1,46 @@
+.THIS .myContainer{
+    min-height: 800px;
+}
+
+.THIS .theBox{
+    height:200px;
+    width:215px;
+    /*box-shadow: 1px 5px 5px 0px rgba(0,0,0,0.2);*/
+    box-shadow: 4px 3px 13px -2px rgba(0,0,0,0.25);
+    border-radius: 4px;
+    background-color: #fcfcfc;
+    border: 1px solid #e6e6e6;
+}
+
+.THIS .theBox:hover {
+    margin-top: -5px;
+    /*background-color: #fafafa;*/
+    /*transform: rotate(10deg);*/
+    border: 1.4px solid #009EDB;
+       /* #b3d1ff;*/
+   	box-shadow: 4px 3px 13px -2px rgba(179, 209, 255);
+    /*box-shadow: .2px 5px 8px .2px rgba(179, 209, 255);*/
+    transition: margin .25s;
+}
+
+.THIS .iconStyle {
+    opacity: 10%;
+}
+
+.THIS .eaIcon {
+    height: 100px;
+    width: auto;
+    opacity: .5;
+}
+
+.THIS .itemPad {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+
+}
+
+.THIS .textMod {
+    opacity: .5;
+}

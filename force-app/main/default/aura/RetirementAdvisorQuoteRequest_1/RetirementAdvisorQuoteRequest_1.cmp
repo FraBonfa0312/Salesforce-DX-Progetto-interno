@@ -1,0 +1,80 @@
+<aura:component implements="lightning:availableForFlowScreens" access="global" >
+    <article class="slds-card">
+        
+        <lightning:progressIndicator currentStep="1" type="base" hasError="false" variant="base">
+            <lightning:progressStep label="Step 1" value="1"/>
+            <lightning:progressStep label="Step 2" value="2"/>
+            <lightning:progressStep label="Step 3" value="3"/>         
+            <lightning:progressStep label="Step 4" value="4"/>            
+            
+        </lightning:progressIndicator>
+        
+        <div class="slds-grid">
+            <div class ="slds-size_1-of-3">
+            </div>
+            <!--Account-->
+            
+            <div class ="slds-size_1-of-3">
+                
+                <div class="row">
+                    <lightning:input name="input1" label="Plan Name:" value="Plan options for Dunder" />
+				</div>
+                
+                <lightning:select name="select1" label="Account:" >
+                    <option value="">Choose an Account</option>
+                    <option value="1">All American Inc.</option>
+                    <option value="2">Dunder Mifflin</option>
+                    <option value="3">Silva Industries</option>
+                    <option value="4">Universal Containers</option>
+
+                </lightning:select>
+                     
+                
+                <!---->
+                
+                
+                <lightning:select name="select2" label="Plan Authorized Representative:">
+                    <option value="">Michael Scott</option>
+                    <option value="1">Jim Halpert></option>
+                    <option value="2">Dwight Schrute</option>
+                    <option value="4">Pam Beasley</option>
+                    <option value="5">David Simon</option>                    
+                    <option value="6">Ryan Howard</option>
+                    <option value="7">Angela Martin</option>
+                </lightning:select>
+                
+                <div>                    
+                    <lightning:input name="input2" label="Advisor Compensation Requested" value="50bps"/>
+                </div>
+                
+                <lightning:select name="select5" label="Compliance:" >
+                    <option value="">TPA</option>
+                    <option value="1">Bundled</option>
+                </lightning:select>
+                
+                
+                
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label" for="textarea-id-01">Description:</label>
+                    <div class="slds-form-element__control">
+                        <textarea id="textarea-id-01" class="slds-textarea" placeholder=""></textarea>
+                    </div>
+                </div>
+                
+                <p class="slds-align_absolute-center">Don't see an Account?</p>
+                
+                <div>                   
+                    <button class="slds-button slds-button_neutral slds-align_absolute-center">Create a new Account</button>               
+                </div>
+                
+                
+            </div>
+            
+            <div class ="slds-size_1-of-3">
+                
+                
+                
+            </div>
+        </div>
+    </article>
+</aura:component>

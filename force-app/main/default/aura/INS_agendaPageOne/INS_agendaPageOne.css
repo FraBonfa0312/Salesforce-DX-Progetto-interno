@@ -1,0 +1,18 @@
+.THIS .miniHeader{
+    background-color:rgb(233, 234, 236);
+}
+
+.THIS .blue-icon {
+    background-color: white;
+    fill: #0070d2 !important;
+}
+
+.THIS .blue-icon .slds-icon {
+    background-color: white;
+    fill: #0070d2 !important;   
+}
+
+.THIS .yellow-icon .slds-icon {
+    background-color: white;
+    fill: #FDB813 !important;   
+}

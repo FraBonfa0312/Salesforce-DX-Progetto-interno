@@ -1,0 +1,79 @@
+<aura:component controller="INS_InsuranceQuoteController" implements="lightning:availableForFlowScreens" access="global">
+    
+    <aura:attribute name="width"           type="String"/>
+    <aura:attribute name="location"        type="String"  default=""/>
+    <aura:attribute name="predictions"     type="List"    default="[]"/>
+    <aura:attribute name="searchTimeout"   type="String" />
+    <aura:attribute name="searching"       type="boolean" default="false" />
+    <aura:attribute name="showPredictions" type="boolean" default="false" />
+    <aura:attribute name="apiError"        type="String" />
+    
+    <!-- Map Attributes -->
+    <aura:attribute name="mapMarkers"      type="Object"/> <!-- Markers object to show on lightning:map -->
+    <aura:attribute name="markerAvailable" type="Boolean" default="false"/> <!-- Bool primarily used to re-render the map component -->
+    <aura:attribute name="mapLoadError"    type="String" /> <!-- Error message when map cannot load -->
+    
+    <!-- Component Layout Attributes -->
+    <aura:attribute name="title"             type="String" access="global" default="Address Search" />
+    <aura:attribute name="showTitle"         type="Boolean" access="global" default="true" />
+    <aura:attribute name="showAddressFields" type="Boolean" access="global" default="true" />
+    <aura:attribute name="showMap"           type="Boolean" access="global" default="true" />
+    
+    <!-- Address Output Attributes -->
+    <aura:attribute name="premise"                     type="String" access="global" />
+    <aura:attribute name="street_number"               type="String" access="global" />
+    <aura:attribute name="route"                       type="String" access="global" />
+    <aura:attribute name="fullStreetAddress"           type="String" access="global" />
+    <aura:attribute name="locality"                    type="String" access="global" />
+    <aura:attribute name="administrative_area_level_1" type="String" access="global" />
+    <aura:attribute name="postal_code"                 type="String" access="global" />
+    <aura:attribute name="country"                     type="String" access="global" />
+    <aura:attribute name="formattedAddress"            type="String" access="global" />
+    <aura:attribute name="placeId"                     type="String" access="global" />
+    <aura:attribute name="imageUrl"                    type="String" access="global" />
+    
+    <!-- Flow Attributes -->
+    <aura:attribute name="canPause"  type="Boolean" />
+    <aura:attribute name="canBack"   type="Boolean" />
+    <aura:attribute name="canNext"   type="Boolean" />
+    <aura:attribute name="canFinish" type="Boolean" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+    <lightning:layout class="slds-m-vertical_medium">
+        <lightning:layoutItem size="9">
+            <DV_Flow_AP:AddressValidation showAddressFields="false" showMap="false" showTitle="false" showCountyField="false"
+                                          locality="{!v.locality}" postal_code="{!v.postal_code}" premise="{!v.premise}"
+                                          administrative_area_level_1="{!v.administrative_area_level_1}" country="{!v.country}" placeId="{!v.placeId}"
+                                          formattedAddress="{!v.formattedAddress}" fullStreetAddress="{!v.fullStreetAddress}"/>
+        </lightning:layoutItem>
+        <lightning:layoutItem size="3">
+            <!--<lightning:button class="ins-button" variant="brand" label="Next" />-->
+        </lightning:layoutItem>
+    </lightning:layout>
+    
+    <div aura:id="actionButtonBar" class="slds-clearfix slds-p-top_large actionButtonBar">
+        <!-- If Previous is available, display to the left -->
+        <div class="slds-float_left">
+            <aura:if isTrue="{!v.canBack}">
+                <lightning:button aura:id="BACK" class="slds-m-right_x-small" label="Previous"
+                                  variant="neutral" onclick="{!c.onButtonPressed}" />
+            </aura:if>
+        </div>
+        <div class="slds-float_right">
+            <!-- If Pause, Next, or Finish are available, display to the right -->
+            <aura:if isTrue="{!v.canPause}">
+                <lightning:button aura:id="PAUSE" label="Pause"
+                                  variant="neutral" onclick="{!c.onButtonPressed}" />
+            </aura:if>
+            <aura:if isTrue="{!v.canNext}">
+                <lightning:button aura:id="NEXT" label="Next" 
+                                  variant="brand" onclick="{!c.onButtonPressed}" />
+            </aura:if>
+            <aura:if isTrue="{!v.canFinish}">
+                <lightning:button aura:id="FINISH" label="Finish"
+                                  variant="brand" onclick="{!c.onButtonPressed}" />
+            </aura:if>
+        </div>
+    </div>
+</aura:component>

@@ -1,0 +1,87 @@
+<aura:component implements="force:hasRecordId,flexipage:availableForAllPageTypes,force:appHostable,forceCommunity:availableForAllPageTypes">
+<lightning:card >
+    
+        <aura:set attribute="title">
+            <div class= "slds-media slds-media_center">
+                <div class="slds-media_figure">
+                    <lightning:icon iconName="standard:link" size="small"/>
+                </div>
+                <div class="slds-media_body slds-m-left_small">
+                    <span class ="slds-text-heading_small " style="font-weight:bold;">
+                        Helpful Links
+                    </span>                    
+                </div>
+            </div>               
+        </aura:set>
+        <div>
+            <div class="slds-p-around_small">
+            <lightning:layout horizontalAlign="spread" class="">
+
+
+                <lightning:layoutItem flexibility="auto" padding="around-x-small" size="3"
+                    class="slds-align_absolute-center">
+                    <a href="/one/one.app#/n/Predicted_Renewals">
+                        <div class="itemPad slds-text-align_center theBox" onclick="">
+                            <div class="slds-p-bottom_x-small">
+                                <lightning:icon iconName="standard:product_request" size="medium" class="iconStyle" />
+                            </div>
+                            <div class="slds-text-body_small">
+                                <span class="">Predicted Renewals
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                </lightning:layoutItem>
+
+                <lightning:layoutItem flexibility="auto" padding="around-x-small" size="3"
+                                      class="slds-align_absolute-center">
+                    <a href="/one/one.app#/n/INS_Book_of_Business">
+                        <div class="itemPad slds-text-align_center theBox" onclick="">
+                            <div class="slds-p-bottom_x-small">
+                                <lightning:icon iconName="standard:performance" size="medium" />
+                            </div>
+                            <div class="slds-text-body_small">
+                                <span class="">Book of Business
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                </lightning:layoutItem>
+
+                <lightning:layoutItem flexibility="auto" padding="around-x-small" size="3"
+                                      class="slds-align_absolute-center">
+                    <a href="/one/one.app#/n/Business_Insight">
+                        <div class="itemPad slds-text-align_center theBox">
+                            <div class="slds-p-bottom_x-small">
+                                <lightning:icon iconName="standard:announcement" size="medium" />
+                            </div>
+                            <div class="slds-text-body_small">
+                                <span class="">Business Insights
+                                </span>  
+                            </div>
+                        </div>
+                    </a>
+                </lightning:layoutItem>
+
+                <lightning:layoutItem flexibility="auto" padding="around-x-small" size="3" class="slds-align_absolute-center">
+                    <a href="/one/one.app#/n/My_Badges">
+                        <div class="itemPad slds-text-align_center theBox">
+                            <div class="slds-p-bottom_x-small">
+                                <lightning:icon iconName="standard:calibration" size="medium" />
+                            </div>
+                            <div class="slds-text-body_small">
+                                <span class="">How can I Improve?
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                </lightning:layoutItem>
+
+            </lightning:layout>
+
+
+        </div>
+          
+        </div>
+    </lightning:card>
+</aura:component>

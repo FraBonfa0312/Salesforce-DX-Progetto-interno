@@ -1,0 +1,23 @@
+<design:component>
+    
+    <design:attribute name="AppointmentFields" label="AppointmentFields"/>
+    <design:attribute name="AppointmentType" label="AppointmentType" required="true"/>
+    <design:attribute name="AdditionalInformation" label="AdditionalInformation"  required="true"/>
+    <design:attribute name="Comments" label="Comments" required="true"/>
+    <design:attribute name="ParentRecordId" label="ParentRecordId" required="true"/>
+    <design:attribute name="ServiceTerritoryId" label="ServiceTerritoryId" required="true"/>
+    <design:attribute name="ServiceResourceId" label="ServiceResourceId" required="true"/>
+    <design:attribute name="WorkTypeGroupId" label="WorkTypeGroupId" required="true"/>
+    <design:attribute name="Street" label="Street" required="true"/>
+    <design:attribute name="City" label="City" required="true"/>
+    <design:attribute name="State" label="State" required="true"/>
+    <design:attribute name="PostalCode" label="PostalCode" required="true"/>
+    <design:attribute name="Country" label="Country" required="true"/>
+    <design:attribute name="SchedStartTime" label="SchedStartTime" required="true"/>
+    <design:attribute name="SchedEndTime" label="SchedEndTime" required="true"/>
+    <design:attribute name="Description" label="Description" required="true"/>
+    <design:attribute name="Subject" label="Subject" required="true"/>
+    <design:attribute name="Phone" label="Phone" required="true"/>
+    <design:attribute name="ContactId" label="ContactId" required="true"/>
+    
+</design:component>

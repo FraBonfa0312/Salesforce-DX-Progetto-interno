@@ -1,0 +1,5 @@
+<design:component>
+    <design:attribute name="insuranceTypesStr"  label="Insurance Types Input JSON"      />
+	<design:attribute name="selectedType"       label="Selected Insurance Product Type" />
+    <design:attribute name="selectedPolicyType" label="Selected Insurance Policy Type"  />
+</design:component>

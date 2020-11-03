@@ -1,0 +1,1194 @@
+<apex:page showHeader="false" sidebar="false" >
+<head>
+    <meta charset="utf-8"/ >
+    <title>Cumulus Onboarding</title>
+        
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui" />
+        
+    <!-- Makes your prototype chrome-less once bookmarked to your phone's home screen -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="transparent" />
+    
+   
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js"></script>
+    
+    <!--
+    <link rel="stylesheet" href="{!URLFOR($Resource.jqMobileTheme, '/cumulusjqeurymobile.min.css')}" />
+    <link rel="stylesheet" href="{!URLFOR($Resource.jqMobileTheme, '/jquery.mobile.icons.min.css')}" />
+    -->
+
+        
+<style>
+    html, body { background: #1A5473; -webkit-backface-visibility: hidden; height: 100%; }
+    .page {}
+    .ui-content { padding: 0; } 
+    .screen {width: 100%; height: 100%; /*  height: 548px; */ }
+    
+    .ui-page { -webkit-backface-visibility: hidden; }
+    
+    .ui-page, .ui-page-active { min-height: 100% !important; }
+
+    /* a#sos-link {
+      position: absolute;
+      bottom: 12%;
+      width: 100%;
+      height: 70px;
+      background: green;
+      color: transparent;
+      z-index: 9999;
+    }
+    */
+
+    .ui-content .next-page {
+      /* background: green; */
+      height: 80px;
+      width: 100%;
+      z-index: 9999;
+      bottom: 0;
+      position: absolute;
+    }
+    .ui-content .prev-page {
+      /* background: green; */
+      height: 150px;
+      width: 100%;
+      z-index: 9999;
+      top: 0;
+      position: absolute;
+    }
+
+    #sos-link {
+        height: 100px;
+        width: 100%;
+        z-index: 9999;
+        bottom: 96px;
+        position: absolute;
+    }
+
+    /*
+    #page1, #page2, #page3, #page4, #page5, #page6, #page7, #page8 { 
+        background-size: 100%;
+    }
+    */
+    #page1 { 
+        background: url("{!URLFOR($Resource.DEappScreens,'/Cumulus_iPhone_1.png')}") no-repeat;
+        background-size: 100%;
+        background-size: cover;
+    }
+    #page2 { 
+        /* background: url("{!URLFOR($Resource.DEappScreens,'/02SmartCity---Second-Page.jpg')}") no-repeat; */
+        background: url("{!URLFOR($Resource.DEappScreens,'/Cumulus_iPhone_2.png')}") no-repeat;
+        background-size: 100%;
+        background-size: cover;
+    }
+
+    #page3 { 
+        background: url("{!URLFOR($Resource.DEappScreens,'/Cumulus_iPhone_3.png')}") no-repeat;
+        background-size: 100%;
+        background-size: cover;
+    }
+
+    #page4 { 
+        background: url("{!URLFOR($Resource.DEappScreens,'/Cumulus_iPhone_4.png')}") no-repeat;
+        background-size: 100%;
+        background-size: cover;
+    }
+
+    #page5 { 
+        background: url("{!URLFOR($Resource.DEappScreens,'/Cumulus_iPhone_5.png')}") no-repeat;
+        background-size: 100%;
+        background-size: cover;
+    }
+    
+    #page5b { 
+        background: url("{!URLFOR($Resource.DEappScreens,'/Cumulus_iPhone_5b.png')}") no-repeat;
+        background-size: 100%;
+        background-size: cover;
+    }
+
+    #page6 { 
+        background: url("{!URLFOR($Resource.DEappScreens,'/Cumulus_iPhone_6.png')}") no-repeat;
+        background-size: 100%;
+        background-size: cover;
+    }
+    #page7 { 
+        background: url("{!URLFOR($Resource.DEappScreens,'/Cumulus_iPhone_7.png')}") no-repeat;
+        background-size: 100%;
+        background-size: cover;
+    }
+    #page8 { 
+        background: url("{!URLFOR($Resource.DEappScreens,'/Cumulus_iPhone_8.png')}") no-repeat;
+        background-size: 100%;
+        background-size: cover;
+    }
+    
+    #page9 { 
+        background: url("{!URLFOR($Resource.DEappScreens,'/Cumulus_iPhone_9.png')}") no-repeat;
+        background-size: 100%;
+        background-size: cover;
+    }
+    #page10 { 
+        background: url("{!URLFOR($Resource.DEappScreens,'/Cumulus_iPhone_10.png')}") no-repeat;
+        background-size: 100%;
+        background-size: cover;
+    }
+    #page11 { 
+        background: url("{!URLFOR($Resource.DEappScreens,'/Cumulus_iPhone_11.png')}") no-repeat;
+        background-size: 100%;
+        background-size: cover;
+    }
+    #page12 { 
+        background: url("{!URLFOR($Resource.DEappScreens,'/Cumulus_iPhone_12.png')}") no-repeat;
+        background-size: 100%;
+        background-size: cover;
+    }
+   
+    #page13 { 
+        background: url("{!URLFOR($Resource.DEappScreens,'/Cumulus_iPhone_13.png')}") no-repeat;
+        background-size: 100%;
+        background-size: cover;
+    }
+     
+    #page14 { 
+        background: url("{!URLFOR($Resource.DEappScreens,'/Cumulus_iPhone_14.png')}") no-repeat;
+        background-size: 100%;
+        background-size: cover;
+    }
+    #page15 { 
+        background: url("{!URLFOR($Resource.DEappScreens,'/Cumulus_iPhone_15.png')}") no-repeat;
+        background-size: 100%;
+        background-size: cover;
+    }
+    #page16 { 
+        background: url("{!URLFOR($Resource.DEappScreens,'/Cumulus_iPhone_16.png')}") no-repeat;
+        background-size: 100%;
+        background-size: cover;
+    }
+    #page17 { 
+        background: url("{!URLFOR($Resource.DEappScreens,'/Cumulus_iPhone_17.png')}") no-repeat;
+        background-size: 100%;
+        background-size: cover;
+    }
+
+    #page18 { 
+        background: url("{!URLFOR($Resource.DEappScreens,'/Cumulus_iPhone_18.png')}") no-repeat;
+        background-size: 100%;
+        background-size: cover;
+    }
+    #page19 { 
+        background: url("{!URLFOR($Resource.DEappScreens,'/Cumulus_iPhone_19.png')}") no-repeat;
+        background-size: 100%;
+        background-size: cover;
+    }
+    #page20a { 
+        background: url("{!URLFOR($Resource.DEappScreens,'/Cumulus_iPhone_20a.png')}") no-repeat;
+        background-size: 100%;
+        background-size: cover;
+    }
+    #page20b { 
+        background: url("{!URLFOR($Resource.DEappScreens,'/Cumulus_iPhone_20b.png')}") no-repeat;
+        background-size: 100%;
+        background-size: cover;
+    }
+    #page20c { 
+        background: url("{!URLFOR($Resource.DEappScreens,'/Cumulus_iPhone_20c.png')}") no-repeat;
+        background-size: 100%;
+        background-size: cover;
+    }
+    #page20d { 
+        background: url("{!URLFOR($Resource.DEappScreens,'/Cumulus_iPhone_20d.png')}") no-repeat;
+        background-size: 100%;
+        background-size: cover;
+    }
+    
+
+    /* Progress Page */
+    #page21 { 
+        background: url("{!URLFOR($Resource.DEappScreens,'/Cumulus_iPhone_21.png')}") no-repeat;
+        background-size: 100%;
+        background-size: cover;
+    }
+    
+    #pageContact { 
+        background: url("{!URLFOR($Resource.DEappScreens,'/Cumulus_iPhone_contact.png')}") no-repeat;
+        background-size: 100%;
+        background-size: cover;
+    }
+    
+    #pageAppointment { 
+        background: url("{!URLFOR($Resource.DEappScreens,'/Cumulus_iPhone_Appointment.png')}") no-repeat;
+        background-size: 100%;
+        background-size: cover;
+    }
+    
+    #pageWhatsApp1 { 
+        background: url("{!URLFOR($Resource.DEappScreens,'/Whatsapp_01.png')}") no-repeat;
+        background-size: 100%;
+        background-size: cover;
+    }
+    
+     #pageWhatsApp2 { 
+        background: url("{!URLFOR($Resource.DEappScreens,'/Whatsapp_02.png')}") no-repeat;
+        background-size: 100%;
+        background-size: cover;
+    }
+    
+     #pageWhatsApp3{ 
+        background: url("{!URLFOR($Resource.DEappScreens,'/Whatsapp_03.png')}") no-repeat;
+        background-size: 100%;
+        background-size: cover;
+    }
+    
+    /*** Hotspots */
+    
+    /* .ui-content { position: relative; } */
+    .toStart { 
+        position: absolute; 
+        top: 0; 
+        right: 0;   
+        height: 65px;
+        width: 75px; 
+    }
+    
+    .toProfile, .toBack { 
+        position: absolute; 
+        top: 0; 
+        left: 0;   
+        height: 60px;
+        width: 75px; 
+    }
+    
+    .toProgress  { 
+        position: absolute; 
+        top: 0; 
+        right: 0;   
+        height: 60px;
+        width: 75px; 
+    }
+    
+    .toSignUp {
+        position: absolute; 
+          top: 200px;
+        left: 40px;
+        height: 150px;
+        width: 290px;
+    /*background: green;*/
+    }
+    
+    .toEventLanding {
+        position: absolute; 
+          bottom: 35px;
+          left: 127px;
+          height: 65px;
+          width: 75px;
+    }
+    
+    .toReport {
+        position: absolute; 
+          bottom: 35px;
+          left: 220px;
+          height: 65px;
+          width: 75px;
+    }
+    
+    .okNext {
+        height: 130px;
+        width: 260px;
+        z-index: 9999;
+        top: 270px;
+        position: absolute;
+        left: 60px;
+    }
+    
+    .toTicket { 
+        height: 115px;
+          width: 100%;
+          z-index: 99;
+          bottom: 0;
+          position: absolute;
+    }
+    
+    .toEvent {
+        height: 120px;
+          width: 100%;
+          z-index: 99;
+          bottom: 120px;
+          position: absolute;
+    }
+    
+    .toCamera {
+        height: 80px;
+      width: 220px;
+      z-index: 9999;
+      top: 170px;
+      right: 5px;
+      position: absolute;
+    }
+    
+    
+    
+    .toBudget {
+        height: 60px;
+        width: 75px;
+        z-index: 9999;
+        bottom: 0px;
+        left: 0px;
+        position: absolute;
+    }
+        .toBudget2 {
+            height: 60px;
+              width: 280px;
+              z-index: 9999;
+              bottom: 75px;
+              left: 50px;
+              position: absolute;
+        }
+    .toAccount {
+        height: 60px;
+        width: 75px;
+        z-index: 9999;
+        bottom: 0px;
+        left: 75px;
+        position: absolute;
+    }
+    .toCredit {
+        height: 60px;
+        width: 75px;
+        z-index: 9999;
+        bottom: 0px;
+        left: 150px;
+        position: absolute;
+    }
+        .toCredit2, .toAccount2 {
+            height: 60px;
+            width: 280px;
+            z-index: 9999;
+            bottom: 80px;
+            left: 50px;
+            position: absolute;
+        }
+    
+    .toOffers {
+        height: 60px;
+        width: 75px;
+        z-index: 9999;
+        bottom: 0px;
+        left: 225px;
+        position: absolute;
+    }
+    
+        .toOffers2 {
+            height: 90px;
+            width: 330px;
+            z-index: 9999;
+            top: 130px;
+            left: 20px;
+            position: absolute;        
+        }
+    
+    .toContact {
+        height: 60px;
+        width: 75px;
+        z-index: 9999;
+        bottom: 0px;
+        left: 300px;
+        position: absolute;
+    }
+        
+    
+    /* Camera */
+    #page4 .ui-input-text, #page5 .ui-input-text { display: none; }
+    .cam-input, .cam-input2 { display: none; }
+    #launch-camera {
+        height: 60px;
+       width: 250px;
+       z-index: 9999;
+       top: 485px;
+       position: absolute;
+       left: 60px;
+    }
+    
+    .ui-checkbox, .ui-radio { position: initial; }
+    
+    #passport-check { 
+        top: 399px;
+        left: 271px;
+        position: absolute;
+    }
+    #license-check { 
+        top: 446px;
+        left: 271px;
+        position: absolute;
+    }
+    
+    #bill-check { top: 381px; left: 271px; position: absolute; }
+    #tax-check { top: 428px; left: 271px; position: absolute;  }
+    #bank-check { top: 474px; left: 271px; position: absolute; }
+
+    #yes-check { 
+        top: 382px;
+        left: 33px;
+        position: absolute;
+        width: 15px;
+    }
+
+    
+    #launch-camera2 {
+        height: 60px;
+       width: 250px;
+       z-index: 9999;
+       top: 500px;
+       position: absolute;
+       left: 60px;
+    }
+    
+    
+    #launchHangout {
+        position: absolute;
+        height: 200px;
+        width: 200px;
+        top: 170px;
+    /*background: rgba(0, 128, 0, 0.51);    */
+        left: 85px;
+        border-radius: 50%; 
+    }
+    
+    #hangout-btn {
+        position: absolute;
+        bottom: 170px;
+        left: 85px;
+    }
+   
+    .ui-checkbox input { border: 0; }
+    
+    /*
+    input[type="checkbox"]:checked {
+        background-color: #3973B6;
+    }
+    */
+    
+    .toAccNext {
+        height: 90px;
+        width: 100%;
+        z-index: 9999;
+        top: 125px;
+        position: absolute;
+    }
+
+    .greenBtnNext {
+        height: 60px;
+        width: 280px;
+        z-index: 9999;
+        bottom: 75px;
+        left: 50px;
+        position: absolute;
+    }
+
+    .toBeginner {
+        height: 74px;
+        width: 74px;
+        z-index: 9999;
+        top: 138px;
+        left: 24px;
+        border-radius: 50%;
+        position: absolute;
+    }
+    .toInter {
+        height: 74px;
+        width: 74px;
+        z-index: 9999;
+        top: 138px;
+        left: 149px;
+        border-radius: 50%;
+        position: absolute;
+    }
+    .toNinja {
+        height: 74px;
+        width: 74px;
+        z-index: 9999;
+        top: 138px;
+        left: 277px;
+        border-radius: 50%;
+        position: absolute;
+    }
+
+
+    /* select menus */
+    .goals-select {
+        width: 87%;
+        position: absolute; 
+        top: 151px;
+        left: 25px
+    }
+    .owner-select {
+        width: 87%;
+        position: absolute; 
+        top: 214px;
+        left: 25px
+    }
+    .access-select {
+        width: 87%;
+        position: absolute; 
+        top: 277px;
+        left: 25px
+    }
+    .record-select {
+        width: 87%;
+        position: absolute; 
+        top: 340px;
+        left: 25px
+    }
+    .card-select {
+        width: 87%;
+        position: absolute; 
+        top: 403px;
+        left: 25px
+    }
+    .management-select {
+        width: 87%;
+        position: absolute; 
+        top: 466px;
+        left: 25px
+    }
+
+    .ui-btn { 
+        padding: 5px 5px 5px 10px; 
+        font-size: 14px;
+        font-weight: 500;
+        box-shadow: none;
+    }
+    .ui-page-theme-a .ui-btn {
+        background-color: transparent;
+        border: 0;
+        border-color: transparent;
+        color: #FFF;
+        text-shadow: none;
+        text-align: left;
+    }
+        .ui-page-theme-a .ui-btn:hover, html .ui-bar-a .ui-btn:hover, html .ui-body-a .ui-btn:hover, html body .ui-group-theme-a .ui-btn:hover, html head+body .ui-btn.ui-btn-a:hover {
+            background-color: transparent;
+            border: 0;
+            border-color: transparent;
+            color: #FFF;
+            text-shadow: none;
+        }
+
+        .ui-btn-icon-left:after, .ui-btn-icon-right:after, .ui-btn-icon-top:after, .ui-btn-icon-bottom:after, .ui-btn-icon-notext:after {
+            background-color: transparent !important; 
+        }
+
+        .ui-btn-icon-right:after {
+            right: .375em;
+        }
+
+
+    /* Range Sliders */
+
+    .ui-slider-track .ui-btn.ui-slider-handle {
+        background-color: #3269A0 !important;
+        border-radius: 50%;
+    }
+    .ui-slider-track.ui-mini .ui-slider-handle {
+        height: 20px;
+        width: 20px;
+        margin: -10px 0 0 -8px;
+    }
+
+    .ui-page-theme-a .ui-bar-inherit {
+        border: 0;
+    }
+
+    #slider-movie {
+        position: absolute; 
+        right: 0px;
+        top: -18px;
+        /* background: transparent; */
+        color: #1ABC9C;
+        font-size: 18px;
+        border: 0;  
+        box-shadow: none
+    }
+    .movie-range {
+        position: absolute;
+        top: 165px;
+        width: 89%;
+        left: 19px;
+    }
+
+
+    #slider-dining {
+        position: absolute; 
+        right: 0px;
+        top: -18px;
+        /* background: transparent; */
+        color: #1ABC9C;
+        font-size: 18px;
+        border: 0;  
+        box-shadow: none
+    }
+    .dining-range {
+        position: absolute;
+        top: 267px;
+        width: 89%;
+        left: 19px;
+    }
+
+
+
+    #slider-sport {
+        position: absolute; 
+        right: 0px;
+        top: -18px;
+        /* background: transparent; */
+        color: #1ABC9C;
+        font-size: 18px;
+        border: 0;  
+        box-shadow: none
+    }
+    .sport-range {
+        position: absolute;
+        top: 372px;
+        width: 89%;
+        left: 19px;
+    }
+
+    .slider-label {
+        position: absolute;
+        top: -15px;
+        right: 50px;
+        font-weight: bold !important;
+        color: #1ABC9C; 
+    }
+
+    .no-select {
+        color: rgba(255,255,255,.5);
+    }
+</style>
+        
+</head>
+    
+<body>
+<!-- Start of quadstar1 -->
+<div data-role="page" id="page1">
+    <div role="main" class="ui-content">
+        <a href="#page2" class="next-page" data-transition="fade"></a>
+    </div><!-- /content -->
+</div><!-- /page -->
+
+<!-- Start of quadstar2 -->
+<div data-role="page" id="page2">
+    <div role="main" class="ui-content">
+        <a href="#page19" class="toStart" data-transition="slide"></a>
+
+        <a href="#page3" class="toSignUp" data-transition="none"></a>
+    </div>
+</div><!-- /page --> 
+
+<!-- Start of quadstar3 -->
+<div data-role="page" id="page3">
+    <div role="main" class="ui-content">
+        <a href="#page2" class="toStart" data-transition="slide"></a>
+
+        <a href="#page4" class="next-page" data-transition="slide"></a>
+    </div>
+</div><!-- /page --> 
+  
+    
+<!-- Start of page quadstar4 -->
+<div data-role="page" id="page4">
+    <div role="main" class="ui-content">
+        
+        <a href="#page2" class="toStart" data-transition="slide"></a>
+        
+        <input data-theme="b" id="passport-check" type="checkbox" name="checkbox-0 " />
+        <input data-theme="b" id="license-check" type="checkbox" name="checkbox-1 " />
+        
+        <!-- Camera Launcher -->
+        <input type="file" class="cam-input" />
+        <div id="launch-camera"></div>
+
+        <a href="#page6" class="next-page" data-transition="slide"></a>
+        
+    </div><!-- /content -->
+</div><!-- /page -->    
+
+
+ 
+    
+<!-- Start of page quadstar6 -->
+<div data-role="page" id="page6">
+    <div role="main" class="ui-content">
+        <a href="#page6" class="toProfile" data-transition="flip"></a>
+        <a href="#page21" class="toProgress" data-transition="slide" ></a>
+        
+        <!-- bottom Navigation -->
+        <a href="#page17" class="toBudget" data-transition="none"></a>
+        <a href="#page9" class="toAccount" data-transition="none"></a>
+        <a href="#page7" class="toCredit" data-transition="none"></a>
+        <a href="#page19" class="toOffers" data-transition="none"></a>
+        <a href="#pageContact" class="toContact" data-transition="none"></a>
+        
+        
+    </div><!-- /content -->
+</div><!-- /page -->    
+    
+<!-- Start of page quadstar7 -->
+<div data-role="page" id="page7">
+    <div role="main" class="ui-content">
+        <a href="#page6" class="toProfile" data-transition="flip"></a>
+        <a href="#page21" class="toProgress" data-transition="slide" ></a>
+
+        <input id="yes-check" type="checkbox" name="checkbox-7 " />
+        
+        <a href="#page8" class="toCredit2" data-transition="none"></a>
+
+        <!-- bottom Navigation -->
+        <a href="#page17" class="toBudget" data-transition="none"></a>
+        <a href="#page9" class="toAccount" data-transition="none"></a>
+        <a href="#page7" class="toCredit" data-transition="none"></a>
+        <a href="#page19" class="toOffers" data-transition="none"></a>
+        <a href="#pageContact" class="toContact" data-transition="none"></a>
+        
+    </div><!-- /content -->
+</div><!-- /page -->    
+    
+<!-- Start of page quadstar8 -->
+<div data-role="page" id="page8">
+    <div role="main" class="ui-content">
+        <a href="#page6" class="toProfile" data-transition="flip"></a>
+        <a href="#page21" class="toProgress" data-transition="slide" ></a>
+        
+        
+        <!-- bottom Navigation -->
+        <a href="#page17" class="toBudget" data-transition="none"></a>
+        <a href="#page9" class="toAccount" data-transition="none"></a>
+        <a href="#page7" class="toCredit" data-transition="none"></a>
+        <a href="#page19" class="toOffers" data-transition="none"></a>
+        <a href="#pageContact" class="toContact" data-transition="none"></a>
+        
+        
+    </div><!-- /content -->
+</div><!-- /page -->    
+    
+    
+<!-- Start of page quadstar9 -->
+<div data-role="page" id="page9">
+    <div role="main" class="ui-content">
+        <a href="#page6" class="toProfile" data-transition="flip"></a>
+        <a href="#page21" class="toProgress" data-transition="slide" ></a>
+        
+        <a href="#page10" class="toAccount2" data-transition="none"></a>
+
+        <!-- bottom Navigation -->
+        <a href="#page17" class="toBudget" data-transition="none"></a>
+        <a href="#page9" class="toAccount" data-transition="none"></a>
+        <a href="#page7" class="toCredit" data-transition="none"></a>
+        <a href="#page19" class="toOffers" data-transition="none"></a>
+        <a href="#pageContact" class="toContact" data-transition="none"></a>
+    </div><!-- /content -->
+</div><!-- /page -->    
+    
+<!-- Start of page quadstar10 -->
+<div data-role="page" id="page10">
+    <div role="main" class="ui-content">
+        <a href="#page6" class="toProfile" data-transition="flip"></a>
+        <a href="#page21" class="toProgress" data-transition="slide" ></a>
+
+        <a href="#page11" class="toAccNext" data-transition="slide"></a>
+        
+        <!-- bottom Navigation -->
+        <a href="#page17" class="toBudget" data-transition="none"></a>
+        <a href="#page9" class="toAccount" data-transition="none"></a>
+        <a href="#page7" class="toCredit" data-transition="none"></a>
+        <a href="#page19" class="toOffers" data-transition="none"></a>
+        <a href="#pageContact" class="toContact" data-transition="none"></a>
+
+    </div><!-- /content -->
+</div><!-- /page -->    
+    
+<!-- Start of page quadstar11 -->
+<div data-role="page" id="page11">
+    <div role="main" class="ui-content">
+        <a href="#page6" class="toProfile" data-transition="flip"></a>
+        <a href="#page21" class="toProgress" data-transition="slide" ></a>
+        
+        <a href="#page12" class="toAccNext" data-transition="slide"></a>
+
+        <!-- bottom Navigation -->
+        <a href="#page17" class="toBudget" data-transition="none"></a>
+        <a href="#page9" class="toAccount" data-transition="none"></a>
+        <a href="#page7" class="toCredit" data-transition="none"></a>
+        <a href="#page19" class="toOffers" data-transition="none"></a>
+        <a href="#pageContact" class="toContact" data-transition="none"></a>
+    </div><!-- /content -->
+</div><!-- /page -->    
+    
+<!-- Start of page quadstar12 -->
+<div data-role="page" id="page12">
+    <div role="main" class="ui-content">
+        <a href="#page6" class="toProfile" data-transition="flip"></a>
+        <a href="#page21" class="toProgress" data-transition="slide" ></a>
+
+        <!-- SELECT BOXES HERE -->
+        <div class="goals-select">
+            <select>
+                <option class="no-select">Tap to add</option>
+                <option>Easy Payments</option>
+                <option>Banking Simplicity</option>
+                <option>Quick Cash Access</option>
+                <option>Small Savings</option>
+                
+            </select>
+        </div>
+
+        <div class="owner-select">
+            <select>
+                <option class="no-select">Tap to add</option>
+                <option>Single</option>
+                <option>Joint</option>
+                <option>Trust</option>
+                <option>Other</option>
+            </select>
+        </div>
+
+        <div class="access-select">
+            <select>
+                <option class="no-select">Tap to add</option>
+                <option>Full</option>
+                <option>Digital Only</option>
+                <option>Phone Only</option>
+            </select>
+        </div>
+
+        <div class="record-select">
+            <select>
+                <option class="no-select">Tap to add</option>
+                <option>Paper</option>
+                <option>Online</option>
+                <option>SMS Alerts</option>
+            </select>
+        </div>
+
+        <div class="card-select">
+            <select>
+                <option class="no-select">Tap to add</option>
+                <option>$100 Limit</option>
+                <option>$500 Limit</option>
+                <option>$1000 Limit</option>
+            </select>
+        </div>
+
+        <div class="management-select">
+            <select>
+                <option class="no-select">Tap to add</option>
+                <option>My Budget</option>
+                <option>My Goals</option>
+                <option>Educational Fitbit</option>
+            </select>
+        </div>
+
+        <a href="#page14" class="greenBtnNext" data-transition="none"></a>
+
+        <!-- bottom Navigation -->
+        <a href="#page17" class="toBudget" data-transition="none"></a>
+        <a href="#page9" class="toAccount" data-transition="none"></a>
+        <a href="#page7" class="toCredit" data-transition="none"></a>
+        <a href="#page19" class="toOffers" data-transition="none"></a>
+        <a href="#pageContact" class="toContact" data-transition="none"></a>
+    </div><!-- /content -->
+</div><!-- /page -->    
+    
+<!-- Start of page quadstar13 -->
+<div data-role="page" id="page13">
+    <div role="main" class="ui-content">
+        <a href="#page6" class="toProfile" data-transition="flip"></a>
+        <a href="#page21" class="toProgress" data-transition="slide" ></a>
+        
+        
+
+        <!-- bottom Navigation -->
+        <a href="#page17" class="toBudget" data-transition="none"></a>
+        <a href="#page9" class="toAccount" data-transition="none"></a>
+        <a href="#page7" class="toCredit" data-transition="none"></a>
+        <a href="#page19" class="toOffers" data-transition="none"></a>
+        <a href="#pageContact" class="toContact" data-transition="none"></a>
+    </div><!-- /content -->
+</div><!-- /page -->    
+
+    
+<!-- Start of page quadstar14 -->
+<div data-role="page" id="page14">
+    <div role="main" class="ui-content">
+        <a href="#page6" class="toProfile" data-transition="flip" ></a>
+        <a href="#page21" class="toProgress" data-transition="slide" ></a>
+        
+        <!-- bottom Navigation -->
+        <a href="#page17" class="toBudget" data-transition="none"></a>
+        <a href="#page9" class="toAccount" data-transition="none"></a>
+        <a href="#page7" class="toCredit" data-transition="none"></a>
+        <a href="#page19" class="toOffers" data-transition="none"></a>
+        <a href="#pageContact" class="toContact" data-transition="none"></a>
+    </div><!-- /content -->
+</div><!-- /page -->    
+    
+<!-- Start of page quadstar15 -->
+<div data-role="page" id="page15">
+    <div role="main" class="ui-content">
+        <a href="#page6" class="toProfile" data-transition="flip"></a>
+        <a href="#page21" class="toProgress" data-transition="slide" ></a>
+        
+        <a href="#page16" class="toOffers2" data-transition="none"></a>
+        
+        <!-- bottom Navigation -->
+        <a href="#page17" class="toBudget" data-transition="none"></a>
+        <a href="#page9" class="toAccount" data-transition="none"></a>
+        <a href="#page7" class="toCredit" data-transition="none"></a>
+        <a href="#page19" class="toOffers" data-transition="none"></a>
+        <a href="#pageContact" class="toContact" data-transition="none"></a>
+    </div><!-- /content -->
+</div><!-- /page -->    
+
+<!-- Start of page quadstar16 -->
+<div data-role="page" id="page16">
+    <div role="main" class="ui-content">
+        <a href="#page6" class="toProfile" data-transition="flip"></a>
+        <a href="#page21" class="toProgress" data-transition="slide" ></a>
+        
+        <!-- bottom Navigation -->
+        <a href="#page17" class="toBudget" data-transition="none"></a>
+        <a href="#page9" class="toAccount" data-transition="none"></a>
+        <a href="#page7" class="toCredit" data-transition="none"></a>
+        <a href="#page19" class="toOffers" data-transition="none"></a>
+        <a href="#pageContact" class="toContact" data-transition="none"></a>
+    </div><!-- /content -->
+</div><!-- /page -->    
+
+<!-- Start of page quadstar17 -->
+<div data-role="page" id="page17">
+    <div role="main" class="ui-content">
+        <a href="#page6" class="toProfile" data-transition="flip"></a>
+        <a href="#page21" class="toProgress" data-transition="slide" ></a>
+
+        <!-- Range Sliders -->
+        <div class="movie-range">
+            <label for="slider-movie" class="slider-label">$</label>
+            <input type="range" name="slider-movie" id="slider-movie" value="85" min="0" max="200" data-highlight="true" data-mini="true" />
+        </div>
+
+        <div class="dining-range">
+            <label for="slider-dining" class="slider-label">$</label>
+            <input type="range" name="slider-dining" id="slider-dining" value="40" min="0" max="200" data-highlight="true" data-mini="true" />
+        </div>
+
+        <div class="sport-range">
+            <label for="slider-sport" class="slider-label">$</label>
+            <input type="range" name="slider-sport" id="slider-sport" value="75" min="0" max="200" data-highlight="true" data-mini="true" />
+        </div>
+        
+
+        <a href="#page18" class="toBudget2" data-transition="none"></a>
+        
+        <!-- bottom Navigation -->
+        <a href="#page17" class="toBudget" data-transition="none"></a>
+        <a href="#page9" class="toAccount" data-transition="none"></a>
+        <a href="#page7" class="toCredit" data-transition="none"></a>
+        <a href="#page19" class="toOffers" data-transition="none"></a>
+        <a href="#pageContact" class="toContact" data-transition="none"></a>
+    </div><!-- /content -->
+</div><!-- /page -->    
+
+<!-- Start of page quadstar18 -->
+<div data-role="page" id="page18">
+    <div role="main" class="ui-content">
+        <a href="#page6" class="toProfile" data-transition="flip"></a>
+        <a href="#page21" class="toProgress" data-transition="slide" ></a>
+        
+        <!-- bottom Navigation -->
+        <a href="#page17" class="toBudget" data-transition="none"></a>
+        <a href="#page9" class="toAccount" data-transition="none"></a>
+        <a href="#page7" class="toCredit" data-transition="none"></a>
+        <a href="#page19" class="toOffers" data-transition="none"></a>
+        <a href="#pageContact" class="toContact" data-transition="none"></a>
+    </div><!-- /content -->
+</div><!-- /page -->    
+
+<!-- Start of page quadstar19 -->
+<div data-role="page" id="page19">
+    <div role="main" class="ui-content">
+        <a href="#page6" class="toProfile" data-transition="flip"></a>
+        <a href="#page21" class="toProgress" data-transition="slide" ></a>
+
+        <a href="#pageAppointment" class="greenBtnNext" data-transition="none"></a>
+        
+        <!-- bottom Navigation -->
+        <a href="#page17" class="toBudget" data-transition="none"></a>
+        <a href="#page9" class="toAccount" data-transition="none"></a>
+        <a href="#page7" class="toCredit" data-transition="none"></a>
+        <a href="#page19" class="toOffers" data-transition="none"></a>
+        <a href="#pageContact" class="toContact" data-transition="none"></a>
+    </div><!-- /content -->
+</div><!-- /page -->    
+    
+<!-- Start of Appointment page -->
+<div data-role="page" id="pageAppointment">
+    <div role="main" class="ui-content">
+        <a href="#page6" class="toProfile" data-transition="flip"></a>
+        <a href="#page21" class="toProgress" data-transition="slide" ></a>
+
+        <!-- bottom Navigation -->
+        <a href="#page17" class="toBudget" data-transition="none"></a>
+        <a href="#page9" class="toAccount" data-transition="none"></a>
+        <a href="#page7" class="toCredit" data-transition="none"></a>
+        <a href="#page19" class="toOffers" data-transition="none"></a>
+        <a href="#pageContact" class="toContact" data-transition="none"></a>
+    </div><!-- /content -->
+</div><!-- /page -->    
+
+<!-- Start of page quadstar20a -->
+<div data-role="page" id="page20a">
+    <div role="main" class="ui-content">
+        <a href="#page6" class="toProfile" data-transition="flip"></a>
+        <a href="#page21" class="toProgress" data-transition="slide" ></a>
+
+        <a href="#page20b" class="toBeginner" data-transition="none"></a>
+        <a href="#page20c" class="toInter" data-transition="none"></a>
+        <a href="#page20d" class="toNinja" data-transition="none"></a>
+        
+        <!-- bottom Navigation -->
+        <a href="#page17" class="toBudget" data-transition="none"></a>
+        <a href="#page9" class="toAccount" data-transition="none"></a>
+        <a href="#page7" class="toCredit" data-transition="none"></a>
+        <a href="#page19" class="toOffers" data-transition="none"></a>
+        <a href="#pageContact" class="toContact" data-transition="none"></a>
+    </div><!-- /content -->
+</div><!-- /page -->    
+
+<!-- Start of page quadstar20b -->
+<div data-role="page" id="page20b">
+    <div role="main" class="ui-content">
+        <a href="#page6" class="toProfile" data-transition="flip"></a>
+        <a href="#page21" class="toProgress" data-transition="slide" ></a>
+
+        <a href="#page20b" class="toBeginner" data-transition="none"></a>
+        <a href="#page20c" class="toInter" data-transition="none"></a>
+        <a href="#page20d" class="toNinja" data-transition="none"></a>
+        
+        <!-- bottom Navigation -->
+        <a href="#page17" class="toBudget" data-transition="none"></a>
+        <a href="#page9" class="toAccount" data-transition="none"></a>
+        <a href="#page7" class="toCredit" data-transition="none"></a>
+        <a href="#page19" class="toOffers" data-transition="none"></a>
+        <a href="#pageContact" class="toContact" data-transition="none"></a>
+    </div><!-- /content -->
+</div><!-- /page -->    
+<!-- Start of page quadstar20c -->
+<div data-role="page" id="page20c">
+    <div role="main" class="ui-content">
+        <a href="#page6" class="toProfile" data-transition="flip"></a>
+        <a href="#page21" class="toProgress" data-transition="slide" ></a>
+
+        <a href="#page20b" class="toBeginner" data-transition="none"></a>
+        <a href="#page20c" class="toInter" data-transition="none"></a>
+        <a href="#page20d" class="toNinja" data-transition="none"></a>
+        
+        <!-- bottom Navigation -->
+        <a href="#page17" class="toBudget" data-transition="none"></a>
+        <a href="#page9" class="toAccount" data-transition="none"></a>
+        <a href="#page7" class="toCredit" data-transition="none"></a>
+        <a href="#page19" class="toOffers" data-transition="none"></a>
+        <a href="#pageContact" class="toContact" data-transition="none"></a>
+    </div><!-- /content -->
+</div><!-- /page -->    
+<!-- Start of page quadstar20d -->
+<div data-role="page" id="page20d">
+    <div role="main" class="ui-content">
+        <a href="#page6" class="toProfile" data-transition="flip"></a>
+        <a href="#page21" class="toProgress" data-transition="slide" ></a>
+
+        <a href="#page20b" class="toBeginner" data-transition="none"></a>
+        <a href="#page20c" class="toInter" data-transition="none"></a>
+        <a href="#page20d" class="toNinja" data-transition="none"></a>
+        
+        <!-- bottom Navigation -->
+        <a href="#page17" class="toBudget" data-transition="none"></a>
+        <a href="#page9" class="toAccount" data-transition="none"></a>
+        <a href="#page7" class="toCredit" data-transition="none"></a>
+        <a href="#page19" class="toOffers" data-transition="none"></a>
+        <a href="#pageContact" class="toContact" data-transition="none"></a>
+    </div><!-- /content -->
+</div><!-- /page -->    
+    
+<!-- Start of page quadstar21 -->
+<div data-role="page" id="page21">
+    <div role="main" class="ui-content">
+        
+        <!-- <a href="#page8" class="toProfile" data-transition="flip"></a> -->
+        
+        <a href="#" class="toBack" data-transition="slide" data-rel="back" data-direction="reverse"></a>
+    </div><!-- /content -->
+</div><!-- /page -->    
+   
+<!-- Start of Contact page -->
+<div data-role="page" id="pageContact">
+    <div role="main" class="ui-content">
+        <a href="#page6" class="toProfile" data-transition="flip"></a>
+        <a href="#page21" class="toProgress" data-transition="slide" ></a>
+        
+        
+        <!-- bottom Navigation -->
+        <a href="#page17" class="toBudget" data-transition="none"></a>
+        <a href="#page9" class="toAccount" data-transition="none"></a>
+        <a href="#page7" class="toCredit" data-transition="none"></a>
+        <a href="#page19" class="toOffers" data-transition="none"></a>
+        <a href="#pageContact" class="toContact" data-transition="none"></a>
+        
+        
+    </div><!-- /content -->
+</div><!-- /page -->    
+        
+<script>
+
+    
+    
+    $(document).ready(function(){
+        
+        /*$(document).on('click', '#launch-camera', function(){
+            console.log('.launch-camera clicked');
+            $('.cam-input').click();
+        });*/
+        
+        $('#launch-camera').click(function(){
+            console.log('#launch-camera clicked');
+            $('.cam-input').click();
+        });
+        
+        $('#launch-camera2').click(function(){
+            console.log('#launch-camera2 clicked');
+            $('.cam-input2').click();
+        });
+        
+        /*
+        console.log('before hangout');
+        gapi.hangout.render('placeholder-div1', {
+            'render': 'createhangout',
+            'invites':  "[{ id : 'conor.gleeson8@mail.dcu.ie', invite_type : 'EMAIL' }, { id : 'me@thomasmccann.me', invite_type : 'EMAIL' }]",
+            'widget_size': 72
+        });
+        console.log('after hangout');
+        */
+    }); 
+    
+    // splash screen for 1.5 seconds - change to next page
+    $(document).on('pageinit','#page1',function(){ // the .on() method does require jQuery 1.7 + but this will allow you to have the contained code only run when the #splash page is initialized.
+        console.log('pageinit');
+        setTimeout(function(){
+            $.mobile.changePage("#page2", "fade");
+        }, 1500);
+    });    
+</script>
+ 
+</body>    
+
+</apex:page>

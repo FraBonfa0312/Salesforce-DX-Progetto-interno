@@ -1,0 +1,262 @@
+<aura:component controller="AbstractorEngine" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:handler name="init" action="{!c.myAction}" value="{!this}"/>
+    <aura:attribute name="custom_template" type="String"/>
+    <aura:attribute name="myOutputLabels" type="map"/>
+    <aura:attribute name="myOutputLabelsCont" type="map"/>
+    <aura:attribute name="myMapID" type="map"/>
+    <aura:attribute name="myOutputs" type="Temp_Memory_Object__c[]"/>
+    <aura:attribute name="recordId" type="Id"/>    
+    <aura:attribute name="externalField" type="String"/>
+    <aura:attribute name="title" type="String" default="External Data"/>
+    <aura:attribute name="icon" type="String" default="custom:custom41"/>
+    <aura:attribute name="endpointURL" type="String"/>
+    <aura:attribute name="column1_label" type="String"/>
+    <aura:attribute name="column1_ID" type="String"/>
+    <aura:attribute name="column1_link" type="Boolean" default="True"/>
+    <aura:attribute name="column2_label" type="String"/>
+    <aura:attribute name="column2_ID" type="String"/>
+    <aura:attribute name="column3_label" type="String"/>
+    <aura:attribute name="column3_ID" type="String"/>
+    <aura:attribute name="column4_label" type="String"/>
+    <aura:attribute name="column4_ID" type="String"/>
+    <aura:attribute name="column5_label" type="String"/>
+    <aura:attribute name="column5_ID" type="String"/>
+    <aura:attribute name="column1_type" type="String" default="String"/>
+    <aura:attribute name="column2_type" type="String" default="String"/>
+    <aura:attribute name="column3_type" type="String" default="String"/>
+    <aura:attribute name="column4_type" type="String" default="String"/>
+    <aura:attribute name="column5_type" type="String" default="String"/>
+    <aura:attribute name="column1_prior" type="String"/>
+    <aura:attribute name="column1_after" type="String"/>
+    <aura:attribute name="column2_prior" type="String"/>
+    <aura:attribute name="column2_after" type="String"/>
+    <aura:attribute name="column3_prior" type="String"/>
+    <aura:attribute name="column3_after" type="String"/>
+    <aura:attribute name="column4_prior" type="String"/>
+    <aura:attribute name="column4_after" type="String"/>
+    <aura:attribute name="column5_prior" type="String"/>
+    <aura:attribute name="column5_after" type="String"/>
+    <aura:attribute name="column1_prior_space" type="Boolean" default="False"/>
+    <aura:attribute name="column1_after_space" type="Boolean" default="False"/>
+    <aura:attribute name="column2_prior_space" type="Boolean" default="False"/>
+    <aura:attribute name="column2_after_space" type="Boolean" default="False"/>
+    <aura:attribute name="column3_prior_space" type="Boolean" default="False"/>
+    <aura:attribute name="column3_after_space" type="Boolean" default="False"/>
+    <aura:attribute name="column4_prior_space" type="Boolean" default="False"/>
+    <aura:attribute name="column4_after_space" type="Boolean" default="False"/>
+    <aura:attribute name="column5_prior_space" type="Boolean" default="False"/>
+    <aura:attribute name="column5_after_space" type="Boolean" default="False"/>    
+    
+    <aura:if isTrue="{! empty(v.myOutputs)}">
+        <article class="slds-card slds-card_boundary">
+            <div class="slds-card__header slds-grid">
+                <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                    <div class="slds-media__figure">
+                        <span>                
+                            <lightning:icon iconName="{!v.icon}" size="small"/>
+                        </span>
+                    </div>
+                    <div class="slds-media__body">
+                        <h2 class="slds-card__header-title">
+                            <a href="javascript:void(0);" class="slds-card__header-link slds-truncate" title="Accounts">
+                                <span>{!v.title} (0)</span>
+                            </a>
+                        </h2>
+                    </div>
+                    <div class="slds-no-flex">
+                        <button class="slds-button slds-button_neutral">New</button>
+                    </div>
+                </header>
+            </div>
+        </article>        
+    </aura:if>
+    
+    <aura:if isTrue="{! !empty(v.myOutputs)}">
+        <article class="slds-card slds-card_boundary">
+            <div class="slds-card__header slds-grid">
+                <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                    <div class="slds-media__figure">
+                        <span>                
+                            <lightning:icon iconName="{!v.icon}" size="small"/>
+                        </span>
+                    </div>
+                    <div class="slds-media__body">
+                        <h2 class="slds-card__header-title">
+                            <a href="javascript:void(0);" class="slds-card__header-link slds-truncate" title="Breakdown">
+                                <span class="slds-text-heading_small">{!v.title} ({!v.myOutputs.length}) </span>
+                            </a>
+                        </h2>
+                    </div>
+                    <div class="slds-no-flex">
+                        <button class="slds-button slds-button_neutral">New</button>
+                    </div>
+                </header>
+            </div>
+            
+            <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+                <thead>
+                    <tr class="slds-text-title_caps">
+                        <aura:if isTrue="{! !empty(v.column1_label)}">
+                            <aura:if isTrue="{! !empty(v.column1_ID)}">
+                                <th scope="col" class="slds-cell-wrap">
+                                    <div class="slds-truncate" title="Column1">{!v.column1_label}</div>
+                                </th>
+                            </aura:if>
+                        </aura:if>
+                        <aura:if isTrue="{! !empty(v.column2_label)}">
+                            <aura:if isTrue="{! !empty(v.column2_ID)}">
+                                <th scope="col" class="slds-cell-wrap">
+                                    <div class="slds-truncate" title="Column2">{!v.column2_label}</div>
+                                </th>
+                            </aura:if>
+                        </aura:if>
+                        <aura:if isTrue="{! !empty(v.column3_label)}">
+                            <aura:if isTrue="{! !empty(v.column3_ID)}">
+                                <th scope="col" class="slds-cell-wrap">
+                                    <div class="slds-truncate" title="Column3">{!v.column3_label}</div>
+                                </th>
+                            </aura:if>
+                        </aura:if>
+                        <aura:if isTrue="{! !empty(v.column4_label)}">
+                            <aura:if isTrue="{! !empty(v.column4_ID)}">
+                                <th scope="col" class="slds-cell-wrap">
+                                    <div class="slds-truncate" title="Column4">{!v.column4_label}</div>
+                                </th>
+                            </aura:if>
+                        </aura:if>
+                        <aura:if isTrue="{! !empty(v.column5_label)}">
+                            <aura:if isTrue="{! !empty(v.column5_ID)}">
+                                <th scope="col" class="slds-cell-wrap">
+                                    <div class="slds-truncate" title="Column5">{!v.column5_label}</div>
+                                </th>
+                            </aura:if>
+                        </aura:if>
+                    </tr>
+                </thead>
+                <tbody>
+                    <aura:iteration items="{!v.myOutputs}" var="myOutput">
+                        <tr>
+                            <aura:if isTrue="{! !empty(v.column1_label)}">
+                                <aura:if isTrue="{! !empty(v.column1_ID)}">
+                                    <td scope="row" data-label="col_1" class="slds-cell-wrap">
+                                        <div class="slds-truncate" title="col_1">
+                                            <aura:if isTrue="{!v.column1_link}">
+                                                <a href="javascript:void(0);">
+                                                    {!v.column1_prior}<aura:if isTrue="{!v.column1_prior_space}">&nbsp;</aura:if>
+                                                    <aura:if isTrue="{!v.column1_type == 'String' }">
+                                                        {!myOutput.Field1__c}
+                                                    </aura:if>
+                                                    <aura:if isTrue="{!v.column1_type == 'Number without decimals' }">
+                                                        <lightning:formattedNumber value="{!myOutput.Field1__c}" maximumFractionDigits="0"/>
+                                                    </aura:if>
+                                                    <aura:if isTrue="{!v.column1_type == 'Number with decimals' }">
+                                                        <lightning:formattedNumber value="{!myOutput.Field1__c}" minimumFractionDigits="2"/>
+                                                    </aura:if>
+                                                    <aura:if isTrue="{!v.column1_after_space}">&nbsp;</aura:if>{!v.column1_after}
+                                                </a>
+                                            </aura:if>
+                                            <aura:if isTrue="{! !v.column1_link}">
+                                                    {!v.column1_prior}<aura:if isTrue="{!v.column1_prior_space}">&nbsp;</aura:if>
+                                                    <aura:if isTrue="{!v.column1_type == 'String' }">
+                                                        {!myOutput.Field1__c}
+                                                    </aura:if>
+                                                    <aura:if isTrue="{!v.column1_type == 'Number without decimals' }">
+                                                        <lightning:formattedNumber value="{!myOutput.Field1__c}" maximumFractionDigits="0"/>
+                                                    </aura:if>
+                                                    <aura:if isTrue="{!v.column1_type == 'Number with decimals' }">
+                                                        <lightning:formattedNumber value="{!myOutput.Field1__c}" minimumFractionDigits="2"/>
+                                                    </aura:if>
+                                                    <aura:if isTrue="{!v.column1_after_space}">&nbsp;</aura:if>{!v.column1_after}
+                                            </aura:if>
+                                        </div>
+                                    </td>
+                                </aura:if>
+                            </aura:if>
+                            <aura:if isTrue="{! !empty(v.column2_label)}">
+                                <aura:if isTrue="{! !empty(v.column2_ID)}">
+                                    <td data-label="col_2" class="slds-cell-wrap">
+                                        <div class="slds-truncate" title="col_2">
+                                            {!v.column2_prior}<aura:if isTrue="{!v.column2_prior_space}">&nbsp;</aura:if>
+                                            <aura:if isTrue="{!v.column2_type == 'String' }">
+                                                {!myOutput.Field2__c}
+                                            </aura:if>
+                                            <aura:if isTrue="{!v.column2_type == 'Number without decimals' }">
+                                                <lightning:formattedNumber value="{!myOutput.Field2__c}" maximumFractionDigits="0"/>
+                                            </aura:if>
+                                            <aura:if isTrue="{!v.column2_type == 'Number with decimals' }">
+                                                <lightning:formattedNumber value="{!myOutput.Field2__c}" minimumFractionDigits="2"/>
+                                            </aura:if>
+                                            <aura:if isTrue="{!v.column2_after_space}">&nbsp;</aura:if>{!v.column2_after}
+                                        </div>
+                                    </td>
+                                </aura:if>
+                            </aura:if>
+                            <aura:if isTrue="{! !empty(v.column3_label)}">
+                                <aura:if isTrue="{! !empty(v.column3_ID)}">
+                                    <td data-label="col_3" class="slds-cell-wrap">
+                                        <div class="slds-truncate" title="col_3">
+                                            {!v.column3_prior}<aura:if isTrue="{!v.column3_prior_space}">&nbsp;</aura:if>
+                                            <aura:if isTrue="{!v.column3_type == 'String' }">
+                                                {!myOutput.Field3__c}
+                                            </aura:if>
+                                            <aura:if isTrue="{!v.column3_type == 'Number without decimals' }">
+                                                <lightning:formattedNumber value="{!myOutput.Field3__c}" maximumFractionDigits="0"/>
+                                            </aura:if>
+                                            <aura:if isTrue="{!v.column3_type == 'Number with decimals' }">
+                                                <lightning:formattedNumber value="{!myOutput.Field3__c}" minimumFractionDigits="2"/>
+                                            </aura:if>
+                                            <aura:if isTrue="{!v.column3_after_space}">&nbsp;</aura:if>{!v.column3_after}
+                                        </div>
+                                    </td>
+                                </aura:if>
+                            </aura:if>
+                            <aura:if isTrue="{! !empty(v.column4_label)}">
+                                <aura:if isTrue="{! !empty(v.column4_ID)}">
+                                    <td data-label="col_4" class="slds-cell-wrap">
+                                        <div class="slds-truncate" title="col_4">
+                                            {!v.column4_prior}<aura:if isTrue="{!v.column4_prior_space}">&nbsp;</aura:if>
+                                            <aura:if isTrue="{!v.column4_type == 'String' }">
+                                                {!myOutput.Field4__c}
+                                            </aura:if>
+                                            <aura:if isTrue="{!v.column4_type == 'Number without decimals' }">
+                                                <lightning:formattedNumber value="{!myOutput.Field4__c}" maximumFractionDigits="0"/>
+                                            </aura:if>
+                                            <aura:if isTrue="{!v.column4_type == 'Number with decimals' }">
+                                                <lightning:formattedNumber value="{!myOutput.Field4__c}" minimumFractionDigits="2"/>
+                                            </aura:if>
+                                            <aura:if isTrue="{!v.column4_after_space}">&nbsp;</aura:if>{!v.column4_after}
+                                        </div>
+                                    </td>
+                                </aura:if>
+                            </aura:if>
+                            <aura:if isTrue="{! !empty(v.column5_label)}">
+                                <aura:if isTrue="{! !empty(v.column5_ID)}">
+                                    <td data-label="col_5" class="slds-cell-wrap">
+                                        <div class="slds-truncate" title="col_5">
+                                            {!v.column5_prior}<aura:if isTrue="{!v.column5_prior_space}">&nbsp;</aura:if>
+                                            <aura:if isTrue="{!v.column5_type == 'String' }">
+                                                {!myOutput.Field5__c}
+                                            </aura:if>
+                                            <aura:if isTrue="{!v.column5_type == 'Number without decimals' }">
+                                                <lightning:formattedNumber value="{!myOutput.Field5__c}" maximumFractionDigits="0"/>
+                                            </aura:if>
+                                            <aura:if isTrue="{!v.column5_type == 'Number with decimals' }">
+                                                <lightning:formattedNumber value="{!myOutput.Field5__c}" minimumFractionDigits="2"/>
+                                            </aura:if>
+                                            <aura:if isTrue="{!v.column5_after_space}">&nbsp;</aura:if>{!v.column5_after}
+                                        </div>
+                                    </td>
+                                </aura:if>
+                            </aura:if>
+                        </tr>
+                    </aura:iteration>
+                </tbody>
+            </table>
+            <footer class="slds-card__footer">
+                <a class="slds-card__footer-action" href="javascript:void(0);">View All
+                    <span class="slds-assistive-text">{!v.title}</span>
+                </a>
+            </footer>        
+        </article>
+    </aura:if>
+</aura:component>

@@ -1,0 +1,36 @@
+<design:component >
+    <design:attribute name="NumberOfBlocks" datasource="1,2,3,4,5,6,7,8,9" label="Config: Number of Tiles " description="Number of Tiles"/>
+    <design:attribute name="NavigateAction" datasource="None, Next, Finish" label="Config: Navigate Action" description="Navigate to next screen, finish flow, or no action" default="None"/>
+    <design:attribute name="SelectedTileValue" label="Tile Selected" />
+    
+    <design:attribute name="Title1" label="Tile 1 Title" description="Enter the text you want to appear in tile 1" />
+    <design:attribute name="Title2" label="Tile 2 Title" description="Enter the text you want to appear in tile 2" />
+    <design:attribute name="Title3" label="Tile 3 Title" description="Enter the text you want to appear in tile 3" />
+    <design:attribute name="Title4" label="Tile 4 Title" description="Enter the text you want to appear in tile 4" />
+    <design:attribute name="Title5" label="Tile 5 Title" description="Enter the text you want to appear in tile 5" />
+    <design:attribute name="Title6" label="Tile 6 Title" description="Enter the text you want to appear in tile 6" />
+    <design:attribute name="Title7" label="Tile 7 Title" description="Enter the text you want to appear in tile 7" />
+    <design:attribute name="Title8" label="Tile 8 Title" description="Enter the text you want to appear in tile 8" />
+    <design:attribute name="Title9" label="Tile 9 Title" description="Enter the text you want to appear in tile 9" />
+    
+    <design:attribute name="Image1" label="Tile 1 Image" description="Static resource name. Ideal image size is a square 400 * 400."/>
+    <design:attribute name="Image2" label="Tile 2 Image" description="Static resource name. Ideal image size is a square 400 * 400."/>
+    <design:attribute name="Image3" label="Tile 3 Image" description="Static resource name. Ideal image size is a square 400 * 400."/>
+    <design:attribute name="Image4" label="Tile 4 Image" description="Static resource name. Ideal image size is a square 400 * 400."/>
+    <design:attribute name="Image5" label="Tile 5 Image" description="Static resource name. Ideal image size is a square 400 * 400."/>
+    <design:attribute name="Image6" label="Tile 6 Image" description="Static resource name. Ideal image size is a square 400 * 400."/>
+    <design:attribute name="Image7" label="Tile 7 Image" description="Static resource name. Ideal image size is a square 400 * 400."/>
+    <design:attribute name="Image8" label="Tile 8 Image" description="Static resource name. Ideal image size is a square 400 * 400."/>
+    <design:attribute name="Image9" label="Tile 9 Image" description="Static resource name. Ideal image size is a square 400 * 400."/>
+    
+    
+    <design:attribute name="Value1" label="Tile 1 Value" description="Value for tile 1 if different than title"/>
+    <design:attribute name="Value2" label="Tile 2 Value" description="Value of tile 2 if different than title"/>
+    <design:attribute name="Value3" label="Tile 3 Value" description="Value of tile 3 if different than title"/>
+    <design:attribute name="Value4" label="Tile 4 Value" description="Value of tile 4 if different than title"/>
+    <design:attribute name="Value5" label="Tile 5 Value" description="Value of tile 5 if different than title"/>   
+    <design:attribute name="Value6" label="Tile 6 Value" description="Value of tile 6 if different than title"/>   
+    <design:attribute name="Value7" label="Tile 7 Value" description="Value of tile 7 if different than title"/>
+    <design:attribute name="Value8" label="Tile 8 Value" description="Value of tile 8 if different than title"/>
+    <design:attribute name="Value9" label="Tile 9 Value" description="Value of tile 9 if different than title"/>    
+</design:component>

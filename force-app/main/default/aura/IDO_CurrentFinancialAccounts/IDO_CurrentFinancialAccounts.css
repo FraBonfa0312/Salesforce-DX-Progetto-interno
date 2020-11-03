@@ -1,0 +1,13 @@
+.THIS .active {
+    height: 35px;
+    width: 35px;
+    margin-right: 5px;
+}
+
+.THIS .inactive {
+    height: 35px;
+    width: 35px;
+    margin-right: 5px;
+    /*background-color: #b8c3ce;*/
+    opacity: 0.5;
+}

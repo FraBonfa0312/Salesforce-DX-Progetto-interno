@@ -1,0 +1,20 @@
+.THIS {
+}
+ 
+.THIS .ellipsis {
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.THIS .ctabutton {
+    line-height: 1.5rem !important;
+}
+
+.THIS a.normal {
+    color: inherit;
+}
+
+.THIS a.normal:hover, 
+.THIS a.normal:focus {
+    text-decoration: none !important;
+}

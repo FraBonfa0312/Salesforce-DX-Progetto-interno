@@ -1,0 +1,7 @@
+<aura:component >
+  <aura:attribute name="percentage" type="Integer" description="How filled is the donut" />
+  <aura:attribute name="size" type="Integer" description="Size of the donut" />
+  <aura:attribute name="color" type="String" default="#44c173" description="Color of the donut" />
+    
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+</aura:component>

@@ -1,0 +1,5 @@
+<aura:component >
+    
+    <img src="https://sfdc-demo-images-jake.s3.amazonaws.com/Home_ActionOrientedHomePage.png" />
+	
+</aura:component>

@@ -1,0 +1,85 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes"  >
+    <aura:attribute name="aIncome" type="Integer" default="0"/>
+    <aura:attribute name="dPay" type="Integer" default="0"/>
+    <aura:attribute name="mExp" type="Integer" default="0"/>
+    <aura:attribute name="mLoan" type="Integer" default="0"/>
+    <aura:attribute name="counter" type="Boolean" default="false"/>
+    <aura:attribute name="currentScreen" type="Integer" default="1"/>
+    <aura:attribute name="totalLoan" type="Integer" default="1930000"/>
+    <aura:attribute name="equationNum" type="Integer" default="1670000"/>
+    
+    <aura:attribute name="stages" type="String[]" default="House,Appartment"/>
+    <aura:attribute name="houseType" type="String" default="House"/>
+    <aura:attribute name="country" type="String" default=""/>
+    <aura:attribute name="currency" type="String" default="$"/>
+
+    <aura:attribute name="urll" type="String" default=""/>
+
+    <aura:attribute name="loanLow" type="Integer" default="960000"/>
+    <aura:attribute name="loanHigh" type="Integer" default="2100000"/>
+    
+    <aura:attribute name="payement1" type="Integer" default="7600"/>
+    <aura:attribute name="payement2" type="Integer" default="9000"/>
+    <aura:attribute name="payement3" type="Integer" default="3400"/>
+    
+    
+    <div class ="container">
+        
+        <div class="screen" style="text-align:center;" aura:id="s1">
+            <lightning:card footer="Card Footer" title="Summery:">
+                <div class="slds-text-heading_medium">Good news! You may be able to buy a home priced up to<span style="color:#c00000;">{!v.currency} {!v.totalLoan}</span></div><br/>
+                <br/><ui:button aura:id="button2" label="Get Pre-Approved" />
+                
+                <p class="slds-p-horizontal_small" style="margin-left:10%;overflow:auto;">
+                    <div class="midLayer pgreen" aura:id="pig" style="margin-right:5%;width:16%;background-size: contain;">
+                    
+                    </div>
+                    
+                    <div  class="midLayer" style="width:45%;margin-top:50px;" >
+                    <lightning:slider step="" min="{!v.loanLow}" max="{!v.loanHigh}" value="{!v.totalLoan}" onchange="{! c.handleChange }"/>
+                    {!v.loanLow}-{!v.loanHigh}
+                    </div>
+                    
+                    <div  class="midLayer hgrey" aura:id="house" style="margin-left:2%;width:19%; background-size: contain;">
+                    
+                    </div>
+                    
+                </p>
+                <br/><!--<ui:button aura:id="2" label="Watch your personalised video" press="{!c.nextScreen}"/>-->
+                
+                <aura:set attribute="footer">
+                    <p> Based on a purchase price of <span style="color:#c00000;"> {!v.currency}{!v.totalLoan} </span> here's what your mortgage loan payment, other housing costs and available cash would be:</p>
+                </aura:set>
+            </lightning:card>
+            
+            
+            <lightning:card footer="Card Footer" title="">
+                <div class="slds-text-heading_medium">Mortgage loan payment<br/><br/>
+                    <span style="color:#c00000;">{!v.currency}{!v.payement1}</span></div><br/>
+               <!-- מבוסס על הלוואת משכנתא של ₪286,934
+                מבוסס על הלוואת משכנתא בסך 286,934 ₪משכנתא בריבית קבועה לשלוש שנים 2.92% במשך 25 שנה 
+                כולל הגנה על אשראי TD אופציונלי של ₪ 103 לחודש
+                -->
+                3 Year Fixed Rate Mortgage 3.09% over 25 years 
+                Includes optional TD Credit Protection of $109/mo
+                
+                <aura:set attribute="footer">
+                    <div class="subS">
+                        <div class="slds-text-heading_medium">
+                        Other housing costs<br/><span style="color:#c00000;">{!v.currency}{!v.payement2}</span><br/>
+                        </div>
+                        Includes property taxes, heating, condo fees (when they apply) and house maintenance. You can add in utilities and property insurance for a more accurate total monthly estimate.
+                    </div>
+                    <div class="subs">
+                        <div class="slds-text-heading_medium">
+                            Remaining cash
+                            <br/><span style="color:#c00000;">{!v.currency}{!v.payement3}</span><br/>
+                        </div>
+                        Based on the amount of your mortgage loan, debt payments and other expenses, this is the amount you have left over each month.
+                    </div>
+                </aura:set>
+            </lightning:card>
+        </div>
+        
+    </div>
+</aura:component>

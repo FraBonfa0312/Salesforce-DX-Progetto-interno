@@ -1,0 +1,7 @@
+<design:component label="IDS PicklistPath">
+	 <design:attribute name="picklistFieldName" label="Picklist Field API Name" 
+                      description="API Name of the picklist field to track the progress of." />
+    
+    <design:attribute name="showAsCard" label="Show in Card"  default="true" />
+    <design:attribute name="pathTitle" label="Title of Path" default="Path title" description="Only shows if showAsCard is checked" />
+</design:component>

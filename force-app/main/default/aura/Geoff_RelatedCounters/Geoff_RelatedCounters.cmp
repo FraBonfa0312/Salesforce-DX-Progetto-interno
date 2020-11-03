@@ -1,0 +1,157 @@
+<aura:component implements="flexipage:availableForRecordHome,flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes,force:hasRecordId,force:hasSObjectName"
+                access="global"
+                description="Component able to present an Object KPIS in donut format with custom queries" >
+    
+    
+
+    
+    <!--  INIT ATTRIBUTES -->
+	<lightning:notificationsLibrary aura:id="notifLib"/>
+    <aura:attribute name="showCounter1" type="Boolean" default="true"/>
+    <aura:attribute name="showCounter2" type="Boolean" default="true"/>
+    <aura:attribute name="showCounter3" type="Boolean" default="true"/>
+    <aura:attribute name="showCounter4" type="Boolean" default="true"/>
+    <aura:attribute name="showCounter5" type="Boolean" default="true"/>
+    
+    <aura:attribute name="showRefresh" type="Boolean" default="true"/>
+
+    
+    
+    <aura:attribute name="titleCounter1" type="String" default="CONTRATS"/>
+    <aura:attribute name="titleCounter2" type="String" default="OPPORTUNITES"/>
+    <aura:attribute name="titleCounter3" type="String" default="REQUETES GESTION"/>
+    <aura:attribute name="titleCounter4" type="String" default="REQUETES PRESTA"/>
+    <aura:attribute name="titleCounter5" type="String" default="SINISTRES"/>
+    
+    <aura:attribute name="iconCounter1" type="String" default="standard:contract"/>
+    <aura:attribute name="iconCounter2" type="String" default="standard:opportunity"/>
+    <aura:attribute name="iconCounter3" type="String" default="standard:case"/>
+    <aura:attribute name="iconCounter4" type="String" default="standard:case"/>
+    <aura:attribute name="iconCounter5" type="String" default="standard:topic"/>
+    
+    <aura:attribute name="colorCounter1" type="String" default="#71bf72"/>
+    <aura:attribute name="colorCounter2" type="String" default="#f8b762"/>
+    <aura:attribute name="colorCounter3" type="String" default="#f1ce64"/>
+    <aura:attribute name="colorCounter4" type="String" default="#f1ce64"/>
+    <aura:attribute name="colorCounter5" type="String" default="#5aabdd"/>
+        
+    
+    <aura:attribute name="queryCounter1"          type="String"
+                    default="SELECT count(Id) FROM Finserv__FinancialAccount__c WHERE FinServ__PrimaryOwner__c = '{{{recordId}}}'"
+                    description="Soql query to be used with merge fields in {{{xxx.xxx}}} format."/>
+    <aura:attribute name="queryCounter2"          type="String"
+                    default="SELECT count(Id) FROM Opportunity WHERE AccountId = '{{{recordId}}}'"
+                    description="Soql query to be used with merge fields in {{{xxx.xxx}}} format."/>
+    <aura:attribute name="queryCounter3"          type="String"
+                    default="SELECT count(Id) FROM Case WHERE (AccountId = '{{{recordId}}}' AND recordtype.name = 'Case') "
+                    description="Soql query to be used with merge fields in {{{xxx.xxx}}} format."/>
+    <aura:attribute name="queryCounter4"          type="String"
+                    default="SELECT count(Id) FROM Case WHERE (AccountId = '{{{recordId}}}' AND recordtype.name = 'Claim') "
+                    description="Soql query to be used with merge fields in {{{xxx.xxx}}} format."/>
+    <aura:attribute name="queryCounter5"          type="String"
+                    default="SELECT count(Id) FROM Claims__c WHERE IDO_W_POLICYHOLDER__c = '{{{recordId}}}'"
+                    description="Soql query to be used with merge fields in {{{xxx.xxx}}} format."/>
+  
+    <aura:attribute name="results1" type="Object" description="Results of the SOQL query." />
+    <aura:attribute name="results2" type="Object" description="Results of the SOQL query." />
+    <aura:attribute name="results3" type="Object" description="Results of the SOQL query." />
+    <aura:attribute name="results4" type="Object" description="Results of the SOQL query." />
+    <aura:attribute name="results5" type="Object" description="Results of the SOQL query." />
+
+    
+    <aura:attribute name="errors"  type="Object"
+                    description="Error returned when executing the SOQL query." />
+    <aura:attribute name="checkPermissions" type="Boolean" default="false" 
+                    description="Check FLS permissions when executing query." />
+    <aura:attribute name="isStorable"   type="Boolean" default="false" 
+                    description="Query action storable mode activation." />
+    <aura:attribute name="isBackground" type="Boolean" default="false" 
+                    description="Query action background mode activation." />
+     <aura:attribute name="fields"       type="String"
+                    default='[{"label":"Id", "fieldName": "Id", "type": "text", "sortable": "true"}]'
+                    description="Configuration of the output data table, following standard 'lightning:datatable' syntax." />
+    <aura:attribute name="fieldJson"   type="List"
+                    description="JSON conversion of 'fields' attribute." />
+    
+    
+    
+    
+<!--  LAUNCH REQUESTS  -->
+    
+  <!-- Component initilialization -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    
+    <!-- Utility Components -->
+    <lightning:notificationsLibrary aura:id="notifUtil"/>
+    
+    <c:PEG_Merge_CMP aura:id="mergeUtil"
+                     recordId="{!v.recordId}"
+                     sObjectName="{!v.sObjectName}"/>
+    
+    <c:PEG_SOQL_CMP  aura:id="soqlUtil"/>
+    
+    
+    
+    
+    
+<!--  DISPLAY COUNTERS  -->
+    
+    <lightning:card class="slds-card_boundary" >
+        
+       
+                
+         <aura:if isTrue="{!v.showRefresh}">      
+         <span class="button">
+                     <lightning:buttonIcon iconName="utility:refresh" 
+                                  alternativeText="refresh"
+                                  variant="border"
+                                  class="slds-button_last"
+                                  onclick="{!c.refreshKPIs}"/>   
+            </span>     
+         </aura:if> 
+        
+        
+
+               
+        <lightning:layout verticalAlign="stretch" horizontalAlign="space" multipleRows="true">
+            
+            <aura:if isTrue="{!v.showCounter1}">                     
+                <lightning:layoutItem  class="counter" > 
+                    <c:Geof_CircularCounter Legend="{!v.titleCounter1}" theme="{!v.colorCounter1}" perText="{!v.results1}" iconName="{!v.iconCounter1}" />
+                </lightning:layoutItem>   
+            </aura:if> 
+            
+            <aura:if isTrue="{!v.showCounter2}">                     
+                <lightning:layoutItem  class="counter" >
+                                        <c:Geof_CircularCounter Legend="{!v.titleCounter2}" theme="{!v.colorCounter2}" perText="{!v.results2}" iconName="{!v.iconCounter2}" />
+                </lightning:layoutItem>
+            </aura:if> 
+            
+            <aura:if isTrue="{!v.showCounter3}">                     
+                <lightning:layoutItem  class="counter" >
+                                        <c:Geof_CircularCounter Legend="{!v.titleCounter3}" theme="{!v.colorCounter3}" perText="{!v.results3}" iconName="{!v.iconCounter3}" />
+                </lightning:layoutItem>
+            </aura:if> 
+            
+            <aura:if isTrue="{!v.showCounter4}">                     
+                <lightning:layoutItem  class="counter" >
+                                        <c:Geof_CircularCounter Legend="{!v.titleCounter4}" theme="{!v.colorCounter4}" perText="{!v.results4}" iconName="{!v.iconCounter4}" />
+                </lightning:layoutItem>
+            </aura:if> 
+            
+            <aura:if isTrue="{!v.showCounter5}">                     
+                <lightning:layoutItem  class="counter" >
+                                        <c:Geof_CircularCounter Legend="{!v.titleCounter5}" theme="{!v.colorCounter5}" perText="{!v.results5}" iconName="{!v.iconCounter5}" />
+                </lightning:layoutItem>
+            </aura:if> 
+
+       
+        </lightning:layout>
+       
+            
+         
+        
+    </lightning:card>  
+    
+</aura:component>

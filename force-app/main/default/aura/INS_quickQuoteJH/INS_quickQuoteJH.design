@@ -1,0 +1,10 @@
+<design:component>
+    
+    <design:attribute name="icon" 
+                      label="Component Icon" 
+                      default="Mulesoft"
+                      datasource="Mulesoft, Guidewire"
+                      description="Choose which logo you would like to display"/>
+
+	
+</design:component>

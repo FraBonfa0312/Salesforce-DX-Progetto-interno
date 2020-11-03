@@ -1,0 +1,25 @@
+<aura:component implements="lightning:availableForFlowScreens" access="global">
+    <aura:attribute name="firstName" type="String" />
+    <aura:attribute name="lastName"  type="String" />
+    <aura:attribute name="birthDate" type="Date"   />
+    <aura:attribute name="email"     type="String" />
+    
+    <div class="slds-m-top_small slds-m-bottom_large">
+        <div  class="" style="max-width: 40rem; margin:auto;">
+            <lightning:layout class="slds-m-vertical_small">
+                <lightning:layoutItem size="6" padding="around-small">
+                    <lightning:input readonly="true" label="First Name" value="{!v.firstName}" />
+                </lightning:layoutItem>
+                <lightning:layoutItem size="6" padding="around-small">
+                    <lightning:input readonly="true" label="Last Name" value="{!v.lastName}" />
+                </lightning:layoutItem>
+            </lightning:layout>
+            <div class="slds-m-around_small">
+                <lightning:input readonly="true" type="date" label="Date of birth" value="{!v.birthDate}" />
+            </div>
+            <div class="slds-m-around_small">
+                <lightning:input readonly="true" type="email" label="Email" value="{!v.email}" />
+            </div>
+        </div>
+    </div>
+</aura:component>

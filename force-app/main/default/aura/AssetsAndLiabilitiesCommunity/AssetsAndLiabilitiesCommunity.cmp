@@ -1,0 +1,68 @@
+<!--
+ - Created by cxu on 24/10/2016.
+ -->
+
+<aura:component description="AssetsAndLiabilitiesCommunity"
+                implements="forceCommunity:availableForAllPageTypes" access="global"
+                controller="FinServCommunity">
+
+    <aura:attribute name="items" type="object[]"></aura:attribute>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <!--
+    <lightning:card title="" footer="View All">
+-->
+    
+    <article class="slds-card">
+        
+        <div class="slds-card__header slds-grid">
+            <h2>
+                <a href="javascript:void(0);" class="slds-text-link--reset">
+                    <span class="slds-text-heading--small">Assets and Liabilities</span>
+                </a>
+            </h2>
+        </div>
+        <table class="slds-table slds-table--bordered slds-table--cell-buffer">
+            <thead>
+            <tr class="slds-text-title--caps">
+                <th scope="col">
+                    <div class="slds-truncate" title="Name"> Name</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="Type">Type</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="Owner Type">Owner Type</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="Amount">Amount</div>
+                </th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <aura:iteration items="{!v.items}" var="item">
+                <tr>
+                    <th scope="row" data-label="Name">
+                        <div class="slds-truncate" title="Name"><a href="javascript:void(0);" onclick="{!c.navigateToObject}" id="{!item.Id}">
+                                {!item.Name}
+                        </a></div>
+                    </th>
+                    <td data-label="Type">
+                        <div class="slds-truncate" title="Type">{!item.FinServ__AssetsAndLiabilitiesType__c}</div>
+                    </td>
+                    <td data-label="Owner Type">
+                        <div class="slds-truncate" title="Owner Type">{!item.FinServ__Ownership__c}</div>
+                    </td>
+                    <td data-label="Amount">
+                        <div class="slds-truncate" title="Amount"><ui:outputCurrency value="{!item.FinServ__Amount__c}"/></div>
+                    </td>
+                </tr>
+            </aura:iteration>
+            </tbody>
+        </table>
+    </article>
+    <!--
+    </lightning:card>
+-->
+
+</aura:component>

@@ -1,0 +1,153 @@
+<aura:component access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="map" type="Map"/>
+    <aura:attribute name="key" type="String"/>
+    <aura:attribute name="groupId" type="String"/>
+    <aura:attribute name="householdTitle" type="String"/>
+    <aura:attribute name="members" type="SObject[]"/>
+    <aura:attribute name="memberSize" type="Integer"/>
+    <aura:attribute name="collapseToggle" type="Boolean"/>
+    <aura:attribute name="isPrimaryGroup" type="Boolean"/>
+    <aura:attribute name="isHousehold" type="Boolean"/>
+    <aura:attribute name="isAccount" type="Boolean"/>
+    <aura:attribute name="isContact" type="Boolean"/>
+    
+    <div class="slds-card__body slds-card__body_inner">
+        <article class="slds-card slds-card_boundary grayBackground">
+            <div class="slds-card__header slds-grid">
+                <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                    <div class="slds-media__figure">
+                        <aura:if isTrue="{!v.isHousehold}">
+                            <span class="slds-icon_container slds-icon-standard-household" title="description of icon when needed">     
+                                
+                                <lightning:icon iconName="standard:household" size="small"/>
+                                
+                            </span>
+                        </aura:if>
+                        <aura:if isTrue="{!v.isAccount}">
+                            <span class="slds-icon_container slds-icon-standard-account" title="description of icon when needed">     
+                                <lightning:icon iconName="standard:account" size="small"/>
+                                
+                            </span>
+                        </aura:if>
+                        <aura:if isTrue="{!v.isContact}">
+                            <span class="slds-icon_container slds-icon-standard-contact" title="description of icon when needed">  
+                                <lightning:icon iconName="standard:contact" size="small"/>
+                            </span>
+                        </aura:if>
+                    </div>
+                    <div class="slds-media__body">
+                        <h2>
+                            <aura:if isTrue="{!v.isHousehold}">
+                                <a href="javascript:void(0);" class="slds-card__header-link slds-truncate" title="" onclick="{!c.goRecord}" id="{!v.groupId}">
+                                    
+                                    <span class="slds-text-heading_small">{!v.householdTitle} ({!v.memberSize})</span>
+                                    <aura:if isTrue="{!v.isPrimaryGroup}">
+                                        <div class="slds-text-heading--label-normal" ><span class="slds-badge" >Primary Group</span></div>
+                                    </aura:if>
+                                </a>
+                                <aura:set attribute="else">
+                                    <a href="javascript:void(0);" class="slds-card__header-link slds-truncate" title="" >
+                                        <span class="slds-text-heading_small">{!v.householdTitle} ({!v.memberSize})</span>
+                                        <aura:if isTrue="{!v.isPrimaryGroup}">
+                                            <div class="slds-text-heading--label-normal" ><span class="slds-badge" >Primary Group</span></div>
+                                        </aura:if>
+                                    </a>
+                                </aura:set>
+                            </aura:if>
+                        </h2>
+                    </div>
+                </header>
+                <div class="slds-no-flex">
+                    <button class="slds-button onTop slds-button--icon-bare" type="button" title="Show or hide group members" onclick="{!c.toggle}">
+                        <span class="lightningPrimitiveIcon" data-aura-class="lightningPrimitiveIcon">
+                            <aura:if isTrue="{!v.collapseToggle}">
+                                <span class="slds-icon_container slds-icon-standard" title="description of icon when needed">     
+                                    <lightning:icon iconName="utility:contract_alt" size="small" class="toggleButtons"/>
+                                </span>
+                                
+                                <aura:set attribute="else">
+                                    <span class="slds-icon_container slds-icon-standard" title="description of icon when needed">     
+                                        <lightning:icon iconName="utility:expand_alt" size="small" class="toggleButtons"/>
+                                    </span>
+                                </aura:set>
+                            </aura:if>
+                        </span>
+                        <span class="slds-assistive-text">Show or hide group members</span>
+                    </button>
+                </div>
+            </div>
+            <div aura:id="memberWrapper">
+                <aura:iteration items="{!v.members}" var="obj">    
+                    <div class="slds-card__body slds-card__body_inner FinServRelationshipEntityBlock ">
+                        <article class="slds-card slds-card_boundary">
+                            <div class="slds-card__header slds-grid">
+                                <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                    <div class="slds-media__figure">
+                                        <aura:if isTrue="{!v.isHousehold}">
+                                            <span class="slds-icon_container slds-icon-standard-contact" title="description of icon when needed">     
+                                                <lightning:icon iconName="standard:contact" size="small" />
+                                            </span>
+                                        </aura:if>
+                                        <aura:if isTrue="{!v.isAccount}">
+                                            <span class="slds-icon_container slds-icon-standard-account" title="description of icon when needed">     
+                                                <lightning:icon iconName="standard:account" size="small" />
+                                            </span>
+                                        </aura:if>
+                                        <aura:if isTrue="{!v.isContact}">
+                                            <span class="slds-icon_container slds-icon-standard-contact" title="description of icon when needed">     
+                                                <lightning:icon iconName="standard:contact" size="small" />
+                                            </span>
+                                        </aura:if>
+                                    </div>
+                                    <div class="slds-media__body">
+                                        <aura:if isTrue="{!v.isHousehold}">
+                                            <h2>
+                                                <a href="javascript:void(0);" class="slds-card__header-link slds-truncate" title="" onclick="{!c.goRecord}" id="{!obj.Contact.AccountId}">
+                                                    <span class="slds-text-heading_small">{!obj.Contact.Name}</span>
+                                                    <div class="slds-text-heading--label-normal" ><p class="slds-truncate" >{!obj.Roles}</p></div>
+                                                    
+                                                    <aura:if isTrue="{!obj.FinServ__Primary__c}">
+                                                        <div class="slds-text-heading--label-normal" ><span class="slds-badge">Primary Member</span></div>
+                                                    </aura:if>
+                                                    
+                                                    
+                                                </a>
+                                            </h2>
+                                        </aura:if>
+                                        <aura:if isTrue="{!v.isAccount}">
+                                            <h2>
+                                                <a href="javascript:void(0);" class="slds-card__header-link slds-truncate" title="" onclick="{!c.goRecord}" id="{!obj.Account.Id}">
+                                                    <span class="slds-text-heading_small">{!obj.Account.Name}</span>
+                                                    <div class="slds-text-heading--label-normal" ><p class="slds-truncate" >{!obj.Roles}</p></div>
+                                                </a>
+                                            </h2>
+                                        </aura:if>
+                                        <aura:if isTrue="{!v.isContact}">
+                                            <h2>
+                                                <a href="javascript:void(0);" class="slds-card__header-link slds-truncate" title="" onclick="{!c.goRecord}" id="{!obj.FinServ__RelatedContact__c}">
+                                                    <span class="slds-text-heading_small">{!obj.FinServ__RelatedContact__r.Name}</span>
+                                                    <div class="slds-text-heading--label-normal" ><p class="slds-truncate" >{!obj.FinServ__Role__r.Name}</p></div>
+                                                </a>
+                                            </h2>
+                                        </aura:if>
+                                    </div>
+                                </header>
+                                <div class="slds-no-flex">
+                                    
+                                </div>
+                            </div>
+                            <div class="slds-card__body slds-card__body_inner">
+                                <p></p>
+                            </div>
+                        </article>
+                    </div>
+                </aura:iteration>
+            </div>
+        </article>
+    </div>
+    
+    
+    
+    
+</aura:component>

@@ -1,0 +1,630 @@
+/******************************************************
+ * CSS override for B2B Commerce.
+ * Override any CSS provided by OOTB B2B Commerce below
+*******************************************************/
+
+@font-face {
+    font-family: "Salesforce Sans - Regular";
+    src: url("../fonts/Salesforce_Sans/SalesforceSans-Regular.woff") format("woff");
+}
+
+body {
+    background: rgba(245, 245, 245, 1);
+    font-family: 'Salesforce Sans - Regular', sans-serif;
+    font-weight: normal;
+    font-style: normal;
+    font-size: 14px;
+    line-height: 24px;
+}
+
+a {
+    color: #2a94d6;;
+}
+
+a:hover {
+    color: #777;;
+    text-decoration: none;
+}
+
+a:focus, .btn:focus {
+    text-decoration: none;
+    outline: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Salesforce Sans - Regular', sans-serif;
+    font-style: normal;
+    margin-top: 0;
+    font-weight: 400;
+    color: #2a94d6;
+}
+
+h1 {
+    font-size: 30px;
+    font-weight: 500;
+}
+
+h2 {
+    font-size: 24px;
+}
+
+h3 {
+    font-size: 20px;
+}
+
+h4 {
+    font-size: 18px;
+}
+
+h5 {
+    font-size: 16px;
+}
+
+h6 {
+    font-size: 14px;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    list-style: none;
+}
+
+p {
+    font-size: 13px;
+    font-weight: normal;
+    line-height: 20px;
+    color: rgba(153, 153, 153, 1);
+    margin-bottom: 15px;
+}
+
+hr {
+    border-bottom: 1px solid rgba(238, 238, 238, 1);
+    border-top: 0 none;
+    padding: 0;
+}
+
+.ckz-text-primary {
+    color: #2a94d6;
+}
+
+.ckz-bg-primary {
+    background-color: #2a94d6;
+}
+
+/******************************************************
+ * BUTTONS
+*******************************************************/
+
+.btn {
+    font-family: "Salesforce Sans Bold", sans-serif;
+}
+
+.btn-default {
+}
+
+.btn-default:hover {
+}
+
+.btn-primary {
+    background-color: rgba(42, 148, 214, 1);
+    border-color: rgba(42, 148, 214, 1)
+}
+
+.btn-primary:hover, .btn-primary:active, .btn-primary.active, .btn-primary:focus, .btn-primary.focus, .open > .dropdown-toggle.btn-primary, .open > .dropdown-toggle.btn-primary:hover, .open > .dropdown-toggle.btn-primary:focus {
+    background-color: rgba(33, 119, 172, 1);
+    border-color: rgba(33, 119, 172, 1);
+}
+
+.btn-primary.disabled, .btn-primary.btn[disabled] {
+    cursor: not-allowed;
+    filter: alpha(opacity=65);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    opacity: .65
+}
+
+.btn-primary.disabled:hover, .btn-primary.btn[disabled]:hover {
+    background-color: rgba(42, 148, 214, .65);
+    border-color: rgba(42, 148, 214, .65);
+}
+
+.btn-secondary {
+    background-color: rgba(255, 255, 255, 1);
+    color: rgba(0, 0, 0, 1);
+    border-color: rgba(0, 0, 0, 1);
+}
+
+.btn-secondary:hover, .btn-secondary:active, .btn-secondary.active, .btn-secondary:focus, .btn-secondary.focus, .open > .dropdown-toggle.btn-secondary, .open > .dropdown-toggle.btn-secondary:hover, .open > .dropdown-toggle.btn-secondary:focus {
+    color: rgba(53, 53, 53, 1);
+    border-color: rgba(53, 53, 53, 1);
+}
+
+.btn-secondary.disabled, .btn-secondary.btn[disabled] {
+    cursor: not-allowed;
+    filter: alpha(opacity=65);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    opacity: .65
+}
+
+.btn-secondary.disabled:hover, .btn-secondary.btn[disabled]:hover {
+    border-color: rgba(0, 0, 0, .65);
+    background-color: rgba(0, 0, 0, .65);
+}
+
+.btn-dashed {
+    background-color: rgba(255, 255, 255, 1);
+    border: 2px dashed rgba(204, 204, 204, 1);
+}
+
+.btn-dashed:hover, .btn-dashed:active, .btn-dashed.active, .btn-dashed:focus, .btn-dashed.focus, .open > .dropdown-toggle.btn-dashed, .open > .dropdown-toggle.btn-dashed:hover, .open > .dropdown-toggle.btn-dashed:focus {
+    color: rgba(51, 51, 51, 1);
+    border-color: rgba(173, 173, 173, 1);
+}
+
+.btn-link {
+    color: rgba(0, 0, 0, 1);
+}
+
+.btn-link:hover, .btn-link:active, .btn-link.active, .btn-link:focus, .btn-link.focus, .open > .dropdown-toggle.btn-link, .open > .dropdown-toggle.btn-link:hover, .open > .dropdown-toggle.btn-link:focus {
+    color: rgba(53, 53, 53, 1);
+}
+
+.btn-group.open .dropdown-toggle {
+    box-shadow: none;
+}
+
+/******************************************************
+ * FORMS/INPUTS
+ *******************************************************/
+
+/******************************************************
+ * PANELS
+ *******************************************************/
+
+.panel {
+    border: 0;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+    margin: 1rem 0;
+}
+
+.panel-default > .panel-heading {
+    background-color: rgba(255, 255, 255, 1);
+    border: 0;
+    /* color: #2a94d6; */
+}
+
+/******************************************************
+ * PROMOTIONS
+*******************************************************/
+
+.promotion_banner {
+    margin-bottom: 1rem;
+}
+
+/******************************************************
+ * NAV OVERRIDES
+*******************************************************/
+
+.navbar {
+    border-radius: 0;
+}
+
+.nav-tabs > li > a {
+    font-size: 18px;
+    font-weight: 700;
+    color: rgba(51, 51, 51, 1);
+    border: 0;
+    border-bottom: 3px solid transparent;
+}
+
+.nav-tabs > li > a:hover {
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+    color: rgba(51, 51, 51, 1);
+    border: 0;
+    border-bottom: 3px solid rgba(0, 0, 0, 1);;
+}
+
+.navbar-default .navbar-collapse {
+}
+
+.navbar-default .navbar-toggle {
+    float: left;
+    margin-left: 15px;
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+}
+
+.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
+    background-color: rgba(255, 255, 255, 1);
+}
+
+.navbar-default .navbar-toggle:hover .icon-bar, .navbar-default .navbar-toggle:focus .icon-bar {
+    background-color: rgba(53, 53, 53, 1);
+}
+
+/******************************************************
+ * HEADER STYLES
+*******************************************************/
+
+.cc_store_logo_img {
+    background: url(../images/cumulus-primary-logo.png) no-repeat;
+    background-size: contain;
+    height: 40px;
+    width: 150px;
+    transform: translateX(-50%);
+    left: 50%;
+    position: absolute;
+}
+
+@media (min-width: 768px) {
+    .cc_store_logo_img {
+        background: url(../images/cumulus-primary-logo.png) no-repeat;
+        background-size: contain;
+        height: 50px;
+        width: 200px;
+        transform: none;
+        left: 0;
+        position: relative;
+    }
+}
+
+.header-top .navbar-default {
+    background-color: rgba(255, 255, 255, 1);
+    border: none;
+    min-height: 0;
+}
+
+.header-top .navbar-default .navbar-nav.navbar-left {
+    float: left;
+}
+
+.header-top .navbar-default .navbar-nav.navbar-right {
+    float: right;
+}
+
+.header-top .navbar-default .navbar-nav > li {
+    display: inline-block;
+}
+
+.header-top .navbar-default .navbar-nav > li > a {
+    font-size: 1.1rem;
+    color: rgba(0, 0, 0, 0.8);
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.header-top .navbar-default .navbar-nav > li > a:hover {
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.header-bottom .navbar-default {
+    padding: 16px 0;
+    background-color: rgba(255, 255, 255, 1);
+    border: 1px solid rgba(231, 231, 231, 1);
+}
+
+@media (min-width: 768px) {
+    .header-bottom .navbar-default .navbar-nav.navbar-left > li {
+        margin: 0 30px;
+    }
+}
+
+.header-bottom .navbar-default .navbar-nav > li > a {
+    color: rgba(0, 0, 0, 0.8);
+    font-size: 1em;
+    padding: 1em;
+}
+
+.header-bottom .navbar-default .navbar-nav > li > a:hover {
+    text-decoration: none;
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.header-bottom .navbar-default .navbar-nav > .open > a, .header-bottom .navbar-default .navbar-nav > .open > a:hover, .header-bottom .navbar-default .navbar-nav > .open > a:focus {
+    background-color: transparent;
+}
+
+.header-bottom .navbar-nav.navbar-left > li > .dropdown-menu.ddPro::before,
+.header-bottom .navbar-nav.navbar-left > li > .dropdown-menu.ddPro::after,
+.header-bottom .navbar-nav.navbar-right > li > .dropdown-menu.ddPro::before,
+.header-bottom .navbar-nav.navbar-right > li > .dropdown-menu.ddPro::after {
+    top: -0.5rem;
+    width: 1rem;
+    height: 1rem;
+    position: absolute;
+    transform: rotate(45deg);
+    content: "";
+    background-color: rgba(255, 255, 255, 1);
+    margin-left: -0.5rem;
+    border-bottom-color: rgba(255, 255, 255, 1);
+    z-index: -1;
+}
+
+.header-bottom .navbar-nav.navbar-left > li > .dropdown-menu.ddPro::before,
+.header-bottom .navbar-nav.navbar-left > li > .dropdown-menu.ddPro::after {
+    left: 1.5rem;
+}
+
+.header-bottom .navbar-nav.navbar-right > li > .dropdown-menu.ddPro::before,
+.header-bottom .navbar-nav.navbar-right > li > .dropdown-menu.ddPro::after {
+    right: 1.5rem;
+}
+
+.header-bottom .navbar-nav > li > .dropdown-menu.ddPro::after {
+    box-shadow: rgba(0, 0, 0, 0.16) -1px -1px 0 0;
+}
+
+.header-bottom .navbar-nav > li > .dropdown-menu.ddPro {
+    padding: 0;
+}
+
+.header-bottom .navbar-nav > li > .dropdown-menu.ddPro > li {
+    line-height: 30px;
+}
+
+.header-bottom .navbar-nav > li > .dropdown-menu.ddPro > li.dropdown-submenu::before,
+.header-bottom .navbar-nav > li > .dropdown-menu.ddPro > li.dropdown-submenu::after {
+    /*     right: 0.5rem;
+    top: 1.5rem;
+    width: 1rem;
+    height: 1rem;
+    position: absolute;
+    transform: rotate(45deg);
+    content: "";
+    background-color: rgba(255, 255, 255, 0);
+    border: 1px solid transparent;
+    border-top-color: rgba(51, 51, 51, 1);
+    border-right-color: rgba(51, 51, 51, 1); */
+}
+
+.header-bottom .navbar-nav > li > .dropdown-menu.ddPro > li > a {
+    padding: 5px 10px;
+    border-bottom: 1px solid rgba(236, 236, 236, 1);
+    line-height: 30px;
+}
+
+.header-bottom .dropdown-menu > li > a:focus, .header-bottom .dropdown-menu > li > a:hover {
+    /*     background-color: rgba(0, 99, 65, 0.05); */
+}
+
+.header-bottom .navbar-nav > li > .dropdown-menu.ddPro > li.dropdown-submenu > a:after {
+    display: block;
+    content: " ";
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    width: 1rem;
+    height: 1rem;
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-top-color: rgba(51, 51, 51, 1);
+    border-right-color: rgba(51, 51, 51, 1);
+    transform: rotate(45deg);
+}
+
+.header-bottom .navbar-nav > li > .dropdown-menu.ddPro > li ul {
+    margin-top: -1px;
+    border-radius: 0;
+    padding: 0;
+}
+
+.header-bottom .navbar-nav > li > .dropdown-menu.ddPro > li ul > li > a {
+    padding: 5px 10px;
+    border-bottom: 1px solid rgba(236, 236, 236, 1);
+    line-height: 30px;
+}
+
+.header-bottom .cc_search_form .search_button {
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-right: none;
+    border-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(255, 255, 255, 1);
+}
+
+.header-bottom .cc_search_form .search_button:hover {
+    background-color: rgba(255, 255, 255, 1);
+}
+
+.header-bottom .cc_search_form .cc_search_input {
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-color: rgba(0, 0, 0, 0.8);
+    border-left: none;
+    box-shadow: none;
+}
+
+.header-bottom .cc_search_form .cc_search_input:focus {
+    box-shadow: none;
+}
+
+.header-bottom .dropdown.user_info a {
+    padding: 5px !important;
+}
+
+.header-bottom .avatar-header img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+
+/******************************************************
+* QUICK ORDER
+*******************************************************/
+
+.quickOrder-Title {
+    font-size: 22px
+}
+
+.quickOrder-Caption {
+    font-size: 14px;
+}
+
+/******************************************************
+ * SITE LOGIN
+ *******************************************************/
+
+/******************************************************
+ * SPOTLIGHT/FEATURED PRODUCTS
+ *******************************************************/
+
+/******************************************************
+ * HOME PAGE
+ *******************************************************/
+
+/******************************************************
+ * PRODUCT LIST PAGE
+*******************************************************/
+
+/******************************************************
+ * PRODUCT COMPARE PAGE
+ *******************************************************/
+
+/******************************************************
+ * PRODUCT DETAILS PAGE
+*******************************************************/
+
+/******************************************************
+ * CART
+ *******************************************************/
+
+/******************************************************
+ * CHECKOUT
+ *******************************************************/
+
+/******************************************************
+ * MY ACCOUNT
+ *******************************************************/
+
+/******************************************************
+ * FOOTER
+ *******************************************************/
+
+.ckz_footer {
+    padding: 20px;
+    border-top: 5px solid;
+    border-color: #2a94d6;
+    color: rgba(195, 195, 195, 1);
+    background-color: #484641;
+    font-size: 12px;
+}
+
+.ckz_footer p {
+    color: rgba(195, 195, 195, 1);
+}
+
+.ckz_footer .footer-link a {
+    color: rgba(195, 195, 195, 1);
+}
+
+.ckz_footer .footer-link a:hover, .ckz_footer .footer-link a:focus {
+    color: rgba(223, 223, 223, 1);
+    text-decoration: none;
+}
+
+.ckz_footer .footer-link a.social {
+    color: rgba(0, 0, 0, 1);;
+}
+
+.ckz_footer .footer-link a.social:hover {
+    color: rgba(53, 53, 53, 1);
+}
+
+.ckz_footer .footer-logo {
+    display: block;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 15px;
+    background: url(../images/cumulus-primary-logo-white.png) center no-repeat;
+    background-size: contain;
+    height: 50px;
+}
+
+.ckz_footer h4 {
+    color: rgba(255, 255, 255, 1);
+    font-size: 14px;
+}
+
+.ckz_footer ul {
+    list-style: none;
+    padding: 0;
+}
+
+.ckz_footer .footer-link-list {
+    -webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+
+.ckz_footer .footer-link-list a:hover {
+    color: rgba(255, 255, 255, 1);
+}
+
+.ckz_footer ul li {
+    margin: 0 0 8px;
+}
+
+.ckz_footer .footer-builtOn {
+    display: inline-block;
+    vertical-align: middle;
+    margin-bottom: 5px;
+}
+
+.ckz_footer .footer-logo-commerceCloud {
+    display: inline-block;
+    overflow: hidden;
+    position: relative;
+    background: url(../images/b2b-commerce-logo.svg) center no-repeat;
+    background-size: contain;
+    height: 70px;
+    width: 140px;
+    vertical-align: middle;
+}
+
+/******************************************************
+ * NOUI SLIDER
+ *******************************************************/
+
+.noUi-base {
+    margin-bottom: 1rem;
+}
+
+.noUi-target {
+    background: rgba(119, 119, 119, 1);
+    box-shadow: none;
+    border: 1px solid rgba(119, 119, 119, 1);
+    border-radius: 15px;
+    padding: 0 40px 0 10px;
+}
+
+.noUi-handle {
+    background: rgba(255, 255, 255, 1);
+    border: 1px solid rgba(119, 119, 119, 1);
+    box-shadow: none;
+    border-radius: 100%;
+}
+
+.noUi-handle:before, .noUi-handle:after {
+    background: transparent;
+}
+
+.noUi-horizontal .noUi-handle {
+    width: 30px;
+    height: 30px;
+    top: -8px;
+}
+
+.spec .lowerDisp, .spec .upperDisp {
+    display: inline-block;
+    margin-top: .8rem;
+}

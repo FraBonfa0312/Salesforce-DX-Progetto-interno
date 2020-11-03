@@ -1,0 +1,4 @@
+<aura:event type="COMPONENT" description="Notify the master component with entered drivers information and go to next step">
+    <aura:attribute name="driversList" type="List" />
+    <aura:attribute name="action" type="String" />  <!--NEXT OR PREVIOUS-->
+</aura:event>

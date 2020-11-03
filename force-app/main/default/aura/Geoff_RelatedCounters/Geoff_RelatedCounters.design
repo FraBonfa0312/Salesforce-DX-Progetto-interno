@@ -1,0 +1,57 @@
+<design:component>
+    
+    <design:attribute name="showRefresh" label="Show Refresh Button ?" />
+    
+    <design:attribute name="showCounter1" label="Show Counter #1 ?" />
+    <design:attribute name="titleCounter1" label="Title of Counter #1" placeholder="CONTRATS" />
+    <design:attribute name="iconCounter1" label="Icon name of Counter #1" description="standard:account ..." placeholder="standard:contract"/>
+    <design:attribute name="colorCounter1" label="Color Name of Counter #1" description="Color of the circle in HTML HEX format (#nnnnnn). i.e : #f8b762" placeholder="#71bf72" />
+	<design:attribute name="queryCounter1"
+                      label="SOQL query template for Counter #1"
+                      description="Eg : SELECT Id FROM Finserv__FinancialAccount__c WHERE FinServ__PrimaryOwner__c = '{{{recordId}}}'"
+                      placeholder="SELECT Id FROM Finserv__FinancialAccount__c WHERE FinServ__PrimaryOwner__c = '{{{recordId}}}'"
+                      />
+    
+    <design:attribute name="showCounter2" label="Show Counter #2 ?" />
+    <design:attribute name="titleCounter2" label="Title of Counter #2" placeholder="OPPORTUNITES" />
+    <design:attribute name="iconCounter2" label="Icon name of Counter #2" description="standard:account ..." placeholder="standard:opportunity"/>
+    <design:attribute name="colorCounter2" label="Color Name of Counter #2" description="Color of the circle in HTML HEX format (#nnnnnn). i.e : #f8b762" placeholder="#f8b762" />
+	<design:attribute name="queryCounter2"
+                      label="SOQL query template for Counter #2"
+                      description="Eg : SELECT Id FROM Opportunity WHERE AccountId = '{{{recordId}}}'"
+                      placeholder="SELECT Id FROM Opportunity WHERE AccountId = '{{{recordId}}}'"
+                      />
+    
+    <design:attribute name="showCounter3" label="Show Counter #3 ?" />
+    <design:attribute name="titleCounter3" label="Title of Counter #3" placeholder="REQUETES GESTION" />
+    <design:attribute name="iconCounter3" label="Icon name of Counter #3" description="standard:account ..." placeholder="standard:case"/>
+    <design:attribute name="colorCounter3" label="Color Name of Counter #3" description="Color of the circle in HTML HEX format (#nnnnnn). i.e : #f8b762" placeholder="#f1ce64" />
+	<design:attribute name="queryCounter3"
+                      label="SOQL query template for Counter #3"
+                      description="Eg : SELECT Id FROM Case WHERE (AccountId = '{{{recordId}}}' AND recordtype.name = 'Case')"
+                      placeholder="SELECT Id FROM Case WHERE (AccountId = '{{{recordId}}}' AND recordtype.name = 'Case') "
+                      />
+
+    <design:attribute name="showCounter4" label="Show Counter #4 ?" />
+    <design:attribute name="titleCounter4" label="Title of Counter #4" placeholder="REQUETES PRESTA" />
+    <design:attribute name="iconCounter4" label="Icon name of Counter #4" description="standard:account ..." placeholder="standard:case"/>
+    <design:attribute name="colorCounter4" label="Color Name of Counter #4" description="Color of the circle in HTML HEX format (#nnnnnn). i.e : #f8b762" placeholder="#f1ce64" />
+	<design:attribute name="queryCounter4"
+                      label="SOQL query template for Counter #4"
+                      description="Eg : SELECT Id FROM Case WHERE (AccountId = '{{{recordId}}}' AND recordtype.name = 'Claim')"
+                      placeholder="SELECT Id FROM Case WHERE (AccountId = '{{{recordId}}}' AND recordtype.name = 'Claim')"
+                      />
+    
+    <design:attribute name="showCounter5" label="Show Counter #5 ?" />
+    <design:attribute name="titleCounter5" label="Title of Counter #5" placeholder="SINISTRES" />
+    <design:attribute name="iconCounter5" label="Icon name of Counter #5" description="standard:account ..." placeholder="standard:topic"/>
+    <design:attribute name="colorCounter5" label="Color Name of Counter #5" description="Color of the circle in HTML HEX format (#nnnnnn). i.e : #f8b762" placeholder="#5aabdd" />
+	<design:attribute name="queryCounter5"
+                      label="SOQL query template for Counter #5"
+                      description="Eg : SELECT Id FROM Claims__c WHERE IDO_W_POLICYHOLDER__c = '{{{recordId}}}'"
+                      placeholder="SELECT Id FROM Claims__c WHERE IDO_W_POLICYHOLDER__c = '{{{recordId}}}'"
+                      />
+	
+
+    
+</design:component>

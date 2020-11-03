@@ -1,0 +1,40 @@
+<aura:component implements="force:hasRecordId,flexipage:availableForAllPageTypes" access="global">
+    
+    <!-- Data and Event Structure -->
+
+    <!-- <aura:handler name="init" value="{!this}" action="{!c.doInit}"/> -->
+    
+    <aura:attribute name="messageFromEvent" type="String"/>
+    <aura:attribute name="component" type="String"/>    
+    <aura:attribute name="numEvents" type="Integer" default="0"/>
+    <aura:attribute name="title" type="String" default="Select an Action Above"/>
+    <aura:attribute name="icon" type="String" default="standard:brand"/>
+    <aura:handler event="c:INS_toolkitEvent" action="{!c.handleApplicationEvent}"/>
+    <aura:handler event="c:INS_toolkitRefreshEvent" action="{!c.handleRefreshEvent}"/>
+
+
+   
+    <div aura:id="jakeContainer" class="slds-card slds-hidden">    
+
+        <aura:if isTrue="{!v.component == 'quote'}">
+            <c:INS_quickQuoteJH/>
+        </aura:if>
+        <aura:if isTrue="{!v.component == 'guidewire'}">
+            
+        </aura:if>
+        <aura:if isTrue="{!v.component == 'analytics'}">
+            
+        </aura:if>
+        <aura:if isTrue="{!v.component == 'map'}">
+           <!-- nothing to do, composed modal from toolkit cmp-->
+        </aura:if>
+        <aura:if isTrue="{!v.component == 'quote'}">
+          
+        </aura:if>
+        
+    </div>
+
+    
+
+	
+</aura:component>

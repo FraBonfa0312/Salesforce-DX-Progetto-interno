@@ -1,0 +1,161 @@
+<!--THIS COMPONENT TAKES A CUSTOMISED STATIC CSS FILE THAT HAS BEEN USED IN DIFFERENT COMPONENTS-->
+<!--PLEASE DO NOT CHANGE THE STATIC FILE FOR ONLY ONE COMPONENT-->
+<!--PLEASE ADD/OVERWRITE CSS IN EACH COMPONENT IF NEEDED-->
+
+
+<aura:component controller="VINLookupController" access="global">
+    <ltng:require styles="{!join(',', 
+    $Resource.Q_GWScreenBaseCss)}" afterScriptsLoaded="{!c.handleSelectVehicleInit}" />
+
+    <aura:registerEvent name="onSelectVehicleCompletionEvt" type="c:Qsyd_GW_onSelectVehicleCompletionEvt"/>
+
+    <aura:attribute name="propertyType" type="String" default="Vehicle"/>
+    <aura:attribute name="primaryUse" type="String" default="Personal"/>    
+    <aura:attribute name="vehicleYearsOptions" type="list" default=""/>
+    <aura:attribute name="numOfAccidents" type="Integer" default="0" />
+    <aura:attribute name="numOfViolations" type="Integer" default="0" />
+    <aura:attribute name="oppty" type="Opportunity" default=""/>
+    <aura:attribute name="vehiclesList" type="list" default="[
+    {
+        VIN: '1VWAP7A36DC047911',
+        state:'IL',
+        deletable: false,
+        make:'Lexus',
+        model:'GS350',
+        year:'2018',
+        licensePlate:'Rachel3451',
+        costNew:35000
+    }
+    ]" />
+
+    <div class="GWScreenContainer">
+        <lightning:layout multipleRows="true">
+            <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                <div class="sectionTitle">
+                    <span class="title">Vehicle</span>
+                </div>
+            </lightning:layoutItem>
+            <aura:iteration items="{!v.vehiclesList}" var="vehicle" indexVar="idx">
+                <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                    <div class="sectionDetails">
+                        <span class="details">After you enter a VIN and move to the next field, the Make, Model and Year will be filled in automatically
+                            if possible.</span>
+                    </div>
+                </lightning:layoutItem>
+                <div class="singleVehicle">
+                    <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                        <div class="inputLabel">
+                            <span class="label">VIN
+                                <span class="asterisk">*</span>
+                            </span>
+                        </div>
+                        <div class="inputElement">
+                            <input id="{!'VIN'+ idx}" type="text" class="slds-input" autocomplete="on" value="{!vehicle.VIN}"/>
+                            <a id="{!'VINLookup' + idx}" name="{!idx}" onclick="{!c.handleVINLookup}"> <lightning:icon class="slds-p-around_small" iconName="utility:search" size="xx-small" alternativeText="Search"/></a>
+                        </div>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                        <div class="inputLabel">
+                            <span class="label">Make
+                                <span class="asterisk">*</span>
+                            </span>
+                        </div>
+                        <div class="inputElement">
+                            <input d="{!'MAKE'+ idx}" type="text" class="slds-input" value="{!vehicle.make}" />
+                        </div>
+                    </lightning:layoutItem>
+
+                    <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                        <div class="inputLabel">
+                            <span class="label">Model
+                                <span class="asterisk">*</span>
+                            </span>
+                        </div>
+                        <div class="inputElement">
+                            <input id="{!'MODEL'+ idx}" type="text" class="slds-input" value="{!vehicle.model}"/>
+                        </div>
+                    </lightning:layoutItem>
+
+                    <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                        <div class="inputLabel">
+                            <span class="label">Year
+                                <span class="asterisk">*</span>
+                            </span>
+                        </div>
+                        <div class="inputElement">
+                            <select class="slds-select" id="{!'YEAR'+ idx}" value="{!vehicle.year}">
+                                <aura:iteration items="{!v.vehicleYearsOptions}" var="item">
+                                    <option value="{!item}">{!item}</option>
+                                </aura:iteration>
+                            </select>
+                        </div>
+                    </lightning:layoutItem>
+
+                    <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                        <div class="inputLabel">
+                            <span class="label">License Plate
+                            </span>
+                        </div>
+                        <div class="inputElement">
+                            <input id="{!'LICENSEPLATE'+ idx}" type="text" class="slds-input" value="{!vehicle.licensePlate}"/>
+                        </div>
+                    </lightning:layoutItem>
+
+                    <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                        <div class="inputLabel">
+                            <span class="label">State
+                                <span class="asterisk">*</span>
+                            </span>
+                        </div>
+                        <div class="inputElement">
+                            <select id="{!'STATE'+ idx}" class="slds-select" >
+                                <option selected="true" value="{!vehicle.state}">{!vehicle.state}</option>
+                                <option value="NSW">NSW</option>
+                                <option value="VIC">VIC</option>
+                                <option value="TAS">TAS</option>
+                                <option value="ACT">ACT</option>
+                            </select>
+                        </div>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                        <div class="inputLabel">
+                            <span class="label">Cost New
+                                <span class="asterisk">*</span>
+                            </span>
+                        </div>
+                        <div class="inputElement">
+                            <input id="{!'COSTNEW'+ idx}" type="number" class="slds-input" value="{!vehicle.costNew}"/>
+                        </div>
+                    </lightning:layoutItem>
+                    <aura:if isTrue="{!vehicle.deletable}">
+                        <lightning:layoutItem size="12" class="slds-p-vertical_x-small slds-text-align_right">
+                            <lightning:button label="Delete" name="{!idx}" onclick="{!c.handleDeleteVehicle}" />
+                        </lightning:layoutItem>
+                    </aura:if>
+                </div>
+                <!--singleVehicle-->
+            </aura:iteration>
+            <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                <div class="sectionTitle">
+                    <span class="title">Add Another Vehicle?</span>
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                <lightning:button label=" + Add Vehicle" onclick="{!c.handleAddVehicle}" />
+            </lightning:layoutItem>
+        </lightning:layout>
+
+        <div class="div-footer">
+            <div class="slds-p-vertical_small">
+                <div class="btn-footer">
+                    <a style="float:left">Cancel</a>
+                    <lightning:button label="Previous" variant="neutral" class="slds-p-vertical_xx-small slds-m-left_xx-small" 
+                        onclick="{!c.handleFireEventGoPrevious}" />
+                    <lightning:button label="Next" variant="brand" class="slds-p-vertical_xx-small slds-m-left_xx-small"
+                        onclick="{!c.handleFireEventGoNext}" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+</aura:component>

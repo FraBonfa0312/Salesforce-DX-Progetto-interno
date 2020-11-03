@@ -1,0 +1,63 @@
+<aura:component>
+
+
+    <div class="myContainer">
+
+        <div class="slds-p-around_small">
+            <lightning:layout horizontalAlign="spread" class="slds-p-top_xx-large">
+
+                <lightning:layoutItem flexibility="auto" padding="around-x-small" size="4"
+                    class="slds-align_absolute-center">
+                    <div class="itemPad theBox slds-text-align_center" onclick="">
+                        <div class="slds-p-bottom_x-small slds-p-top_medium">
+                            <img src="https://sfdc-demo-images-jake.s3.amazonaws.com/location.png" class="eaIcon" />
+                            <!-- <img src="https://sfdc-demo-images-jake.s3.amazonaws.com/calendar+(1).png" class="eaIcon" /> -->
+                            <!-- <lightning:icon iconName="standard:product_request" size="medium" class="iconStyle" /> -->
+                            
+                        </div>
+                        <div class="slds-text-heading_small textMod">
+                            <span class="">Salesforce Maps
+                            </span>
+                        </div>
+                    </div>
+                </lightning:layoutItem>
+
+                <lightning:layoutItem flexibility="auto" padding="around-x-small" size="4"
+                    class="slds-align_absolute-center">
+                    <div class="itemPad slds-text-align_center theBox" onclick="">
+                        <div class="slds-p-bottom_x-small slds-p-top_medium">
+                            <img src="https://sfdc-demo-images-jake.s3.amazonaws.com/check-list.png" class="eaIcon" />
+                            <!-- <lightning:icon iconName="standard:performance" size="medium" /> -->
+                        </div>
+                        <div class="slds-text-heading_small textMod">
+                            <span class="">Create a Task
+                            </span>
+                        </div>
+                    </div>
+                </lightning:layoutItem>
+
+                <lightning:layoutItem flexibility="auto" padding="around-x-small" size="4"
+                    class="slds-align_absolute-center">
+                    <div class="itemPad slds-text-align_center theBox">
+                        <div class="slds-p-bottom_x-small slds-p-top_medium">
+                            <img src="https://sfdc-demo-images-jake.s3.amazonaws.com/stopwatch.png" class="eaIcon" />
+                            <!-- <lightning:icon iconName="standard:announcement" size="medium" /> -->
+                        </div>
+                        <div class="slds-text-heading_small textMod">
+                            <span class="">Schedule a Reminder
+                            </span>
+                        </div>
+                    </div>
+                </lightning:layoutItem>
+
+
+            </lightning:layout>
+
+
+        </div>
+
+    </div>
+
+
+
+</aura:component>

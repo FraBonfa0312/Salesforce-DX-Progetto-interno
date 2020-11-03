@@ -1,0 +1,469 @@
+<aura:component implements="lightning:availableForFlowScreens" access="global" >
+    <article class="slds-card">
+        <lightning:progressIndicator currentStep="2" type="base" hasError="false" variant="base">
+            <lightning:progressStep label="Step 1" value="1"/>
+            <lightning:progressStep label="Step 2" value="2"/>
+            <lightning:progressStep label="Step 3" value="3"/>
+            <lightning:progressStep label="Step 4" value="4"/>
+            
+            
+        </lightning:progressIndicator>
+        <div class="slds-card__header slds-grid">
+            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                <div class="slds-media__figure">
+                    <span class="slds-icon_container slds-icon-standard-account" title="account">
+                        <span class="slds-assistive-text">account</span>
+                    </span>
+                </div>
+                <div class="slds-media__body">
+                    <h2 class="slds-card__header-title">
+                        <span>Create a Quote</span>
+                    </h2>
+                </div>
+            </header>
+        </div>
+        <div class="slds-card__body slds-card__body_inner">
+            <!--Input 1-->
+            
+            <h2>Option 1</h2>
+            
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col">
+                    
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="text-input-id-1">Plan Assets</label>
+                        <div class="slds-form-element__control">
+                            <input type="text" id="text-input-id-1" value="$500,000" required="" class="slds-input" />
+                        </div>
+                    </div> 
+                </div>
+                <!--Input 2-->
+                <div class="slds-col">
+                    
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="text-input-id-1">Plan Participants</label>
+                        <div class="slds-form-element__control">
+                            <input type="text" id="text-input-id-1" value="20" required="" class="slds-input" />
+                        </div>
+                    </div>   
+                </div>
+                
+                <!--Input 3-->
+                
+                <div class="slds-col">
+                    
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="text-input-id-1">Annual Contribution</label>
+                        <div class="slds-form-element__control">
+                            <input type="text" id="text-input-id-1" value ="$50,000" required="" class="slds-input" />
+                        </div>
+                    </div>    
+                </div>
+                <!--Input 4-->
+                <div class="slds-col">
+                    
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="text-input-id-1">Employee Matching</label>
+                        <div class="slds-form-element__control">
+                            <input type="text" id="text-input-id-1" value="5%" required="" class="slds-input" />
+                        </div>
+                    </div>   
+                </div>
+            </div>
+            <!--Input 5-->
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col">
+                    
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="text-input-id-1">TPA:</label>
+                        <div class="slds-form-element__control">
+                            <input type="text" id="text-input-id-1" value="Stringer Resource Group" required="" class="slds-input" />
+                        </div>
+                    </div>   
+                </div>
+                
+                <!--Input 6-->
+                <div class="slds-col">
+                    
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="text-input-id-1">
+                            <abbr class="slds-required" title="required">* </abbr>Mapping Strategy</label>
+                        <div class="slds-form-element__control">
+                            <input type="text" id="text-input-id-1" value="Target Date Fund" required="" class="slds-input" />
+                        </div>
+                    </div>   
+                </div>
+                
+                <!--Input 7-->
+                <div class="slds-col">
+                    
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="text-input-id-1">
+                            <abbr class="slds-required" title="required">* </abbr>Fiduciary</label>
+                        <div class="slds-form-element__control">
+                            <input type="text" id="text-input-id-1" value="Michelle Advisor" required="" class="slds-input" />
+                        </div>
+                    </div>   
+                </div>                
+                <!--Input 8-->
+                <div class="slds-col">
+                    <lightning:select name="select1" label="TPA:" >
+                        <option value="">Self Trust</option>
+                        <option value="1">Great Trust</option>
+                        <option value="2">Reliance Trust</option>
+                    </lightning:select>
+                </div>
+                <!--input10-->
+            </div>
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" for="text-input-id-1">
+                    Fund Selection</label>
+                
+                <div class="slds-grid slds-gutters"> 
+                    <div class="slds-col slds-size_1-of-12">
+                        <lightning:input type="checkbox" label="Bonds" name="input1"/>
+                    </div>
+                    <div class="slds-col slds-size_1-of-12">
+                        <lightning:input type="checkbox" label="In House" name="input2"/>
+                    </div>
+                    <div class="slds-col slds-size_1-of-12">
+                        <lightning:input type="checkbox" label="ETF" name="input3"/>
+                    </div>
+                    <div class="slds-col slds-size_3-of-12">
+                        <lightning:input type="checkbox" checked="true" label="Target Date" name="input4"/>
+                    </div>
+                    
+                </div>
+                <div>
+                    <br></br>
+                </div>
+                
+                <div>                        
+                    <lightning:input type="checkbox" checked = "true" label="Auto Enroll?" name="input1"/>
+                </div>
+                
+                
+            </div>     
+            
+        </div>
+        
+        <!-- buttons--> 
+        <div class="slds-grid">
+            <div class="slds-col slds-size_1-of-12">
+                <div class="slds-no-flex">
+                    <lightning:button variant="brand" label="Add" title="Brand action" onclick="{!c.handleClick}"/>            
+                </div>      
+            </div>
+            
+            <div class="slds-col slds-size_11-of-12">
+                
+            </div>
+            
+            
+        </div>
+        
+        
+        
+        <div id="div2" style="display: none" class="slds-card__body slds-card__body_inner">
+            
+            <!--Input 1-->
+            
+            <h2>Option 2</h2>
+            
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col">
+                    
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="text-input-id-1">Plan Assets</label>
+                        <div class="slds-form-element__control">
+                            <input type="text" id="text-input-id-1" value="$5,000,000" required="" class="slds-input" />
+                        </div>
+                    </div> 
+                </div>
+                <!--Input 2-->
+                <div class="slds-col">
+                    
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="text-input-id-1">Plan Participants</label>
+                        <div class="slds-form-element__control">
+                            <input type="text" id="text-input-id-1" value ="200" required="" class="slds-input" />
+                        </div>
+                    </div>   
+                </div>
+                <!--Input 3-->
+                <div class="slds-col">
+                    
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="text-input-id-1">Annual Contribution</label>
+                        <div class="slds-form-element__control">
+                            <input type="text" id="text-input-id-1" value="$500,000" required="" class="slds-input" />
+                        </div>
+                    </div>    
+                </div>
+                <!--Input 4-->
+                
+                <div class="slds-col">
+                    
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="text-input-id-1">Employee Matching</label>
+                        <div class="slds-form-element__control">
+                            <input type="text" id="text-input-id-1" value="5%" required="" class="slds-input" />
+                        </div>
+                    </div>   
+                </div>
+            </div>
+            <!--Input 5-->
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col">
+                    
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="text-input-id-1">TPA:</label>
+                        <div class="slds-form-element__control">
+                            <input type="text" id="text-input-id-1" value="Stringer Resource Group" required="" class="slds-input" />
+                        </div>
+                    </div>   
+                </div>
+                
+                
+                <!--Input 6-->
+                <div class="slds-col">
+                    
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="text-input-id-1">Mapping Strategy</label>
+                        <div class="slds-form-element__control">
+                            <input type="text" id="text-input-id-1" value="Dynamic Retirement Advisor" required="" class="slds-input" />
+                        </div>
+                    </div>   
+                </div>
+                
+                <!--Input 7-->
+                <div class="slds-col">
+                    
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="text-input-id-1">Fiduciary</label>
+                        <div class="slds-form-element__control">
+                            <input type="text" id="text-input-id-1" value="Michelle Advisor" required="" class="slds-input" />
+                        </div>
+                    </div>   
+                </div>                
+                <!--Input 8-->
+                
+                <div class="slds-col">
+                    
+                    <lightning:select name="select1" label="TPA:" >
+                        <option value="">Self Trust</option>
+                        <option value="1">Great Trust</option>
+                        <option value="2">Better Trust</option>
+                    </lightning:select>
+                </div>
+                <!--Input 9-->
+            </div>
+            <!--input10-->
+            
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" for="text-input-id-1">Fund Selection</label>
+                
+                <div class="slds-grid slds-gutters"> 
+                    
+                    <div class="slds-col slds-size_1-of-12">
+                        <lightning:input type="checkbox" label="Bonds" name="input1"/>
+                    </div>
+                    <div class="slds-col slds-size_1-of-12">
+                        <lightning:input type="checkbox" checked="true" label="In House" name="input2"/>
+                    </div>
+                    <div class="slds-col slds-size_1-of-12">
+                        <lightning:input type="checkbox" checked="true" label="ETF" name="input3"/>
+                    </div>
+                    <div class="slds-col slds-size_3-of-12">
+                        <lightning:input type="checkbox" checked="true" label="Target Date" name="input4"/>
+                    </div>
+                    
+                </div>
+                <div>
+                    <br></br>
+                </div>
+                
+                <div>                        
+                    <lightning:input type="checkbox" checked = "true" label="Auto Enroll?" name="input1"/>
+                </div>
+                
+                
+            </div>   
+            <div>
+                <br>
+                </br>
+            </div>
+            <div class="slds-grid">
+                
+                <div class="slds-col slds-size_1-of-12">
+                    <div class="slds-no-flex">
+                        <lightning:button variant="brand" label="Add" title="Brand action" onclick="{!c.handleClick2}"/>
+                    </div>  
+                    
+                </div>   
+                
+                <div class="slds-col slds-size_1-of-12">
+                    <div class="slds-no-flex">
+                        <lightning:button variant="brand" label="Remove" title="Brand action" onclick="{!c.handleClick}"/>            
+                    </div>   
+                </div>
+                
+                <div class="slds-col slds-size_10-of-12">
+                </div>
+            </div>
+            
+        </div>
+        
+        
+        <div id="div3" style="display: none" class="slds-card__body slds-card__body_inner">
+            
+            <!--Input 1-->
+            <h2>Option 3</h2>
+            
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col">
+                    
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="text-input-id-1">Plan Assets</label>
+                        <div class="slds-form-element__control">
+                            <input type="text" id="text-input-id-1"  required="" class="slds-input" />
+                        </div>
+                    </div> 
+                </div>
+                <!--Input 2-->
+                <div class="slds-col">
+                    
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="text-input-id-1">Plan Participants</label>
+                        <div class="slds-form-element__control">
+                            <input type="text" id="text-input-id-1"  required="" class="slds-input" />
+                        </div>
+                    </div>   
+                </div>
+                
+                <!--Input 3-->
+                <div class="slds-col">
+                    
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="text-input-id-1">Annual Contribution</label>
+                        <div class="slds-form-element__control">
+                            <input type="text" id="text-input-id-1"  required="" class="slds-input" />
+                        </div>
+                    </div>    
+                </div>
+                <!--Input 4-->
+                <div class="slds-col">
+                    
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="text-input-id-1">Employee Matching</label>
+                        <div class="slds-form-element__control">
+                            <input type="text" id="text-input-id-1" required="" class="slds-input" />
+                        </div>
+                    </div>   
+                </div>
+            </div>
+            <!--Input 5-->
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col">
+                    
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="text-input-id-1">TPA:</label>
+                        <div class="slds-form-element__control">
+                            <input type="text" id="text-input-id-1" required="" class="slds-input" />
+                        </div>
+                    </div>   
+                </div>
+                
+                <!--Input 6-->
+                <div class="slds-col">
+                    
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="text-input-id-1">Mapping Strategy</label>
+                        <div class="slds-form-element__control">
+                            <input type="text" id="text-input-id-1" required="" class="slds-input" />
+                        </div>
+                    </div>   
+                </div>
+                
+                <!--Input 7-->
+                <div class="slds-col">
+                    
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="text-input-id-1">Fiduciary</label>
+                        <div class="slds-form-element__control">
+                            <input type="text" id="text-input-id-1"  required="" class="slds-input" />
+                        </div>
+                    </div>   
+                </div>      
+                
+                <div class="slds-col">
+                    
+                    <lightning:select name="select1" label="TPA:" >
+                        <option value="">Select One:</option>
+                        <option value="1">Great West Trust</option>
+                        <option value="2">Reliance Trust</option>
+                        <option value="3">Self Trust</option>
+                        
+                    </lightning:select>
+                </div>
+                
+            </div>
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" for="text-input-id-1">
+                    <abbr class="slds-required"></abbr>Fund Selection</label>
+                
+                <div class="slds-grid slds-gutters"> 
+                    
+                    <div class="slds-col slds-size_1-of-12">
+                        <lightning:input type="checkbox" label="Bonds" name="input1"/>
+                    </div>
+                    <div class="slds-col slds-size_1-of-12">
+                        <lightning:input type="checkbox" label="In House" name="input2"/>
+                    </div>
+                    <div class="slds-col slds-size_1-of-12">
+                        <lightning:input type="checkbox" label="ETF" name="input3"/>
+                    </div>
+                    <div class="slds-col slds-size_3-of-12">
+                        <lightning:input type="checkbox" label="Age Based" name="input4"/>
+                    </div>
+                    
+                </div>
+                
+                
+            </div>  
+            
+            <div>
+                <br></br>
+            </div>
+            
+            <div>                        
+                <lightning:input type="checkbox" label="Auto Enroll?" name="input1"/>
+            </div>
+            
+            <div>
+                <br>
+                </br>
+            </div>
+            
+            <div class="slds-grid">
+                
+                <div class="slds-col slds-size_1-of-12">
+                    <div class="slds-no-flex">
+                        <lightning:button variant="brand" label="Add" title="Brand action"/>
+                    </div>
+                </div>   
+                
+                <div class="slds-col slds-size_1-of-12">
+                    <div class="slds-no-flex">
+                        <lightning:button variant="brand" label="Remove" title="Brand action" onclick="{!c.handleClick2}"/>            
+                    </div>   
+                </div>
+                
+                <div class="slds-col slds-size_10-of-12">
+                </div>
+                
+            </div>
+        </div>
+        
+    </article>
+</aura:component>

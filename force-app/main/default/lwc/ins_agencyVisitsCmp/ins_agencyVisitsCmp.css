@@ -1,0 +1,7 @@
+.slds-section lightning-icon {
+    transform: rotate(-90deg);
+}
+
+.slds-section.slds-is-open lightning-icon {
+    transform: rotate(0deg);
+}

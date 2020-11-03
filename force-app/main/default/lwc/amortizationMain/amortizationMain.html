@@ -1,0 +1,11 @@
+<template>
+    <c-amortization-form onamortizationcalculationevent={amortizationCalculationEventHandler} onamortizationresetevent={amortizationResetEventHandler} purchase-price={purchasePrice} monthly-payment={monthlyPayment} number-of-months={numberOfMonths}></c-amortization-form>
+    <p>&nbsp;</p>
+    <template if:true={showTable}>
+        <c-amortization-table amortization-records={amortizationRecords}></c-amortization-table>
+    </template>
+    <p>&nbsp;</p>
+    <template if:true={showBurndown}>
+        <c-generic-line-chart x-axis-obj={xAxisObj} y-axis-obj={yAxisObj} onburndowntypeevent={burndownTypeEventHandler}></c-generic-line-chart>
+    </template>
+</template>

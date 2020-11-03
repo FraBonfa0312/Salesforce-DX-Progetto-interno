@@ -1,0 +1,99 @@
+<aura:component implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes,force:hasRecordId,force:hasSObjectName"
+                access="global">
+    
+    <!-- Global Component Configuration -->
+    <aura:attribute name="title"         type="String"   default="The Map"/>
+    <aura:attribute name="icon"          type="String"   default="action:map" />
+    <aura:attribute name="showBorder"    type="Boolean"  default="false"/>
+    <aura:attribute name="zoomLevel"    type="String"  default="15"/>
+    
+    <aura:attribute name="locationConfigStr" type="String"
+                    default='{"location": {
+                                 "City"   : {"field":"BillingCity"},
+                                 "Country": {"field":"BillingCountry"}
+                              },
+                              "icon" : {"value":"custom:custom24"},
+                              "title": {"field":"Name"},
+                              "description": {"field":"Type"}
+                             }'/>
+    <aura:attribute name="locationQuery" type="String"
+                    default="select BillingCity,BillingCountry,Name,Type from Account where BillingCity !=null WITH SECURITY_ENFORCED order by Id LIMIT 3"/>
+                    
+    <aura:attribute name="mapMarkersStr" type="String"
+                    default='[{"location": {
+                                 "City": "{{{Object.BillingCity}}}",
+                                 "Country": "{{{Object.BillingCountry}}}"
+                              },
+                              "icon": "custom:custom1",
+                              "title": "{{{Object.Name}}}",
+                              "description": "{{{Object.Type}}}"
+                             }]' />
+    <aura:attribute name="mapMarkers"    type="Object" />
+    <aura:attribute name="markersTitle"  type="String" 
+                    default="Map"/>
+
+    <!-- Data Management Parameters -->
+    <aura:attribute name="bypassFLS"         type="Boolean"  default="false" 
+                    description="Bypass FLS when executing query." />
+    <aura:attribute name="bypassSharing"     type="Boolean"  default="false" 
+                    description="Bypass Sharing when executing query." />
+    <aura:attribute name="queryType"         type="String"   default=""
+                    description="When requesting a byPass, a valid queryType should be provided (in PEG_Query__mdt)." />
+    <aura:attribute name="isStorable"        type="Boolean"  default="false" 
+                    description="Query action storable mode activation." />
+    <aura:attribute name="isBackground"      type="Boolean"  default="false" 
+                    description="Query action background mode activation." />
+    
+    <!-- handlers-->
+    <aura:handler name="init" value="{! this }" action="{! c.init }"
+                  description="Initialization of the component : generation of the required SOQL query." />
+    <aura:handler event="lightning:tabRefreshed" action="{!c.refreshMap}"
+                  description="Refreshing of the underlying SOQL list." />
+    
+    <!-- Utility Components -->
+    <lightning:notificationsLibrary aura:id="notifUtil"/>
+    <c:PEG_Merge_CMP aura:id="mergeUtil1"
+                     recordId="{!v.recordId}"
+                     sObjectName="{!v.sObjectName}"/>
+    <c:PEG_Merge_CMP aura:id="mergeUtil2"
+                     recordId="{!v.recordId}"
+                     sObjectName="{!v.sObjectName}"/>
+    <c:PEG_SOQL_CMP  aura:id="soqlUtil"/>
+    <c:PEG_JSON_CMP  aura:id="jsonUtil"/>
+    
+    <!-- the map component -->
+    <lightning:card title="{!v.title}" iconName="{!v.icon}" 
+                   class="{! if(v.showBorder, 'slds-card_boundary', '')}" >
+        
+        <aura:set attribute="actions">
+            <lightning:buttonGroup class="slds-col">
+            <lightning:buttonIcon iconName="utility:refresh"
+                                  alternativeText="Open"
+                                  variant="border"
+                                  class="slds-button_last"
+                                  onclick="{!c.refreshMap}"/>
+            </lightning:buttonGroup>
+        </aura:set>
+        
+    <div class="{! 'slds-card__body' + if(v.showBorder, ' slds-card__body_inner', '')}">
+        <aura:if isTrue="{!v.mapMarkers.length == 1}">
+        <lightning:map 
+        title="{!v.title}"
+        zoomLevel="{!v.zoomLevel}"
+        mapMarkers="{! v.mapMarkers }"
+        markersTitle="{!v.markersTitle}"
+        onclick="{c.handleClick}"/>
+        </aura:if>
+        
+        <aura:if isTrue="{!v.mapMarkers.length > 1}">  
+        <lightning:map 
+        title="{!v.title}"       
+        mapMarkers="{! v.mapMarkers }"
+        markersTitle="{!v.markersTitle}"
+        onclick="{c.handleClick}"/>
+        </aura:if>
+    </div> 
+    </lightning:card>
+    
+    
+</aura:component>

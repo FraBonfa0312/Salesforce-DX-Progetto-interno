@@ -1,0 +1,22 @@
+<apex:page controller="Cancel_S_Appointment_Controller" lightningStylesheets="true">
+    <head>
+        <script>
+        function cancelSA()
+        {
+            var retVal = confirm("Are you sure you want to cancel it?");
+            if( retVal == true ){
+                cancelMethod();
+                return true;
+            }else{
+                return false;
+            }
+        }
+        </script>
+    </head>
+    <apex:form >
+        <apex:commandButton onclick="cancelSA()"  id="cancelButton" value="Cancel"/>
+        <apex:actionFunction name="cancelServiceAppointmentRecord" action="{!cancelMethod}" rerender="out" status="myStatus">
+            <apex:param name="id" value="{!currentRecord.Id}"/>
+        </apex:actionFunction>
+    </apex:form>
+</apex:page>

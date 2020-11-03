@@ -1,0 +1,5 @@
+<design:component>
+	<design:attribute name="recordId"          label="Record ID" />
+    <design:attribute name="selectedVehicleId" label="Selected Vehicle ID" />
+    <design:attribute name="selectedAssetId"   label="Selected Insured Asset ID" />
+</design:component>

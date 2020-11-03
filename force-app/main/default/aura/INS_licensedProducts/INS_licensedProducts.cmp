@@ -1,0 +1,345 @@
+<!-- Developer Notes:
+*Author:
+*Date: August 6, 2019
+*Comments: Admittedly terrible design from the functional side. Formatting with screen size is basically not present, needs to be updated once we find some time.
+*Planned Revisions:
+	- map to object model once defined, store licensed products in an attribute of type=object[]
+	- hover component to display details on things for each, such as license info and basically all things seen in expander section now
+	- hover events, tag on util add class methods, enable additional styling to interact with the user
+	- make the metrics display section not completely suck
+	- Update to make it functional. Once licensing data model bits are added to the IDO, implement an apex controller and store returned licenses 
+    in local object, then iterate over to display cmp.
+	-Get images off of s3 host and replace with references to static images in the IDO
+
+*Completed Revisions:
+	-Revised styling to make layout items not pop quite as much, removed slds-box classes
+
+
+
+-->
+
+<aura:component implements="force:hasRecordId,flexipage:availableForAllPageTypes" access="global">
+    
+    <!-- Data and Event Structure -->
+    <!-- <aura:handler name="init" value="{!this}" action="{!c.doInit}"/> -->
+    <aura:attribute name="Licenses" type="String" default="" />
+    <aura:attribute name="icon" type="String" default="custom:custom90" />
+    <aura:attribute name="title" type="String" default="Active Lines of Business" />
+    <aura:attribute name="collapsed" type="Boolean" default="True"/>
+    
+    <lightning:card>
+        <aura:set attribute="title">
+            <div class= "slds-media slds-media_center">
+                <div class="slds-media_figure">
+                    <lightning:icon iconName="{!v.icon}"/>
+                </div>
+                <div class = "slds-media_body slds-m-left_small">                    
+                    <span class ="slds-text-heading_small " style="font-weight:bold;">{!v.title}</span>                    
+                </div>
+            </div>            
+        </aura:set>
+        <aura:set attribute="actions">
+            <lightning:buttonIcon iconName="utility:down" size="medium" variant="bare"/>
+        </aura:set>
+        
+        <div class="c-container slds-padding-around_small slds-p-right_x-large">
+            <lightning:layout horizontalAlign="spread">
+                
+                <lightning:layoutItem flexibility="auto" padding="around-small" size="2" class="slds-text-align_center"> 
+                    <div class="jake1 section21" onclick="{!c.doClick}">
+                        <div>
+                            <img src="https://sfdc-demo-images-jake.s3.amazonaws.com/Condo.png" class="slds-p-top_medium pic images"/>
+                        </div>
+                        <div class="slds-text-body_small"> 
+                            <span class="licenseText">Property</span>
+                        </div> 
+                    </div>
+                </lightning:layoutItem>
+                
+                <lightning:layoutItem flexibility="auto" padding="around-small" size="2" class="slds-text-align_center"> 
+                    <div class="jake1 section21">
+                        <div>
+                            <img src="https://sfdc-demo-images-jake.s3.amazonaws.com/Collector_Car.png" class="slds-p-top_medium images"/>
+                        </div>
+                        <div class="slds-text-body_small"> 
+                            <span class="licenseText">Auto</span>
+                        </div>
+                    </div>
+                </lightning:layoutItem>
+                
+                <lightning:layoutItem flexibility="auto" padding="around-small" size="2" class="slds-text-align_center"> 
+                    <div class="jake1 section21">
+                        <div>
+                            <img src="https://sfdc-demo-images-jake.s3.amazonaws.com/LTC.png" class="slds-p-top_medium images"/>
+                        </div>
+                        <div class="slds-text-body_small"> 
+                            <span class="licenseText">Workers'</span>
+                        </div> 
+                    </div>
+                </lightning:layoutItem>
+                
+                <lightning:layoutItem flexibility="auto" padding="around-small" size="2" class="slds-text-align_center"> 
+                    <div class="jake1 section21">
+                        <div>
+                            <img src="https://sfdc-demo-images-jake.s3.amazonaws.com/Commercial.png" class="slds-p-top_medium images"/>
+                        </div>
+                        <div class="slds-text-body_small"> 
+                            <span class="licenseText">Liability</span>
+                        </div> 
+                    </div>
+                </lightning:layoutItem>
+                
+                <lightning:layoutItem flexibility="auto" padding="around-small" size="2" class="slds-text-align_center"> 
+                    <div class="jake1 inactive" onmousemove="{!c.onMouseMove}">
+                        <div aura:id="changeIt">
+                            <img src="https://sfdc-demo-images-jake.s3.amazonaws.com/Umbrella.png" class="slds-p-top_medium images"/>
+                        </div>
+                        <div class="slds-text-body_small"> 
+                                <span class="licenseText">BoP</span>
+                        </div>
+                    </div>
+                </lightning:layoutItem>
+                
+                
+            </lightning:layout>
+        </div>
+        
+        <aura:if isTrue="{!not(v.collapsed)}">
+            <div class="slds-card__body_inner">
+                <ul class="slds-p-top_small slds-has-dividers_bottom">
+                    
+                   <!--  <li class="slds-item">
+                                <div class="slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_6-of-12">
+                                        <div class="slds-form-element">
+                                            <span class="slds-form-element__label">Label</span>
+                                            <div class="slds-form-element__control">
+                                                <span class="slds-form-element__static">Value</span>
+                                            </div>
+                                        </div>                                    
+                                    </div>
+                                    <div class="slds-col slds-size_6-of-12">
+                                        <div class="slds-form-element">
+                                            <span class="slds-form-element__label">Label</span>
+                                            <div class="slds-form-element__control">
+                                                <span class="slds-form-element__static">Value</span>
+                                            </div>
+                                        </div>                                    
+                                    </div>
+                                </div>
+                            </li> -->
+                    <li class="slds-item">
+                        <lightning:layout class="slds-p-top_xx-small slds-p-bottom_xx-small" horizontalAlign="spread" verticalAlign="center">
+                            <lightning:layoutItem>
+                                <div class="slds-media slds-m-left_x-small slds-media_center">
+                                    <div class="slds-media__figure">
+                                        <div style="font-size: 1rem;">73</div>
+                                    </div>
+                                    <div class="slds-media__body">
+                                        <div style="font-size: 0.8125rem;">YTD Submissions</div>
+                                    </div>
+                                    <div class="slds-media__figure slds-media__figure_reverse"></div>
+                                </div>
+                            </lightning:layoutItem>
+                            <lightning:layoutItem>
+                                <div class="slds-media slds-media_center">
+                                    <div class="slds-media__figure">
+                                        <lightning:dynamicIcon type="trend" option="up"></lightning:dynamicIcon>
+                                    </div>
+                                    <div class="slds-media__body">
+                                        <div style="font-size: 0.8125rem;">14%</div>
+                                    </div>
+                                    <div class="slds-media__figure slds-media__figure_reverse"></div>
+                                </div>
+                            </lightning:layoutItem>
+                        </lightning:layout>
+                    </li>
+                    <li class="slds-item">
+                        <lightning:layout class="slds-p-top_xx-small slds-p-bottom_xx-small" horizontalAlign="spread" verticalAlign="center">
+                            <lightning:layoutItem>
+                                <div class="slds-media slds-p-left_x-small slds-media_center">
+                                    <div class="slds-media__figure">
+                                        <div style="font-size: 1rem;">31</div>
+                                    </div>
+                                    <div class="slds-media__body">
+                                        <div style="font-size: 0.8125rem;">YTD Quotes</div>
+                                    </div>
+                                    <div class="slds-media__figure slds-media__figure_reverse"></div>
+                                </div>
+                            </lightning:layoutItem>
+                            <lightning:layoutItem>
+                                <div class="slds-media slds-media_center">
+                                    <div class="slds-media__figure">
+                                        <lightning:dynamicIcon type="trend" option="up"></lightning:dynamicIcon>
+                                    </div>
+                                    <div class="slds-media__body">
+                                        <div style="font-size: 0.8125rem;">12%</div>
+                                    </div>
+                                    <div class="slds-media__figure slds-media__figure_reverse"></div>
+                                </div>
+                            </lightning:layoutItem>
+                        </lightning:layout>
+                    </li>
+                    <li class="slds-item">
+                        <lightning:layout class="slds-p-top_xx-small slds-p-bottom_xx-small" horizontalAlign="spread" verticalAlign="center">
+                            <lightning:layoutItem>
+                                <div class="slds-media slds-p-left_x-small slds-media_center">
+                                    <div class="slds-media__figure">
+                                        <div style="font-size: 1rem;">12</div>
+                                    </div>
+                                    <div class="slds-media__body">
+                                        <div style="font-size: 0.8125rem;">YTD Bindings</div>
+                                    </div>
+                                    <div class="slds-media__figure slds-media__figure_reverse"></div>
+                                </div>
+                            </lightning:layoutItem>
+                            <lightning:layoutItem>
+                                <div class="slds-media slds-media_center">
+                                    <div class="slds-media__figure">
+                                        <lightning:dynamicIcon type="trend" option="down" style="padding-right:3px;"/>
+                                    </div>
+                                    <div class="slds-media__body">
+                                        <div style="font-size: 0.8125rem;">4%</div>
+                                    </div>
+                                    <div class="slds-media__figure slds-media__figure_reverse"></div>
+                                </div>
+                            </lightning:layoutItem>
+                        </lightning:layout>
+                    </li>
+                    <!-- <li class="slds-item">
+                        <lightning:layout class="slds-p-top_xx-small slds-p-bottom_xx-small" horizontalAlign="spread" verticalAlign="center">
+                            <lightning:layoutItem>
+                                <div class="slds-media slds-p-left_x-small slds-media_center">
+                                    <div class="slds-media__figure">
+                                        <div style="font-size: 1rem;">97</div>
+                                    </div>
+                                    <div class="slds-media__body">
+                                        <div style="font-size: 0.8125rem;">Quotes</div>
+                                    </div>
+                                    <div class="slds-media__figure slds-media__figure_reverse"></div>
+                                </div>
+                            </lightning:layoutItem>
+                            <lightning:layoutItem>
+                                <div class="slds-media slds-media_center">
+                                    <div class="slds-media__figure">
+                                        <lightning:dynamicIcon type="trend" option="up"></lightning:dynamicIcon>
+                                    </div>
+                                    <div class="slds-media__body">
+                                        <div style="font-size: 0.8125rem;">#</div>
+                                    </div>
+                                    <div class="slds-media__figure slds-media__figure_reverse"></div>
+                                </div>
+                            </lightning:layoutItem>
+                        </lightning:layout>
+                    </li>
+                    <li class="slds-item">
+                        <lightning:layout class="slds-p-top_xx-small slds-p-bottom_xx-small" horizontalAlign="spread" verticalAlign="center">
+                            <lightning:layoutItem>
+                                <div class="slds-media slds-p-left_x-small slds-media_center">
+                                    <div class="slds-media__figure">
+                                        <div style="font-size: 1rem;">78.8%</div>
+                                    </div>
+                                    <div class="slds-media__body">
+                                        <div style="font-size: 0.8125rem;">Quote Ratio</div>
+                                    </div>
+                                    <div class="slds-media__figure slds-media__figure_reverse"></div>
+                                </div>
+                            </lightning:layoutItem>
+                            <lightning:layoutItem>
+                                <div class="slds-media slds-media_center">
+                                    <div class="slds-media__figure">
+                                        <lightning:dynamicIcon type="trend" option="up"></lightning:dynamicIcon>
+                                    </div>
+                                    <div class="slds-media__body">
+                                        <div style="font-size: 0.8125rem;">#</div>
+                                    </div>
+                                    <div class="slds-media__figure slds-media__figure_reverse"></div>
+                                </div>
+                            </lightning:layoutItem>
+                        </lightning:layout>
+                    </li>
+                    <li class="slds-item">
+                        <lightning:layout class="slds-p-top_xx-small slds-p-bottom_xx-small" horizontalAlign="spread" verticalAlign="center">
+                            <lightning:layoutItem>
+                                <div class="slds-media slds-p-left_x-small slds-media_center">
+                                    <div class="slds-media__figure">
+                                        <div style="font-size: 1rem;">65%</div>
+                                    </div>
+                                    <div class="slds-media__body">
+                                        <div style="font-size: 0.8125rem;">Policies Bound</div>
+                                    </div>
+                                    <div class="slds-media__figure slds-media__figure_reverse"></div>
+                                </div>
+                            </lightning:layoutItem>
+                            <lightning:layoutItem>
+                                <div class="slds-media slds-media_center">
+                                    <div class="slds-media__figure">
+                                        <lightning:dynamicIcon type="trend" option="up"></lightning:dynamicIcon>
+                                    </div>
+                                    <div class="slds-media__body">
+                                        <div style="font-size: 0.8125rem;">#</div>
+                                    </div>
+                                    <div class="slds-media__figure slds-media__figure_reverse"></div>
+                                </div>
+                            </lightning:layoutItem>
+                        </lightning:layout>
+                    </li>
+                    <li class="slds-item">
+                        <lightning:layout class="slds-p-top_xx-small slds-p-bottom_xx-small" horizontalAlign="spread" verticalAlign="center">
+                            <lightning:layoutItem>
+                                <div class="slds-media slds-p-left_x-small slds-media_center">
+                                    <div class="slds-media__figure">
+                                        <div style="font-size: 1rem;">67.1%</div>
+                                    </div>
+                                    <div class="slds-media__body">
+                                        <div style="font-size: 0.8125rem;">Hit Ratio</div>
+                                    </div>
+                                    <div class="slds-media__figure slds-media__figure_reverse"></div>
+                                </div>
+                            </lightning:layoutItem>
+                            <lightning:layoutItem>
+                                <div class="slds-media slds-media_center">
+                                    <div class="slds-media__figure">
+                                        <lightning:dynamicIcon type="trend" option="up"></lightning:dynamicIcon>
+                                    </div>
+                                    <div class="slds-media__body">
+                                        <div style="font-size: 0.8125rem;">#</div>
+                                    </div>
+                                    <div class="slds-media__figure slds-media__figure_reverse"></div>
+                                </div>
+                            </lightning:layoutItem>
+                        </lightning:layout>
+                    </li>
+                    <li class="slds-item">
+                        <lightning:layout class="slds-p-top_xx-small slds-p-bottom_xx-small" horizontalAlign="spread" verticalAlign="center">
+                            <lightning:layoutItem>
+                                <div class="slds-media slds-p-left_x-small slds-media_center">
+                                    <div class="slds-media__figure">
+                                        <div style="font-size: 1rem;">95.2%</div>
+                                    </div>
+                                    <div class="slds-media__body">
+                                        <div style="font-size: 0.8125rem;">Combined Ratio</div>
+                                    </div>
+                                    <div class="slds-media__figure slds-media__figure_reverse"></div>
+                                </div>
+                            </lightning:layoutItem>
+                            <lightning:layoutItem>
+                                <div class="slds-media slds-media_center">
+                                    <div class="slds-media__figure">
+                                        <lightning:dynamicIcon type="trend" option="neutral"></lightning:dynamicIcon>
+                                    </div>
+                                    <div class="slds-media__body">
+                                        <div style="font-size: 0.8125rem;">#</div>
+                                    </div>
+                                    <div class="slds-media__figure slds-media__figure_reverse"></div>
+                                </div>
+                            </lightning:layoutItem>
+                        </lightning:layout>
+                    </li>-->
+                </ul>
+            </div>
+        </aura:if>
+        
+    </lightning:card>
+    
+</aura:component>

@@ -1,0 +1,92 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:lightningQuickAction" access="global" controller="FSCDemoController">
+	<aura:attribute name="rachelAdamsId" type="String" default="FSC_Account.003" access="global"/>
+	<aura:attribute name="counter" type="Integer" default="1" access="global"/>
+	<aura:attribute name="isSaving" type="Boolean" default="1" access="global"/>
+    
+    <aura:attribute name="namePrefix" type="String" default="CD" access="global"/>
+    <aura:attribute name="theProduct" type="String" default="CD" access="global"/>
+    <aura:attribute name="fundingMethod" type="String" default="Check" access="global"/>
+    <aura:attribute name="finAcctType" type="String" default="CD" access="global"/>
+    
+	<lightning:spinner aura:id="spinner" class="hide-element" alternativeText="Creating Bank Account..." />
+	<style>
+		.hide-element{
+			display: none;
+		}
+	</style>
+
+	<div class="fsccd_image">
+		<img aura:id="image1" src="{!$Resource.screenshots + '/screenshots/1screen.png'}" onclick="{!c.highlightClick}" />
+		<a href="#" onclick="{!c.advanceDemo}" style="top: 17%; left: 21%; width: 36%; height: 4%;"></a>
+	</div>
+
+	<div class="fsccd_image">
+		<img aura:id="image2" class="hide-element" src="{!$Resource.screenshots + '/screenshots/2screen.png'}" onclick="{!c.highlightClick}" />
+		<a href="#" onclick="{!c.advanceDemo}" style="top: 17%; left: 59%; width: 37%; height: 4%;"></a>
+	</div>
+
+	<div class="fsccd_image">
+		<img aura:id="image3" class="hide-element" src="{!$Resource.screenshots + '/screenshots/3screen.png'}" onclick="{!c.highlightClick}" />
+		<a href="#" onclick="{!c.advanceDemo}" style="top: 28%; left: 20%; width: 37%; height: 4%;"></a>
+	</div>
+
+	<div class="fsccd_image">
+		<img aura:id="image4" class="hide-element" src="{!$Resource.screenshots + '/screenshots/4screen.png'}" onclick="{!c.highlightClick}" />
+		<a href="#" onclick="{!c.advanceDemo}" style="top: 38%; left: 21%; width: 36%; height: 4%;"></a>
+	</div>
+
+	<div class="fsccd_image">
+		<img aura:id="image5" class="hide-element" src="{!$Resource.screenshots + '/screenshots/5screen.png'}" onclick="{!c.highlightClick}" />
+		<a href="#" onclick="{!c.advanceDemo}" style="top: 2%; left: 92%; width: 6%; height: 4%;"></a>
+	</div>
+
+	<div class="fsccd_image">
+		<img aura:id="image6" class="hide-element" src="{!$Resource.screenshots + '/screenshots/6screen.png'}" onclick="{!c.highlightClick}" />
+		<a href="#" onclick="{!c.advanceDemo}" style="top: 28%; left: 21%; width: 36%; height: 4%;"></a>
+	</div>
+
+	<div class="fsccd_image">
+		<img aura:id="image7" class="hide-element" src="{!$Resource.screenshots + '/screenshots/7screen.png'}" onclick="{!c.highlightClick}" />
+		<a href="#" onclick="{!c.advanceDemo}" style="top: 2%; left: 92%; width: 6%; height: 5%;"></a>
+	</div>
+
+	<div class="fsccd_image">
+		<img aura:id="image8" class="hide-element" src="{!$Resource.screenshots + '/screenshots/8screen.png'}" onclick="{!c.highlightClick}" />
+		<a href="#" onclick="{!c.advanceDemo}" style="top: 2%; left: 91%; width: 7%; height: 4%;"></a>
+	</div>
+
+	<div class="fsccd_image">
+		<img aura:id="image9" class="hide-element" src="{!$Resource.screenshots + '/screenshots/9screen.png'}" onclick="{!c.highlightClick}" />
+		<a href="#" onclick="{!c.advanceDemo}" style="top: 33%; left: 77%; width: 10%; height: 4%;"></a>
+	</div>
+
+	<div class="fsccd_image">
+		<img aura:id="image10" class="hide-element" src="{!$Resource.screenshots + '/screenshots/10screen.png'}" onclick="{!c.advanceDemo}" />
+		<img id="ncinoBars" class="hide-element" src="{!$Resource.ncinoBars}" style="position: absolute; display: block; top: 9%; left: 47%; height: 6%;" />
+		<!--<a href="#" onclick="{!c.advanceDemo}" style="top: 2%; left: 92%; width: 6%; height: 4%;"></a>-->
+	</div>
+
+	<div class="fsccd_image">
+		<img aura:id="image11" class="hide-element" src="{!$Resource.screenshots + '/screenshots/11screen.png'}" onclick="{!c.highlightClick}" />
+		<a href="#" onclick="{!c.advanceDemo}" style="top: 3%; left: 92%; width: 6%; height: 3%;"></a>
+	</div>
+
+	<div class="fsccd_image">
+		<img aura:id="image12" class="hide-element" src="{!$Resource.screenshots + '/screenshots/12screen.png'}" onclick="{!c.highlightClick}" />
+		<a href="#" onclick="{!c.advanceDemo}" style="top: 2%; left: 92%; width: 6%; height: 4%;"></a>
+	</div>
+
+	<div class="fsccd_image">
+		<img aura:id="image13" class="hide-element" src="{!$Resource.screenshots + '/screenshots/13screen.png'}" onclick="{!c.highlightClick}" />
+		<a href="#" onclick="{!c.advanceDemo}" style="top: 19%; left: 21%; width: 6%; height: 4%;"></a>
+	</div>
+
+	<map name="fsccd">
+		<area shape="rect" image="productSelection" coords="260,115,727,148" alt="next" onclick="{!c.advanceDemo}" html="#"/>
+	</map>
+
+	<ltng:require styles="{!$Resource.animate_css}"
+		scripts="{!$Resource.jquery}"
+		afterScriptsLoaded="{!c.doneRendering}" />
+
+</aura:component>

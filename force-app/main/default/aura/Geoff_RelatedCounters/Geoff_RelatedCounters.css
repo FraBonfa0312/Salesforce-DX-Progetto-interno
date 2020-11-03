@@ -1,0 +1,11 @@
+.THIS .counter {
+    width: 120px;
+}
+
+.THIS .button {
+        float: right;
+    margin-right : 10px;
+        vertical-align: top;
+        display: block;
+    margin-left : -5px
+}

@@ -1,0 +1,5 @@
+<apex:page controller="SaveAndOpenPDF" renderAs="{!renderAs}" action="{!saveAndOpenPDF}">
+ <apex:image id="theImage" value="{!$Resource.illustrationimg1}"  />
+  <apex:image id="theImage1" value="{!$Resource.illustrationimg2}"  />
+  <apex:image id="theImage2" value="{!$Resource.illustrationimg3}"  />
+</apex:page>

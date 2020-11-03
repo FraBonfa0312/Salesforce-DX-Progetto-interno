@@ -1,0 +1,52 @@
+<template>
+    <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+        <thead>
+            <tr class="slds-line-height_reset">
+                <th class="" scope="col">
+                    <div class="slds-truncate" title="Month">Month</div>
+                </th>
+                <th class="" scope="col">
+                    <div class="slds-truncate" title="Payment">Payment</div>
+                </th>
+                <th class="" scope="col">
+                    <div class="slds-truncate" title="Principal Paid">Principal Paid</div>
+                </th>
+                <th class="" scope="col">
+                    <div class="slds-truncate" title="Interest Paid">Interest Paid</div>
+                </th>
+                <th class="" scope="col">
+                    <div class="slds-truncate" title="Remaining Balance">Remaining Balance</div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <template for:each={amortizationRecords} for:item='amortizationRecord'>
+                <tr class="slds-hint-parent" key={amortizationRecord.currentMonth}>
+                    <td data-label="Month">
+                        <div class="slds-truncate" title={amortizationRecord.currentMonth>{amortizationRecord.currentMonth}&nbsp;&nbsp;&nbsp;{amortizationRecord.currentMonthString}</div>
+                    </td>
+                    <td data-label="Payment">
+                        <div class="slds-truncate" title={amortizationRecord.payment}>
+                            <lightning-formatted-number value={amortizationRecord.payment} format-style="currency"></lightning-formatted-number>
+                        </div>
+                    </td>
+                    <td data-label="Principal Paid">
+                        <div class="slds-truncate" title={amortizationRecord.principalPaid}>
+                            <lightning-formatted-number value={amortizationRecord.principalPaid} format-style="currency"></lightning-formatted-number>
+                        </div>
+                    </td>
+                    <td data-label="Interest Paid">
+                        <div class="slds-truncate" title={amortizationRecord.interestPaid}>
+                            <lightning-formatted-number value={amortizationRecord.interestPaid} format-style="currency"></lightning-formatted-number>
+                        </div>
+                    </td>
+                    <td data-label="Remaining Balance">
+                        <div class="slds-truncate" title={amortizationRecord.remainingBalance}>
+                            <lightning-formatted-number value={amortizationRecord.remainingBalance} format-style="currency"></lightning-formatted-number>
+                        </div>
+                    </td>
+                </tr>
+            </template>
+        </tbody>
+    </table>
+</template>

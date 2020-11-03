@@ -1,0 +1,44 @@
+<aura:component controller="IDO_BdayRMDcard_Ctrl" implements="flexipage:availableForAllPageTypes" access="global" >
+	
+    <aura:attribute name="theContacts" type="Object[]" access="public" />
+    <aura:attribute name="theLimit" type="Integer" access="public" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <lightning:card title="{! 'Birthdays (' + v.theContacts.length +')'}" iconName="standard:thanks" footer="View All">
+        
+        <ul>
+            <aura:iteration items="{!v.theContacts}" var="con" >
+            <li class="slds-media slds-tile slds-m-vertical--small slds-m-horizontal--large">
+                <div class="slds-media__figure">
+                    <lightning:icon iconName="standard:client" size="small" alternativeText="Birthday"/> 
+                </div>
+                <div class="slds-media__body">
+                    <div class="slds-grid slds-grid--align-spread slds-has-flexi-truncate" >
+                        <p class="tile__title slds-truncate slds-tile__title">
+                            <div class="outputLookupContainer forceOutputLookupWithPreview">
+                                <a class=" textUnderline outputLookupLink slds-truncate forceOutputLookup"  data-recordid="" data-special-link="true" href="{! '/one/one.app#/sObject/'+ con.Id +'/view'}" rel="noreferrer" title="" data-aura-class="forceOutputLookup"> {!con.Name} </a>
+                            </div>
+                        </p>
+                        <div >
+                            <label class="uiLabel" for="" data-aura-class="uiLabel">
+                                <span class=""><ui:outputDate value="{!con.Birthdate}" format="MMM d"/></span>
+                            </label>
+                        </div>
+                    </div>
+                    <ul class="slds-tile__detail slds-list--horizontal slds-has-dividers slds-text-body--small" >
+                        <li class="slds-truncate slds-list__item">
+                            <label class="uiLabel" for="" data-aura-class="uiLabel">
+                                <span class="">Turning <lightning:formattedNumber value="{!con.Age__c}" maximumFractionDigits="0" /></span>
+                            </label>
+                        </li>
+                        <li class="slds-truncate slds-list__item"> {!con.Category__c}</li>
+                    </ul>
+                </div>
+            </li>
+            </aura:iteration>
+        </ul>
+            
+        
+    </lightning:card>
+    
+</aura:component>

@@ -1,0 +1,31 @@
+<aura:component implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome" access="global">
+    <aura:attribute name="thing" type="String" />
+
+    <aura:registerEvent name="navigateToSObject" type="force:navigateToSObject" />
+    <aura:registerEvent name="selectSObject" type="ltng:selectSObject" />
+
+    <div class="slds-card wholecard">
+        <div class="slds-p-around_small wholeCard">
+            <div class="slds-media slds-media_center">
+                <div class="slds-media__figure">
+                    <lightning:icon iconName="standard:account" size="medium" />
+                </div>
+                <div class="slds-media__body">
+                    <a onclick="{!c.navEvent}">
+                        <div class="slds-text-heading_small" style="color: rgb(0, 95, 178);">{!v.thing.Title}</div>
+                    </a>
+                    <div style="color: rgb(107, 109, 112); font-size: 13px;">Health Score: {!v.thing.healthScore}
+                        <span>
+                            <lightning:dynamicIcon type="trend" option="{!v.thing.trend}" alternativeText="Trending Up"
+                                style="padding-left: 4px" />
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-p-top_medium">
+                <lightning:badge label="{!v.thing.badgeText}" class="" style="border-radius: 3px;" />
+            </div>
+        </div>
+    </div>
+
+</aura:component>

@@ -1,0 +1,35 @@
+/**
+ * Created by kylegower-winter on 8/4/17.
+ */
+.THIS {
+}
+
+.THIS.fsc_modal{
+    text-align: center;
+    margin-top: 5em;
+}
+
+.THIS.fsc_modal h2{
+    font-size: 1.5em;
+    font-weight: bold;
+    -webkit-animation-duration: 1500ms;
+    -moz-animation-duration: 1500ms;
+}
+
+.THIS.fsc_modal p{
+    font-style: italic;
+    color: #54698d;
+    -webkit-animation-duration: 1000ms;
+    -webkit-animation-delay: 1000ms;
+    -moz-animation-duration: 1000ms;
+    -moz-animation-delay: 1000ms;
+}
+
+.THIS.fsc_modal img{
+    width: 120px;
+    margin-top: 3em;
+}
+
+.THIS .demo-container {
+    display: none;
+}

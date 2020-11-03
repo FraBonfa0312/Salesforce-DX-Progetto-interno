@@ -1,0 +1,35 @@
+<design:component label="Recommended Learning (Agent)">
+    
+    <design:attribute name="title" 
+                      label="Component Title"
+                      description=""/>
+    
+    <design:attribute name="trail1Title" 
+                      label="Title of the first trail" 
+                      description=""/>
+    
+    <design:attribute name="trail1URL" 
+                      label="Image URL for the first trail" 
+                      description="https://developer.salesforce.com/resource/images/trailhead/badges/modules/trailhead_module_apex_basics_and_database.png"/>
+    
+    <design:attribute name="trail2Title" 
+                      label="Title of the second trail" 
+                      description=""/>
+    
+    <design:attribute name="trail2URL" 
+                      label="Image URL for the second trail" 
+                      description="https://res.cloudinary.com/hy4kyit2a/f_auto,fl_lossy,q_70/learn/modules/platform_events_basics/23b9a76b8b2a24bf3937cd648179c24f_badge.png"/>
+    
+    <design:attribute name="trail3Title" 
+                      label="Title of the third trail" 
+                      description=""/>
+    
+    <design:attribute name="trail3URL" 
+                      label="Image URL for the third trail" 
+                      description="https://developer.salesforce.com/resource/images/trailhead/badges/modules/trailhead_module_financial_services_cloud_basics.png"/>
+    
+
+
+    
+	
+</design:component>

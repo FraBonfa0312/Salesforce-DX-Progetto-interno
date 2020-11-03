@@ -1,0 +1,91 @@
+<!--THIS COMPONENT TAKES A CUSTOMISED STATIC CSS FILE THAT HAS BEEN USED IN DIFFERENT COMPONENTS-->
+<!--PLEASE DO NOT CHANGE THE STATIC FILE FOR ONLY ONE COMPONENT-->
+<!--PLEASE ADD/OVERWRITE CSS IN EACH COMPONENT IF NEEDED-->
+
+
+<aura:component access="global">
+    <ltng:require styles="{!$Resource.Q_GWScreenBaseCss}"  afterScriptsLoaded="{!c.handleQualificationInit}" />
+
+    <div class="GWScreenContainer">
+        <lightning:layout multipleRows="true">
+            <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                <div class="sectionTitle">
+                    <span class="title">Qualification</span>
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                <div class="inputLabel">
+                    <span class="label">Is the applicant currently insured</span>
+                </div>
+                <div class="inputElement">
+                    <select class="slds-select" name="GWS3IsInsured">
+                        <option value="">--Choose--</option>
+                        <option value="No_NotRenew">No - previous policy did not renew</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No_NewDriver">No - New driver</option>
+                        <option value="Not_known">Not known</option>
+                    </select>
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                <div class="inputLabel">
+                    <span class="label">Is the applicant's license currently suspended, canceled, or revoked</span>
+                </div>
+                <div class="inputElement">
+                    <lightning:buttonGroup class="btn-groupToggleButton">
+                        <lightning:button label="Yes" aura:id="S3Q1" onclick="{!c.handleToggleBtnClick}" />
+                        <lightning:button label="No" aura:id="S3Q1" onclick="{!c.handleToggleBtnClick}" class="selectedToggleButtonType"/>
+                    </lightning:buttonGroup>
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                <div class="inputLabel">
+                    <span class="label">Has the applicant's license currently suspended, canceled, or revoked</span>
+                </div>
+                <div class="inputElement">
+                    <lightning:buttonGroup class="btn-groupToggleButton">
+                        <lightning:button label="Yes" aura:id="S3Q2" onclick="{!c.handleToggleBtnClick}" />
+                        <lightning:button label="No" aura:id="S3Q2" onclick="{!c.handleToggleBtnClick}" class="selectedToggleButtonType"/>
+                    </lightning:buttonGroup>
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                <div class="inputLabel">
+                    <span class="label">Any drivers with convictions for moving traffic violations within the past 3 years? If 'Yes' please explain</span>
+                </div>
+                <div class="inputElement">
+                    <lightning:buttonGroup class="btn-groupToggleButton">
+                        <lightning:button label="Yes" aura:id="S3Q3" onclick="{!c.handleToggleBtnClick}" />
+                        <lightning:button label="No" aura:id="S3Q3" onclick="{!c.handleToggleBtnClick}" class="selectedToggleButtonType"/>
+                    </lightning:buttonGroup>
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                <div class="inputLabel">
+                    <span class="label">Has any policy or coverage been declined, canceled, or non-renewed during the prior 3 years</span>
+                </div>
+                <div class="inputElement">
+                    <lightning:buttonGroup class="btn-groupToggleButton">
+                        <lightning:button label="Yes" aura:id="S3Q4" onclick="{!c.handleToggleBtnClick}" />
+                        <lightning:button label="No" aura:id="S3Q4" onclick="{!c.handleToggleBtnClick}" class="selectedToggleButtonType"/>
+                    </lightning:buttonGroup>
+                </div>
+            </lightning:layoutItem>
+        </lightning:layout>
+
+        
+<!-- <hr style="margin-bottom:1rem" /> -->
+        <!-- <div class="div-footer">
+            <div class="slds-p-vertical_small">
+                <div class="btn-footer">
+                    <a style="float:left">Cancel</a>
+                    <lightning:button label="Previous" variant="neutral" class="slds-p-vertical_xx-small slds-m-left_xx-small" aura:id="S3FooterPrevious"
+                        onclick="{!c.handlePrevious}" />
+                    <lightning:button label="Next" variant="brand" class="slds-p-vertical_xx-small slds-m-left_xx-small" aura:id="S3FooterNext"
+                        onclick="{!c.handleNext}" />
+                </div>
+            </div>
+        </div> -->
+    </div>
+
+</aura:component>

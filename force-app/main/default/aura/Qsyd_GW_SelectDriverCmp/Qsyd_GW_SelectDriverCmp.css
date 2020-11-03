@@ -1,0 +1,29 @@
+.THIS {
+}
+
+/*OVERWRITE THE STATIC RESOURCES CSS*/
+.THIS .inputElement {
+    width: 60% !important;
+}
+
+.THIS .inputLabel {
+    width: 40% !important;
+}
+
+.THIS .div-incrementalfield {
+    width: 40%;
+}
+
+.THIS .div-incrementalfield .icon_minus:hover,
+.THIS .div-incrementalfield .icon_plus:hover {
+    cursor: pointer;
+}
+
+.THIS .singleDriver{
+    width: 100%;
+    border-bottom: 1px #ccc solid;
+}
+
+.THIS .readonly {
+    border: none;
+}

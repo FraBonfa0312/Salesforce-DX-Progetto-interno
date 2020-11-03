@@ -1,0 +1,4 @@
+<design:component label="FSC Transaction Servicer">
+    <design:attribute name="myTitle" label="Override Default Title" description="What's the title - default is 'Financial Account Transactions'"/>	
+    <design:attribute name="myIcon" label="Override Default Icon" description="Grab any icon from here: https://www.lightningdesignsystem.com/icons/#site-main-content - for example, 'custom:custom43' yields a pic of a purple-looking diamond image"/>	
+</design:component>

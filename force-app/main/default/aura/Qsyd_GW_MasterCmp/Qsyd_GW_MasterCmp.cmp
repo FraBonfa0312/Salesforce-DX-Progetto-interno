@@ -1,0 +1,459 @@
+<!--THIS COMPONENT TAKES A CUSTOMISED STATIC CSS FILE (/*Q_GWScreenBaseCss*/) THAT HAS BEEN USED IN DIFFERENT COMPONENTS-->
+<!--PLEASE DO NOT CHANGE THE STATIC FILE FOR ONLY ONE COMPONENT-->
+<!--PLEASE ADD/OVERWRITE CSS IN EACH COMPONENT IF NEEDED-->
+
+<aura:component
+    implements="force:hasRecordId,flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes"
+    access="global" controller="Qsyd_GW_Controller">
+    <ltng:require styles="{!$Resource.Q_GWScreenBaseCss}" afterScriptsLoaded="{!c.handleGWMasterInit}" />
+
+    <!--[Handler] - Component Event Handler-->
+    <aura:handler name="onSelectQuoteBuyNowEvt" event="c:Qsyd_GW_onSelectQuoteBuyNowEvt"
+        action="{!c.handleOnSelectQuoteBuyNowEvt}" />
+    <aura:handler name="onSelectDriverCompletionEvt" event="c:Qsyd_GW_onSelectDriverCompletionEvt"
+        action="{!c.handleOnSelectDriverCompletionEvt}" />
+    <aura:handler name="onSelectVehicleCompletionEvt" event="c:Qsyd_GW_onSelectVehicleCompletionEvt"
+        action="{!c.handleOnSelectVehicleCompletionEvt}" />
+    <aura:handler name="onFromBuildingLocationScreenToMasterEvt" event="c:qsyd_GW_CM_buildingToMasterEvt"
+        action="{!c.handleOnFromBuildingLocationScreenToMasterEvt}" />
+    <aura:handler name="onConfirmFromUnderwritingIssue" event="c:qsyd_GW_CM_FireFromUnderwritingIssueConfirmEvt"
+        action="{!c.handleOnFromUnderwritingIssueScreenEvt}" />
+    <aura:handler event="c:INS_toolkitEvent" action="{!c.handleINSToolKitEvent}" />
+    <!--[Handler] - Standard Event Handler-->
+    <aura:handler event="force:refreshView" action="{!c.handleRefreshViewEvent}" />
+
+
+    <!--[Attributes-Not Configurable] - MasterCmp Internal -->
+    <aura:attribute name="currentStepString" type="String" default="1" />
+    <aura:attribute name="oppty" type="Opportunity" />
+
+    <aura:attribute name="policy" type="InsurancePolicy" />
+    <aura:attribute name="policyId" type="String" />
+    <aura:attribute name="policyExternalId" type="String" />
+    <aura:attribute name="policyCMExternalId" type="String" />
+    <aura:attribute name="producerId" type="String" />
+    <aura:attribute name="insuranceAssetsList" type="List" />
+    <aura:attribute name="record" type="Object" description="The record object to be displayed" />
+    <aura:attribute name="simpleRecord" type="Object" description="A simplified view record object to be displayed" />
+    <aura:attribute name="recordError" type="String" description="An error message bound to force:recordData" />
+    <aura:attribute name="lastScreenMessage" type="String" />
+    <aura:attribute name="isPersonal" type="Boolean" default="true" />
+    <aura:attribute name="showSpinner" type="Boolean" default="true" />
+
+    <!--[Attributes] - Progress Indicator -->
+    <aura:attribute name="GWComponentsListPersonalType" type="list" default="[
+        {
+            step:'1', 
+            stepLabel:'Basic Information'
+        },
+        {
+            step:'2',
+            stepLabel:'Qualification'
+        },
+        {
+            step: '3',
+            stepLabel:'Select Driver'
+        },
+        {
+            step:'4',
+            stepLabel:'Select Vehicle'  
+        }, 
+        { 
+             step:'5', 
+             stepLabel:'Select Quote' 
+        },
+        { 
+            step:'6', 
+            stepLabel:'Policy Information' 
+        }, 
+        { 
+            step:'7', 
+            stepLabel:'Payment Details'
+        },
+        { 
+            step:'8', 
+            stepLabel:'Finish'
+        }
+    ]" />
+
+    <aura:attribute name="GWComponentsListCommercialType" type="list" default="[
+        {
+            step:'1', 
+            stepLabel:'Basic Information'
+        },
+        {
+            step: '2',
+            stepLabel:'Buildings and Locations'
+        },
+        {
+            step:'3',
+            stepLabel:'Underwriting Issue'  
+        }, 
+        {
+            step:'4',
+            stepLabel:'Underwriting Issue Review'  
+        },
+        { 
+            step:'5', 
+            stepLabel:'Quote Details' 
+       },
+        { 
+             step:'6', 
+             stepLabel:'Policy Information' 
+        },
+        { 
+            step:'7', 
+            stepLabel:'Payment Details' 
+        }, 
+        { 
+            step:'8', 
+            stepLabel:'Finish'
+        }
+    ]" />
+
+
+    <!--Qsyd_GW_SelectDriverCmp-->
+    <aura:attribute name="returnedDriversList" type="list" default="" />
+
+    <!--Qsyd_GW_SelectVehicleCmp-->
+    <aura:attribute name="returnedVehiclesList" type="list" default="" />
+    <aura:attribute name="propertyListVehicle" type="list" default="" />
+
+    <!--Qsyd_GW_SelectQuoteCmp-->
+    <!--Quote design attributes - pass down to child attributes-->
+    <aura:attribute name="QuoteProgramName1" type="String" default="Basic Program" />
+    <aura:attribute name="QuoteProgramName2" type="String" default="Premium Program" />
+    <aura:attribute name="QuoteProgramName3" type="String" default="Standard Program" />
+    <aura:attribute name="QuoteProgramPrice1" type="String" default="20.67" />
+    <aura:attribute name="QuoteProgramPrice2" type="String" default="182.00" />
+    <aura:attribute name="QuoteProgramPrice3" type="String" default="115.17" />
+    <aura:attribute name="QuoteCurrencySymbol" type="String" default="$" />
+
+
+
+    <!--Quote internal attributes - pass down to child attributes-->
+    <aura:attribute name="selectedQuoteProgramNameOnCard" type="String" default="" />
+    <aura:attribute name="selectedQuoteProgramMonthlyPriceOnCard" type="String" default="" />
+    <aura:attribute name="QuoteProgramPrice" type="String" default="" />
+    <aura:attribute name="averageMonthlyPrice" type="String" default="" />
+    <aura:attribute name="selectedAutoPolicyComparisonProductsData" type="List" />
+    <aura:attribute name="totalPrice" type="String" default="" />
+    <aura:attribute name="productFamily" type="String" default="Car Insurance" />
+
+    <!--  Commercial Path Attributes -->
+    <aura:attribute name="commercialInsurancePolicyUnderwritingIssue" type="Boolean" />
+    <aura:attribute name="productCM" type="Product2" />
+    <aura:attribute name="existingCPcommercialPropertyList" type='List' />
+    <aura:attribute name="selectedCPcommercialPropertyList" type='List' />
+    <aura:attribute name="QuoteProgramCM" type="String" default="Premium" />
+    <aura:attribute name="QuoteProgramPriceCM" type="String" default="7200" />
+    <aura:attribute name="QuoteProgramTaxCM" type="String" default="654.55" />
+    <aura:attribute name="QuoteProgramCMMonthly" type="String" default="600" />
+    <aura:attribute name="paymentConfigListCommercial" type="list" default="[
+    {
+        name: 'Monthly 10% Down, 9 Max installments',
+        totalPercentage:1,
+        downPaymentPercentage: 0.1,
+        numOfInstallments: 9,
+        policyTermMonths : 12
+    },
+
+    {
+        name: 'Monthly 10% Down, 11 Max installments',
+        totalPercentage:1,
+        downPaymentPercentage: 0.1,
+        numOfInstallments: 11,
+        policyTermMonths : 12
+    },
+    {
+        name: 'Annual 100% Down, 0 Max installments',
+        totalPercentage:1,
+        downPaymentPercentage: 1,
+        numOfInstallments: 0,
+        policyTermMonths : 12
+    },
+    ]" />
+
+    <!--Qsyd_GW_PolicyInfoCmp: Policy Infomation-->
+    <!--Policy design attributes - pass down to child attributes-->
+    <aura:attribute name="PolicyCoverageStartDate" type="String" />
+
+    <!--Qsyd_GW_PaymentDetailsCmp: Payment Infomation-->
+    <!--Config surcharges and installments of different payment plans-->
+    <aura:attribute name="paymentConfigList" type="list" default="[
+        {
+            name: '6 Payments Demo',
+            totalPercentage:1.05,
+            downPaymentPercentage: 0.20,
+            numOfInstallments: 6,
+            policyTermMonths : 6
+        },
+    
+        {
+            name: '3 Payments Demo',
+            totalPercentage:1.10,
+            downPaymentPercentage: 0.20,
+            numOfInstallments: 3,
+            policyTermMonths : 3
+        },
+        {
+            name: 'Full Pay',
+            totalPercentage:1,
+            downPaymentPercentage: 1,
+            numOfInstallments: 0,
+            policyTermMonths : 12
+        },
+        {
+            name: 'Twice Per Month Demo',
+            totalPercentage:1.20,
+            downPaymentPercentage: 0.10,
+            numOfInstallments: 24,
+            policyTermMonths :12
+        }
+        ]" />
+
+
+
+
+    <!--Payment Information internal attributes - pass down to child attributes-->
+    <aura:attribute name="paymentPlansList" type="List" default="" />
+
+
+    <div style="margin:auto; padding-top:3.5rem">
+        <!--Progress Indicator-->
+        <aura:if isTrue="{!v.showSpinner}">
+            <lightning:spinner size="small" />
+        </aura:if>
+        <aura:if isTrue="{! v.isPersonal }">
+            <lightning:progressIndicator aura:id="progressBarPersonalType" currentStep="{!v.currentStepString}"
+                type="base" variant="base" class="slds-m-bottom_small">
+                <aura:iteration items="{!v.GWComponentsListPersonalType}" var="item" indexVar="idx">
+                    <lightning:progressStep label="{!item.stepLabel}" value="{!item.step}" class="progressIndicator" />
+                </aura:iteration>
+            </lightning:progressIndicator>
+        </aura:if>
+
+        <aura:if isTrue="{! not(v.isPersonal) }">
+            <lightning:progressIndicator aura:id="progressBarCommercialType" currentStep="{!v.currentStepString}"
+                type="base" variant="base" class="slds-m-bottom_small">
+                <aura:iteration items="{!v.GWComponentsListCommercialType}" var="item" indexVar="idx">
+                    <lightning:progressStep label="{!item.stepLabel}" value="{!item.step}" class="progressIndicator" />
+                </aura:iteration>
+            </lightning:progressIndicator>
+        </aura:if>
+
+
+        <!--Screens-->
+        <div class="GWScreenContainer">
+            <aura:if isTrue="{! v.isPersonal == true }">
+                <aura:if isTrue="{! v.currentStepString == '1'}">
+                    <c:Qsyd_GW_PersonalCorporateInfoCmp aura:id="S1" recordId="{!v.recordId}" oppty="{!v.oppty}"
+                        PolicyCoverageStartDate="{!v.PolicyCoverageStartDate}" isPersonal="{!v.isPersonal}" />
+                </aura:if>
+                <aura:if isTrue="{! v.currentStepString == '2'}">
+                    <c:Qsyd_GW_QualificationCmp aura:id="PA_Qualification" />
+                </aura:if>
+                <aura:if isTrue="{! v.currentStepString == '3'}">
+                    <c:Qsyd_GW_SelectDriverCmp aura:id="PA_Drivers" oppty="{!v.oppty}" />
+                </aura:if>
+                <aura:if isTrue="{! v.currentStepString == '4'}">
+                    <c:Qsyd_GW_SelectVehicleCmp aura:id="PA_Vehicles" oppty="{!v.oppty}" />
+                </aura:if>
+                <aura:if isTrue="{! v.currentStepString == '5'}">
+                    <c:Qsyd_GW_SelectQuoteCmp aura:id="PA_Quote" programName1="{!v.QuoteProgramName1}"
+                        programName2="{!v.QuoteProgramName2}" programName3="{!v.QuoteProgramName3}"
+                        programPrice1="{!v.QuoteProgramPrice1}" programPrice2="{!v.QuoteProgramPrice2}"
+                        programPrice3="{!v.QuoteProgramPrice3}" currencySymbol="{!v.QuoteCurrencySymbol}" />
+                </aura:if>
+
+                <aura:if isTrue="{! v.currentStepString == '6'}">
+                    <c:Qsyd_GW_PolicyInfoCmp aura:id="PA_PolicyInfo" vehiclesList="{!v.returnedVehiclesList}"
+                        driversList="{!v.returnedDriversList}" coverageStartDate="{!v.PolicyCoverageStartDate}"
+                        oppty="{!v.oppty}" />
+                </aura:if>
+
+                <aura:if isTrue="{! v.currentStepString == '7'}">
+                    <c:Qsyd_GW_PaymentDetailsCmp aura:id="PA_Payment" currencySymbol="{!v.QuoteCurrencySymbol}"
+                        selectProgramName="{!v.selectedQuoteProgramNameOnCard}"
+                        averageMonthlyPrice="{!v.selectedQuoteProgramMonthlyPriceOnCard}"
+                        totalPriceForThisPaymentPlan="{!v.QuoteProgramPrice}"
+                        paymentPlansList="{!v.paymentPlansList}" />
+                </aura:if>
+
+                <aura:if isTrue="{! v.currentStepString == '8'}">
+                    <force:recordData aura:id="recordData" recordId="{!v.policyId}" layoutType="FULL"
+                        fields="Name,PolicyName" mode="VIEW" targetRecord="{!v.record}" targetFields="{!v.simpleRecord}"
+                        targetError="{!v.error}" />
+
+                    <div class="slds-text-align_center">
+                        <lightning:icon iconName="action:approval" size="large" class="pointer"
+                            onclick="{!c.handleDeleteCreatedPolicy}" />
+                        <h2 class="slds-m-vertical_medium slds-text-heading_medium">{!v.lastScreenMessage} </h2>
+                        <p class="slds-m-vertical_small slds-text-title_caps">Here is your reference number:
+                            {!v.simpleRecord.PolicyName}.</p>
+                        <lightning:button label="View Policy" class="slds-button slds-button_outline-brand"
+                            onclick="{!c.handleClickViewPolicy}"></lightning:button>
+                    </div>
+                </aura:if>
+            </aura:if>
+
+            <aura:if isTrue="{! v.isPersonal == false }">
+                <aura:if isTrue="{! v.currentStepString == '1'}">
+                    <c:Qsyd_GW_PersonalCorporateInfoCmp aura:id="PersonalCorporateInfoScreen" recordId="{!v.recordId}"
+                        oppty="{!v.oppty}" PolicyCoverageStartDate="{!v.PolicyCoverageStartDate}"
+                        isPersonal="{!v.isPersonal}" />
+                </aura:if>
+                <aura:if isTrue="{! v.currentStepString == '2'}">
+                    <c:qsyd_GW_CM_BuildingsAndLocations aura:id="CA_Buildings" oppty="{!v.oppty}" />
+                </aura:if>
+
+
+                <aura:if isTrue="{! v.currentStepString == '3'}">
+                    <c:qsyd_GW_CM_UnderwritingIssue aura:id="CA_UnderwritingIssue" />
+                </aura:if>
+
+
+                <aura:if isTrue="{! v.currentStepString == '4'}">
+                    <c:qsyd_GW_CM_UnderwritingIssue aura:id="CA_UnderwritingIssue" showReviewMessage="true" />
+                </aura:if>
+
+
+                <aura:if isTrue="{! v.currentStepString == '5'}">
+                    <c:qsyd_GW_CM_QuoteDetails aura:id="CA_Quote" coverageStartDate="{!v.PolicyCoverageStartDate}"
+                        oppty="{!v.oppty}" QuoteCurrencySymbol="{!v.QuoteCurrencySymbol}"
+                        QuoteProgramCM="{!v.QuoteProgramCM}" QuoteProgramPriceCM="{!v.QuoteProgramPriceCM}"
+                        QuoteProgramTaxCM="{!v.QuoteProgramTaxCM}" />
+
+                </aura:if>
+
+                <aura:if isTrue="{! v.currentStepString == '6'}">
+                    <c:qsyd_GW_CM_PolicyInformation aura:id="CA_PolicyInfo"
+                        coverageStartDate="{!v.PolicyCoverageStartDate}" oppty="{!v.oppty}"
+                        selectedCPcommercialPropertyList="{!v.selectedCPcommercialPropertyList}" />
+                </aura:if>
+
+                <aura:if isTrue="{! v.currentStepString == '7'}">
+                    <c:Qsyd_GW_PaymentDetailsCmp aura:id="CA_Payment" currencySymbol="{!v.QuoteCurrencySymbol}"
+                        selectProgramName="{!v.QuoteProgramCM}" averageMonthlyPrice="{!v.QuoteProgramCMMonthly}"
+                        totalPriceForThisPaymentPlan="{!v.QuoteProgramPriceCM}"
+                        paymentPlansList="{!v.paymentPlansList}" />
+                </aura:if>
+
+                <aura:if isTrue="{! v.currentStepString == '8'}">
+                    <force:recordData aura:id="recordData" recordId="{!v.policyId}" layoutType="FULL"
+                        fields="Name,PolicyName" mode="VIEW" targetRecord="{!v.record}" targetFields="{!v.simpleRecord}"
+                        targetError="{!v.error}" />
+
+                    <div class="slds-text-align_center">
+                        <lightning:icon iconName="action:approval" size="large" class="pointer"
+                            onclick="{!c.handleDeleteCreatedPolicy}" />
+                        <h2 class="slds-m-vertical_medium slds-text-heading_medium">{!v.lastScreenMessage} </h2>
+                        <p class="slds-m-vertical_small slds-text-title_caps">Here is your reference number:
+                            {!v.simpleRecord.Name}.</p>
+                        <lightning:button label="View Policy" class="slds-button slds-button_outline-brand"
+                            onclick="{!c.handleClickViewPolicy}"></lightning:button>
+                    </div>
+                </aura:if>
+            </aura:if>
+
+            <!--Footer (Previous and Next Screen Controller)-->
+
+            <!--1st Screen / Basic Information Screen has a different footer style-->
+            <!--Hide master component footer for Select Driver Screen and Select Vehicle Screen-->
+            <!--These two screens have embedded footer and will fire events to the master component to update entered drivers and vehicles information-->
+            <aura:if isTrue="{! v.isPersonal == true }">
+                <aura:if isTrue="{!v.currentStepString != '8'}">
+                    <aura:if isTrue="{!and(v.currentStepString != '3', v.currentStepString != '4')}">
+                        <hr style="margin-bottom:0.5rem; margin-top:1rem" />
+                        <div class="div-footer">
+                            <div class="slds-p-vertical_small">
+                                <aura:if isTrue="{! v.currentStepString == '1'}">
+                                    <div class="btn-footer">
+                                        <lightning:button label="Cancel" variant="neutral"
+                                            class="slds-p-vertical_xx-small" onclick="{!c.handleCancel}" />
+                                        <lightning:button label="Search" variant="brand"
+                                            class="slds-p-vertical_xx-small slds-m-left_xx-small"
+                                            onclick="{!c.handleNext}" />
+                                    </div>
+                                </aura:if>
+                                <aura:if isTrue="{! v.currentStepString != '1'}">
+                                    <div class="btn-footer">
+                                        <a style="float:left">Cancel</a>
+                                        <lightning:button label="Previous" variant="neutral"
+                                            class="slds-p-vertical_xx-small slds-m-left_xx-small"
+                                            aura:id="footerPrevious" onclick="{!c.handlePrevious}" />
+                                        <!--On Quote Screen (#5), request to hide the Next button. Users should click on button "Buy Now" to go to the next screen-->
+                                        <aura:if
+                                            isTrue="{!and(v.currentStepString != '5', v.currentStepString != '7')}">
+                                            <lightning:button label="Next" variant="brand"
+                                                class="slds-p-vertical_xx-small slds-m-left_xx-small"
+                                                onclick="{!c.handleNext}" />
+                                        </aura:if>
+
+                                        <aura:if isTrue="{! v.currentStepString == '7'}">
+                                            <lightning:button label="Buy Now" variant="brand"
+                                                class="slds-p-vertical_xx-small slds-m-left_xx-small"
+                                                onclick="{!c.handleBuyNowOnLastScreen}" />
+                                        </aura:if>
+
+                                    </div>
+                                </aura:if>
+                            </div>
+                        </div>
+                    </aura:if>
+                </aura:if>
+            </aura:if>
+
+            <aura:if isTrue="{! v.isPersonal == false }">
+                <aura:if isTrue="{! and(v.currentStepString != '8',v.currentStepString != '2')}">
+                    <aura:if isTrue="{! and(v.currentStepString != '3', v.currentStepString != '4')}">
+                        <hr style="margin-bottom:0.5rem; margin-top:1rem" />
+                        <div class="div-footer">
+                            <div class="slds-p-vertical_small">
+                                <aura:if isTrue="{! v.currentStepString == '1'}">
+                                    <div class="btn-footer">
+                                        <lightning:button label="Cancel" variant="neutral"
+                                            class="slds-p-vertical_xx-small" onclick="{!c.handleCancel}" />
+                                        <lightning:button label="Next" variant="brand"
+                                            class="slds-p-vertical_xx-small slds-m-left_xx-small"
+                                            onclick="{!c.handleNext}" />
+                                    </div>
+                                </aura:if>
+                                <aura:if isTrue="{! and(v.currentStepString != '1', v.currentStepString != '8')}">
+                                    <div class="btn-footer">
+                                        <a style="float:left">Cancel</a>
+                                        <lightning:button label="Previous" variant="neutral"
+                                            class="slds-p-vertical_xx-small slds-m-left_xx-small"
+                                            aura:id="footerPrevious" onclick="{!c.handlePrevious}" />
+                                        <aura:if isTrue="{! v.currentStepString != '7'}">
+                                            <lightning:button label="Next" variant="brand"
+                                                class="slds-p-vertical_xx-small slds-m-left_xx-small"
+                                                onclick="{!c.handleNext}" />
+                                        </aura:if>
+                                        <aura:if isTrue="{! v.currentStepString == '7'}">
+                                            <lightning:button label="Buy Now" variant="brand"
+                                                class="slds-p-vertical_xx-small slds-m-left_xx-small"
+                                                onclick="{!c.handleBuyNowOnLastScreen}" />
+                                        </aura:if>
+
+                                    </div>
+                                </aura:if>
+                            </div>
+                        </div>
+                    </aura:if>
+                </aura:if>
+            </aura:if>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <div class="slds-text-align_right slds-p-top_xx-large">
+        <img src="{!$Resource.qsyd_guidewire_logo}" style="width:150px" />
+    </div>
+
+</aura:component>

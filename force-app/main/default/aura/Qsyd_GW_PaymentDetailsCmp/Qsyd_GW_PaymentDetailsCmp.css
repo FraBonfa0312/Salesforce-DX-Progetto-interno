@@ -1,0 +1,31 @@
+.THIS {
+}
+
+/*OVERWRITE THE STATIC RESOURCES CSS*/
+.THIS .inputElement {
+    width: 70% !important;
+}
+
+.THIS .inputLabel {
+    width: 30% !important;
+}
+
+.THIS .grey {
+    color: #999;
+}
+
+.THIS .bold {
+    font-weight: 600;
+}
+
+.THIS .paymentDetailsPrice {
+    font-size: 1.2rem;
+}
+
+.THIS .bottomBorder {
+    border-bottom: 1px #ccc solid;
+}
+
+.THIS .bottomBorderBlack {
+    border-bottom: 1px #333 solid;
+}

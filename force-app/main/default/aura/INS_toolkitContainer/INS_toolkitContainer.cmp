@@ -1,0 +1,5 @@
+<aura:component implements="flexipage:availableForAllPageTypes" access="global">
+    <c:INS_submissionToolkit />
+    
+    <c:INS_submissionWorkbench />
+</aura:component>

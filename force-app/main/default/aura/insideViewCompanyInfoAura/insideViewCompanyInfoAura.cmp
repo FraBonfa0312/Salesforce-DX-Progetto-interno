@@ -1,0 +1,31 @@
+<aura:component>
+    <aura:attribute name="backgroundImageURL" type="String" default=""/>
+    <aura:attribute name="showOverview" type="Boolean" default="true"/>
+    <aura:attribute name="showIndustry" type="Boolean" default="false"/>
+    <aura:attribute name="showFinancials" type="Boolean" default="false"/>
+    <aura:attribute name="showFamilyTree" type="Boolean" default="false"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.onInit}"/> 
+
+    <aura:if isTrue="{!v.showOverview}">
+        <img src="{!$Resource.companyInfo}" class="backGroundClass"/>
+        <!--<div style="{!'position: relative; height: 100vh; background:white' + ' url(' + v.backgroundImageURL +') no-repeat; background-position: left top; background-size: cover; '}" class="backGroundClass">
+        </div>-->
+    </aura:if>
+    <aura:if isTrue="{!v.showIndustry}">
+        <img src="{!$Resource.companyInfoIndustry}" class="backGroundClass"/>
+    </aura:if>
+    <aura:if isTrue="{!v.showFinancials}">
+        <img src="{!$Resource.companyInfoFinancials}" class="backGroundClass"/>
+    </aura:if>
+    <aura:if isTrue="{!v.showFamilyTree}">
+        <img src="{!$Resource.companyInfoFamilyTree}" class="backGroundClass"/>
+    </aura:if>
+    <div class="selectOverview" onclick="{!c.selectOverview}"></div>
+    <div class="selectIndustry" onclick="{!c.selectIndustry}"></div>
+    <div class="selectFinancials" onclick="{!c.selectFinancials}"></div>
+    <div class="selectFamilyTree" onclick="{!c.selectFamilyTree}"></div>
+
+    <!--<div style="{!'position: relative; height: 30vh; background:inherit' + ' url(' + v.backgroundImageURL +') no-repeat;background-position: center;background-size: cover;'}">
+    </div>-->
+</aura:component>

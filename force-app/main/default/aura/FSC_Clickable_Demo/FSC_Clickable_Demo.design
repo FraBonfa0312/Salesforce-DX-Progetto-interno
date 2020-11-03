@@ -1,0 +1,7 @@
+<design:component label="nCino Open Account Clickpath">
+    <design:attribute name="rachelAdamsId" label="Claire Adams' Account External_Id" description="External_Id__c of the Account named Claire Adams" default="FSC_Account.003" />
+    <design:attribute name="namePrefix" label="Account Name Prefix" default="CD" datasource="CD,SA"/>
+    <design:attribute name="theProduct" label="The Product" default="CD" datasource="CD,Regular Savings"/>
+    <design:attribute name="fundingMethod" label="Funding Method" default="Check" datasource="Check,Direct Debit"/>
+	<design:attribute name="finAcctType" label="Financial Account Type" default="CD" datasource="CD,Savings"/>    
+</design:component>

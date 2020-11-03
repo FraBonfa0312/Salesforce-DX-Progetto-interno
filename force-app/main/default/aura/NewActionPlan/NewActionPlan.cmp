@@ -1,0 +1,32 @@
+<aura:component controller="ActionPlanController" implements="force:appHostable,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >
+    
+    <aura:attribute name="ActionPlanTemplates" type="Action_Plan_Template__c[]"/>
+    <aura:handler name="init" value="{!this}" action="{!c.getTemplates}"/>
+    <aura:attribute name="currentSelectedTemplate" type="Integer"/>
+    
+    
+    <div style="position:relative;">
+        
+        <lightning:spinner aura:id="spinner" variant="brand" alternativeText="Loading" class="slds-hide"/>
+        <div class="slds-text-heading_x-small slds-text-align_center" aura:id="chooseTemplateMessage">Choose an Action Plan Template</div>
+        
+        <lightning:layout multipleRows="true">
+            <aura:iteration items="{!v.ActionPlanTemplates}" var="template" indexVar="iVar">
+                <lightning:layoutItem flexibility="no-grow" padding="around-small" size="6">
+                    <div class="{!v.currentSelectedTemplate == iVar ? 'templateSelected template_button' : 'template_button'}" data-indexVar="{!iVar}" onclick="{!c.templateSelected}">
+                        <div class="template_image" style="{!'background:'+template.Color__c}">
+                            <div class="slds-text-heading_medium"> {!template.First_Two_Letters__c}</div>
+                            <!--<img class="image_icon" src="https://wealth-banking-w17-gs0.my.salesforce.com/resource/1505824869000/DE_Action_icon"/>-->
+                        </div>
+                        <div aura:id="ActPlanTemplates" class="template_name" id="{!template.Id}">{!template.Name}</div>
+                    </div>    
+                </lightning:layoutItem>
+            </aura:iteration>
+        </lightning:layout>
+        
+        <div class="slds-text-align_center slds-m-top_large">
+            <lightning:button variant="brand" label="Create Action Plan" onclick="{!c.createActPlan}" disabled="{!empty(v.currentSelectedTemplate)}"/>
+        </div>
+        
+    </div>
+</aura:component>

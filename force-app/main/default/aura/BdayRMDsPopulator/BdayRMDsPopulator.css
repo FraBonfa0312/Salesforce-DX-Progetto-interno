@@ -1,0 +1,18 @@
+.THIS {
+}
+
+.THIS .card_body {
+    padding: 1rem;
+}
+
+.THIS .btn_wrap {
+	padding: 1rem 1rem 0;
+}
+
+.THIS .card_wrap {
+    position:relative;
+}
+
+.THIS .amount_wrap {
+    margin-top: .75rem;
+}

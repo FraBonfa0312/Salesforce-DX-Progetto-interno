@@ -1,0 +1,55 @@
+.THIS .modalContainer {
+    background-color: #fafafa;
+}
+
+.THIS .blue-icon {
+    background-color: white;
+    fill: #0070d2 !important;
+}
+
+.THIS .blue-icon .slds-icon {
+    background-color: white;
+    fill: #0070d2 !important;   
+}
+
+.THIS .openingImg {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-height: 300px;
+    width: auto;
+}
+
+.THIS .customer-image-container{
+    position: relative;
+    display: inline-block;
+    margin-top: -35px;
+    
+}
+.THIS .customer-avatar{
+    
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 3px solid white;
+}
+
+.THIS .wholeCard {
+    border-radius: .5rem;
+    box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.2);
+    border-top: .4rem solid;
+    border-top-style: solid;
+    border-top-color:#1D75CD;
+}
+
+.THIS .wholeCard:hover {
+    box-shadow: 0px 5px 8px 0px rgba(0,0,0,0.2);
+}
+
+.THIS .myContainer {
+    min-height: 400px;
+}
+
+.THIS .customLookup {
+    margin-top: -12px;
+}

@@ -1,0 +1,61 @@
+<aura:component controller="IDO_LightningMySmartAlertsCx" implements="force:hasRecordId,flexipage:availableForAllPageTypes,force:appHostable,forceCommunity:availableForAllPageTypes">
+
+<aura:handler name="init" value="{!this}" action="{!c.handleInitWrapper}"/>
+<aura:attribute name="smartAlertList" type="List"/>
+<aura:attribute name="smartAlertWapperList" type="List"/>
+<lightning:workspaceAPI aura:id="workspace" />
+<div>
+    <div class="slds-card slds-card_boundary">
+        <div class="slds-media slds-p-around_small slds-p-top_small slds-p-right_small slds-p-bottom_small slds-p-left_small slds-media_center slds-border_bottom">
+            <div class="slds-media__figure">
+                <lightning:icon iconName="standard:solution" size="slds-icon_medium" variant="warning"></lightning:icon>
+            </div>
+            <div class="slds-media__body">
+                <div class="slds-m-bottom_none slds-p-around_none slds-p-top_none slds-p-right_none slds-p-bottom_none slds-p-left_none slds-text-align_left slds-text-heading_medium">{!$Label.c.IDO_Smart_Alert}</div>
+            </div>
+            <div class="slds-media__figure slds-media__figure_reverse">
+                <lightning:icon iconName="utility:expand" size="xx-small"></lightning:icon>
+            </div>
+        </div>
+
+        <lightning:layout multipleRows="true" verticalAlign="center">
+            <aura:iteration items="{!v.smartAlertWapperList}" var="wrapperItem">
+                <lightning:layoutItem size="3" largeDeviceSize="3" mediumDeviceSize="6" smallDeviceSize="12" class="slds-p-around_x-small">
+                    <a class="normal" data-id="{!wrapperItem.alert.FinServ__Account__r.Id}" href="#" onclick="{!c.handleAccountClick}">
+                        <div class="slds-media">     
+                            <div class="slds-media__figure">
+                                <lightning:avatar alternativeText="" size="slds-avatar_small" src="{!wrapperItem.avatarImageSrc}" variant="circle"></lightning:avatar>
+                            </div>
+                            <div class="slds-media__body">
+                                <div style="font-size: 0.8125rem;">
+                                    <p style="font-weight: 700">{! wrapperItem.alert.FinServ__Account__r.Name}</p>
+                                    <p>{! 'Alert Score ' + wrapperItem.alert.Score__c}</p>
+                                </div>
+                            </div>
+                            <div class="slds-media__figure slds-media__figure_reverse"></div>
+                        </div>
+                    </a>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="3" largeDeviceSize="3" mediumDeviceSize="6" smallDeviceSize="12"  class="slds-p-around_x-small">
+                    <div style="font-size: 0.8125rem;" >
+                        <p>{!wrapperItem.alert.FinServ__Message__c}</p>
+                    </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="4" largeDeviceSize="4" mediumDeviceSize="6" smallDeviceSize="12"  class="slds-p-around_x-small ellipsis">
+                    <a class="normal" data-id="{!wrapperItem.parentAccount.Id}" href="#" onclick="{!c.handleAccountClick}">
+                        <span class="slds-badge slds-badge_lightest">
+                            <lightning:icon class="slds-m-right_xx-small" iconName="utility:world" size="xx-small">
+                            </lightning:icon>
+                            <span class="longtext">{!wrapperItem.parentAccount.Name}</span>
+                        </span>
+                    </a>
+                    </lightning:layoutItem>
+                <lightning:layoutItem size="2" largeDeviceSize="2" mediumDeviceSize="6" smallDeviceSize="12"  class="slds-p-around_x-small">
+                    <lightning:button class="slds-theme_neutral ctabutton" variant="neutral" label="Schedule Appt"></lightning:button>
+                </lightning:layoutItem>
+            </aura:iteration>
+        </lightning:layout>
+    </div>
+</div>
+	
+</aura:component>

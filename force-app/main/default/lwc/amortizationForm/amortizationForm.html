@@ -1,0 +1,41 @@
+<template>
+    <lightning-card title="Amortization Calculator">
+        <template if:true={showError}>
+            <p class="errorMessage">Please enter the interest rate and either the number of payments or the payment amount, but not both.</p>
+            <p>&nbsp;</p>
+        </template>
+        <lightning-button-group slot="actions">
+            <lightning-button label="Calculate" onclick={calculateAmortization}></lightning-button>
+            <lightning-button label="Reset" onclick={resetForm}></lightning-button>
+        </lightning-button-group>
+		<div class="slds-p-horizontal_small">
+            <p>
+                <lightning-input type="number" label="Purchase Price" value={purchasePrice} formatter="currency" class="purchasePriceInput" onchange={updatePurchasePrice} required></lightning-input>
+            </p>
+            <p>
+                <lightning-input type="number" label="Down Payment" value={downPayment} formatter="currency" class="downPaymentInput" onchange={updateDownPayment}></lightning-input>
+            </p>
+            <p>
+                <lightning-input type="number" label="# of Months" step="1" value={numberOfMonths} class="numMonthsInput" onchange={updateNumMonths}></lightning-input>
+            </p>
+            <p>
+                <lightning-input type="number" label="Interest Rate" value={interestRate} formatter="percent-fixed" step="0.1" class="interestRateInput" onchange={updateInterestRate} required></lightning-input>
+            </p>
+            <p>
+                <lightning-input type="number" label="Monthly Payment" value={monthlyPayment} formatter="currency" class="monthlyPaymentInput" onchange={updateMonthlyPayment}></lightning-input>
+            </p>
+            <p>
+                <lightning-input type="date" name="firstPaymentDate" label="First Payment Due" value={firstPaymentDateString} class="firstPaymentDateInput" onchange={updateFirstPaymentDate} required></lightning-input>
+            </p>
+            <p>&nbsp;</p>
+            <h2>Additional Payment</h2>
+            <p>&nbsp;</p>
+            <p>
+                <lightning-input type="number" label="Payment Amount" value={additionalPayment} formatter="currency" class="additionalPaymentInput" onchange={updateAdditionalPayment}></lightning-input>
+            </p>
+            <p>
+                <lightning-input type="number" label="Month Number Payment Occurs On" step="1" value={additionalPaymentMonthNumber} class="additionalPaymentMonthNumberInput" onchange={updateAdditionalPaymentMonthNumber}></lightning-input>
+            </p>
+        </div>
+	</lightning-card>
+</template>

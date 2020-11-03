@@ -1,0 +1,42 @@
+<template>
+    <!-- <iframe id="vfFrame" src="https://www.google.com" height="100%" width="100%">
+        </iframe> -->
+
+    <!-- Handle Standard Message Output -->
+    <div class={messageStyle} if:false={lwcFound}>
+        <lightning-formatted-rich-text
+            value={text}>
+        </lightning-formatted-rich-text>
+    </div>
+
+    <!-- Handle LWC File Upload Output -->
+    <div class="file-upload" if:true={lwcUpload}>
+        <lightning-file-upload 
+            label="Attach Documents" 
+            name="fileUploader"
+            accept={acceptedFormats}
+            record-id={lwcValue} 
+            onuploadfinished={handleUploadFinished}
+            disabled={disabled} 
+            multiple>
+        </lightning-file-upload>
+    </div>
+    <div class="previews slds-m-top_small" if:true={fileUploaded}>
+        <lightning-formatted-rich-text value={SuccessMsg}>
+        </lightning-formatted-rich-text>
+    </div>
+
+    <!-- Handle LWC Image URL Output -->
+    <div class={messageStyle} if:true={lwcImageUrl}>
+        <img src={lwcValue} />
+    </div>
+
+    <!-- <lightning-icon icon-name="action:approval" alternative-text="Approved" ></lightning-icon> -->
+    
+    <div style="height: 195px; width:100%;" class={messageStyle} if:true={lwcMap}>
+        <lightning-map
+            map-markers={mapMarkers}
+            zoom-level="15"
+        ></lightning-map>
+    </div>
+</template>

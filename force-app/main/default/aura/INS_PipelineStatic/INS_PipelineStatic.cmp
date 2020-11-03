@@ -1,0 +1,63 @@
+<aura:component implements="force:hasRecordId,flexipage:availableForAllPageTypes,force:appHostable">
+ <lightning:card >
+        <aura:set attribute="title">
+            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                <div class="slds-media__figure">
+                    <!-- ICON -->
+                  
+                    <img src="https://www.dropbox.com/s/uw7t1ds75cpa1yg/Forecast.png?raw=1" />
+				</div>
+                <!-- TITLE -->
+                <div class="slds-media__body">Pipeline FY18</div>
+            </header>
+        </aura:set>
+        <!--<aura:set attribute="actions">
+            <lightning:button label="New"/>
+        </aura:set>-->
+ 
+    <div class="slds-grid slds-wrap slds-grid_pull-padded slds-p-vertical_xx-small slds-p-left_medium slds-p-right_medium">
+        <div class="slds-p-horizontal_small slds-size_1-of-1 slds-border_bottom slds-p-vertical_small">
+            <div class="slds-clearfix">
+                <div class="slds-float_left">
+                    <div class="slds-text-title_caps">Illustrations</div>
+                </div>
+                <div class="slds-float_right">
+                    <p>671 | $75.50mm</p>
+                </div>
+            </div>
+        </div>
+        <div class="slds-p-horizontal_small slds-size_1-of-1 slds-border_bottom slds-p-vertical_small">
+            <div class="slds-float_left">
+                <div class="slds-text-title_caps">Verbal Commit</div>
+            </div>
+            <div class="slds-float_right">
+                <p>85 | $50.40mm</p>
+            </div>
+        </div>
+        <div class="slds-p-horizontal_small slds-size_1-of-1 slds-border_bottom slds-p-vertical_small">
+            <div class="slds-float_left">
+                <div class="slds-text-title_caps">App Submitted</div>
+            </div>
+            <div class="slds-float_right">
+                <p>24 | $34.70mm</p>
+            </div>
+        </div>
+        <div class="slds-p-horizontal_small slds-size_1-of-1 slds-border_bottom slds-p-vertical_small">
+            <div class="slds-float_left">
+                <div class="slds-text-title_caps">Pending</div>
+            </div>
+            <div class="slds-float_right">
+                <p>13 | $11.60mm</p>
+            </div>
+        </div>
+        <div class="slds-p-horizontal_small slds-size_1-of-1 slds-p-vertical_small">
+            <div class="slds-float_left">
+                <div class="slds-text-title_caps">Paid (YTD)</div>
+            </div>
+            <div class="slds-float_right">
+                <p>72 | $65.13mm</p>
+            </div>
+        </div>
+    </div>
+  </lightning:card>  
+</aura:component>

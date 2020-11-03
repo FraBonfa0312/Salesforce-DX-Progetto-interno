@@ -1,0 +1,186 @@
+<!-- Dev Notes:
+* Author:
+* Date:
+* Comments: 
+
+* Planned Revisons:
+    - add "the next thing" functionality. What would we logically do if this thing looks good?
+    - need to add sprinkles of intelligence as well. Predictive factors would be pretty handy to display as a "tell me why" modal
+    - help modal
+
+*Change Log:
+    -
+
+-->
+
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:appHostable" access="global" >
+    <aura:attribute name="state" type="String" default="inactive" />    
+    <aura:attribute name="status" type="String" />
+    <aura:attribute name="premium" type="String" />
+    <aura:attribute name="applicationId" type="String" />
+    <aura:attribute name="earlyPaymentDiscount" type="String" />
+    <aura:attribute name="coverageRequested" type="String" />
+    <aura:attribute name="coverageLimit" type="String" />
+    <aura:attribute name="createdDate" type="String" />
+    <aura:attribute name="modifiedDate" type="String" />
+    <aura:attribute name="productName" type="String" />
+    <aura:attribute name="title" type="String" default="Rate Check"/>
+    <aura:attribute name="collapsed" type="Boolean" access="global" default="true"/>
+    <aura:attribute name="icon" type="String" default="Mulesoft"/>
+    <aura:attribute name="iconUrl" type="String" default=""/>
+    <aura:attribute name="buttonLabel" type="String" default="Submit"/> 
+    <aura:attribute name="buttonActionJS" type="String" default="{!c.runQuote}"/> 
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    
+    
+    <aura:attribute name="record" type="Object" />
+    <aura:attribute name="simpleRecord" type="Object" />
+    <aura:attribute name="error" type="String" />
+    
+    <force:recordData aura:id="forceRecordCmp"
+                      recordId="{!v.recordId}"
+                      layoutType="FULL"
+                      mode="VIEW"
+                      targetRecord="{!v.record}"
+                      targetFields="{!v.simpleRecord}"
+                      targetError="{!v.error}" />
+    
+    <lightning:card aura:id="wholeCard" class="">
+        <aura:set attribute="title">
+            <div class= "slds-media slds-media_center" onclick="{!c.collapse}">
+                <div class = "slds-media_figure">
+                    <div class="slds-icon_container">
+                        <lightning:icon iconName="standard:calibration"/>
+                    </div>
+                </div>
+                <div class = "slds-media_body slds-m-left_small">                    
+                    <span class ="slds-text-heading_small " style="font-weight:bold;">{!v.title}</span>                    
+                </div>
+            </div>
+        </aura:set>
+        <aura:set attribute="actions">
+           <lightning:buttonIcon iconName="utility:question" size="small" variant="bare" onclick="{!c.openModal}"/>
+        </aura:set>
+        
+        <div aura:id="spinner" id="spinner" class="demo-only">
+            <div role="status" class="slds-spinner slds-spinner_medium slds-spinner_brand">
+                <span class="slds-assistive-text">Loading</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+        
+        <div class="{!v.state == 'inactive' ? 'slds-show' : 'slds-hide' }">
+            <img src="https://general-demo-content-gif-storage.s3.amazonaws.com/ezgif.com-crop+(1).gif" class="gifClass"/>
+        </div>
+        
+        <div class="{!v.state == 'active' ? 'slds-show' : 'slds-hide'}">
+            <div class="slds-card__body_inner">
+                <div aura:id="creditDetails" id="creditDetails" class="slds-box jake1">
+                    <div class="slds-grid full forcePageBlockSectionRow slds-p-left_small slds-p-right_small">
+                        <div class="slds-has-flexi-truncate slds-p-horizontal_x-small full forcePageBlockItem forcePageBlockItemView" role="listitem">
+                            <div class="slds-form-element slds-m-bottom_xx-small slds-form-element_edit slds-grow slds-hint-parent override--slds-form-element">
+                                <span class="slds-form-element__label">Quote ID</span>
+                                <div class="slds-form-element__control slds-grid itemBody">
+                                    <span class="slds-form-element__static slds-grow slds-form-element_separator is-read-only">
+                                        <span class="uiOutputText">{!v.applicationId}</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-has-flexi-truncate slds-p-horizontal_x-small full forcePageBlockItem forcePageBlockItemView" role="listitem">
+                            <div class="slds-form-element slds-m-bottom_xx-small slds-form-element_edit slds-grow slds-hint-parent override--slds-form-element">
+                                <span class="slds-form-element__label">Coverage Requested</span>
+                                <div class="slds-form-element__control slds-grid itemBody">
+                                    <span class="slds-form-element__static slds-grow slds-form-element_separator is-read-only">
+                                        <span class="uiOutputText">{!v.coverageRequested}</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>        
+                    <div class="slds-grid full forcePageBlockSectionRow slds-p-left_small slds-p-right_small">
+                        <div class="slds-has-flexi-truncate slds-p-horizontal_x-small full forcePageBlockItem forcePageBlockItemView" role="listitem">
+                            <div class="slds-form-element slds-m-bottom_xx-small slds-form-element_edit slds-grow slds-hint-parent override--slds-form-element">
+                                <span class="slds-form-element__label">Product</span>
+                                <div class="slds-form-element__control slds-grid itemBody">
+                                    <span class="slds-form-element__static slds-grow slds-form-element_separator is-read-only">
+                                        <span class="uiOutputText">{!v.productName}</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-has-flexi-truncate slds-p-horizontal_x-small full forcePageBlockItem forcePageBlockItemView" role="listitem">
+                            <div class="slds-form-element slds-m-bottom_xx-small slds-form-element_edit slds-grow slds-hint-parent override--slds-form-element">
+                                <span class="slds-form-element__label">Covereage Limit (Property)</span>
+                                <div class="slds-form-element__control slds-grid itemBody">
+                                    <span class="slds-form-element__static slds-grow slds-form-element_separator is-read-only">
+                                        <span class="maxLimit uiOutputText">{!v.coverageLimit}</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-grid full forcePageBlockSectionRow slds-p-left_small slds-p-right_small">
+                        <div class="slds-has-flexi-truncate slds-p-horizontal_x-small full forcePageBlockItem forcePageBlockItemView" role="listitem">
+                            <div class="slds-form-element slds-m-bottom_xx-small slds-form-element_edit slds-grow slds-hint-parent override--slds-form-element">
+                                <span class="slds-form-element__label">Submission Date</span>
+                                <div class="slds-form-element__control slds-grid itemBody">
+                                    <span class="slds-form-element__static slds-grow slds-form-element_separator is-read-only">
+                                        <span class="uiOutputText">{!v.createdDate}</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-has-flexi-truncate slds-p-horizontal_x-small full forcePageBlockItem forcePageBlockItemView" role="listitem">
+                            <div class="slds-form-element slds-m-bottom_xx-small slds-form-element_edit slds-grow slds-hint-parent override--slds-form-element">
+                                <span class="slds-form-element__label">Premium Range (12mo.)</span>
+                                <div class="slds-form-element__control slds-grid itemBody">
+                                    <span class="slds-form-element__static slds-grow slds-form-element_separator is-read-only">
+                                        <span class="uiOutputText calcPremium">{!v.premium}</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>            
+                </div>
+            </div>
+        </div>
+        
+        <lightning:layout horizontalAlign="spread" class="slds-p-top_small jake2">
+            <lightning:layoutItem>
+                <img src="{!v.iconUrl}" class="mule slds-m-left_small"/>
+            </lightning:layoutItem>
+            <lightning:layoutItem>
+                <lightning:buttonGroup>
+                    <lightning:button aura:id="actionButton" label="{!v.buttonLabel}" onclick="{!v.buttonActionJS}" variant="brand"/>
+                </lightning:buttonGroup>
+            </lightning:layoutItem>
+        </lightning:layout>
+    </lightning:card>
+
+    <!-- Modal Section-->
+    
+    <div role="dialog" tabindex="-1" aria-labelledby="header43" aura:id="helpModal" class="slds-modal">
+        <div class="slds-modal__container">
+            <header class="slds-modal__header slds-modal__header_empty">
+                <lightning:buttonIcon iconName="utility:close" onclick="{!c.closeModal}" alternativeText="close"
+                                      variant="bare-inverse" class="slds-modal__close" />
+                <!-- <h2 id="header43" class="slds-text-heading_medium">Help</h2> -->
+            </header>
+            
+            <div class="slds-modal__content  slds-p-around_medium" id="modal-content-id-1">
+                <c:INS_agendaBuilderHeader Title="Need Some Help?" Icon="standard:question_feed"/>
+                <lightning:button label="reset" onclick="{!c.doReset}" variant="brand" />
+            </div>
+            
+            <footer class="slds-modal__footer slds-grid slds-grid_align-spread">
+            </footer>
+        </div>
+    </div>
+    <div class="slds-backdrop " aura:id="Modalbackdrop"></div>
+
+</aura:component>

@@ -1,0 +1,175 @@
+<aura:component implements="lightning:availableForFlowScreens" >
+    <article class="slds-card">
+        <lightning:progressIndicator currentStep="3" type="base" hasError="false" variant="base">
+            <lightning:progressStep label="Step 1" value="1"/>
+            <lightning:progressStep label="Step 2" value="2"/>
+            <lightning:progressStep label="Step 3" value="3"/>
+            <lightning:progressStep label="Step 4" value="4"/>
+            
+        </lightning:progressIndicator>
+        
+        
+        <div class="slds-card__header slds-grid">
+            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                <div class="slds-media__figure">
+                    <span class="slds-icon_container slds-icon-standard-account" title="account">
+                        <span class="slds-assistive-text">Quote</span>
+                    </span>
+                </div>
+                <div class="slds-media__body">
+                    <h2 class="slds-card__header-title slds-align_absolute-center">
+                        <span>Option 1 Funds</span>
+                    </h2>
+                </div>
+            </header>
+        </div>
+        <!--div 1-->
+        <div class="slds-grid">
+            <div class ="slds-size_3-of-12">
+            </div>
+            <!--Account-->
+            
+            <div class ="slds-size_6-of-12">
+                
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Investment Name">Investment Name</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Ticker">Ticker</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Gross / Net Expense Ratio">Gross / Net Expense Ratio</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Revenue Sharing (12B-1 / Admin)">Revenue Sharing (12B-1 / Admin)</div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="slds-hint-parent">
+                            <th data-label="Investment Name" scope="row">
+                                <div class="slds-truncate" title="Putnam Dynamic Asset Allocation Bal R6">PT Dynamic Asset Allocation Bal R6</div>
+                            </th>
+                            <td data-label="Ticker">
+                                <div class="slds-truncate" title="PAAEX">PAAEX</div>
+                            </td>
+                            <td data-label="Gross / Net Expense Rati">
+                                <div class="slds-truncate" title="0.62 / 0.62%">0.62 / 0.62%</div>
+                            </td>
+                            <td data-label="Revenue Sharing (12B-1 / Admin)">
+                                <div class="slds-truncate" title="0.00% / 0.00%">0.00% / 0.00%</div>
+                            </td>
+                        </tr>
+                        
+                        <!--Row-->
+                        <tr class="slds-hint-parent">
+                            <th data-label="Investment Name" scope="row">
+                                <div class="slds-truncate" title="Putnam Dynamic Asset Allocation Cnsrv R6">PT Dynamic Asset Allocation Cnsrv R6</div>
+                            </th>
+                            <td data-label="Ticker">
+                                <div class="slds-truncate" title="PCCEX">PCCEX</div>
+                            </td>
+                            <td data-label="Gross / Net Expense Rati">
+                                <div class="slds-truncate" title="0.64 / 0.64%">0.64 / 0.64%</div>
+                            </td>
+                            <td data-label="Revenue Sharing (12B-1 / Admin)">
+                                <div class="slds-truncate" title="0.00% / 0.00%">0.00% / 0.00%</div>
+                            </td>
+                        </tr>
+                        
+                        <!--Row-->
+                        <tr class="slds-hint-parent">
+                            <th data-label="Investment Name" scope="row">
+                                <div class="slds-truncate" title="American Funds 2030 Trgt Date Retire R-6">USA Funds 2030 Trgt Date Retire R-6</div>
+                            </th>
+                            <td data-label="Ticker">
+                                <div class="slds-truncate" title="RFETX">RFETX</div>
+                            </td>
+                            <td data-label="Gross / Net Expense Rati">
+                                <div class="slds-truncate" title="0.38 / 0.38%">0.38 / 0.38%</div>
+                            </td>
+                            <td data-label="Revenue Sharing (12B-1 / Admin)">
+                                <div class="slds-truncate" title="0.00% / 0.00%">0.00% / 0.00%</div>
+                            </td>
+                        </tr>
+                        
+                        <!--Row-->
+                        <tr class="slds-hint-parent">
+                            <th data-label="Investment Name" scope="row">
+                                <div class="slds-truncate" title="American Funds 2035 Trgt Date Retire R-6 ">USA Funds 2035 Trgt Date Retire R-6 </div>
+                            </th>
+                            <td data-label="Ticker">
+                                <div class="slds-truncate" title="RFFTX">RFFTX</div>
+                            </td>
+                            <td data-label="Gross / Net Expense Rati">
+                                <div class="slds-truncate" title="0.39 / 0.39%">0.39 / 0.39%</div>
+                            </td>
+                            <td data-label="Revenue Sharing (12B-1 / Admin)">
+                                <div class="slds-truncate" title="0.00% / 0.00%">0.00% / 0.00%</div>
+                            </td>
+                        </tr>
+                        
+                        <!--Row-->
+                        <tr class="slds-hint-parent">
+                            <th data-label="Investment Name" scope="row">
+                                <div class="slds-truncate" title="American Funds 2040 Trgt Date Retire R-6">USA Funds 2040 Trgt Date Retire R-6</div>
+                            </th>
+                            <td data-label="Ticker">
+                                <div class="slds-truncate" title="RFGTX">RFGTX</div>
+                            </td>
+                            <td data-label="Gross / Net Expense Rati">
+                                <div class="slds-truncate" title="0.40 / 0.40%">0.40 / 0.40%</div>
+                            </td>
+                            <td data-label="Revenue Sharing (12B-1 / Admin)">
+                                <div class="slds-truncate" title="0.00% / 0.00%">0.00% / 0.00%</div>
+                            </td>
+                        </tr>
+                        
+                        <!--Row-->
+                        <tr class="slds-hint-parent">
+                            <th data-label="Investment Name" scope="row">
+                                <div class="slds-truncate" title="American Funds 2045 Trgt Date Retire R-6">USA Funds 2045 Trgt Date Retire R-6</div>
+                            </th>
+                            <td data-label="Ticker">
+                                <div class="slds-truncate" title="RFHTX">RFHTX</div>
+                            </td>
+                            <td data-label="Gross / Net Expense Rati">
+                                <div class="slds-truncate" title="0.41 / 0.41%">0.41 / 0.41%</div>
+                            </td>
+                            <td data-label="Revenue Sharing (12B-1 / Admin)">
+                                <div class="slds-truncate" title="0.00% / 0.00%">0.00% / 0.00%</div>
+                            </td>
+                        </tr>
+                        <!--Row-->
+                        <tr class="slds-hint-parent">
+                            <th data-label="Investment Name" scope="row">
+                                <div class="slds-truncate" title="American Funds 2050 Trgt Date Retire R-6">USA Funds 2050 Trgt Date Retire R-6</div>
+                            </th>
+                            <td data-label="Ticker">
+                                <div class="slds-truncate" title="RFITX">RFITX</div>
+                            </td>
+                            <td data-label="Gross / Net Expense Rati">
+                                <div class="slds-truncate" title="0.42 / 0.42%">0.42 / 0.42%</div>
+                            </td>
+                            <td data-label="Revenue Sharing (12B-1 / Admin)">
+                                <div class="slds-truncate" title="0.00% / 0.00%">0.00% / 0.00%</div>
+                            </td>
+                        </tr>
+                        
+                        
+                    </tbody>
+                </table>
+            </div>
+            <div class ="slds-size_3-of-12">
+            </div>
+            <!--Account-->
+            
+            
+        </div>
+        
+        
+    </article>    
+</aura:component>

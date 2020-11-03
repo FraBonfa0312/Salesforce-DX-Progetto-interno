@@ -1,0 +1,11 @@
+<design:component label="Flow Header With Progress Indicator" >
+    <design:attribute name="icon" label="SLDS Icon" default="standard:default" />
+    <design:attribute name="iconSize" label="Icon Size" default="medium" />
+    <design:attribute name="heading" label="Heading" default="Heading" />
+    <design:attribute name="subHeading" label="Sub Heading" default="Sub heading" />
+    <design:attribute name="screenHelpText" label="Help Text" default="Help text" />
+    
+	<design:attribute name="stages" label="Stages" description="What stages are active"/>
+    <design:attribute name="currentStage" label="Current Stage" description="What is the current stage?"/>
+    <design:attribute name="type" label="Progress Indicator Type" description="Show progress as a path or the base version" datasource="path,base"/>
+</design:component>

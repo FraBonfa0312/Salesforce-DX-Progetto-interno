@@ -1,0 +1,3 @@
+<apex:page standardcontroller="Account" extensions="xTabHelperController" docType="html-5.0" lightningStylesheets="true">
+<script> window.location=("https://{!metadata.Server_Name__c}/{!metadata.Site_Root__c}/views/MarketingLeads/MarketingLeads?iframeSizedToWindow=true&:embed=y&:showAppBanner=false&:display_count=no&:toolbar=no&:showShareOptions=false&:showAppBanner=false&:showVizHome=no"); </script>
+</apex:page>

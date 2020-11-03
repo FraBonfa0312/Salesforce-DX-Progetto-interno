@@ -1,0 +1,59 @@
+.THIS {
+        overflow-x:scroll;
+
+
+}
+.THIS .container{
+    border: 1px solid #d8dde6;
+    border-bottom: none;
+    display:table;
+}
+.THIS h1{
+    font-size:24px;
+    padding-top:15px;
+    padding-bottom:10px;
+}
+.THIS tr.dropdown {
+    background-color: #d8dde6;
+}
+
+.THIS .bold {
+    font-weight:800;
+}
+
+.THIS .hidden {
+    display:none;
+}
+
+.THIS .filterContainer{
+    display:flex;
+    padding-left:87px;
+    padding-bottom:20px;
+    padding-top:20px;
+    background-color:#f4f6f9;
+}
+
+.THIS .filterDetails{
+    width:10%;
+    margin-right:10px;
+}
+.THIS .filterDetails:nth-child(1){
+    margin-right:0;
+}
+.THIS .filterDetails .slds-form-element__label{
+    display:none;
+}
+
+.THIS .filterText{
+    font-size: 18px;
+}
+
+.THIS .greyBackground{
+        background-color: #d8dde6;
+
+}
+
+.THIS .expandBtns > button{
+    border: none;
+    background: none;
+}

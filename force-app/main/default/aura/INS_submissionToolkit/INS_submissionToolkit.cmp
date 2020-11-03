@@ -1,0 +1,245 @@
+<!-- Dev Notes:
+
+* Date: August 19, 2019
+* Author: Jake Hendrix
+* Comments:
+
+* Planned Revisions:
+    - Current implementation of the modal used in several areas of this cmp is far too deeply hard-coded, need to decouple and more efficiently pass
+        values into stateless cmps
+    - 
+
+* Completed Revisions:
+    - Created event stucture to communicate with subm. workbench component for efficient page space re-use
+    - Created refresh event (probably not the best way used but good in short term) to clear out the values in workbench cmp when this is closed
+    - 
+
+
+-->
+
+
+<aura:component
+    implements="flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:appHostable"
+    access="global">
+
+    <aura:attribute name="title" type="string" default="Submission Toolkit" />
+    <aura:attribute name="collapsed" type="Boolean" access="global" default="" />
+    <aura:registerEvent name="appEvent" type="c:INS_toolkitEvent" />
+    <aura:registerEvent name="refreshEvent" type="c:INS_toolkitRefreshEvent" />
+
+    <lightning:card aura:id="wholeCard">
+        <aura:set attribute="title">
+            <div class="slds-media slds-media_center">
+                <div class="slds-media_figure">
+                    <div class="slds-icon_container">
+                        <lightning:icon iconName="standard:macros" class="hammer1" />
+                    </div>
+                </div>
+                <div class="slds-media_body slds-m-left_small">
+                    <span class="slds-text-heading_small " style="font-weight:bold;">{!v.title}</span>
+                </div>
+            </div>
+        </aura:set>
+        <aura:set attribute="actions">
+            <lightning:input type="toggle" label="" name="togglevalue" checked="{!v.collapsed}"
+                messageToggleActive="Open" messageToggleInactive="Close" onchange="{!c.doCollapse}" />
+        </aura:set>
+
+        <aura:if isTrue="{!v.collapsed}">
+            <lightning:layout>
+                <lightning:layoutItem size="6">
+
+                    <a class="slds-box slds-box_link slds-box_x-small slds-media slds-m-around_x-small"
+                        style="background-color: rgb(255, 255, 255);" onclick="{!c.fireApplicationEventQuote}">
+                        <div class="slds-media__figure slds-media__figure_fixed-width slds-align_absolute-center slds-m-left_xx-small"
+                            dropzone="visualPickerLink figure">
+                            <div closertotopclass="project-canvas-element--closer-to-top">
+                                <span class="slds-icon_container slds-icon-standard-bot " title="">
+                                    <lightning:icon iconName="standard:quotes"
+                                        class="slds-icon slds-icon_medium slds-icon-text-slds-icon-inverse" />
+                                </span>
+                            </div>
+                        </div>
+                        <div class="slds-media__body slds-clearfix slds-border_left slds-p-around_small"
+                            dropzone="visualPickerLink body">
+                            <div closertotopclass="project-canvas-element--closer-to-top">
+                                <div class="slds-welcome-mat__tile-title slds-text-heading_small">Rate Check</div>
+                            </div>
+                            <div closertotopclass="project-canvas-element--closer-to-top">
+                                <div style="font-size: 0.8125rem;"></div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a class="slds-box slds-box_link slds-box_x-small slds-media slds-m-around_x-small"
+                        style="background-color: rgb(255, 255, 255);" onclick="{!c.fireApplicationEventGuidewire}">
+                        <div class="slds-media__figure slds-media__figure_fixed-width slds-align_absolute-center slds-m-left_xx-small"
+                            dropzone="visualPickerLink figure">
+                            <div closertotopclass="project-canvas-element--closer-to-top">
+                                <span class="slds-icon_container slds-icon-standard-bot " title="">
+                                    <img src="{!$Resource.INS_SubmissionToolkit_PolicyCenterLogo}" class="guidewire" />
+                                </span>
+                            </div>
+                        </div>
+                        <div class="slds-media__body slds-clearfix slds-border_left slds-p-around_small"
+                            dropzone="visualPickerLink body">
+                            <div closertotopclass="project-canvas-element--closer-to-top">
+                                <div class="slds-welcome-mat__tile-title slds-text-heading_small">PolicyCenter</div>
+                            </div>
+                            <div closertotopclass="project-canvas-element--closer-to-top">
+                                <div style="font-size: 0.8125rem;"></div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a class="slds-box slds-box_link slds-box_x-small slds-media slds-m-around_x-small"
+                        style="background-color: rgb(255, 255, 255);" onclick="{!c.analyticsEvent}">
+                        <div class="slds-media__figure slds-media__figure_fixed-width slds-align_absolute-center slds-m-left_xx-small"
+                            dropzone="visualPickerLink figure">
+                            <div closertotopclass="project-canvas-element--closer-to-top">
+                                <span class="slds-icon_container slds-icon-standard-bot " title="">
+                                    <img src="https://pbs.twimg.com/profile_images/1043258982159142912/hjO-TapQ.jpg"
+                                        class="analytics" />
+                                </span>
+                            </div>
+                        </div>
+                        <div class="slds-media__body slds-clearfix slds-border_left slds-p-around_small"
+                            dropzone="visualPickerLink body">
+                            <div closertotopclass="project-canvas-element--closer-to-top">
+                                <div class="slds-welcome-mat__tile-title slds-text-heading_small">Analytics</div>
+                            </div>
+                            <div closertotopclass="project-canvas-element--closer-to-top">
+                                <div style="font-size: 0.8125rem;"></div>
+                            </div>
+                        </div>
+                    </a>
+                </lightning:layoutItem>
+
+                <lightning:layoutItem size="6">
+
+                    <a class="slds-box slds-box_link slds-box_x-small slds-media slds-m-around_x-small"
+                        style="background-color: rgb(255, 255, 255);" onclick="{!c.openModal}">
+                        <div class="slds-media__figure slds-media__figure_fixed-width slds-align_absolute-center slds-m-left_xx-small"
+                            dropzone="visualPickerLink figure">
+                            <div closertotopclass="project-canvas-element--closer-to-top">
+                                <span class="slds-icon_container slds-icon-standard-bot " title="">
+                                    <lightning:icon iconName="standard:location"
+                                        class="slds-icon slds-icon_medium slds-icon-text-slds-icon-inverse" />
+                                </span>
+                            </div>
+                        </div>
+                        <div class="slds-media__body slds-clearfix slds-border_left slds-p-around_small"
+                            dropzone="visualPickerLink body">
+                            <div closertotopclass="project-canvas-element--closer-to-top">
+                                <div class="slds-welcome-mat__tile-title slds-text-heading_small">Map Viewer</div>
+                            </div>
+                            <div closertotopclass="project-canvas-element--closer-to-top">
+                                <div style="font-size: 0.8125rem;"></div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a class="slds-box slds-box_link slds-box_x-small slds-media slds-m-around_x-small"
+                        style="background-color: rgb(255, 255, 255);" onclick="{!c.docsEvent}">
+                        <div class="slds-media__figure slds-media__figure_fixed-width slds-align_absolute-center slds-m-left_xx-small"
+                            dropzone="visualPickerLink figure">
+                            <div closertotopclass="project-canvas-element--closer-to-top">
+                                <span class="slds-icon_container slds-icon-standard-bot " title="">
+                                    <lightning:icon iconName="standard:drafts"
+                                        class="slds-icon slds-icon_medium slds-icon-text-slds-icon-inverse" />
+                                </span>
+                            </div>
+                        </div>
+                        <div class="slds-media__body slds-clearfix slds-border_left slds-p-around_small"
+                            dropzone="visualPickerLink body">
+                            <div closertotopclass="project-canvas-element--closer-to-top">
+                                <div class="slds-welcome-mat__tile-title slds-text-heading_small">Documents</div>
+                            </div>
+                            <div closertotopclass="project-canvas-element--closer-to-top">
+                                <div style="font-size: 0.8125rem;"></div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a class="slds-box slds-box_link slds-box_x-small slds-media slds-m-around_x-small"
+                        style="background-color: rgb(255, 255, 255);" onclick="{!c.checklistEvent}">
+                        <div class="slds-media__figure slds-media__figure_fixed-width slds-align_absolute-center slds-m-left_xx-small"
+                            dropzone="visualPickerLink figure">
+                            <div closertotopclass="project-canvas-element--closer-to-top">
+                                <span class="slds-icon_container slds-icon-standard-bot " title="">
+                                    <lightning:icon iconName="standard:task"
+                                        class="slds-icon slds-icon_medium slds-icon-text-slds-icon-inverse" />
+                                </span>
+                            </div>
+                        </div>
+                        <div class="slds-media__body slds-clearfix slds-border_left slds-p-around_small"
+                            dropzone="visualPickerLink body">
+                            <div closertotopclass="project-canvas-element--closer-to-top">
+                                <div class="slds-welcome-mat__tile-title slds-text-heading_small">Checklist</div>
+                            </div>
+                            <div closertotopclass="project-canvas-element--closer-to-top">
+                                <div style="font-size: 0.8125rem;"></div>
+                            </div>
+                        </div>
+                    </a>
+
+                </lightning:layoutItem>
+            </lightning:layout>
+        </aura:if>
+
+        <!-- ***************************************************     Modal Section    ***************************************************     -->
+
+        <div role="dialog" tabindex="-1" aria-labelledby="header43" aura:id="theModal"
+            class="slds-modal slds-modal_medium">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header slds-modal__header_empty">
+                    <lightning:buttonIcon iconName="utility:close" onclick="{!c.closeModal}" alternativeText="close"
+                        variant="bare-inverse" class="slds-modal__close" />
+                    <!-- <h2 id="header43" class="slds-text-heading_medium">Help</h2> -->
+                </header>
+                <div class="slds-modal__content  slds-p-around_medium" id="modal-content-id-1">
+                    <c:INS_agendaBuilderHeader Title="Salesforce Maps" Icon="standard:location"
+                        SubTitle="Planning to use this as the 'visual vehicle' to enable the similar property story" />
+
+                    <c:zJH_tempMapAnythingImgCmp />
+
+                </div>
+
+                <footer class="slds-modal__footer">
+                    <lightning:button label="Save" onclick="{!c.closeModal}" variant="neutral" />
+                    <lightning:button label="Close" onclick="{!c.closeModal}" variant="brand" />
+                </footer>
+            </div>
+        </div>
+        <div class="slds-backdrop " aura:id="Modalbackdrop"></div>
+
+        <!-- ***************************************************     Modal2 Section    ***************************************************      
+        
+                <div role="dialog" tabindex="-1" aria-labelledby="header43" aura:id="theModal2" class="slds-modal slds-modal_medium">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header slds-modal__header_empty">
+                        <lightning:buttonIcon iconName="utility:close" onclick="{!c.closeModal2}" alternativeText="close"
+                                              variant="bare-inverse" class="slds-modal__close" />
+                    </header>
+                    <div class="slds-modal__content  slds-p-around_medium" id="modal-content-id-1">
+      
+                        <c:INS_GW_PolicyCenter/>
+    
+                    </div>
+                    
+                    <footer class="slds-modal__footer">
+                        <lightning:button label="Underwriting Approved" onclick="{!c.fireApplicationEventGuidewire}" variant="success" />
+                        <lightning:button label="Save" onclick="{!c.closeModal2}" variant="neutral" />
+                        <lightning:button label="Close" onclick="{!c.closeModal2}" variant="brand" />
+                    </footer>
+                </div>
+            </div>
+            <div class="slds-backdrop " aura:id="Modalbackdrop"></div>
+         
+ -->
+    </lightning:card>
+
+
+
+
+</aura:component>

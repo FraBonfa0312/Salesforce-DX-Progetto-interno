@@ -1,0 +1,156 @@
+<aura:component access="global" implements="lightning:availableForFlowScreens">
+    <aura:attribute name="prefix" type="String" />
+    <aura:attribute name="NumberOfBlocks" type="String" default="3"/>
+    <aura:attribute name="NavigateAction" type="String" default="None" />
+    <aura:attribute name="canNext" type="Boolean" />
+    <aura:attribute name="canFinish" type="Boolean" />
+    <aura:attribute name="SelectedTileValue" type="String" default="" />
+    
+    <aura:attribute name="Title1" type="String" default=""/>
+    <aura:attribute name="Title2" type="String" default=""/>
+    <aura:attribute name="Title3" type="String" default=""/>
+    <aura:attribute name="Title4" type="String" default=""/>
+    <aura:attribute name="Title5" type="String" default=""/>
+    <aura:attribute name="Title6" type="String" default=""/>
+    <aura:attribute name="Title7" type="String" default=""/>
+    <aura:attribute name="Title8" type="String" default=""/>
+    <aura:attribute name="Title9" type="String" default=""/>
+    
+    <aura:attribute name="Value1" type="String" default=""/>
+    <aura:attribute name="Value2" type="String" default=""/>
+    <aura:attribute name="Value3" type="String" default=""/>
+    <aura:attribute name="Value4" type="String" default=""/>
+    <aura:attribute name="Value5" type="String" default=""/>
+    <aura:attribute name="Value6" type="String" default=""/>
+    <aura:attribute name="Value7" type="String" default=""/>
+    <aura:attribute name="Value8" type="String" default=""/>
+    <aura:attribute name="Value9" type="String" default=""/>
+    
+    
+    <aura:attribute name="Image1" type="String" default=""/>
+    <aura:attribute name="Image2" type="String" default=""/>
+    <aura:attribute name="Image3" type="String" default=""/>
+    <aura:attribute name="Image4" type="String" default=""/>
+    <aura:attribute name="Image5" type="String" default=""/>
+    <aura:attribute name="Image6" type="String" default=""/>
+    <aura:attribute name="Image7" type="String" default=""/>
+    <aura:attribute name="Image8" type="String" default=""/>
+    <aura:attribute name="Image9" type="String" default=""/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <div class="slds">
+        <div class="slds-grid slds-wrap">
+            <ul class="tiles">
+                <aura:if isTrue="{!v.NumberOfBlocks>0}" > 
+                    <li class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2  slds-small-size--1-of-2 slds-large-size--1-of-3">
+                        <div class="block">
+                            <div class="blocklink">
+                                <div class="backgroundimage" style="{!'background-image: url('+$SfdcSite.pathPrefix  +'/resource/'+v.Image1+')'}"></div>
+                                <div class="blockcontent">
+                                    <lightning:button aura:id="Title1" class="blocktitle2 slds-align_absolute-center" label="{!v.Title1}" value="{!v.Value1}" onclick="{! c.handleClick }" />
+                                </div>
+                            </div >
+                        </div>
+                    </li>
+                </aura:if>
+                <aura:if isTrue="{!v.NumberOfBlocks>1}" > 
+                    <li class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-small-size--1-of-2 slds-large-size--1-of-3">
+                        <div class="block" >
+                            <div class="blocklink">
+                                <div class="backgroundimage" style="{!'background-image: url('+$SfdcSite.pathPrefix +'/resource/'+v.Image2+')'}"></div>
+                                <div class="blockcontent">
+                                    <lightning:button aura:id="Title2" class="blocktitle2 slds-align_absolute-center" label="{!v.Title2}" value="{!v.Value2}" onclick="{! c.handleClick }" />
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </aura:if>
+                <aura:if isTrue="{!v.NumberOfBlocks>2}" >    
+                    <li class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-small-size--1-of-2 slds-large-size--1-of-3">
+                        <div class="block">
+                            <div class="blocklink">
+                                <div class="backgroundimage" style="{!'background-image: url('+$SfdcSite.pathPrefix  +'/resource/'+v.Image3+')'}"></div>
+                                <div class="blockcontent">
+                                    <lightning:button aura:id="Title3" class="blocktitle2 slds-align_absolute-center" label="{!v.Title3}" value="{!v.Value3}" onclick="{! c.handleClick }" />
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </aura:if>
+                <aura:if isTrue="{!v.NumberOfBlocks>3}" >
+                    <li class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2  slds-small-size--1-of-2 slds-large-size--1-of-3">
+                        <div class="block">
+                            <div class="blocklink">
+                                <div class="backgroundimage" style="{!'background-image: url('+$SfdcSite.pathPrefix  +'/resource/'+v.Image4+')'}"></div>
+                                <div class="blockcontent">
+                                    <lightning:button aura:id="Title4" class="blocktitle2 slds-align_absolute-center" label="{!v.Title4}" value="{!v.Value4}" onclick="{! c.handleClick }" />
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </aura:if>
+                <aura:if isTrue="{!v.NumberOfBlocks>4}" >
+                    <li class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-small-size--1-of-2 slds-large-size--1-of-3">
+                        <div class="block">
+                            <div class="blocklink">
+                                <div class="backgroundimage" style="{!'background-image: url('+$SfdcSite.pathPrefix  +'/resource/'+v.Image5+')'}"></div>
+                                <div class="blockcontent">
+                                    <lightning:button aura:id="Title5" class="blocktitle2 slds-align_absolute-center" label="{!v.Title5}" value="{!v.Value5}" onclick="{! c.handleClick }" />
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </aura:if>
+                <aura:if isTrue="{!v.NumberOfBlocks>5}" >
+                    <li class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-small-size--1-of-2 slds-large-size--1-of-3">
+                        <div class="block">
+                            <div class="blocklink">
+                                <div class="backgroundimage" style="{!'background-image: url('+$SfdcSite.pathPrefix  +'/resource/'+v.Image6+')'}"></div>
+                                <div class="blockcontent">
+                                    <lightning:button aura:id="Title6" class="blocktitle2 slds-align_absolute-center" label="{!v.Title6}" value="{!v.Value6}" onclick="{! c.handleClick }" />
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </aura:if>
+                <aura:if isTrue="{!v.NumberOfBlocks>6}" >    
+                    <li class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2  slds-small-size--1-of-2 slds-large-size--1-of-3">
+                        <div class="block">
+                            <div class="blocklink">
+                                <div class="backgroundimage" style="{!'background-image: url('+$SfdcSite.pathPrefix  +'/resource/'+v.Image7+')'}"></div>
+                                <div class="blockcontent">
+                                    <lightning:button aura:id="Title7" class="blocktitle2 slds-align_absolute-center" label="{!v.Title7}" value="{!v.Value7}" onclick="{! c.handleClick }" />
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </aura:if>
+                <aura:if isTrue="{!v.NumberOfBlocks>7}" >
+                    <li class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-small-size--1-of-2 slds-large-size--1-of-3">
+                        <div class="block">
+                            <div class="blocklink">
+                                <div class="backgroundimage" style="{!'background-image: url('+$SfdcSite.pathPrefix  +'/resource/'+v.Image8+')'}"></div>
+                                <div class="blockcontent">
+                                    <lightning:button aura:id="Title8" class="blocktitle2 slds-align_absolute-center" label="{!v.Title8}" value="{!v.Value8}" onclick="{! c.handleClick }" />
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </aura:if>
+                <aura:if isTrue="{!v.NumberOfBlocks>8}" >   
+                    <li class="slds-col slds-size--1-of-2 slds-medium-size--1-of-2 slds-small-size--1-of-2 slds-large-size--1-of-3">
+                        <div class="block">
+                            <div class="blocklink">
+                                <div class="backgroundimage" style="{!'background-image: url('+$SfdcSite.pathPrefix  +'/resource/'+v.Image9+')'}"></div>
+                                <div class="blockcontent">
+                                    <lightning:button aura:id="Title9" class="blocktitle2 slds-align_absolute-center" label="{!v.Title9}" value="{!v.Value9}" onclick="{! c.handleClick }" />
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </aura:if>
+            </ul>
+        </div>
+    </div>
+</aura:component>

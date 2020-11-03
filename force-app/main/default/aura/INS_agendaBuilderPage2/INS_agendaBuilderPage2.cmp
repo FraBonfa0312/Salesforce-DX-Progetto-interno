@@ -1,0 +1,182 @@
+<!-- Dev Notes:
+* Author:
+* Date:
+
+* To-Do:
+    - Expend layout of existing agenda items to not suck
+    - 
+
+* Completed:
+    - removed agenda item structure and placed into its own component for usability and functionality enablement
+
+
+
+-->
+
+
+<aura:component>
+    <!-- <aura:attribute name="toggleClass" type="String" default="slds-is-close" />
+    <aura:attribute name="filterIconName" type="String" default="utility:chevronright" />
+    <aura:attribute name="filterIconName2" type="String" default="utility:chevronright" />
+    <aura:attribute name="filterIconName3" type="String" default="utility:chevronright" /> -->
+    <aura:attribute name="agendaTopics" type="Object[]" default="" />
+    <aura:attribute name="topicName" type="String" default="" />
+    <aura:attribute name="tempTopic" type="String[]" default="" />
+    <aura:attribute name="isShowing" type="Boolean" default="" />
+
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <div class="myContainer">
+        <div class="slds-p-around_medium">
+            <div aura:id="topHalf" class="">
+                <!-- add aura if conditional rendering. If agendaTopics is empty, show the standard "nothing yet" pic -->
+                <aura:if isTrue="{!empty(v.agendaTopics)}">
+                    <img src="https://sfdc-demo-images-jake.s3.amazonaws.com/Screen+Shot+2019-09-17+at+3.06.17+PM.png"
+                        class="emptyImage" />
+                    <div class="slds-m-top_medium slds-align_absolute-center" style="font-size: 0.8125rem;">
+                        <h3 class="slds-illustration__header slds-text-heading_medium">Looking a bit lonely...</h3>
+                    </div>
+                    <div aura:id="addTopicButton" class="slds-m-top_small slds-m-bottom_small slds-align_absolute-center">
+                        <lightning:button class="slds-theme_neutral" iconPosition="left" variant="brand"
+                            label="Add Topics" onclick="{!c.unhideform}" />
+                    </div>
+                    <aura:set attribute="else">
+                        <!-- creates each agenda item iteratively -->
+                        <aura:iteration items="{!v.agendaTopics}" var="topic">
+                            <c:INS_agendaItem thing="{!topic}" />
+                        </aura:iteration>
+                    </aura:set>
+                </aura:if>
+            </div>
+
+            <!-- Conditional rendering based on the desired presence of the editor -->
+            <aura:if isTrue="{!v.isShowing}">
+                <div aura:id="secondHalf" class="slds-m-top_small">
+                    <div class="slds-form slds-form_stacked slds-p-around_xx-small">
+                        <div class="slds-grid slds-gutters slds-m-bottom_x-small">
+                            <!-- Input  1 -->
+                            <div class="slds-col">
+                                <div class="slds-media slds-media_center">
+                                    <div class="slds-media_object">
+                                        <lightning:icon iconName="standard:drafts" size="medium"
+                                            style="margin-top:10px;" class="blueIcon" />
+                                    </div>
+                                    <div class="slds-media_body" style="min-width: 200px;">
+                                        <lightning:input name="input1" class="" label="" placeholder="Title.."
+                                            type="text" variant="standard" value="{!v.tempTopic.Title}" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Input  2 -->
+                            <div class="slds-col">
+                                <div class="slds-media slds-media_center">
+                                    <div class="slds-media_object">
+                                        <lightning:icon iconName="standard:today" size="medium" style="margin-top:10px;"
+                                            class="blueIcon" />
+                                    </div>
+                                    <div class="slds-media_body" style="min-width: 200px;">
+                                        <lightning:select name="select1" label="" variant="standard">
+                                            <option value="">Duration...</option>
+                                            <option value="Option One">5 Minutes</option>
+                                            <option value="Option Two">10 Minutes</option>
+                                            <option value="Option Three">15 Minutes</option>
+                                        </lightning:select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Input  3 -->
+                            <div class="slds-col">
+                                <div class="slds-media slds-media_center">
+                                    <div class="slds-media_object">
+                                        <lightning:icon iconName="standard:topic2" size="medium"
+                                            style="margin-top:10px;" class="blueIcon" />
+                                    </div>
+                                    <div class="slds-media_body" style="min-width: 200px;">
+                                        <lightning:input name="input2" class="" label="" placeholder="Topics..."
+                                            type="text" variant="standard" value="{!v.tempTopic.Topics}" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <lightning:layout class="">
+                            <lightning:inputRichText label="Details" variant="bottom-toolbar"
+                                value="{!v.tempTopic.Description}" placeholder="Add Details Here.." />
+                        </lightning:layout>
+
+                        <lightning:layout class="slds-p-top_x-small">
+                            <div class="slds-align_absolute-center">
+                                <lightning:button class="" label="Add Topic" variant="brand" onclick="{!c.createNew}"
+                                    iconName="utility:add" />
+                            </div>
+                        </lightning:layout>
+                    </div>
+                </div>
+            </aura:if>
+        </div>
+    </div>
+
+</aura:component>
+
+
+
+
+
+<!-- <div class="section2 slds-p-bottom_x-small">
+        <div class="{! 'slds-section ' +  v.toggleClass }" aura:id="filterSection">
+            <h3 class="slds-section__title">
+                <lightning:button onclick="{!c.toggleSection2}" class="slds-section__title-action"
+                    iconPosition="left" label="Topic 2" iconName="{!v.filterIconName2}"></lightning:button>
+            </h3>
+        </div>
+    </div> -->
+
+<!-- <lightning:input
+            aura:id="enter-search"
+            name="enter-search"
+            label="Search when user hits the 'enter' key"
+            type="search"
+        /> -->
+
+<!-- Removed this input option in favor of the current implementation 
+            <div class="slds-input-has-icon slds-input-has-icon_right jakeClass">
+                 <lightning:icon class="slds-input__icon slds-show" iconName="utility:search"
+                    size="x-small" alternativeText="Search to Add..." />
+                <span class="slds-icon_container  slds-combobox__input-entity-icon" title="record">
+                    <lightning:icon class="slds-icon slds-icon slds-icon_small slds-icon-text-default"
+                        iconName="standard:topic2" size="medium" alternativeText="icon" />
+                    <span class="slds-assistive-text"></span>
+                </span>
+                <ui:inputText click="{!c.onfocus}" updateOn="keyup" keyup="{!c.keyPressController}"
+                    class="slds-lookup__search-input slds-input leftPaddingClass" value=""
+                    placeholder="Topics..." />
+            </div> -->
+
+<!-- removed this and placed into its own component for simplicity and usability
+    <div class="section1 slds-p-bottom_x-small">
+                                    <div class="{! 'slds-section ' +  v.toggleClass }" aura:id="filterSection">
+                                        <h3 class="slds-section__title">
+                                            <lightning:button onclick="{!c.toggleSection}" class="slds-section__title-action" iconPosition="left"
+                                                label="{!topic.Title}" iconName="{!v.filterIconName}">
+                                            </lightning:button>
+                                        </h3>
+                                    </div>
+                                    <div class="slds-p-around_small">
+                                        <article
+                                            class="slds-box slds-timeline__item_details slds-theme_shade slds-m-top_x-small slds-m-horizontal_xx-small slds-p-around_medium"
+                                            id="event-item-expanded" aria-hidden="false">
+                                            <div class="slds-media slds-m-bottom_small slds-media_center">
+                                                <div class="slds-media__figure">
+                                                    <lightning:icon iconName="utility:warning" size="x-small">
+                                                    </lightning:icon>
+                                                </div>
+                                                <div class="slds-media__body">
+                                                    <div style="font-size: 0.8125rem;"><b>Stuff</b>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </article>
+                                    </div>
+                                </div> -->

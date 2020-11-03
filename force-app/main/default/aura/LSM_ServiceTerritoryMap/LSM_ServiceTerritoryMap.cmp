@@ -1,0 +1,136 @@
+<aura:component controller="LSM_ServiceTerritoryMapController" implements="lightning:availableForFlowScreens,flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" access="global">
+    
+    <aura:attribute name="markersTitle" type="String" />
+    <aura:attribute name="territories" type="ServiceTerritory[]" />
+    <aura:attribute name="mapData" type="Object[]" />
+    <aura:attribute name="lsmConfig" type="Object" />
+    <aura:attribute name="placeOptions" type="String" />
+    
+    <aura:attribute name="currentLat" type="decimal" />
+    <aura:attribute name="currentLng" type="decimal" />
+    
+    <aura:attribute name="noNearbyLocations" type="Boolean" default="false" />
+    
+    <aura:attribute name="location" type="string" default=""/>
+    <aura:attribute name="predictions" type="List" default="[]"/>
+    <aura:attribute name="lat" type="decimal" />
+    <aura:attribute name="lng" type="decimal" />
+    
+    <aura:attribute name="UOM" type="string" />
+    <aura:attribute name="radius" type="integer" default="20"/>
+
+    <aura:attribute name="WorkTypeGroupId" type="string" />
+    <aura:attribute name="WorkTypeId" type="string" />
+    <aura:attribute name="ServiceTerritoryId" type="string" />
+    <aura:attribute name="Street" type="string" />
+    <aura:attribute name="City" type="string" />
+    <aura:attribute name="PostalCode" type="string" />
+    <aura:attribute name="State" type="string" />
+    <aura:attribute name="Country" type="string" />
+    
+    <aura:attribute name="showSpinner" type="Boolean" default="true" />
+    
+    <aura:attribute name="vfHost" type="String" default="" />
+    <aura:attribute name="loaded" type="Boolean" default="false" />
+    <aura:attribute name="built" type="Boolean" default="false" />
+    <aura:attribute name="found" type="Boolean" default="false" />
+    
+    <aura:attribute name="mapOptions" type="Object" default='{"zoom": 4}' />
+    <aura:attribute name="loadMap" type="Boolean" default="false" />
+    
+    <!-- Domain of LC for VF to send message -->
+    <aura:attribute name="lcHost" type="String" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler name="change" value="{!v.loaded}" action="{!c.createMap}" />
+    <aura:handler name="change" value="{!v.built}" action="{!c.createMap}" />
+    <aura:handler name="change" value="{!v.found}" action="{!c.buildMapData}" />
+    
+    <aura:if isTrue = "{!v.showSpinner}">
+    <div class="spinnerHolder">
+        <lightning:spinner alternativeText="Loading" size="medium" />
+    </div>
+    </aura:if>
+    
+    <div class="slds-grid slds-has-coordinates" >
+        <div class="slds-map_container" style="height:auto;">
+            <iframe id="{!globalId + '_vfFrame'}" aura:id="vfFrame" src="{! v.lsmConfig.prefix + '/apex/LSM_ServiceTerritoryMapVF?lcHost=' + v.lcHost }" width="100%" height="450" style="min-height:350px;border:none;"/>      
+        </div>
+        
+        <div class="slds-coordinates" >
+            
+            <div class="slds-coordinates__header slds-p-around_none">
+            
+                <div class="slds-p-horizontal_medium">
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_2-of-3 slds-m-right_small">
+                    	<div class="slds-combobox_container">
+                        	<div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right"><lightning:input label="Search Cities" 
+                        	name="location"
+                        	aura:id="location" 
+                        	value="{!v.location}"
+                        	onchange="{!c.getCities}" /></div>
+                    	</div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-3">
+                        <lightning:select name="radius" aura:id="radius" value="{!v.radius}" onchange="{!c.handleLimitChange}" label="Range:">
+        					<option value="5">5 {!v.UOM}</option>
+        					<option value="10">10 {!v.UOM}</option>
+        					<option value="20">20 {!v.UOM}</option>
+                            <option value="50">50 {!v.UOM}</option>
+                            <option value="100">100 {!v.UOM}</option>
+    					</lightning:select>
+                    </div>
+                </div>
+                <aura:if isTrue="{!v.noNearbyLocations}">
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-size_1-of-1">
+                            No nearby locations were found.
+                        </div>
+                    </div>
+               	</aura:if>
+                
+            </div>
+            <aura:if isTrue="{!v.predictions.length > 0}">
+                        <div class="slds-m-horizontal--medium slds-is-relative">
+                        <div id="listbox-id-2" class="slds-is-absolute slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid" role="listbox">
+  							<ul class="slds-listbox slds-listbox_vertical" role="presentation">
+                        <aura:iteration items="{!v.predictions}" var="prediction">
+                                <li role="presentation" onclick="{!c.getCityDetails}" data-placeid="{!prediction.place_id}" class="slds-listbox__item">
+                                    <div id="option2" class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small" role="option">
+                                        <span class="slds-listbox__option-icon">
+                                            <span class="slds-icon_container slds-icon-utility-anchor slds-current-color">
+                                                <lightning:icon style="vertical-align:top;" iconName="utility:checkin" size="small" alternativeText="Icon"/>
+                                            </span>
+                                        </span>
+                                        <span class="slds-p-left--small">
+                                            <div class="firstLine">{!prediction.structured_formatting.main_text}</div>
+                                            <div class="secondLine">{!prediction.structured_formatting.secondary_text}</div>
+                                        </span>
+                                    </div>
+                                </li>
+                        </aura:iteration>
+                            </ul>
+                        </div></div>
+            </aura:if>
+                <h2 class="slds-coordinates__title slds-p-horizontal_medium"><br/>{!v.markersTitle}</h2>
+            </div>
+        	<ul class="slds-coordinates__list" style="height:340px;">
+            	<aura:iteration items="{!v.mapData}" var="marker">
+                	<li class="slds-coordinates__item">
+                    	<span class="slds-assistive-text" aria-live="polite"></span>
+                    	<button id="{!globalId + '_' + marker.id}" class="slds-coordinates__item-action slds-button_reset slds-media" aria-pressed="false">
+                    	    <span class="slds-media__figure">
+                        	    <lightning:icon iconName="action:map" alternativeText="Map Icon" />
+                        	</span>
+                        	<span class="slds-media__body">
+                        	    <span class="slds-text-link" onclick="{!c.selectLocation}" data-markerid="{!marker.id}">{!marker.markerText}</span>
+                        	    <span>{!marker.Street}, {!marker.City}, {!marker.State}</span>
+                        	</span>
+                    	</button>
+                	</li>
+            	</aura:iteration>
+        	</ul>
+        </div>
+    </div>
+</aura:component>

@@ -1,0 +1,6 @@
+<design:component>
+	<design:attribute name="firstName" label="First Name"    />
+    <design:attribute name="lastName"  label="Last Name"     />
+    <design:attribute name="birthDate" label="Date of birth" />
+    <design:attribute name="email"     label="Email"         />
+</design:component>

@@ -1,0 +1,48 @@
+<aura:component controller="FinancialGoalStatus" implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" >
+	
+    <aura:attribute name="recordId" type="Id" access="public" />
+    <aura:attribute name="theGoal" type="FinServ__FinancialGoal__c" access="public" />
+    
+    <!--
+    <ltng:require styles="/resource/circlefulJS/jquery.circliful.css" 
+                  scripts="/resource/jquery224, /resource/circlefulJS/jquery.circliful.min.js"
+                  afterScriptsLoaded="{!c.doInit}"/> 
+	-->
+    
+    <ltng:require styles="{!$Resource.circlefulJS + '/jquery.circliful.css'}" 
+                  scripts="{!join(',', 
+    					$Resource.jquery224, 
+    					$Resource.circlefulJS + '/jquery.circliful.min.js')}"
+                  afterScriptsLoaded="{!c.doInit}"/>
+    
+    <!-- <aura:handler name="init" value="{!this}" action="{!c.doInit}"/> --> 
+    
+    <lightning:card >
+        <aura:set attribute="title"> Progress </aura:set>
+        <aura:set attribute="footer">
+            <lightning:badge label="{!v.theGoal.FinServ__Status__c}"/>
+        </aura:set>
+        <div>
+            <div class="wrap" id="status-wrap">
+                <div aura:id="test-circle" id="test-circle"></div>
+                <lightning:icon iconName="custom:custom26" size="medium" alternativeText="Goal" class="goal-icon" />
+            </div>
+            
+            <div class="progress-wrap">
+                <div class="slds-text-body_small slds-text-color_weak progress-title">
+                    {!v.theGoal.Days_to_Target__c != null ? v.theGoal.Days_to_Target__c + ' Days to Target Date' : 'Target Date not set'} 
+                </div>
+                <div class="slds-progress-bar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="28" role="progressbar">
+                    <span class="slds-progress-bar__value" style="width: 28%;">
+                        <span class="slds-assistive-text">Progress: 28%</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+    </lightning:card>
+    
+    
+    
+    
+</aura:component>

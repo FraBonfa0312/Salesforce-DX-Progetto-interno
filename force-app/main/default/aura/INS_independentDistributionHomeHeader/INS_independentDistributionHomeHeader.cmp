@@ -1,0 +1,127 @@
+<!-- Developer Notes:
+*Author: Jake Hendrix
+*Date: July 15, 2019
+*Comments: Created to enable a bit of flexibility around a really handy component, for a different use case outside of the intended
+			captive agent use-case within FSC as is.
+
+*Planned Revisions:
+	-Make it real... current version is static and meant to be super flexible. Would like live metrics, while retaining flexibility. Includes:
+		> Current user reference
+		> Apex controller or varied methods to obtain true metrics of focus
+		> Enable live filtering based on displayed point in time buttons
+		> Connect "Upcoming Agency Visits" component once fully flushed out and built
+		>
+
+*Completed Revisions: 
+	-
+-->
+
+<aura:component implements="force:hasRecordId,flexipage:availableForAllPageTypes,force:appHostable,forceCommunity:availableForAllPageTypes">
+    <aura:attribute name="Title" type="String" default="CARRIER DISTRIBUTION MANAGEMENT" />
+    <aura:attribute name="userName" type="String" default="Michael" />
+    <aura:attribute name="message" type="String" default="" />
+    <aura:attribute name="linkText" type="String" default="" />
+   	<aura:attribute name="linkURL" type="String" />
+    <aura:attribute name="metric1Title" type="String" default="Policies Sold" /> 
+    <aura:attribute name="metric2Title" type="String" default="Policies Renewed" />
+    <aura:attribute name="metric3Title" type="String" default="Retention Ratio" />
+    <aura:attribute name="metric4Title" type="String" default="Lead Conversion Ratio" />
+    <aura:attribute name="metric5Title" type="String" default="Average Conversion Timeline" />
+    <aura:attribute name="metric1Value" type="String" default="100.4" />
+    <aura:attribute name="metric2Value" type="String" default="25.2" />
+    <aura:attribute name="metric3Value" type="String" default="65 %" />
+    <aura:attribute name="metric4Value" type="String" default="47 %" />
+    <aura:attribute name="metric5Value" type="String" default="21 Days" />
+    
+    <aura:attribute name="isActive" type="Boolean" default="false" />
+    
+   	<aura:handler name="init" action="{!c.init}" value="{!this}" />
+    
+    <div class="slds-m-bottom_small slds-page-header  slds-page-header_record-home">
+        <lightning:layout horizontalAlign="spread" verticalAlign="center">
+            <lightning:layoutItem>
+                <div class="slds-media">
+                    <div class="slds-media__figure">
+                        <lightning:icon iconName="standard:performance" size="medium" variant="slds-icon-inverse"></lightning:icon>
+                    </div>
+                    <div class="slds-media__body">
+                        <div style="font-size: 0.8125rem;">{!V.Title}</div>
+                        <div class="slds-page-header__title slds-text-heading_small">Hello, {!v.userName}!</div>
+                    </div>
+                    <div class="slds-media__figure slds-media__figure_reverse"></div>
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem>
+                <lightning:layout>
+                    <lightning:layoutItem>
+                        <!-- <lightning:buttonGroup>
+                        <lightning:button class="slds-theme_neutral" iconPosition="left" variant="brand" type="button" label="MTD" />
+                        <lightning:button class="slds-theme_neutral" iconPosition="left" variant="neutral" type="button" label="QTD" />
+                    <lightning:button class="slds-theme_neutral" iconPosition="left" variant="neutral" type="button" label="YTD" />
+                    </lightning:buttonGroup> -->
+                    </lightning:layoutItem>
+                    <lightning:layoutItem>
+                        <lightning:buttonGroup class="slds-m-left_medium">
+                            <lightning:button class="slds-theme_neutral" variant="neutral" label="View My Day" onclick="{!c.openModal}"/>
+                            <!-- <lightning:buttonMenu alternativeText="Show menu" class="slds-button_last">
+                            <lightning:menuItem label="Menu Item One" value="item1" />
+                            <lightning:menuItem label="Menu Item Two" value="item2" />
+                            <lightning:menuItem label="Menu Item Three" value="item3" />
+                        </lightning:buttonMenu> -->
+                        </lightning:buttonGroup>
+                    </lightning:layoutItem>
+                </lightning:layout>
+            </lightning:layoutItem>
+        </lightning:layout>
+         
+        <div class="slds-page-header__detail-row">
+            <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_warning theAlert" role="alert">
+                <span class="slds-assistive-text">warning</span>
+                <span class="slds-icon_container slds-icon-utility-warning slds-m-right_medium" title="Description of icon when needed">
+                    <lightning:icon iconName="utility:announcement" size="medium"/>
+                </span>
+                <h2 class="jake">{!v.message}
+                    <a href="javascript:void(0);" onclick="{!c.doLearning}" class="slds-m-left_x-small">{!v.linkText}</a>
+                </h2>
+                <div class="slds-notify__close">
+                	<lightning:buttonIcon iconName="utility:close" size="small" variant="bare"/>
+
+                    <!-- <button class="slds-button slds-button_icon slds-button_icon-small" title="Close">
+                        <span class="slds-assistive-text">Close</span>
+                    </button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- ED Modal Component -->
+    <div>
+        <aura:if isTrue="{!v.isActive}"> 
+            <div role="dialog" tabindex="-1" aria-labelledby="header43" aura:id="EDModal" class="slds-modal slds-modal_small">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header slds-modal__header_empty">
+                        <lightning:buttonIcon iconName="utility:close" onclick="{!c.closeModal}" alternativeText="close"
+                                              variant="bare-inverse" class="slds-modal__close" />
+                    </header>
+                    
+                    
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <c:INS_agendaBuilderHeader Icon="standard:today" Title="Upcoming Agency Visits"
+                                                   SubTitle="See below for a breakdown of your day." />
+                        <c:INS_myAgencyVisits/>
+                        <!-- <c:z_imageContainer1/>-->
+                    </div>
+                    <div class="slds-modal__footer">
+                        <lightning:button variant="brand" label="Close" onclick="{!c.closeModal}" />
+                    </div>
+                </div>
+           
+        </div>
+        <div class="slds-backdrop" aura:id="Modalbackdrop"></div>
+             </aura:if>
+    </div>
+    
+    
+    
+        
+</aura:component>

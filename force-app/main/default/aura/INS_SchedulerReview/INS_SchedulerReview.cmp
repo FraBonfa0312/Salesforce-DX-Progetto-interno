@@ -1,0 +1,25 @@
+<aura:component implements="lightning:availableForFlowScreens" access="global">
+	
+    <aura:attribute name="AppointmentFields" type="String" access="global"/>
+    <aura:attribute name="AppointmentType" type="String"/>
+    <aura:attribute name="AdditionalInformation" type="String"/>
+    <aura:attribute name="Comments" type="String"/>
+    <aura:attribute name="ParentRecordId" type="String"/>
+    <aura:attribute name="ServiceTerritoryId" type="String"/>
+    <aura:attribute name="ServiceResourceId" type="String"/>
+    <aura:attribute name="WorkTypeGroupId" type="String"/>
+    <aura:attribute name="Street" type="String"/>
+    <aura:attribute name="City" type="String"/>
+    <aura:attribute name="State" type="String"/>
+    <aura:attribute name="PostalCode" type="String"/>
+    <aura:attribute name="Country" type="String"/>
+    <aura:attribute name="SchedStartTime" type="String"/>
+    <aura:attribute name="SchedEndTime" type="String"/>
+    <aura:attribute name="Description" type="String"/>
+    <aura:attribute name="Subject" type="String"/>
+    <aura:attribute name="Phone" type="String"/>
+    <aura:attribute name="ContactId" type="String"/>    
+    
+   <aura:handler name="init" value="{!this}" action="{!c.doInit}" /> 
+  
+</aura:component>

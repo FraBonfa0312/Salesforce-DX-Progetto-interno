@@ -1,0 +1,28 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" controller="LightningAttachmentUploaderClass">
+    <ltng:require styles="/resource/LightningAttachmentUploaderResource/matostyles.css?v=45" 
+                  scripts="   /resource/LightningAttachmentUploaderResource/strict_utility.js?v=45, 
+                           /resource/LightningAttachmentUploaderResource/strict_utilitycss.js?v=45, 
+                           /resource/LightningAttachmentUploaderResource/strict_utilitysf.js?v=45,
+                           /resource/LightningAttachmentUploaderResource/LightningAttachmentUploader_logic.js?v=45z" afterScriptsLoaded="{!c.afterScriptsLoaded}" />
+    
+	<aura:attribute name="recordId" type="Id" />
+    
+    <section id="{! 'lightning-attachment' + globalId}" class="matostyle lightning-attachment" style="opacity: 1;">
+        <div class="file-drop-area smooth-animation" ondrop="{!c.save}">
+        	<div class="file-drop-holder">
+                <ul class="flex-box flex-wrap file-list">
+                    <!--
+						********************************
+										FILES HERE
+						********************************
+					-->
+                </ul>
+                <input type="file" class="file-attach" name="fileselect[]" multiple="multiple" />
+                <div class="smooth-animation-fast clear-files">
+                    Clear
+                </div>
+            </div>
+        </div>
+    </section>
+    
+</aura:component>

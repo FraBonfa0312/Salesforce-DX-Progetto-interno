@@ -1,0 +1,180 @@
+<aura:component implements="lightning:availableForFlowScreens" >
+    <article class="slds-card">
+        <lightning:progressIndicator currentStep="4" type="base" hasError="false" variant="base">
+            <lightning:progressStep label="Step 1" value="1"/>
+            <lightning:progressStep label="Step 2" value="2"/>
+            <lightning:progressStep label="Step 3" value="3"/>
+            <lightning:progressStep label="Step 4" value="4"/>
+            
+            
+        </lightning:progressIndicator>
+        <div class="slds-card__header slds-grid">
+            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                
+                <div class="slds-media__body">
+                    <h2 class="slds-card__header-title">
+                        
+                    </h2>
+                </div>
+                
+                <div class="slds-no-flex">
+                    <lightning:button variant="brand" label="Generate Quote" title="Brand action" onclick="{!c.handleClick}"/>            
+                </div>                
+                
+               
+            </header>
+        </div>
+        
+        <!--div 1-->
+        
+        <div style="display: block">
+            <div class="slds-card__body slds-card__body_inner">
+                <ul class="slds-grid slds-wrap slds-grid_pull-padded">
+                    <li class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_2-of-12">
+                    </li>
+                    <li class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_4-of-12">
+                        <article class="slds-tile slds-media slds-card__tile slds-hint-parent">
+                            
+                            <div class="slds-media__body">
+                                <h2 class ="slds-text-heading_medium slds-align_absolute-center">Option 1</h2>
+                                <lightning:card class="slds-box">
+                                    <dl class="slds-list_horizontal slds-wrap">
+                                        <dt class="slds-item_detail slds-text-color_weak slds-truncate slds-box slds-box_small" title="Plan Assets">Plan Assets:</dt>
+                                        <dd class="slds-item_label slds-truncate slds-box slds-box_small slds-align_absolute-center">$500,000.00</dd>
+                                        <dt class="slds-item_detail slds-text-color_weak slds-truncate slds-box slds-box_small" title="Plan Participants">Plan Participants:</dt>
+                                        <dd class="slds-item_label slds-truncate slds-box slds-box_small slds-align_absolute-center">20</dd>
+                                        <dt class="slds-item_detail slds-text-color_weak slds-truncate slds-box slds-box_small" title="Annual Contribution">Annual Contribution:</dt>
+                                        <dd class="slds-item_label slds-truncate slds-box slds-box_small slds-align_absolute-center">$50,000.00</dd>
+                                        <dt class="slds-item_detail slds-text-color_weak slds-truncate slds-box slds-box_small" title="Employee Matching">Employee Matching:</dt>
+                                        <dd class="slds-item_label slds-truncate slds-box slds-box_small slds-align_absolute-center">5%</dd>
+                                        <dt class="slds-item_detail slds-text-color_weak slds-truncate slds-box slds-box_small" title="Fund Selection">Fund Selection:</dt>
+                                        <dd class="slds-item_label slds-truncate slds-box slds-box_small" title="Target Date">Target Date</dd>                                    
+                                    </dl>
+                                </lightning:card>
+                            </div>
+                        </article>
+                    </li>
+                    <li class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_4-of-12">
+                        <article class="slds-tile slds-media slds-card__tile slds-hint-parent">
+                            
+                            <div class="slds-media__body">
+                                <div class="slds-grid slds-grid_align-spread slds-has-flexi-truncate">                                    
+                                </div>
+                                <h2 class ="slds-text-heading_medium slds-align_absolute-center">Option 2</h2>
+                                
+                                <lightning:card class="slds-box">
+                                    <dl class="slds-list_horizontal slds-wrap">
+                                        <dt class="slds-item_detail slds-text-color_weak slds-truncate slds-box slds-box_small" title="Plan Assets">Plan Assets:</dt>
+                                        <dd class="slds-item_label slds-truncate slds-box slds-box_small slds-align_absolute-center">$5,000,000.00</dd>
+                                        <dt class="slds-item_detail slds-text-color_weak slds-truncate slds-box slds-box_small" title="Plan Participants">Plan Participants:</dt>
+                                        <dd class="slds-item_label slds-truncate slds-box slds-box_small slds-align_absolute-center">200</dd>
+                                        <dt class="slds-item_detail slds-text-color_weak slds-truncate slds-box slds-box_small" title="Annual Contribution">Annual Contribution:</dt>
+                                        <dd class="slds-item_label slds-truncate slds-box slds-box_small slds-align_absolute-center">$500,000.00</dd>
+                                        <dt class="slds-item_detail slds-text-color_weak slds-truncate slds-box slds-box_small" title="Employee Matching">Employee Matching:</dt>
+                                        <dd class="slds-item_label slds-truncate slds-box slds-box_small slds-align_absolute-center">5%</dd>
+                                        <dt class="slds-item_detail slds-text-color_weak slds-truncate slds-box slds-box_small" title="Fund Selection">Fund Selection:</dt>
+                                        <dd class="slds-item_label slds-truncate slds-box slds-box_small slds-text-body_small" title="In House, ETF, Target Date">In House, ETF, Target Date</dd>                                    
+                                    </dl>
+                                </lightning:card>
+                            </div>
+                        </article>
+                    </li>
+                    <li class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_2-of-12">
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <!--Button-->       
+        
+        <!--second component-->
+        <div id="div2" style="display: none">
+            <div id="div2" style="display: block" class="slds-card__body slds-card__body_inner">
+                <ul class="slds-grid slds-wrap slds-grid_pull-padded">
+                    <li class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_2-of-12">
+                    </li>
+                    <li class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_4-of-12">
+                        <article class="slds-tile slds-media slds-card__tile slds-hint-parent">
+                            
+                            <div class="slds-media__body">
+                                <h2 class ="slds-text-heading_medium slds-align_absolute-center">Quote 1</h2>
+                                
+                                <lightning:card class="slds-box ">
+                                    <dl class="slds-list_horizontal slds-wrap">
+                                        <dt class="slds-item_detail slds-text-body_small slds-text-color_weak slds-truncate slds-box slds-box_small" title="Annual Plan Maintenance">Annual Plan Maintenance:</dt>
+                                        <dd class="slds-item_label slds-truncate slds-box slds-box_small slds-align_absolute-center">$0.00</dd>
+                                        <dt class="slds-item_detail slds-text-body_small slds-text-color_weak slds-truncate slds-box slds-box_small" title="Annual Participant Account Maintenance">Annual Participant Account Maintenance:</dt>
+                                        <dd class="slds-item_label slds-truncate slds-box slds-box_small slds-align_absolute-center">$0.00</dd>
+                                        <dt class="slds-item_detail slds-text-color_weak slds-truncate slds-box slds-box_small" title="Asset Based Fee">Asset Based Fee:</dt>
+                                        <dd class="slds-item_label slds-truncate slds-box slds-box_small slds-align_absolute-center">0.94%</dd>
+                                        <dt class="slds-item_detail slds-text-color_weak slds-truncate slds-box slds-box_small" title="Installation Fee">Installation Fee:</dt>
+                                        <dd class="slds-item_label slds-truncate slds-box slds-box_small slds-align_absolute-center">Waived</dd>
+                                        <dt class="slds-item_detail slds-text-body_small slds-text-color_weak slds-truncate slds-box slds-box_small" title="Average Net Investment Expense">Average Net Investment Expense:</dt>
+                                        <dd class="slds-item_label slds-truncate slds-box slds-box_small slds-align_absolute-center">0.36%</dd>                                    
+                                    </dl>
+                                </lightning:card>
+                            </div>
+                        </article>
+                        <!--Ayo-->
+                        <div class="slds-no-flex slds-align_absolute-center">
+                            <p>View Quote in PDF</p>
+                        </div>
+                        
+                        
+                        <div class="slds-no-flex slds-align_absolute-center">
+                            
+                            
+                            <button class="slds-button slds-button_neutral" onclick="{!c.openModal}">View as PDF</button>
+                            <div>
+                                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aura:id="Modalbox" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-modal_large">
+                                    <div class="slds-modal__container">
+                                        <header class="slds-modal__header slds-modal__header_empty">
+                                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick="{!c.closeModal}">
+                                                <lightning:icon iconName="utility:close" size="medium" alternativeText="Close"/>
+                                                <span class="slds-assistive-text">Close</span>
+                                            </button>
+                                        </header>
+                                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                                            <iframe src="{!$Resource.DefaultPDF}" width="100%" height="1000px">
+                                            </iframe>
+                                        </div>
+                                    </div>
+                                </section>
+                                <div class="slds-backdrop" aura:id="Modalbackdrop"></div>
+                            </div>
+                        </div>
+                        <!--Ayo -->
+                        <div>
+                            <br></br>
+                        
+                        </div>
+                        
+                        <div class="slds-no-flex slds-align_absolute-center">
+                        <iframe width="100%" height="200" src="https://www.youtube.com/embed/ApHRfYA1A-Y" frameborder="2" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"></iframe>                            
+                        </div>
+                        
+                        
+                    </li>
+                    <li class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_4-of-12">
+                        <article class="slds-tile slds-media slds-card__tile slds-hint-parent">
+                            <div class="slds-media__body">
+                                <h2 class ="slds-text-heading_medium slds-align_absolute-center">Quote 2</h2>
+                                    <lightning:card class="slds-box">
+                                        <div class="slds-text-body_regular">Based on the details entered we recommend you connect with Debi Patel to discuss this plan.</div>
+                                        <div style = "text-align:center">       
+                                            <img src="https://insurance-ido.s3.amazonaws.com/icon_quote.png" height="175" width="175"  />
+                                        </div>
+                                        <button class="slds-button slds-button_neutral slds-align_absolute-center">Connect with Us!</button>
+                                    </lightning:card>
+                                
+                            </div>
+                        </article>
+                    </li>
+                    <li class="slds-p-horizontal_small  slds-size_1-of-1 slds-medium-size_2-of-12">
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </article>    
+</aura:component>

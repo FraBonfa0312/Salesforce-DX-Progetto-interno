@@ -1,0 +1,25 @@
+<aura:component implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" >
+
+    <aura:attribute name="recordId" type="String" access="public" />
+    <aura:attribute name="picklistFieldName" type="String" default="Status" access="public" />
+    <aura:attribute name="showAsCard" type="Boolean" default="true" access="public" />
+    <aura:attribute name="pathTitle" type="String" default="Path title" access="public" />
+
+    <aura:if isTrue="{!v.showAsCard}">
+        <lightning:card variant="narrow" title="{!v.pathTitle}">
+            <lightning:picklistPath aura:id="picklistPath1" recordId="{!v.recordId}"
+                variant="linear"
+                picklistFieldApiName="{!v.picklistFieldName}"
+                onselect="{!c.handleSelect}">
+            </lightning:picklistPath>
+        </lightning:card>
+        <aura:set attribute="else">
+            <lightning:picklistPath aura:id="picklistPath2" recordId="{!v.recordId}"
+                variant="linear"
+                picklistFieldApiName="{!v.picklistFieldName}"
+                onselect="{!c.handleSelect}">
+            </lightning:picklistPath>
+        </aura:set>
+    </aura:if>      
+
+</aura:component>

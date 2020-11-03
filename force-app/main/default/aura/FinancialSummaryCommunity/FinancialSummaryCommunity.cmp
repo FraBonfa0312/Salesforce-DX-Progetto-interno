@@ -1,0 +1,34 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global"
+                controller="FinServCommunity">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="client" type="Account"></aura:attribute>
+
+    <article class="slds-card">
+        
+        <div class="slds-card__header slds-grid">
+            <h2>
+                <a href="javascript:void(0);" class="slds-text-link--reset">
+                    <span class="slds-text-heading--small">Financial Summary</span>
+                </a>
+            </h2>
+        </div>
+        <lightning:layout horizontalAlign="spread" multipleRows="true">
+            <lightning:layoutItem flexibility="auto" padding="around-medium" class="layout-item">
+                <p class="slds-text-title--caps slds-truncate slds-m-bottom--xx-small" title="Total Investments">Total Investments</p>
+                <p class="slds-text-body--regular slds-truncate"><ui:outputCurrency value="{!v.client.FinServ__TotalInvestments__c}"></ui:outputCurrency> </p>
+            </lightning:layoutItem>
+            <lightning:layoutItem flexibility="auto" padding="around-medium" class="layout-item">
+                <p class="slds-text-title--caps slds-truncate slds-m-bottom--xx-small" title="Total Bank Deposits">Total Bank Deposits</p>
+                <p class="slds-text-body--regular slds-truncate"><ui:outputCurrency value="{!v.client.FinServ__TotalBankDeposits__c}"></ui:outputCurrency></p>
+            </lightning:layoutItem>
+            <lightning:layoutItem flexibility="auto" padding="around-medium" class="layout-item">
+                <p class="slds-text-title--caps slds-truncate slds-m-bottom--xx-small" title="Field 1">Total Insurance</p>
+                <p class="slds-text-body--regular slds-truncate"><ui:outputCurrency value="{!v.client.FinServ__TotalInsurance__c}"></ui:outputCurrency></p>
+            </lightning:layoutItem>
+            <lightning:layoutItem flexibility="auto" padding="around-medium" class="layout-item slds-hide">
+                <p class="slds-text-title--caps slds-truncate slds-m-bottom--xx-small" title="Field 1">Wallet Share</p>
+                <p class="slds-text-body--regular slds-truncate"><ui:outputNumber value="{!v.client.FinServ__WalletShare__c}"></ui:outputNumber>%</p>
+            </lightning:layoutItem>
+        </lightning:layout>
+    </article>
+</aura:component>

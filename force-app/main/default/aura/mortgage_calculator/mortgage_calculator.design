@@ -1,0 +1,17 @@
+<design:component >
+    <design:attribute name="city1" label="enter city1 name there"/>
+    <design:attribute name="city2" label="enter city2 name there"/>
+    <design:attribute name="city3" label="enter city3 name there"/>
+    <design:attribute name="city4" label="enter city4 name there"/>
+    <design:attribute name="city5" label="enter city5 name there"/>
+
+    <design:attribute name="figure1" label="Max number for screen3"/>
+    <design:attribute name="figure2" label="Max number for screen4"/>
+    <design:attribute name="figure3" label="Max number for screen5"/>
+    <design:attribute name="figure4" label="Max number for screen6"/>
+    <design:attribute name="currency" label="Currency"/>
+    <design:attribute name="urll" label="enter the target community page url there"/>
+    
+    
+
+</design:component>

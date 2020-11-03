@@ -1,0 +1,287 @@
+<aura:component controller="DE_CreateLoanRecord" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+    
+    
+    <ltng:require styles="{!$Resource.ModalWidth}"/>
+    
+    
+    <aura:attribute name="opportunity" type="Opportunity" default="{'sobject':'Opportunity',
+                                                                   'Employer__c':'',
+                                                                   'Employment_Type__c':'',
+                                                                   'Monthly_Income__c':'',
+                                                                   'Employment_Start_Date__c':'',
+                                                                   'Amount_Requested__c':'', 
+                                                                   'CloseDate':''
+                                                                   }"/>
+    <aura:attribute name="Loan" type="Loan__c" default="{'sobject':'Loan__c',
+                                                        'Account__c':'--',
+                                                        'Amount_Requested__c':'--',
+                                                        'First_Payment_Date__c':'',
+                                                        'Product_Type__c':'',
+                                                        'Days_Until_Anticipated_Closing__c':'',
+                                                        'Loan_Name__c':''}"/>
+    <aura:attribute name="MonthlyPayment" type="String"/>
+    <aura:attribute name="createdRecId" type="String"/>
+    <aura:attribute name="Term" type="String"/>
+    <aura:attribute name="InterestRate" type="String"/>
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="isVisited" type="Boolean" default="false"/>
+    
+    <aura:attribute name="selTabId" type="string" default="1" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <div class="slds-container_fluid slds-card slds-card_boundary">
+        <lightning:card title="Consumer-Vehicle" iconName="custom:custom17" variant="narrow">
+            <aura:set attribute="actions">
+                <lightning:button class="slds-theme_neutral" iconPosition="right" aura:id="mainButton" variant="neutral" label="Run the Numbers ->" onclick="{!c.next}"></lightning:button>
+            </aura:set>
+            <lightning:layout class="slds-p-around_medium">
+                <lightning:layoutItem size="1">
+                    <div class="slds-form-element"><span class="slds-form-element__label">Relationship</span>
+                        <div class="slds-form-element__control"><span class="slds-form-element__static">{!v.opportunity.Account.Name}</span></div>
+                    </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="1">
+                    <div class="slds-form-element"><span class="slds-form-element__label">Amount Requested</span>
+                        <div class="slds-form-element__control" aura:id="amountRequested"><span class="slds-form-element__static">${!v.Loan.Amount_Requested__c}</span></div>
+                    </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="1">
+                    <div class="slds-form-element"><span class="slds-form-element__label">Interest Rate</span>
+                        <div class="slds-form-element__control"><span class="slds-form-element__static">{!v.InterestRate}</span></div>
+                    </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="1">
+                    <div class="slds-form-element"><span class="slds-form-element__label">Monthly Payment</span>
+                        <div class="slds-form-element__control"><span class="slds-form-element__static">{!v.MonthlyPayment}</span></div>
+                    </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="2">
+                    <div class="slds-form-element"><span class="slds-form-element__label">Term (Months)</span>
+                        <div class="slds-form-element__control"><span class="slds-form-element__static">{!v.Term}</span></div>
+                    </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="2">
+                    <div class="slds-form-element">
+                        <img src="{!$Resource.nCinoLogo}" style="width: 90px;float: right;"/>
+                    </div>
+                </lightning:layoutItem>
+            </lightning:layout>
+        </lightning:card>
+        <lightning:tabset variant="vertical" selectedTabId="{!v.selTabId}">
+            <lightning:tab id="1"  label="Application">
+                <lightning:card class="slds-container_center slds-card slds-card_boundary" title="Applicants">
+                    <aura:set attribute="actions">
+                        <lightning:button class="slds-theme_neutral" iconPosition="right" variant="neutral" type="button" label="Add Entry"></lightning:button>
+                    </aura:set>
+                    <table class="slds-table slds-table_bordered slds-table_striped">
+                        <thead>
+                            <tr class="slds-text-title_caps">
+                                <th>
+                                    <div class="slds-truncate" title="Column 1">Relationship Name</div>
+                                </th>
+                                <th>
+                                    <div class="slds-truncate" title="Column 1">Relationship Type</div>
+                                </th>
+                                <th>
+                                    <div class="slds-truncate" title="Column 1">Borrower Type </div>
+                                </th>
+                                <th>
+                                    <div class="slds-truncate" title="Column 1">Street</div>
+                                </th>
+                                <th>
+                                    <div class="slds-truncate" title="Column 1">Relationship Phone</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="slds-hint-parent">
+                                <td class="slds-cell-buffer_left slds-cell-buffer_right">{!v.opportunity.Account.Name}</td>
+                                <td class="slds-cell-buffer_left slds-cell-buffer_right">
+                                    <div class="slds-text-title slds-text-color_default">Individual</div>
+                                </td>
+                                <td class="slds-cell-buffer_left slds-cell-buffer_right">
+                                    <div class="slds-text-title slds-text-color_default">Borrower</div>
+                                </td>
+                                <td class="slds-cell-buffer_left slds-cell-buffer_right">21 Jumpstreet</td>
+                                <td class="slds-cell-buffer_left slds-cell-buffer_right"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </lightning:card>
+                <div class="slds-container_center slds-container_fluid slds-card slds-card_boundary">
+                    <lightning:layout>
+                        <lightning:layoutItem size="6">
+                            <lightning:input class="slds-p-around_medium" label="Amount Requested" aura:id="amnt_req" placeholder="Placeholder Text" required="true" type="number" variant="standard" formatter="currency" step="0.01" value="{!v.opportunity.Amount_Requested__c}"></lightning:input>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="6">
+                            <lightning:input class="slds-p-around_medium" label="Loan Purpose" aura:id="purpose"  placeholder="Placeholder Text" type="text" variant="standard"></lightning:input>
+                        </lightning:layoutItem>
+                    </lightning:layout>
+                    <lightning:layout>
+                        <lightning:layoutItem size="6">
+                            <lightning:input class="slds-p-around_medium" label="Projected Close Date" aura:id="closeDate"  placeholder="Placeholder Text" required="true" type="Date" variant="standard" value="{!v.opportunity.CloseDate}"></lightning:input>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="6"></lightning:layoutItem>
+                    </lightning:layout>
+                </div>
+                <div class="slds-container_center slds-container_fluid slds-card slds-card_boundary">
+                    <lightning:layout>
+                        <lightning:layoutItem size="6">
+                            <lightning:input class="slds-p-around_small" label="Employment Type" aura:id="empType" placeholder="Placeholder Text" type="text" variant="standard" value="{!v.opportunity.Employment_Type__c}"></lightning:input>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="6">
+                            <lightning:input class="slds-p-around_small" label="Employment Start Date" aura:id="empStartDate"  placeholder="Placeholder Text" type="date" variant="standard" value="{!v.opportunity.Employment_Start_Date__c}"></lightning:input>
+                        </lightning:layoutItem>
+                    </lightning:layout>
+                    <lightning:layout>
+                        <lightning:layoutItem size="6">
+                            <lightning:input class="slds-p-around_small" label="Employer" aura:id="employer"  placeholder="Placeholder Text" type="text" variant="standard" value="{!v.opportunity.Employer__c}"></lightning:input>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="6">
+                            <lightning:input class="slds-p-around_small" label="Monthly Income" aura:id="income"  placeholder="Placeholder Text" type="number" variant="standard" value="{!v.opportunity.Monthly_Income__c}" formatter="currency" step="0.01"></lightning:input>
+                        </lightning:layoutItem>
+                    </lightning:layout>
+                </div>
+            </lightning:tab>
+            <lightning:tab id="2" label="Underwriting"></lightning:tab>
+            <lightning:tab id="3" label="Decision">
+                <lightning:tabset variant="default" class="slds-tabs_card slds-container_center slds-card slds-card_boundary">
+                    <lightning:tab id="-Lp8cr2YUhPUh7eBgGOR" label="AUTO DECISION">
+                        <div class="slds-container_center slds-container_fluid">
+                            <lightning:layout>
+                                <lightning:layoutItem size="6">
+                                    <div class="slds-text-heading_medium">Decision Overview</div>
+                                </lightning:layoutItem>
+                                <lightning:layoutItem size="6">
+                                    <div>
+                                        <lightning:button label="Submit for approval" variant="brand" class="slds-float_right"></lightning:button>
+                                    </div>
+                                </lightning:layoutItem>
+                            </lightning:layout>                   
+                            
+                            <lightning:layout class="slds-align_absolute-center">
+                                <lightning:layoutItem size="3">
+                                    <div class="slds-container_center slds-float_left">
+                                        <!--svg height="120" viewbox="0 0 120 120" width="120"><circle cx="60" cy="60" fill="none" r="54" stroke="#ebebeb" stroke-width="12"></circle><circle cx="60" cy="60" fill="none" r="54" stroke="#44c173" stroke-dasharray="339.292" stroke-width="12" transform="rotate(-90 60 60)" stroke-dashoffset="0"></circle><text dominant-baseline="central" fill="black" style="position: absolute;" text-anchor="middle" x="60" y="60">100%</text>
+                                        </svg-->
+                                        <img src="{!$Resource.successRing}" style="width:45%" alternativeText="emoji"/>
+                                        
+                                    </div>
+                                </lightning:layoutItem>
+                                <lightning:layoutItem size="6">
+                                    <div class="slds-form-element" style="padding:0.85em"><span class="slds-form-element__label">DECISION</span>
+                                        <div class="slds-form-element__control"><span class="slds-form-element__static">
+                                            <span class="slds-text-color_success slds-text-title_bold">APPROVED</span>
+                                            <br/><br/>
+                                            Rachel Morris - Consumer - Vehicle - Purchase Used has completed decisioning and is approved. Review all the details here and 'submit for approval' 
+                                            to continue with the auto approval process. <br/><br/>
+                                            Returning to the loan will not automatically continue the process, but it will allow you to update information<br/> and re-run the decisioning logic.</span></div>
+                                    </div>
+                                </lightning:layoutItem>
+                                <lightning:layoutItem size="3">
+                                    <div class="slds-form-element"><span class="slds-form-element__label">Execution Date</span>
+                                        <div class="slds-form-element__control"><span class="slds-form-element__static">Jul 31, 2019</span></div>
+                                    </div>
+                                    <div class="slds-form-element"><span class="slds-form-element__label">Execution Time</span>
+                                        <div class="slds-form-element__control"><span class="slds-form-element__static">1:15 PM</span></div>
+                                    </div>
+                                    <div class="slds-form-element"><span class="slds-form-element__label">Executed By</span>
+                                        <div class="slds-form-element__control"><span class="slds-form-element__static">Jon Valand</span></div>
+                                    </div>
+                                    <div class="slds-form-element"><span class="slds-form-element__label">Decision Model Version # </span>
+                                        <div class="slds-form-element__control"><span class="slds-form-element__static">11</span></div>
+                                    </div>
+                                </lightning:layoutItem>
+                            </lightning:layout>
+                        </div>
+                        <div class="slds-m-top_small slds-container_center slds-container_fluid">
+                            <div class="slds-container_center slds-text-heading_medium">Key Score Criteria</div>
+                            <lightning:layout>
+                                <lightning:layoutItem size="4">
+                                    <div class="slds-form-element slds-container_center  " style="float: left;"><span class="slds-form-element__label">BORROWER SCORE</span>
+                                        <div class="slds-form-element__control"><span class="slds-form-element__static"><span class="slds-text-color_success">5</span><br/><b>2</b>/2 Point(s)</span></div>
+                                    </div>
+                                </lightning:layoutItem>
+                                <lightning:layoutItem size="4">
+                                    <div class="slds-form-element slds-container_center  " style="float: left;"><span class="slds-form-element__label">HAS GUARANTOR</span>
+                                        <div class="slds-form-element__control"><span class="slds-form-element__static"><span class="slds-text-color_success">No</span><br/><b>0</b>/1 Point(s)</span></div>
+                                    </div>
+                                </lightning:layoutItem>
+                                <lightning:layoutItem size="4">
+                                    <div class="slds-form-element slds-container_center  " style="float: left;"><span class="slds-form-element__label">LTV</span>
+                                        <div class="slds-form-element__control"><span class="slds-form-element__static"><b>2</b>/2 point(s)</span></div>
+                                    </div>
+                                </lightning:layoutItem>
+                            </lightning:layout>
+                        </div>
+                    </lightning:tab>
+                    <lightning:tab id="-Lp8cr2YUhPUh7eBgGOS" label="{!v.opportunity.Account.Name}">
+                        <div><!--svg height="120" viewbox="0 0 120 120" width="120"><circle cx="60" cy="60" fill="none" r="54" stroke="#ebebeb" stroke-width="12"></circle><circle cx="60" cy="60" fill="none" r="54" stroke="#44c173" stroke-dasharray="339.292" stroke-width="12" transform="rotate(-90 60 60)" stroke-dashoffset="325.7203263241897"></circle><text dominant-baseline="central" fill="black" style="position: absolute;" text-anchor="middle" x="60" y="60">4%</text></svg--></div>
+                        <div>
+                            <div class="slds-progress-ring  ">
+                                <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="100" class="slds-progress-ring__progress" role="progressbar"><!--svg viewBox="-1 -1 2 2"><path class="slds-progress-ring__path" id="slds-progress-ring-path-6" d="M 1 0 A 1 1 0 0 0 0.9685831611286311 -0.2486898871648548 L 0 0"></path></svg--></div>
+                                <div class="slds-progress-ring__content">
+                                    <div dropzone="progressRingSLDS body"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </lightning:tab>
+                </lightning:tabset>
+                <div class="slds-container_center slds-container_fluid slds-card slds-card_boundary">
+                    <div class="slds-container_fluid slds-card slds-card_boundary">
+                        <lightning:card title="Policy Exceptions">
+                            <aura:set attribute="actions">
+                                <lightning:button class="slds-theme_neutral" variant="neutral" label="View All Policy Exceptions"></lightning:button>
+                            </aura:set>
+                            <table class="slds-table slds-table_bordered slds-table_striped">
+                                <thead>
+                                    <tr class="slds-text-title_caps">
+                                        <th>
+                                            <div class="slds-truncate" title="Column 1">Policy Exception Name</div>
+                                        </th>
+                                        <th>
+                                            <div class="slds-truncate" title="Column 1">Type</div>
+                                        </th>
+                                        <th>
+                                            <div class="slds-truncate" title="Column 1">Relationship Name</div>
+                                        </th>
+                                        <th>
+                                            <div class="slds-truncate" title="Column 1">Severity</div>
+                                        </th>
+                                        <th>
+                                            <div class="slds-truncate" title="Column 1">Severity Value</div>
+                                        </th>
+                                        <th>
+                                            <div class="slds-truncate" title="Column 1">Exception Status</div>
+                                        </th>
+                                        <th>
+                                            <div class="slds-truncate" title="Column 1">Generated</div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="slds-hint-parent">
+                                        <td colspan ="7"  style="text-align:center;">No Unmitigated Policy Exceptions Cited</td>
+                                        
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </lightning:card>
+                    </div>
+                </div>
+                <div class="slds-container_center slds-container_fluid slds-card slds-card_boundary"></div>
+            </lightning:tab>
+            <lightning:tab id="4" label="Manage Fees"></lightning:tab>
+            <lightning:tab id="5" label="Offers"></lightning:tab>
+            <lightning:tab id="6" label="Document Preparation"></lightning:tab>
+            <lightning:tab id="7" label="Documents">
+                <div class="slds-container_fluid">
+                    <lightning:tabset variant="default">
+                        <lightning:tab id="-Lpc6H49Sh-j6AxNcrzB" label="Documents">
+                            <img src="{!$Resource.docsScreen}" alternativeText="emoji"/>
+                        </lightning:tab>
+                    </lightning:tabset>
+                </div>
+            </lightning:tab>
+        </lightning:tabset>
+    </div>
+</aura:component>

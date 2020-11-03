@@ -1,0 +1,87 @@
+<!-- CM #5-->
+<aura:component access="global">
+    <ltng:require styles="{!$Resource.Q_GWScreenBaseCss}" afterScriptsLoaded="{!c.handleCMPolicyInformationInit}" />
+
+    <aura:attribute name="coverageStartDate" type="String" />
+    <aura:attribute name="oppty" type="Opportunity" />
+    <aura:attribute name="selectedCPcommercialPropertyList" type="List" />
+
+    <div class="GWScreenContainer">
+        <lightning:layout multipleRows="true">
+            <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                <div class="sectionTitle">
+                    <span class="title">Policy Information</span>
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" class="slds-p-vertical_small">
+                <div class="inputLabel">
+                    <span class="label">Coverage Start Date
+                    </span>
+                </div>
+                <div class="inputElement">
+                    {!v.coverageStartDate}
+                </div>
+            </lightning:layoutItem>
+            <aura:iteration items="{!v.selectedCPcommercialPropertyList}" var="propertyItem">
+                <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                    <div class="inputLabel">
+                        <span class="label">Primary Insured <span class="asterisk"></span> </span>
+                    </div>
+                    <div class="inputElement">
+                        <div class="inputElement">
+                            {!v.oppty.Account.Name}
+                        </div>
+                    </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                    <div class="inputLabel">
+                        <span class="label"> <span class="asterisk"></span> </span>
+                    </div>
+                    <div class="inputElement" style="display:inline-grid">
+                        <div>{!propertyItem.Street}</div>
+                        <div>{!propertyItem.City}</div>
+                        <div>{!propertyItem.State}</div>
+                        <div>{!propertyItem.PostalCode}</div>
+                    </div>
+                </lightning:layoutItem>
+            </aura:iteration>
+
+            <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                <div class="inputLabel">
+                    <span class="label">Is the billing address the same as the above address?<span
+                            class="asterisk">*</span></span>
+                </div>
+                <div class="inputElement">
+                    <lightning:buttonGroup class="btn-groupToggleButton insideLayout">
+                        <lightning:button label="Yes" name="Yes" aura:id="addType" class="selectedToggleButtonType"
+                            onclick="{!c.handleToggleBtnClick}" />
+                        <lightning:button label="No" name="No" aura:id="addType" onclick="{!c.handleToggleBtnClick}" />
+                    </lightning:buttonGroup>
+                </div>
+            </lightning:layoutItem>
+
+            <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                <div class="inputLabel">
+                    <span class="label">Email
+                        <span class="asterisk">*</span>
+                    </span>
+                </div>
+                <div class="inputElement">
+                    <input type="text" class="slds-input" value="{!v.oppty.Account.PersonEmail}" />
+                </div>
+            </lightning:layoutItem>
+
+            <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                <div class="inputLabel">
+                    <span class="label">Phone
+                        <span class="asterisk">*</span>
+                    </span>
+                </div>
+                <div class="inputElement">
+                    <input type="text" class="slds-input" value="{!v.oppty.Account.Phone}" />
+                </div>
+            </lightning:layoutItem>
+
+        </lightning:layout>
+    </div>
+</aura:component>

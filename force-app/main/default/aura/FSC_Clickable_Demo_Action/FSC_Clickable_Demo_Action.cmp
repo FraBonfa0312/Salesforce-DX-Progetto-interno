@@ -1,0 +1,20 @@
+<!--
+ - Created by kylegower-winter on 8/2/17.
+ -->
+<!--quickAdd.cmp-->
+<aura:component description="FSC_Clickable_Demo_Action" implements="force:lightningQuickActionWithoutHeader,force:hasRecordId" access="global">
+        <!-- Very simple addition -->
+    <ltng:require styles="{!$Resource.animate_css}"/>
+
+    <!--<lightning:button label="Add" onclick="{!c.clickAdd}"/>-->
+    <div class="fsc_modal">
+        <h2 class="animated fadeInUp" >Preparing Your Product</h2>
+        <p class="animated fadeInUp" id="tagline"></p>
+        <img src="{!$Resource.ncino_logo}" />
+    </div>
+
+    <aura:handler name="init" value="{!this}" action="{!c.clickAdd}"/>
+    <aura:handler name="render" value="{!this}" action="{!c.tagLine}"/>
+
+
+</aura:component>

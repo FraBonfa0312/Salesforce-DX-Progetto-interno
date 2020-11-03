@@ -1,0 +1,20 @@
+.THIS {
+}
+
+/*OVERWRITE THE STATIC RESOURCES CSS*/
+.THIS .inputElement {
+    width: 60% !important;
+}
+
+.THIS .inputLabel {
+    width: 40% !important;
+}
+
+.THIS .singleVehicle{
+    width: 100%;
+    border-bottom: 1px #ccc solid;
+}
+
+.THIS .readonly {
+    border: none;
+}

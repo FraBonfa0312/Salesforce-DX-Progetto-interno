@@ -1,0 +1,209 @@
+<!--THIS COMPONENT TAKES A CUSTOMISED STATIC CSS FILE THAT HAS BEEN USED IN DIFFERENT COMPONENTS-->
+<!--PLEASE DO NOT CHANGE THE STATIC FILE FOR ONLY ONE COMPONENT-->
+<!--PLEASE ADD/OVERWRITE CSS IN EACH COMPONENT IF NEEDED-->
+
+<aura:component controller="Qsyd_GW_Controller" access="global">
+    <ltng:require styles="{!$Resource.Q_GWScreenBaseCss}" afterScriptsLoaded="{!c.handlePersonalCorporateInfoInit}" />
+
+    <aura:attribute name="isPersonal" type="Boolean" default="true" />
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="oppty" type="Opportunity" />
+
+    <!-- Products -->
+    <aura:attribute name="selectedCommercialProduct" type="Product2" />
+    <aura:attribute name="commercialINSProductsList" type="List" />
+    <!-- Dates -->
+    <aura:attribute name="PolicyCoverageStartDate" type="String" />
+    <aura:attribute name="effectiveDate" type="String" />
+
+    <aura:attribute name="showSpinner" type="Boolean" default="false" />
+    <aura:attribute name="producerList" type="List" />
+    <aura:attribute name="selectedProducer" type="String" default="" />
+
+
+    <aura:method name="GetSelectedPolicyType" action="{!c.returnSelectedPolicyTypeFromPersonCorporateScreen}"
+        access="public">
+    </aura:method>
+    <aura:method name="GetSelectedProduct" action="{!c.returnSelectedProductFromPersonCorporateScreen}" access="public">
+    </aura:method>
+
+
+    <div class="GWScreenContainer">
+        <aura:if isTrue="{!v.showSpinner}">
+            <lightning:spinner alternativeText="Loading" size="small" />
+        </aura:if>
+        <lightning:layout multipleRows="true">
+            <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                <div class="inputLabel">
+                    <span class="label">Account Type</span>
+                </div>
+                <div class="inputElement">
+                    <lightning:buttonGroup class="btn-groupToggleButton">
+                        <lightning:button label="Commercial" name="Commercial" aura:id="accType"
+                            onclick="{!c.handleToggleBtnClick}"
+                            class="{!v.isPersonal == false ? 'selectedToggleButtonType' : ''}" />
+                        <lightning:button label="Personal" name="Personal" aura:id="accType"
+                            class="{!v.isPersonal == true ? 'selectedToggleButtonType' : ''}"
+                            onclick="{!c.handleToggleBtnClick}" />
+                    </lightning:buttonGroup>
+                </div>
+            </lightning:layoutItem>
+            <aura:if isTrue="{!v.isPersonal}">
+                <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                    <div class="inputLabel">
+                        <span class="label">First Name
+                            <span class="asterisk">*</span>
+                        </span>
+                    </div>
+                    <div class="inputElement">
+                        <input type="text" class="slds-input"
+                            value="{!v.oppty.Account.FirstName == null ? 'Rachel' : v.oppty.Account.FirstName }" />
+                    </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                    <div class="inputLabel">
+                        <span class="label">Last Name
+                            <span class="asterisk">*</span>
+                        </span>
+                    </div>
+                    <div class="inputElement">
+                        <input type="text" class="slds-input"
+                            value="{!v.oppty.Account.LastName == null ? 'Adam' : v.oppty.Account.LastName }" />
+                    </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                    <div class="inputLabel">
+                        <span class="label">City</span>
+                    </div>
+                    <div class="inputElement">
+                        <input type="text" class="slds-input" value="{!v.oppty.Account.BillingCity}" />
+                    </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                    <div class="inputLabel">
+                        <span class="label">ZIP Code</span>
+                    </div>
+                    <div class="inputElement">
+                        <input type="text" class="slds-input" value="{!v.oppty.Account.BillingPostalCode}" />
+                    </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                    <div class="inputLabel">
+                        <span class="label">State</span>
+                    </div>
+                    <div class="inputElement">
+                        <select class="slds-select">
+                            <option selected="true" value="{!v.oppty.Account.BillingState}">
+                                {!v.oppty.Account.BillingState}</option>
+                            <option value="California">California</option>
+                        </select>
+                    </div>
+                </lightning:layoutItem>
+            </aura:if>
+
+            <aura:if isTrue="{! not(v.isPersonal) }">
+                <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                    <div class="inputLabel commercial">
+                        <span class="label">Account
+                            <span class="asterisk"></span>
+                        </span>
+                    </div>
+                    <div class="inputElement commercial">
+                        <span>{!v.oppty.Account.AccountNumber}</span>
+                    </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                    <div class="inputLabel commercial">
+                        <span class="label">Company
+                            <span class="asterisk"></span>
+                        </span>
+                    </div>
+                    <div class="inputElement commercial" style="display:inline-grid">
+                        <span>{!v.oppty.Account.Name}</span>
+                        <span>{!v.oppty.Account.BillingStreet}</span>
+                        <span>{!v.oppty.Account.BillingCity}</span>
+                        <span>{!v.oppty.Account.BillingState}&nbsp;{!v.oppty.Account.BillingPostalCode}</span>
+                    </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                    <div class="inputLabel commercial">
+                        <span class="label">State
+                            <span class="asterisk">*</span>
+                        </span>
+                    </div>
+                    <div class="inputElement commercial">
+                        <select class="slds-select">
+                            <option value="{!v.oppty.Account.BillingState}">{!v.oppty.Account.BillingState}</option>
+                        </select>
+                    </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                    <div class="inputLabel commercial">
+                        <span class="label">Effective Date
+                            <span class="asterisk">*</span>
+                        </span>
+                    </div>
+                    <div class="inputElement commercial">
+                        <input id="efdate" type="date" class="slds-input" value="{!v.effectiveDate}" />
+                    </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                    <div class="inputLabel commercial">
+                        <span class="label">Organization
+                            <span class="asterisk">*</span>
+                        </span>
+                    </div>
+                    <div class="inputElement commercial">
+                        <select class="slds-select" id="producerSelect" value="{!v.selectedProducer.Id}"
+                            onchange="{!c.handleSelectProducerChange}">
+                            <aura:if isTrue="{!v.producerList != null}">
+                                <aura:iteration items="{!v.producerList}" var="item">
+                                    <option value="{!item.Id}">
+                                        <span class="label">{!item.Name}</span>
+                                    </option>
+                                </aura:iteration>
+                                <aura:set attribute="else">
+                                    <option value="">
+                                        <span class="label">No Producer Available</span>
+                                    </option>
+                                </aura:set>
+                            </aura:if>
+                        </select>
+                    </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                    <div class="inputLabel commercial">
+                        <span class="label">Producer Code</span>
+                    </div>
+                    <div class="inputElement commercial">
+                        <input class="slds-input" value="{!v.selectedProducer.INS_Producer_Code__c}" readonly="true">
+
+                        </input>
+                    </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                    <div class="inputLabel commercial">
+                        <span class="label">Product Code</span>
+                    </div>
+                    <div class="inputElement commercial">
+                        <select id="commercialProductsSelect" class="slds-select" required="true">
+                            <aura:if isTrue="{!v.commercialINSProductsList != null}">
+                                <aura:iteration items="{!v.commercialINSProductsList}" var="item" indexVar="idx">
+                                    <option value="{!idx}">
+                                        <span class="label">{!item.Name}</span>
+                                    </option>
+                                </aura:iteration>
+                                <aura:set attribute="else">
+                                    <option value="">
+                                        <span class="label">No Commercial Insurance Product Available</span>
+                                    </option>
+                                </aura:set>
+                            </aura:if>
+                        </select>
+                    </div>
+                </lightning:layoutItem>
+            </aura:if>
+        </lightning:layout>
+    </div>
+
+</aura:component>

@@ -1,0 +1,203 @@
+<!--THIS COMPONENT TAKES A CUSTOMISED STATIC CSS FILE THAT HAS BEEN USED IN DIFFERENT COMPONENTS-->
+<!--PLEASE DO NOT CHANGE THE STATIC FILE FOR ONLY ONE COMPONENT-->
+<!--PLEASE ADD/OVERWRITE CSS IN EACH COMPONENT IF NEEDED-->
+
+
+<aura:component access="global">
+    <ltng:require styles="{!join(',', 
+    $Resource.Q_GWScreenBaseCss)}" afterScriptsLoaded="{!c.handleSelectDriverInit}" />
+    <aura:attribute name="yearsOptions" type="list" default="" />
+    <aura:attribute name="numOfAccidents" type="Integer" default="0" />
+    <aura:attribute name="numOfViolations" type="Integer" default="0" />
+    <aura:attribute name="oppty" type="opportunity" default="" />
+    <aura:attribute name="driversList" type="list" default="[
+    {
+        firstName: 'Rachel',
+        lastName: 'Adams',
+        readonly: true,
+        deletable: false,
+        isPrimary: true,
+        gender:'',
+        licenseState:'',
+        dateOfBirth:'',
+        yearLicensed:2018,
+        licenseNumber:''
+    }
+    ]" />
+
+    <aura:registerEvent name="onSelectDriverCompletionEvt" type="c:Qsyd_GW_onSelectDriverCompletionEvt" />
+
+    <div class="GWScreenContainer">
+        <lightning:layout multipleRows="true">
+            <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                <div class="sectionTitle">
+                    <span class="title">Driver</span>
+                </div>
+            </lightning:layoutItem>
+            <aura:iteration items="{!v.driversList}" var="driver" indexVar="idx">
+                <div class="singleDriver slds-m-vertical_small">
+                    <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                        <div class="inputLabel">
+                            <span class="label">First Name</span>
+                        </div>
+                        <div class="inputElement">
+                            <input id="{!'FIRSTNAME'+idx}" class="{! driver.readonly ? 'readonly' : 'slds-input' }" value="{!driver.firstName}" readonly="{!driver.readonly}"
+                            />
+                        </div>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                        <div class="inputLabel">
+                            <span class="label">Last Name</span>
+                        </div>
+                        <div class="inputElement">
+                            <input id="{!'LASTNAME'+idx}" class="{! driver.readonly ? 'readonly' : 'slds-input' }" value="{!driver.lastName}" readonly="{!driver.readonly}"
+                            />
+                        </div>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                        <div class="inputLabel">
+                            <span class="label">Date of Birth
+                                <span class="asterisk">*</span>
+                            </span>
+                        </div>
+                        <div class="inputElement">
+                            <input id="{!'DOB'+idx}" type="date" class="slds-input" value="{!driver.dateOfBirth}" />
+                        </div>
+                    </lightning:layoutItem>
+
+                    <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                        <div class="inputLabel">
+                            <span class="label">Gender</span>
+                        </div>
+                        <div class="inputElement">
+                            <select class="slds-select" id="{!'GENDER'+idx}" value="{!driver.gender}">
+                                <option value="Female">Female</option>
+                                <option value="Male">Male</option>
+                            </select>
+                        </div>
+                    </lightning:layoutItem>
+
+                    <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                        <div class="inputLabel">
+                            <span class="label">Driver's License Number
+                                <span class="asterisk">*</span>
+                            </span>
+                        </div>
+                        <div class="inputElement">
+                            <input id="{!'LICENSENUMBER'+idx}" type="text" class="slds-input" value="{!driver.licenseNumber}"/>
+                        </div>
+                    </lightning:layoutItem>
+
+                    <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                        <div class="inputLabel">
+                            <span class="label">License State
+                                <span class="asterisk">*</span>
+                            </span>
+                        </div>
+                        <div class="inputElement">
+                            <select id="{!'LICENSESTATE'+idx}" class="slds-select">
+                                <option selected="true" value="{!driver.licenseState}">{!driver.licenseState}</option>
+                                <option value="NSW">NSW</option>
+                                <option value="VIC">VIC</option>
+                                <option value="TAS">TAS</option>
+                                <option value="ACT">ACT</option>
+                            </select>
+                        </div>
+                    </lightning:layoutItem>
+
+                    <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                        <div class="inputLabel">
+                            <span class="label">Year First Licensed
+                                <span class="asterisk">*</span>
+                            </span>
+                        </div>
+                        <div class="inputElement">
+                            <select class="slds-select" id="{!'YEARLICENSED'+ idx}" value="{!driver.yearLicensed}">
+                                <aura:iteration items="{!v.yearsOptions}" var="item">
+                                    <option value="{!item}">{!item}</option>
+                                </aura:iteration>
+                            </select>
+                        </div>
+                    </lightning:layoutItem>
+
+                    <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                        <div class="inputLabel">
+                            <span class="label">Number of Accidents
+                                <span class="asterisk">*</span>
+                            </span>
+                        </div>
+                        <div class="inputElement">
+                            <div class="div-incrementalfield" id="numOfAccidents" onclick="{!c.handleUpdateCounter}">
+                                <div class="slds-grid slds-text-align--center">
+                                    <div class="slds-col slds-size_1-of-4">
+                                        <img data-action="decrement" data-idx="{!'a'+idx}" class="icon_minus" src="{!$Resource.Q_GWIconMinus}" />
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-4 slds-align_absolute-center div-number">
+                                        <input class="readonly" type="number" id="{!'a' + idx}" value="{!driver.numOfAccidents}" style="width:100%; text-align: center" readonly="true"
+                                        />
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-4">
+                                        <img data-action="increment" data-idx="{!'a'+idx}" class="icon_plus" src="{!$Resource.Q_GWIconPlus}" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </lightning:layoutItem>
+
+                    <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                        <div class="inputLabel">
+                            <span class="label">Number of Violations
+                                <span class="asterisk">*</span>
+                            </span>
+                        </div>
+                        <div class="inputElement">
+                            <div class="div-incrementalfield" id="numOfViolations" onclick="{!c.handleUpdateCounter}">
+                                <div class="slds-grid slds-text-align--center">
+                                    <div class="slds-col slds-size_1-of-4">
+                                        <img data-action="decrement" data-idx="{!'v'+idx}" class="icon_minus" src="{!$Resource.Q_GWIconMinus}" />
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-4 slds-align_absolute-center">
+                                        <input class="readonly" type="number" id="{!'v' + idx}" value="{!driver.numOfViolations}" style="width:100%; text-align: center" readonly="true"
+                                        />
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-4">
+                                        <img data-action="increment" data-idx="{!'v'+idx}" class="icon_plus" src="{!$Resource.Q_GWIconPlus}" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </lightning:layoutItem>
+                    <aura:if isTrue="{!driver.deletable}">
+                        <lightning:layoutItem size="12" class="slds-p-vertical_x-small slds-text-align_right">
+                            <lightning:button label="Delete" name="{!idx}" onclick="{!c.handleDeleteDriver}" />
+                        </lightning:layoutItem>
+                    </aura:if>
+                </div>
+                <!--singleDriver-->
+            </aura:iteration>
+
+
+            <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                <div class="sectionTitle">
+                    <span class="title">Add Another Driver?</span>
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                <lightning:button label=" + Add Driver" onclick="{!c.handleAddDriver}" />
+            </lightning:layoutItem>
+        </lightning:layout>
+
+        <div class="div-footer">
+            <div class="slds-p-vertical_small">
+                <div class="btn-footer">
+                    <a style="float:left">Cancel</a>
+                    <lightning:button label="Previous" variant="neutral" class="slds-p-vertical_xx-small slds-m-left_xx-small" onclick="{!c.handleFireEventGoPrevious}"
+                    />
+                    <lightning:button label="Next" variant="brand" class="slds-p-vertical_xx-small slds-m-left_xx-small" onclick="{!c.handleFireEventGoNext}"
+                    />
+                </div>
+            </div>
+        </div>
+    </div>
+
+</aura:component>

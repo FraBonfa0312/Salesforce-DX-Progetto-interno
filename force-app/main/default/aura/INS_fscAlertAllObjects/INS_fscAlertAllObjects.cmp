@@ -1,0 +1,67 @@
+<!-- Developer Notes:
+*Author
+*Date: August 12, 2019
+*Comments: Created to overcome the limitation of existing alerts component, in that it is only enabled for accounts.
+			This version is for all. Any yes, I am likely even more appalled than you at the hack job that was used below
+			to drive class assignment. Works in a pinch, will fix later. 
+
+*Planned Revisions:
+	- Apex controller revisions to accept any object injected from the component, current version is a bit structurally dumb
+	- will need separate functions for each object type in order to query the proper objects
+	- Updated cmp structure to iterate over all returned alerts from controller
+
+*Completed Revisions:
+	- Component layout
+	- Initial data services (Apex controller to return alerts)
+	- baseline conditional class assignment using the severity field on each record (super crappy but works as first pass)
+-->
+
+<aura:component controller="JH_fscAlertsCtrl" implements="force:hasRecordId,flexipage:availableForAllPageTypes"
+    access="global">
+    <aura:attribute name="Title" type="String" default="Alert" />
+    <aura:attribute name="Description" type="String" default="" />
+    <aura:attribute name="Type" type="String" default="" />
+    <aura:attribute name="Alerts" type="FinServ__Alert__c[]" />
+    <aura:attribute name="recordId" type="Id" />
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInIt}" />
+
+    <!--EZ [Handler] - Standard Event Handler-->
+    <aura:handler event="force:refreshView" action="{!c.handleRefreshViewEvent}" />
+
+    <aura:iteration items="{!v.Alerts}" var="item">
+        <aura:if isTrue="{!item.FinServ__Active__c}">
+            <div class="FinServAlertItem">
+                <span>
+                    <div aura:id="thing1"
+                        class="{!if(item.FinServ__Severity__c == 'Warning',
+                                                 'warning + border + slds-p-around--small + slds-m-bottom--x-small + slds-grid',
+                                                 'info + border + slds-p-around--small + slds-m-bottom--x-small + slds-grid')}">
+
+                        <lightning:icon
+                            iconName="{!if(item.FinServ__Severity__c == 'Warning', 'utility:warning', 'utility:info')}"
+                            size="x-small" aura:id="iconMain" class="slds-icon_container" />
+                        <div class="slds-m-left--small">
+                            <p class="slds-text-heading--small Title">{!item.FinServ__Message__c}</p>
+                            <p class="slds-text-body--regular">{!item.FinServ__MessageDescription__c}</p>
+                        </div>
+                        <div class="slds-col_bump-left">
+                            <button class="slds-button slds-button--icon">
+                                <lightning:icon iconName="utility:clock" size="x-small" aura:id="utilityIcons"
+                                    class="slds-icon_container" onclick="{!c.doSnooze}" />
+                            </button>
+                            <button class="slds-button slds-button--icon" data-aura-rendered-by="1:2020;a">
+                                <lightning:icon iconName="utility:close" size="x-small"
+                                    class="utility iconStyle slds-icon-utility-close slds-icon_container"
+                                    onclick="{!c.doDelete}" />
+                            </button>
+                        </div>
+                    </div>
+                </span>
+            </div>
+        </aura:if>
+    </aura:iteration>
+
+
+
+</aura:component>

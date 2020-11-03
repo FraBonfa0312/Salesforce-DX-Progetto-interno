@@ -1,0 +1,20 @@
+.THIS .progress-bar-green .slds-progress-bar__value{
+    background: #4bca81 !important;
+}
+
+.THIS .progress-bar-yellow .slds-progress-bar__value{
+    background: #ffb75d !important;
+}
+.THIS .progress-bar-red .slds-progress-bar__value{
+    background: #d4504c !important;
+}
+
+.THIS .embedImg {
+    height: 30px;
+    width: auto;
+}
+
+.THIS .alert {
+    padding-left: 10px;
+    padding-right: 20px;
+}

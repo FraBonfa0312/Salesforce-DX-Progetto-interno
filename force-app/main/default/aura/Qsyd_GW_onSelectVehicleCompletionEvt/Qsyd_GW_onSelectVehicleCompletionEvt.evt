@@ -1,0 +1,5 @@
+<aura:event type="COMPONENT" description="Notify the master component with entered vehicles information and go to next step">
+    <aura:attribute name="propertyList" type="List" />
+    <aura:attribute name="propertyType" type="String" />
+    <aura:attribute name="action" type="String" /> <!--NEXT OR PREVIOUS-->
+</aura:event>

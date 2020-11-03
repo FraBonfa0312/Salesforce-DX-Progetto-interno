@@ -1,0 +1,6 @@
+<design:component>
+	<design:attribute name="cardNumber"       label="Card Number" />
+    <design:attribute name="cardHolder"       label="Card Holder Name" />
+    <design:attribute name="totalAmount"      label="Total Amount" />
+    <design:attribute name="paymentProcessed" label="Payment Processed?" default="false" />
+</design:component>

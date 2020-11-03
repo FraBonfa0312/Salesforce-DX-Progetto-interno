@@ -1,0 +1,42 @@
+<!--
+ - Created by brandon.rogers on 4/14/20.
+ -->
+
+<apex:page id="ckz_BIE_ALL_incl" sidebar="false" showHeader="false" standardStylesheets="false">
+
+    <c:ckz_Header_Pro />
+    <c:ckz_Footer />
+
+    <!-- FontAwesome -->
+    <script src="https://kit.fontawesome.com/93082887a8.js" crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            const pageName = "ckz_" + CCRZ.pagevars.currentPageName.slice(6).toLowerCase();
+            $("body").addClass(pageName);
+
+            // change_favicon("{!URLFOR($Resource.CKZ_Theme_Cumulus,'/images/favicon.png')}");
+        });
+
+        function change_favicon(img) {
+            let favicon = document.querySelector('link[rel="shortcut icon"]');
+
+            if (!favicon) {
+                favicon = document.createElement('link');
+                favicon.setAttribute('rel', 'shortcut icon');
+                let head = document.querySelector('head');
+                head.appendChild(favicon);
+            }
+
+
+            favicon.setAttribute('type', 'image/png');
+            favicon.setAttribute('href', img);
+        }
+
+        function collapseRotate(e) {
+            console.log('collapseRotate(' + e + ')');
+
+            $(e).find('i').toggleClass('fa-angle-right fa-angle-down');
+        }
+    </script>
+</apex:page>

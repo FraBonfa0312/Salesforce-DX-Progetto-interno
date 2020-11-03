@@ -1,0 +1,13 @@
+.THIS .policy-tile:hover, .THIS.policy-tile:hover {
+    border: 2px solid #2a94d6;
+    cursor: cell;
+}
+
+.THIS.message {
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #c8c8c8;
+    border-radius: 5px;
+    font-size: 1.5em;
+    font-weight: 100;
+}

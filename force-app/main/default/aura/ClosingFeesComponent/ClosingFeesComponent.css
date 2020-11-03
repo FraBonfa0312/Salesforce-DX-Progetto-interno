@@ -1,0 +1,45 @@
+.THIS {
+        padding: 40px 0;
+    	overflow-x:scroll;
+    
+}
+
+.THIS .tableContainer {
+    padding: 30px 0;
+    display:table;
+}
+
+.THIS .slds-table {
+    border: 1px solid #d8dde6 !important;
+}
+.THIS .fees{
+        background-color: #f5f5f5;
+    line-height: 50px;
+    border: 1px solid #d8dde6;
+    border-bottom:none;
+}
+.THIS .feesText{
+        margin-left: 10px;
+    font-size: 20px;
+}
+
+.THIS .closingHeader{
+    background-color:#f5f5f5;
+}
+
+.THIS .closingHdr{
+    font-size:24px;
+    padding-bottom:5px;
+}
+
+.THIS .closingText{
+    padding-bottom:40px;
+}
+.THIS .btnContainer{
+    float:right;
+    
+}
+
+.THIS .feesHdr{
+    background-color:#e4e7e9;
+}

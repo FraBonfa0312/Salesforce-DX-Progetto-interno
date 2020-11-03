@@ -1,0 +1,39 @@
+.THIS {}
+
+.THIS .alertcontainer {
+    background: #FDEBBD;
+    display: flex;
+    width: 850px;
+    margin-left: -130px;
+}
+
+.THIS .alertcontainer .content {
+    display: flex;
+    width: 60%;
+}
+
+.THIS .alertcontainer .button {
+    width: 40%;
+    align-self: flex-end;
+    text-align: right;
+}
+
+.THIS .detailContainer {
+    display: block;
+    width: 850px;
+    margin-left: -130px;
+}
+
+.THIS h2 {
+    font-size: 20px;
+}
+
+.THIS h2.underline {
+    width: 100%;
+    padding-bottom: 5px;
+    border-bottom: solid 2px #333;
+}
+
+.THIS .topborder {
+    border-top: solid 1px #efefef;
+}

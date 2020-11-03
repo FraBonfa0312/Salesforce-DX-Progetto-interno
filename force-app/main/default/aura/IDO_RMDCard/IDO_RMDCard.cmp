@@ -1,0 +1,40 @@
+<aura:component controller="IDO_BdayRMDcard_Ctrl" implements="flexipage:availableForAllPageTypes" access="global" >
+	
+    <aura:attribute name="theContacts" type="Object[]" access="public" />
+    <aura:attribute name="theLimit" type="Integer" access="public" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <lightning:card title="{! 'Upcoming RMDs (' + v.theContacts.length +')'}" iconName="custom:custom25" footer="View All" class="rmd_card">
+        
+        <ul>
+            <aura:iteration items="{!v.theContacts}" var="con" >           
+                <li class="slds-media slds-tile slds-m-vertical--small slds-m-horizontal--large">
+                    <div class="slds-media__body">
+                        <div class="slds-grid slds-grid--align-spread slds-has-flexi-truncate">
+                            <p class="tile__title slds-truncate slds-tile__title" >
+                                <div class="outputLookupContainer forceOutputLookupWithPreview" data-aura-class="forceOutputLookupWithPreview">
+                                    <a class=" textUnderline outputLookupLink slds-truncate forceOutputLookup" data-refid="recordId" data-recordid="{!con.Id}" data-special-link="true" href="{! '/one/one.app#/sObject/'+ con.Id +'/view'}" rel="noreferrer" title="" data-aura-class="forceOutputLookup"> {!con.Name} </a>
+                                </div>
+                            </p>
+                            <div data-aura-rendered-by="33:4347;a">
+                                <ui:outputCurrency value="{!con.AUM__c}"/>
+                                <!-- <span data-aura-rendered-by="36:4347;a" class="uiOutputCurrency" data-aura-class="uiOutputCurrency">${!con.AUM__c}</span> -->
+                            </div>
+                        </div>
+                        <ul class="slds-tile__detail slds-list--horizontal slds-has-dividers slds-text-body--small">
+                            <li class="slds-truncate slds-list__item">{!con.Category__c}</li>
+                            <li class="slds-truncate slds-list__item">
+                                <label class="uiLabel" for="" data-aura-class="uiLabel">
+                                    <span class="">Days Away: {!con.DaysAway__c}</span>
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </aura:iteration>
+        </ul>
+            
+        
+    </lightning:card>
+    
+</aura:component>

@@ -1,0 +1,33 @@
+<design:component label="INS Rego Check">
+    <!-- Component Load Attributes -->
+    <design:attribute name="username" 
+                    label="Username" 
+                    description="Your username to access the API calls from http://www.regcheck.org.uk/api/reg.asmx/" />
+    <design:attribute name="checkCountry" 
+                    datasource="Demo, Check, CheckUSA, CheckAustralia, CheckNewZealand, CheckFrance"
+                    label="Check Country" 
+                    description="Which check API should it be calling, e.g. Demo, Check, CheckUSA, CheckAustralia, CheckNewZealand, CheckFrance" />
+
+    <!-- Rego Details Attributes -->
+    <design:attribute name="regoNumber" />
+    <design:attribute name="description" />
+    <design:attribute name="vehicleIdentificationNumber" />
+    <design:attribute name="imageUrl" />
+    <design:attribute name="bodyDescription" />
+    <design:attribute name="bodyType" />
+    <design:attribute name="capacityUnit" />
+    <design:attribute name="capacityValue" />
+    <design:attribute name="code" />
+    <design:attribute name="cylinders" />
+    <design:attribute name="driveType" />
+    <design:attribute name="engineDescription" />
+    <design:attribute name="family" />
+    <design:attribute name="fuelType" />
+    <design:attribute name="make" />
+    <design:attribute name="model" />
+    <design:attribute name="nvic" />
+    <design:attribute name="series" />
+    <design:attribute name="transmissionType" />
+    <design:attribute name="variant" />
+    <design:attribute name="year" />
+</design:component>

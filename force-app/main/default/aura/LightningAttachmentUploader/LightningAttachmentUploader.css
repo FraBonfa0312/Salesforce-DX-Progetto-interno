@@ -1,0 +1,150 @@
+.THIS .file-drop-area {
+	text-align: center;
+    padding: 1em 0;
+    margin: 1em 0;
+    color: #16325c;
+    border: 1px dashed #d8dde6;
+    border-radius: .25rem;
+    cursor: default;
+    min-height: 100px;
+    background-color: #f4f6f9;
+    font-weight: 300;
+    font-size: 1rem;
+}
+
+.THIS .file-drop-area.is-dragover {
+    background-color: #9faab5;
+    color: #FAFAFA;
+}
+
+.THIS .file-drop-area.not-empty {
+    
+}
+
+
+.THIS .file-drop-area:not(.not-empty):before {
+    content: 'Click or Drop file/s here';
+    position: absolute !important;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.THIS .file-list li.file-list-item {
+    flex: 0 0 82px;
+    margin: 2px;
+}
+
+.THIS .file-prop {
+    width: 100%;
+    padding: 10px 0px;
+}
+
+.THIS .file-prop img {
+    width: 30px;
+}
+
+.THIS .file-title {
+    font-size: .8125rem;
+    font-weight: 400;
+    line-height: 1.5;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 75px;
+}
+
+
+.THIS .file-prop .checkmark,
+.THIS .file-prop .closeIcon {
+    position: absolute;
+    z-index: 99;
+    color: #FAFAFA;
+    border-radius: 10px;
+    padding: 2px;
+    font-size: 12px;
+    right: 26px;
+    top: 6px;
+    opacity: 0;
+}
+.THIS .file-prop:not(.ok):not(.ng):after {
+    content: '';
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: rgba(33, 33, 33, 0.7);
+    top: 0px;
+    left: 0px;
+    border-radius: 6px;
+}
+.THIS .file-prop .icon-key {
+    z-index: 2;
+    position: absolute!important;
+    left: 50%;
+    top: 50%;
+    color: #FAFAFA;
+    font-size: 30px;
+    opacity: 0;
+    animation: fadein 1s linear infinite;
+}
+.THIS .file-prop:not(.ok):not(.ng) .icon-key {
+    opacity: 1;
+}
+@keyframes fadein {
+    0%{ transform: translate(-50%,-50%) rotate(0deg); }
+    100%{ transform: translate(-50%,-50%) rotate(360deg); }
+}
+
+
+
+.THIS .file-prop .checkmark {
+    background-color: #04844b;
+}
+.THIS .file-prop .closeIcon {
+    background-color: #F44336;
+}
+.THIS .file-prop.ok .checkmark {
+    opacity: 1;
+}
+.THIS .file-prop.ng .closeIcon {
+    opacity: 1;
+}
+
+
+.THIS .file-drop-area.not-empty .clear-files {
+    display: block;
+}
+.THIS .clear-files {
+    cursor: pointer;
+    display: none;
+}
+.THIS .clear-files:hover {
+    color: rgb(0, 112, 210);
+}
+
+.THIS .smooth-animation-fast {
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+
+.THIS input.file-attach {
+    display: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.THIS {}

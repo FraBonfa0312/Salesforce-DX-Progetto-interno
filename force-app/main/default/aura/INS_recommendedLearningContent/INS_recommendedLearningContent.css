@@ -1,0 +1,14 @@
+.THIS .badgeIcon {
+    height: 70px;
+    width:	70px;
+}
+
+.THIS .badgy {
+    background-color: green;
+    color: #ffffff;
+}
+
+.THIS .iconClass {
+    height:35px;
+    width: auto;
+}

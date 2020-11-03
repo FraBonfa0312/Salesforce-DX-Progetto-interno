@@ -1,0 +1,33 @@
+<aura:component implements="lightning:availableForFlowScreens" access="global">
+    <aura:attribute name="insuranceTypesStr"  type="String" />
+    
+    <aura:attribute name="insuranceTypes"     type="List"   default="[{ 'name' : 'Home Insurance', 'value' : 'Home Insurance', 'policyType': 'Home', 'description' : 'From as low as $50.00 per month',        'imageUrl' : 'home.svg' }, 
+                                                                      { 'name' : 'Car Insurance',  'value' : 'Car Insurance',  'policyType': 'Auto', 'description' : 'Multi Policy discounts upto 30% off',    'imageUrl' : 'car.svg' }, 
+                                                                      { 'name' : 'Life Insurance', 'value' : 'Life Insurance', 'policyType': 'Life', 'description' : 'Cover against loss, accidents and more', 'imageUrl' : 'life.svg' }]"/>
+    <aura:attribute name="selectedType"       type="String" />
+    <aura:attribute name="selectedPolicyType" type="String" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+    <lightning:layout multipleRows="true">
+        <aura:iteration items="{!v.insuranceTypes}" var="insType">
+            <lightning:layoutItem size="12" padding="around-small" smallDeviceSize="4">
+                <div class="{!(v.selectedType == insType.value ? 'ins-is-selected' : '') + ' slds-card slds-card_boundary'}">
+                    <div class="ins-icon-container slds-align_absolute-center" id="{!insType.value}" data-policy-type="{!insType.policyType}" onclick="{!c.handleClick}">
+                        <img src="{!$Resource.INS_InsuranceTypeIcons + '/' + insType.imageUrl}" class="slds-p-around_medium"></img>
+                    </div>
+                    <div class="slds-p-around_small slds-theme_shade">
+                        <lightning:layout horizontalAlign="spread">
+                            <lightning:layoutItem>
+                                <div class="slds-text-link slds-m-vertical_x-small" id="{!insType.value}" onclick="{!c.handleClick}">
+                                    <h2 class="slds-text-heading_medium">{!insType.name}</h2>
+                                </div>
+                                <div class="slds-text-align_left slds-text-title slds-text-color_default">{!insType.description}</div>
+                            </lightning:layoutItem>
+                        </lightning:layout>
+                    </div>
+                </div>
+            </lightning:layoutItem>
+        </aura:iteration>
+    </lightning:layout>
+</aura:component>

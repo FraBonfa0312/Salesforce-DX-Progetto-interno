@@ -1,0 +1,35 @@
+<aura:component access="global">
+    <ltng:require styles="{!$Resource.Q_GWScreenBaseCss}" afterScriptsLoaded="{!c.handleCMPolicyInit}" />
+
+    <aura:attribute name="coverageStartDate" type="String" />
+    <aura:attribute name="oppty" type="Opportunity" />
+
+    <div class="GWScreenContainer">
+        <lightning:layout multipleRows="true">
+            <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                <div class="sectionTitle">
+                    <span class="title">Policy Details</span>
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" class="slds-p-vertical_small">
+                <div class="inputLabel">
+                    <span class="label">Coverage Start Date
+                    </span>
+                </div>
+                <div class="inputElement">
+                    {!v.coverageStartDate}
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                <div class="inputLabel">
+                    <span class="label">Organization Type <span class="asterisk">*</span> </span>
+                </div>
+                <div class="inputElement">
+                    <select class="slds-select">
+                        <option selected="true" value="Individual">Individual</option>
+                    </select>
+                </div>
+            </lightning:layoutItem>
+        </lightning:layout>
+    </div>
+</aura:component>

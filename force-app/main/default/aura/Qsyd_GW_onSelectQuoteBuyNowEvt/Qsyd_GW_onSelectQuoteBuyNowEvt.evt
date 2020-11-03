@@ -1,0 +1,6 @@
+<aura:event type="COMPONENT" description="Notify the master component with selected quote program and go to next step">
+    <aura:attribute name="selectedQuoteProgramName" type="String" />
+    <aura:attribute name="selectedQuoteProgramMonthlyPrice" type="String" />
+    <aura:attribute name="selectedQuoteProgramTotalPrice" type="String" />
+    <aura:attribute name="selectedProductsData" type="List" />
+</aura:event>

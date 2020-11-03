@@ -1,0 +1,173 @@
+<!--THIS COMPONENT TAKES A CUSTOMISED STATIC CSS FILE THAT HAS BEEN USED IN DIFFERENT COMPONENTS-->
+<!--PLEASE DO NOT CHANGE THE STATIC FILE FOR ONLY ONE COMPONENT-->
+<!--PLEASE ADD/OVERWRITE CSS IN EACH COMPONENT IF NEEDED-->
+
+<aura:component access="global">
+    <ltng:require styles="{!join(',', 
+    $Resource.Q_GWScreenBaseCss)}" afterScriptsLoaded="{!c.handlePaymentDetailsInit}" />
+
+    <aura:attribute name="currencySymbol" type="String" default="$" />
+    <aura:attribute name="selectProgramName" type="String" default="Premium" />
+    <aura:attribute name="selectProgramMonthlyPriceOnCard" type="String" default="182.00" />
+    <aura:attribute name="selectProgramTotalPriceOnCard" type="String" default="2184.00" />
+    <aura:attribute name="averageMonthlyPrice" type="String" default="182.00" />
+    <aura:attribute name="totalPriceForThisPaymentPlan" type="String" default="2184.00" />
+    <aura:attribute name="paymentPlansList" type="List" default="" />
+
+
+    <div class="GWScreenContainer">
+        <lightning:layout multipleRows="true" verticalAlign="stretch">
+            <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                <div class="sectionTitle">
+                    <span class="title">Policy Information</span>
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" class="slds-p-top_small">
+                <div class="paymentDetailsLabel">Average Monthly {!v.selectProgramName}</div>
+                <div class="paymentDetailsPrice">
+                    <ui:outputCurrency value="{!v.averageMonthlyPrice}" />
+                </div>
+            </lightning:layoutItem>
+
+            <lightning:layoutItem size="12" class="slds-p-top_small">
+                <div class="paymentDetailsLabel">Total {!v.selectProgramName} Program</div>
+                <div class="paymentDetailsPrice">
+                    <ui:outputCurrency value="{!v.totalPriceForThisPaymentPlan}" />
+                </div>
+            </lightning:layoutItem>
+
+            <lightning:layoutItem size="12" class="slds-p-vertical_x-small bottomBorderBlack">
+                <div class="slds-text-heading_small">Payment Plans</div>
+            </lightning:layoutItem>
+
+
+            <lightning:layoutItem size="12" class="slds-p-vertical_x-small slds-text-align--center">
+                <!--Payment Details Header-->
+                <lightning:layout class="slds-p-vertical_small" verticalAlign="stretch">
+                    <!--Payment Details Header-->
+                    <lightning:layoutItem size="1" class="bottomBorder">
+                        <!--Radio-->
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="3" class="bottomBorder">
+                        <div class="bold">NAME</div>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="3" class="bottomBorder">
+                        <div class="bold">DOWN PAYMENT</div>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="2" class="bottomBorder">
+                        <div class="bold">INSTALLMENT</div>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="3" class="bottomBorder">
+                        <div class="bold">TOTAL</div>
+                    </lightning:layoutItem>
+                    <!--Payment Details Header-->
+                </lightning:layout>
+                <!--Payment Details Header-->
+
+            </lightning:layoutItem>
+
+            <lightning:layoutItem size="12" class="slds-text-align--center">
+                <!--Payment Details contents-->
+                <lightning:layout multipleRows="true" verticalAlign="stretch">
+                    <aura:iteration items="{!v.paymentPlansList}" var="item" indexVar="idx">
+                        <lightning:layoutItem size="1" class="slds-p-vertical_small bottomBorder">
+                            <input type="radio" name="paymentPlans" value="{!idx}" id="{!'PAYMENTPLAN'+idx}"
+                                onclick="{!c.handleSelectDifferentPaymentPlan}" />
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="3" class="slds-p-vertical_small bottomBorder">
+                            <div id="{!'PLANNAME'+idx}">{!item.name}</div>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="3" class="slds-p-vertical_small bottomBorder">
+                            <div id="{!'DOWNPAYMENT'+idx}">{!item.downPayment}</div>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="2" class="slds-p-vertical_small bottomBorder">
+                            <div id="{!'INSTALLMENT'+idx}">{!item.installment}</div>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="3" class="slds-p-vertical_small bottomBorder">
+                            <div id="{!'TOTAL'+idx}">{!item.total}</div>
+                            <div id="{!'TERMMONTHS'+idx}" style="display:none">{!item.policyTermMonths}</div>
+                        </lightning:layoutItem>
+
+                    </aura:iteration>
+                    <!--paymentPlansList-->
+                </lightning:layout>
+                <!--Payment Details contents-->
+            </lightning:layoutItem>
+
+
+            <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                <div class="sectionTitle">
+                    <span class="title">Payment Options</span>
+                </div>
+            </lightning:layoutItem>
+
+            <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                <div class="inputLabel">
+                    <span class="label">Payment Method</span>
+                </div>
+                <div class="inputElement">
+                    <select class="slds-select" name="GW_PD_PaymentMethod">
+                        <option value="Bank_Account">Bank Account</option>
+                        <option value="Credit_Card">Credit Card</option>
+                    </select>
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                <div class="inputLabel">
+                    <span class="label">Account Type</span>
+                </div>
+                <div class="inputElement">
+                    <lightning:buttonGroup class="btn-groupToggleButton">
+                        <lightning:button label="Checkings" name="Checkings" aura:id="paymentAccType"
+                            onclick="{!c.handleToggleBtnClick}" />
+                        <lightning:button label="Savings" name="Savings" aura:id="paymentAccType"
+                            class="selectedToggleButtonType" onclick="{!c.handleToggleBtnClick}" />
+                    </lightning:buttonGroup>
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                <div class="inputLabel">
+                    <span class="label">Account Number
+                        <span class="asterisk">*</span>
+                    </span>
+                </div>
+                <div class="inputElement">
+                    <input class="slds-input" />
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                <div class="inputLabel">
+                    <span class="label">Routing (ABA) Number
+                        <span class="asterisk">*</span>
+                    </span>
+                </div>
+                <div class="inputElement">
+                    <input class="slds-input" />
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" class="slds-p-vertical_x-small">
+                <div class="inputLabel">
+                    <span class="label">Bank Name
+                        <span class="asterisk">*</span>
+                    </span>
+                </div>
+                <div class="inputElement">
+                    <input class="slds-input" />
+                </div>
+            </lightning:layoutItem>
+        </lightning:layout>
+
+        <!-- <div class="div-footer">
+            <div class="slds-p-vertical_small">
+                <div class="btn-footer">
+                    <a style="float:left">Cancel</a>
+                    <lightning:button label="Previous" variant="neutral" class="slds-p-vertical_xx-small slds-m-left_xx-small" aura:id="S3FooterPrevious"
+                        onclick="{!c.handlePrevious}" />
+                    <lightning:button label="Next" variant="brand" class="slds-p-vertical_xx-small slds-m-left_xx-small" aura:id="S3FooterNext"
+                        onclick="{!c.handleNext}" />
+                </div>
+            </div>
+        </div> -->
+    </div>
+
+</aura:component>

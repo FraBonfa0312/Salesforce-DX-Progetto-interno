@@ -1,0 +1,19 @@
+<aura:component controller="INS_PolicyListController" implements="force:hasRecordId,flexipage:availableForRecordHome,flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes,force:lightningQuickAction">
+    <aura:attribute name="policies" access="global" type="InsurancePolicy[]" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler name="selectPolicyEvent" event="c:SelectRecordId" action="{!c.handleSelect}"/>
+    
+    <div class="slds-theme_default slds-p-around_small">
+        <aura:iteration items="{!v.policies}" var="policy">
+            <c:INS_PolicyTile recordId="{!policy.Id}" />
+        </aura:iteration>
+        
+        <aura:if isTrue="{!v.policies.length == 0}">
+            <div class="message">
+                <lightning:icon iconName="utility:warning" size="small" alternativeText="Warning!" variant="warning"/>
+                No policies found
+            </div>
+        </aura:if>
+    </div>
+</aura:component>

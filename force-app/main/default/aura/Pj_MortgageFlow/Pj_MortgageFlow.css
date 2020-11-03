@@ -1,0 +1,50 @@
+.THIS .slds-col{
+    padding : 20px;
+}
+.THIS .form{
+    padding : 10px;
+}
+.THIS .hide{
+    display:none !important;
+}
+.THIS .show{
+    display:block;
+}
+.THIS .startbtn{
+    margin-top: -32px;
+    float: right;
+}
+.THIS .banner{
+    background-color:#1e2443;
+    color : white;
+}
+.THIS .startingblock{
+    padding-top:3%;
+}
+.THIS .show{
+    display:block;
+}
+.THIS .slds-modal__footer{
+    padding-top : 1.75rem !important;
+    padding-bottom : 1.75rem !important;
+}
+.THIS .slds-button{
+    padding-top : 0.25rem;
+    padding-bottom : 0.25rem;
+}
+.THIS .checkboxes{
+    padding : 5px;
+}
+.THIS .labels{
+    padding-left:6px;
+}
+.THIS .progressbar50{
+
+}
+.THIS .pagetitle{
+    padding-left : 20px;
+    padding-top : 15px;
+}
+.THIS .congrats{
+    padding : 50px 70px 50px 80px;
+}

@@ -1,0 +1,118 @@
+<aura:component access="global">
+    <ltng:require styles="{!$Resource.Q_GWScreenBaseCss}" />
+    <aura:attribute name="showCommentSection" type="Boolean" default="false" />
+    <aura:attribute name="showReviewMessage" type="Boolean" default="false" />
+    <aura:attribute name="showSpinner" type="Boolean" default="false" />
+    <aura:registerEvent name="onConfirmFromUnderwritingIssue" type="c:qsyd_GW_CM_FireFromUnderwritingIssueConfirmEvt" />
+    <aura:attribute name="issueList" type="List" default="[{
+        shortDesc:'CP: This policy has a building 10 stories or taller',
+        longDesc:'CP: This policy has a building 10 stories or taller',
+        custom:'Blocks Bind'
+    },{
+        shortDesc:'Predictive Analytics Flag',
+        longDesc:'Predictive Analytics raised recommendations. U/W will advise',
+        custom:'Blocks Quote Release'
+    }]" />
+    <div>
+        <aura:if isTrue="{!v.showSpinner}">
+            <lightning:spinner size="small" />
+        </aura:if>
+        <div class="slds-p-around_medium alertcontainer">
+            <div class="content">
+                <lightning:icon class="slds-m-right_x-small" iconName="utility:warning" size="x-small"></lightning:icon>
+                <div style="font-size: 0.8125rem;">
+                    <aura:if isTrue="{!not(v.showReviewMessage)}">
+                        <h2>Underwriting issues have been raised for this quote.</h2>
+                        <div>
+                            You cannot complete this quote until these issues have been resolved. You can do the
+                            following:
+                            <ul>
+                                <li>Edit the quote if the customer is willing to accept the changes.</li>
+                                <li>Refer the quote to an underwriter for review.</li>
+                                <li><a href="javascript:void(0)" onclick="{!c.handleClickWithdrawQuote}">Withdraw</a>
+                                    this quote if you do not wish to continue.</li>
+                            </ul>
+                        </div>
+                    </aura:if>
+                    <aura:if isTrue="{! v.showReviewMessage}">
+                        <h2>This quote has been referred to an underwriter for review.</h2>
+                        <div>
+                            An activity will be created to inform you when the underwriter has completed the review.
+                        </div>
+                    </aura:if>
+
+                </div>
+            </div>
+            <div class='button'>
+                <aura:if isTrue="{! not(v.showReviewMessage)}">
+                    <lightning:button label="Edit quote" variant="neutral"
+                        class="slds-p-vertical_xx-small slds-m-left_xx-small" />
+                    <lightning:button label="Refer to Underwriter" variant="brand"
+                        class="slds-p-vertical_xx-small slds-m-left_xx-small" onclick="{!c.handleShowCommentArea}" />
+                </aura:if>
+                <aura:if isTrue="{! v.showReviewMessage}">
+                    <lightning:button label="Withdraw quote" onclick="{!c.handleClickWithdrawQuote}" variant="neutral"
+                        class="slds-p-vertical_xx-small slds-m-left_xx-small" />
+                </aura:if>
+            </div>
+        </div>
+
+        <aura:if isTrue="{!v.showCommentSection}">
+            <div class="detailContainer slds-p-vertical_medium">
+                <h2 class="underline">Refer to Underwriter</h2>
+                <lightning:layout multipleRows="true">
+                    <lightning:layoutItem size="6" padding="around-small">
+                        <div>Note for Underwriter (optional)</div>
+                        <div>
+                            <lightning:textarea name="commentTextarea" label="" />
+                        </div>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="6" padding="around-small">
+                        <div>
+                            <p>Once referred, a high priority activity will be created for the underwriter. You will not
+                                be
+                                able to edit the quote until the underwriter releases it back to you.</p>
+                            <p>Are you sure you want to refer this quote to the Underwriter?</p>
+                        </div>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="12" class="slds-text-align_right">
+                        <div class="btn-footer">
+                            <lightning:button label="Cancel" variant="neutral"
+                                class="slds-p-vertical_xx-small slds-m-left_xx-small" />
+                            <lightning:button label="Confirm" variant="brand"
+                                class="slds-p-vertical_xx-small slds-m-left_xx-small" onclick="{!c.handleConfirm}" />
+                        </div>
+                    </lightning:layoutItem>
+                </lightning:layout>
+            </div>
+        </aura:if>
+
+        <div class="detailContainer slds-p-vertical_medium">
+            <h2 class="underline">Underwriting Issues</h2>
+            <div>
+                <lightning:layout multipleRows="true" verticalAlign="stretch">
+                    <lightning:layoutItem size="3" class="slds-p-around_x-small">
+                        <div class="bold">SHORT DESCRIPTION</div>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="7" class="slds-p-around_x-small">
+                        <div class="bold">LONG DESCRIPTION</div>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="2" class="slds-p-around_x-small">
+                        <div class="bold">CUSTOM</div>
+                    </lightning:layoutItem>
+                    <aura:iteration items="{!v.issueList}" var="issueItem">
+                        <lightning:layoutItem size="3" class="slds-p-around_x-small topborder">
+                            <div class="bold">{!issueItem.shortDesc}</div>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="7" class="slds-p-around_x-small topborder">
+                            <div class="bold">{!issueItem.longDesc}</div>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="2" class="slds-p-around_x-small topborder">
+                            <div class="bold">{!issueItem.custom}</div>
+                        </lightning:layoutItem>
+                    </aura:iteration>
+                </lightning:layout>
+            </div>
+        </div>
+    </div>
+</aura:component>

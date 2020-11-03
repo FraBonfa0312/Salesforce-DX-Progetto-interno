@@ -1,0 +1,158 @@
+<aura:component controller="ActionPlanController" implements="flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="tasks" type="Task[]"/>
+    <aura:attribute name="currentSelectedRow" type="Integer"/>
+    <aura:attribute name="currentTask" type="Task"/>
+    <aura:attribute name="chosenValue" type="String"/>
+    
+    <section aura:id="srModal" role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-describedby="modal-content-id-1" class="slds-modal">
+        <div class="slds-modal__container">
+            <header class="slds-modal__header">
+                <lightning:buttonIcon class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" iconName="utility:close" variant="bare" alternativeText="Settings" onclick="{!c.closeModal}"/>
+                <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Choose Status</h2>
+            </header>
+            <div class="slds-modal__content slds-p-around_medium">
+                <div class="slds-form slds-form_horizontal">
+                <fieldset class="slds-form-element">
+                    <legend class="slds-form-element__legend slds-form-element__label">Select a Status</legend>
+                    <div class="slds-form-element__control">
+                        <lightning:input type="radio" aura:id="statusRadio" label="Not Started" name="taskStatus" value="Not Started" onchange="{!c.statusChosen}"/>
+                        <lightning:input type="radio" aura:id="statusRadio" label="In Progress" name="taskStatus" value="In Progress" onchange="{!c.statusChosen}"/>
+                    </div>
+                </fieldset>
+                </div>
+            </div>
+            <footer class="slds-modal__footer">
+                 <lightning:button variant="neutral" label="Cancel" onclick="{!c.closeModal}"/>
+                 <lightning:button variant="brand" label="Save" onclick="{!c.saveStatusToTask}" disabled="{!empty(v.chosenValue)}"/>
+            </footer>
+        </div>
+    </section>
+    <div aura:id="modalBkdrp" class="slds-backdrop"></div>
+    
+    
+    <lightning:layout >
+        <lightning:layoutItem size="9">
+            <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+                <thead>
+                    <tr class="slds-text-title_caps">
+                        <th scope="col">
+                            <div class="slds-truncate"></div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate"></div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Name">Name</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Due">Due</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Assigned To">Assigned To</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Compliance Required">Compliance Required</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <aura:iteration items="{!v.tasks}" var="task" indexVar="iVar">
+                        <tr onclick="{!c.rowSelected}" data-indexVar="{!iVar}" class="{!v.currentSelectedRow == iVar ? 'rowSelected' : ''}">
+                            <td>
+                                <lightning:input class="hideCheckboxLabel" type="checkbox" name="{!iVar}" checked="{!task.Status == 'Completed' ? true : false}" onchange="{!c.changeTaskStatus}"/>
+                            </td>
+                            <td>
+                                <aura:if isTrue="{!task.Priority == 'High'}">
+                                    <center><lightning:icon iconName="utility:priority" size="x-small" variant="error"/></center>
+                                </aura:if>
+                            </td>
+                            <td>
+                                <div class="{!task.Status == 'Completed' ? 'taskComplete slds-truncate' : 'slds-truncate'}">{!task.Subject}</div>
+                            </td>
+                            <td>
+                                <lightning:formattedRichText value="{!task.CustomFormattedActivityDate}"/>
+                            </td>
+                            <td>
+                                {!task.Assigned_To__c}
+                            </td>
+                            <td>
+                                <aura:if isTrue="{!task.Compliance_Required__c}">
+                                    <center><lightning:icon iconName="utility:check" size="x-small" class="compRequired"/></center>
+                                </aura:if>
+                            </td>
+                        </tr>
+                    </aura:iteration>
+                </tbody>
+            </table>
+        </lightning:layoutItem>
+        
+        <aura:if isTrue="{!not(empty(v.currentTask))}">
+            <lightning:layoutItem size="3">
+                <div class="slds-p-top_small slds-p-left_small">
+                    <article class="slds-p-bottom_small slds-m-bottom_small slds-tile slds-media border-bottom">
+                        <div class="slds-media__figure">
+                            <lightning:input class="hideCheckboxLabel" type="checkbox" name="{!v.currentSelectedRow}" checked="{!v.currentTask.Status == 'Completed' ? true : false}" onchange="{!c.changeTaskStatus}"/>
+                        </div>
+                        <div class="slds-media__body">
+                            <h3 class="{!v.currentTask.Status == 'Completed' ? 'slds-tile__title taskComplete slds-truncate' : 'slds-tile__title slds-truncate'}" title="{!v.currentTask.Subject}"><a href="javascript:void(0);">{!v.currentTask.Subject}</a></h3>
+                            <div class="slds-tile__detail">
+                                <lightning:formattedRichText value="{!v.currentTask.CustomFormattedActivityDate}"/>
+                            </div>
+                        </div>
+                    </article>
+                    <div class="slds-form-element border-bottom slds-m-bottom_small">
+                        <label class="slds-form-element__label" for="Notes">Notes</label>
+                        <div class="slds-form-element__control">
+                            <textarea readonly="true" id="Notes" class="slds-input" value="{!v.currentTask.Description}" />
+                        </div>
+                    </div>
+                
+                
+                <lightning:layout multipleRows="true" horizontalAlign="spread">
+                    <lightning:layoutItem size="5" flexibility="auto" class="slds-p-top_small border-bottom">
+                        <div class="slds-form-element">
+                            <label class="slds-form-element__label" for="Priority">Priority</label>
+                            <div class="slds-form-element__control">
+                                <input type="text" readonly="true" id="Priority" class="slds-input" value="{!v.currentTask.Priority}" />
+                            </div>
+                        </div>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="5" flexibility="auto" class="slds-p-top_small border-bottom">
+                        <div class="slds-form-element">
+                            <label class="slds-form-element__label" for="due">Due</label>
+                            <div class="slds-form-element__control">
+                                <input type="text" readonly="true" id="Priority" class="slds-input" value="{!v.currentTask.Custom_FormattedActivityDate}" />
+                            </div>
+                        </div>
+                    </lightning:layoutItem><!--<input type="text" readonly="true" id="type" class="slds-input" value="{!v.currentTask.Type}" />-->
+                    <lightning:layoutItem size="5" flexibility="auto" class="slds-p-top_small border-bottom">
+                        <div class="slds-form-element">
+                            <label class="slds-form-element__label" for="assignedTo">Assigned To</label>
+                            <div class="slds-form-element__control">
+                                <input type="text" readonly="true" id="assignedTo" class="slds-input" value="{!v.currentTask.Assigned_To__c}" />
+                            </div>
+                        </div>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="5" flexibility="auto" class="slds-p-top_small border-bottom">
+                        <div class="slds-form-element">
+                            <label class="slds-form-element__label" for="type">Type</label>
+                            <div class="slds-form-element__control">
+                                <input type="text" readonly="true" id="type" class="slds-input" value="{!v.currentTask.Type}" />
+                            </div>
+                        </div>
+                    </lightning:layoutItem>
+                </lightning:layout>
+                    
+                    <div class="slds-form-element border-bottom slds-m-top_small">
+                        <label class="slds-form-element__label" for="Name">Name</label>
+                        <div class="slds-form-element__control">
+                            <input type="text" readonly="true" id="Name" class="slds-input" value="{!v.currentTask.Subject}" />
+                        </div>
+                    </div>
+                </div>
+            </lightning:layoutItem> 
+        </aura:if>
+    </lightning:layout>
+    
+</aura:component>

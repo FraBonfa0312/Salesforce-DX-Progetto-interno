@@ -1,0 +1,34 @@
+<aura:component controller="FIDO">
+    <aura:attribute name="recid" type="String" />
+    <aura:attribute name="OrgId" type="String" />
+    <aura:attribute name="ScreenChoice" type="String" />
+    <aura:attribute name="Settings" type="String[]" />
+    <aura:attribute name="Industry" type="String"/>
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <div class="fullwidthWrapper">
+        <aura:if isTrue="{!v.ScreenChoice == 'Updates'}">
+            <c:FIDO_SingleRecord_Announcement Industry="{!v.Industry}" recid="{!v.recid}" ScreenChoice="{!v.ScreenChoice}" Settings="{!v.Settings}"/>
+        </aura:if>
+        <aura:if isTrue="{!v.ScreenChoice == 'Personas'}">
+            <c:FIDO_SingleRecord_Personas Industry="{!v.Industry}" recid="{!v.recid}" ScreenChoice="{!v.ScreenChoice}" Settings="{!v.Settings}"/>
+        </aura:if>
+        <aura:if isTrue="{!v.ScreenChoice == 'Scripts'}">
+            <c:FIDO_SingleRecord_Scripts Industry="{!v.Industry}" recid="{!v.recid}" ScreenChoice="{!v.ScreenChoice}" Settings="{!v.Settings}"/>
+        </aura:if>
+        <aura:if isTrue="{!v.ScreenChoice == 'Partners'}">
+            <c:FIDO_SingleRecord_Partners Industry="{!v.Industry}" recid="{!v.recid}" ScreenChoice="{!v.ScreenChoice}" Settings="{!v.Settings}"/>
+        </aura:if>
+        <aura:if isTrue="{!v.ScreenChoice == 'Features'}">
+            <c:FIDO_SingleRecord_OrgFeature OrgId="{!v.OrgId}" Industry="{!v.Industry}" recid="{!v.recid}" ScreenChoice="{!v.ScreenChoice}" Settings="{!v.Settings}"/>
+        </aura:if>
+        <aura:if isTrue="{!v.ScreenChoice == 'Customizations'}">
+            <c:FIDO_SingleRecord_Customizations Industry="{!v.Industry}" recid="{!v.recid}" ScreenChoice="{!v.ScreenChoice}" Settings="{!v.Settings}"/>
+        </aura:if>
+        <aura:if isTrue="{!v.ScreenChoice == 'Resources'}">
+            <c:FIDO_SingleRecord_Resources Industry="{!v.Industry}" recid="{!v.recid}" ScreenChoice="{!v.ScreenChoice}" Settings="{!v.Settings}"/>
+        </aura:if>
+        <aura:if isTrue="{!v.ScreenChoice == 'Videos'}">
+            <c:FIDO_SingleRecord_Videos Industry="{!v.Industry}" recid="{!v.recid}" ScreenChoice="{!v.ScreenChoice}" Settings="{!v.Settings}"/>
+        </aura:if>
+    </div> 
+</aura:component>

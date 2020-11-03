@@ -1,0 +1,45 @@
+.THIS .active {
+    height: 35px;
+    width: 35px;
+    margin-right: 5px;
+}
+
+.THIS .inactive {
+    opacity: 0.3;
+}
+
+.THIS .jake1 {
+    height: 70px;
+    width: 70px;
+    box-shadow: 0px 5px 8px 0px rgba(0,0,0,0.2);
+    border-radius: 10px;
+}
+
+.THIS .hoverStyle {
+    background-color: #fafafa;
+}
+
+.THIS .section1 {
+    background-color: green;
+}
+
+.THIS .section2 {
+    background-color: #fafafa;
+}
+
+.THIS .licenseText {
+    font-weight: bold;
+}
+
+.THIS .section21:hover {
+   	margin-top: -5px;
+    background-color: #fafafa;
+    /*transform: rotate(10deg);*/
+    border: 1.4px solid #b3d1ff;
+    box-shadow: 0px 5px 8px 0px rgba(179, 209, 255);
+    transition: margin .25s;
+}
+
+.THIS .images {
+    width: 30px;
+}

@@ -1,0 +1,13 @@
+<design:component>
+    <design:attribute name="policyExternalId" label="Policy External Id (Personal)" />
+    <design:attribute name="policyCMExternalId" label="Policy External Id (Commercial)" />
+    <design:attribute name="QuoteProgramName1" label="Quote Program Name 1" default="Basic Program" />
+    <design:attribute name="QuoteProgramName2" label="Quote Program Name 2" default="Premium Program" />
+    <design:attribute name="QuoteProgramName3" label="Quote Program Name 3" default="Standard Program" />
+    <design:attribute name="QuoteProgramPrice1" label="Quote Program Price 1" default="20.67" />
+    <design:attribute name="QuoteProgramPrice2" label="Quote Program Price 1" default="182.00" />
+    <design:attribute name="QuoteProgramPrice3" label="Quote Program Price 2" default="115.17" />
+    <design:attribute name="QuoteCurrencySymbol" label="Quote Program Price 3" default="$" />
+    <design:attribute name="PolicyCoverageStartDate" label="Policy Coverage Start Date(yyyy-mm-dd)" />
+    <design:attribute name="lastScreenMessage" label="Last Screen Message" />
+</design:component>

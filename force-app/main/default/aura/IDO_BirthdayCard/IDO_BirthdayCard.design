@@ -1,0 +1,3 @@
+<design:component label="FSC Birthday Card">
+	<design:attribute name="theLimit" label="Number of Birthdays" min="2" max="5" default="3" />
+</design:component>

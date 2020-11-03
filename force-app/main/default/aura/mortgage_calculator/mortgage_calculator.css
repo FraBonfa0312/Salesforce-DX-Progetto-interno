@@ -1,0 +1,87 @@
+.THIS .slds-card__body{
+    border-bottom: 1px #c00000 solid;
+    padding: 30px;
+    width:80%;
+    margin-left:10%;
+}
+
+.THIS .slds-card__footer {
+    text-align:center;
+}
+
+.THIS .slds-select_container .slds-select{
+    text-align-last: center;
+    padding-right: 29px;
+}
+
+.THIS .uiInput {
+    direction: rtl; 
+}
+
+.THIS  input[type=radio] {
+    width: 25px;
+}
+
+.THIS .radioCust{
+    float:left;
+    width:45%;
+    margin:1%;
+}
+.THIS .btnCust{
+    float:left;
+    width:40%;
+}
+.THIS .btnCust1{
+    float:left;
+    margin-left:25%;
+    width:50%;
+}
+.THIS .btnCust2{
+    float:left;
+    margin-left:25%;
+    width:50%;
+}
+
+.THIS .houseBefore{
+    float: left;
+    margin-left: 32%;
+    background-size: cover;
+    height: 92px;
+    width: 200px;
+    background:no-repeat url("https://i.imgur.com/3idEKUC.png");
+}
+
+.THIS .houseAfter{
+    float: left;
+    margin-left: 32%;
+    background-size: cover;
+    height: 92px;
+    width: 200px;
+    background:no-repeat url("https://i.imgur.com/p9rNUHw.png");
+}
+
+.THIS .appBefore{
+    float: left;
+    margin-left: 32%;
+    background-size: cover;
+    height: 92px;
+    width: 200px;
+    background:no-repeat url("https://i.imgur.com/Vsnnw1W.png");
+}
+
+.THIS .appAfter{
+    float: left;
+    margin-left: 32%;
+    background-size: cover;
+    height: 92px;
+    width: 200px;
+    background:no-repeat url("https://i.imgur.com/xQIsrqg.png");
+}
+
+.THIS .slds-form-element__label {
+    color: rgb(255, 255, 255) !important;
+}
+
+.THIS .slds-slider__value{
+    display:none;
+}

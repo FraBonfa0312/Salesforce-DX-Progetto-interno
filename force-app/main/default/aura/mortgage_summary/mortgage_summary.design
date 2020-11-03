@@ -1,0 +1,9 @@
+<design:component >
+        <design:attribute name="loanHigh" label="Minimum loan"/>
+        <design:attribute name="loanLow" label="Max loan"/>
+        <design:attribute name="totalLoan" label="Initial loan amount"/>
+        <design:attribute name="payement1" label="payement1"/>
+        <design:attribute name="payement2" label="payement2"/>
+        <design:attribute name="payement3" label="payement3"/>
+        <design:attribute name="equationNum" label="Distinction Point(the price point that picture changes colour)"/>
+</design:component>

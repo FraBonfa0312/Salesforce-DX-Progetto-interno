@@ -1,0 +1,93 @@
+.THIS .buildingbox {
+    text-align: center;
+    height: 100px;
+}
+
+.THIS .buildingbox>div {
+    padding-top: 15px;
+}
+
+.THIS .buildingor {
+    width: 100px;
+    text-align: center;
+    padding-top: 50px;
+}
+
+.THIS .sectionTitle {
+    line-height: 3rem !important;
+}
+
+.THIS .grey {
+    color: #999;
+}
+
+/*OVERWRITE THE STATIC RESOURCES CSS*/
+.THIS .inputElement {
+    width: 60% !important;
+}
+
+.THIS .inputElement .btn-groupToggleButton.insideLayout button {
+    width: 80px !important;
+}
+
+.THIS .inputLabel {
+    width: 40% !important;
+}
+
+.THIS .inputLabelBlack {
+    color: black !important;
+    position: unset !important;
+    font-weight: 500;
+    padding-left: 5px;
+}
+
+.THIS .checkbox img {
+    background: white;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #ccc;
+}
+
+.THIS .checkbox img.active {
+    background: #0370D2;
+}
+
+.THIS .checkboxtitle {
+    padding-left: 10px;
+    font-size: 0.925rem;
+}
+
+.THIS .hide {
+    display: none;
+}
+
+.THIS .infodiv {
+    line-height: 4rem;
+    background: #D5EEF9;
+    padding-left: 20px;
+}
+
+.THIS .infodiv span {
+    padding-left: 10px;
+}
+
+.THIS .customblue {
+    color: #1798c1;
+}
+
+.THIS .tabletitle {
+    text-transform: uppercase;
+    font-size: 11px;
+}
+
+.THIS .borderbottom {
+    border-bottom: 1px solid #ccc;
+}
+
+.THIS #locationSearch {
+    position: relative;
+}
+
+.THIS #locationSearch>ul {
+    width: 100% !important;
+}

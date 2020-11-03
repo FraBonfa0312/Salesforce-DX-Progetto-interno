@@ -1,0 +1,72 @@
+<aura:component controller="SubscriptionViewCtrl" implements="forceCommunity:availableForAllPageTypes">
+  <aura:attribute name="subs" type="List" />
+  <aura:attribute name="subId" type="String" />
+  <aura:attribute name="rendered" type="boolean" default="true" />
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+  <article class="slds-card">
+    <div class="slds-page-header">
+      <div class="slds-media">
+        <div class="slds-media__figure">
+          <span class="slds-icon_container slds-icon-standard-opportunity" title="Description of icon when needed">
+            <lightning:icon iconName="standard:product_item" size="medium" alternativeText="Products" />
+          </span>
+        </div>
+        <div class="slds-media__body">
+          <h1 class="slds-page-header__title slds-truncate slds-align-middle" title="">My Subscriptions</h1>
+          <p class="slds-text-body_small slds-line-height_reset">To View a subscription click on the product name.</p>
+        </div>
+      </div>
+    </div>
+    <aura:renderIf isTrue="{!v.rendered}">
+      <table class="slds-table slds-table--bordered slds-table--striped slds-table--cell-buffer slds-table--fixed-layout">
+        <thead>
+          <tr class="slds-text-heading--label">
+            <th id="longerCol" scope="col">
+              <div class="slds-truncate" title="ProductName">Product Name</div>
+            </th>
+            <th scope="col">
+              <div class="slds-truncate" title="Start Date">Start Date</div>
+            </th>
+            <th scope="col">
+              <div class="slds-truncate" title="End Date">End Date</div>
+            </th>
+            <th scope="col">
+              <div class="slds-truncate" title="Quantity">Qty</div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Use the Apex model and controller to fetch server side data -->
+          <aura:iteration items="{!v.subs}" var="sub">
+            <tr>
+              <td id="longerCol">
+                <div>
+                  <a onclick="{!c.handleView}" id="{!sub.Id}">{!sub.SBQQ__ProductName__c}</a>
+                </div>
+              </td>
+              <td>
+                <div class="slds-truncate" title="{!sub.SBQQ__StartDate__c}">
+                  <ui:outputDate value="{!sub.SBQQ__StartDate__c}" />
+                </div>
+              </td>
+              <td>
+                <div class="slds-truncate" title="{!sub.SBQQ__EndDate__c}">
+                  <ui:outputDate value="{!sub.SBQQ__EndDate__c}" />
+                </div>
+              </td>
+              <td>
+                <div class="slds-truncate" title="{!sub.SBQQ__Quantity__c}">{!sub.SBQQ__Quantity__c}</div>
+              </td>
+            </tr>
+          </aura:iteration>
+        </tbody>
+      </table>
+    </aura:renderIf>
+    <aura:renderIf isTrue="{!!v.rendered}">
+
+      <div class="slds-text-color_weak slds-text-align--center slds-p-bottom--card-wrapper-spacing">No Subscriptions to display. To view Subscriptions please log in.</div>
+
+    </aura:renderIf>
+  </article>
+</aura:component>

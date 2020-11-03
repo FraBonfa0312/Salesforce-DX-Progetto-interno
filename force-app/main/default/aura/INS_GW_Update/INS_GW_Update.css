@@ -1,0 +1,31 @@
+.THIS #spinner {
+    display: none;
+    
+    height: 10em;
+    color: blue;
+}
+
+.THIS .mule {
+    padding-top: 50px;
+   height: 100px;
+   width: auto;
+}
+.THIS .logo {
+    padding-top: 50px;
+    max-height: 100px;
+    width: auto;
+  	display: block;
+  	margin-left: auto;
+  	margin-right: auto;
+
+}
+
+
+.THIS .gifClass {
+    max-height: 150px;
+    width: auto;
+   	display: block;
+  	margin-left: auto;
+  	margin-right: auto;
+    opacity: .5;
+}

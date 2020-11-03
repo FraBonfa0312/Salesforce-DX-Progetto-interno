@@ -1,0 +1,6 @@
+<design:component>
+    <design:attribute name="ContactName" label="Contact Name" required="true" default="Rachel"/>	
+    <design:attribute name="ResourceName" label="Resource Name" required="true" default="Justin Chen"/>	
+    <design:attribute name="TerritoryName" label="Territory Name" required="true" default="Market St Branch, San Francisco"/>	
+    <design:attribute name="TerritoryStreet" label="Territory Street" required="true" default="1 Market St."/>	
+</design:component>

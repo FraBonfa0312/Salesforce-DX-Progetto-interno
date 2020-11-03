@@ -1,0 +1,43 @@
+<design:component label="REST Abstractor">
+    <design:attribute name="externalField" label="External Field (API name)" description="Name of the external field for integration - use the object's Field Name (AKA the API name), not the object's Field Label" required="true"/>
+    <design:attribute name="custom_template" label="Use a Template (if you have one)" description="Either create your own template or download one someone else made into your org - do that by going to 'API Template' Custom Metadata Type record (API_Template__mdt) and creating a record in there. Once you're done (either if it's created by yourself or downloaded), go to Lightning App Builder here and for this field choose the NAME field (aka DeveloperName) of your template you either created or name - see directions here: http://bit.ly/rest-abstractor --- note: picking a template overrides all values in this App Builder form EXCEPT for the External Field (above) as it's specific to an object you're in. PS you can find prebuilt template samples (that you can download and use) here: http://bit.ly/rest-abstractor-sample-prebuilt-templates"/>
+    <design:attribute name="title" label="Title" placeholder="External Data" description="The title for your retrieved data"/>
+    <design:attribute name="icon" label="Icon" placeholder="custom:custom41" description="Grab any icon from here: https://www.lightningdesignsystem.com/icons/#site-main-content - for example, 'custom:custom43' yields a pic of a purple-looking diamond image"/>
+    <design:attribute name="endpointURL" label="Endpoint URL" description="Place your REST endpoint URL here"/>
+    <design:attribute name="column1_label" label="Column 1 Label" description="The label of how the column appears"/>
+    <design:attribute name="column1_ID" label="Column 1 ID" description="JSON property name that it will need to find to map against this column"/>
+    <design:attribute name="column1_type" label="Column 1 Type" datasource="String,Number without decimals,Number with decimals" description="What kind of type is it - everything defaults to String type if nothing is chosen" default="String"/>
+    <design:attribute name="column2_label" label="Column 2 Label" description="The label of how the column appears"/>
+    <design:attribute name="column2_ID" label="Column 2 ID" description="JSON property name that it will need to find to map against this column"/>
+    <design:attribute name="column2_type" label="Column 2 Type" datasource="String,Number without decimals,Number with decimals" description="What kind of type is it - everything defaults to String type if nothing is chosen" default="String"/>
+    <design:attribute name="column3_label" label="Column 3 Label" description="The label of how the column appears"/>
+    <design:attribute name="column3_ID" label="Column 3 ID" description="JSON property name that it will need to find to map against this column"/>
+    <design:attribute name="column3_type" label="Column 3 Type" datasource="String,Number without decimals,Number with decimals" description="What kind of type is it - everything defaults to String type if nothing is chosen" default="String"/>
+    <design:attribute name="column4_label" label="Column 4 Label" description="The label of how the column appears"/>
+    <design:attribute name="column4_ID" label="Column 4 ID" description="JSON property name that it will need to find to map against this column"/>
+    <design:attribute name="column4_type" label="Column 4 Type" datasource="String,Number without decimals,Number with decimals" description="What kind of type is it - everything defaults to String type if nothing is chosen" default="String"/>
+    <design:attribute name="column5_label" label="Column 5 Label" description="The label of how the column appears"/>
+    <design:attribute name="column5_ID" label="Column 5 ID" description="JSON property name that it will need to find to map against this column"/>
+    <design:attribute name="column5_type" label="Column 5 Type" datasource="String,Number without decimals,Number with decimals" description="What kind of type is it - everything defaults to String type if nothing is chosen" default="String"/>
+    <design:attribute name="column1_prior" label="Column 1 Text Prior" description="What symbols/words to you want to put in front of your word? Example: putting a '$' sign or writing 'USD'."/>
+    <design:attribute name="column1_prior_space" label="Column 1 - Space After 'Text Prior'" description="Do you want to put a space after the 'Text Prior' wording (see 'Text Prior' value above)"/>
+    <design:attribute name="column1_after" label="Column 1 Text After" description="What symbols/words to you want to put in front of your word? Example: putting a '%' sign or writing 'per year'."/>
+    <design:attribute name="column1_after_space" label="Column 1 - Space Before 'Text After'" description="Do you want to put a space before the 'Text After' wording (see 'Text After' value above)"/>
+    <design:attribute name="column2_prior" label="Column 2 Text Prior" description="What symbols/words to you want to put in front of your word? Example: putting a '$' sign or writing 'USD'."/>
+    <design:attribute name="column2_prior_space" label="Column 2 - Space After 'Text Prior'" description="Do you want to put a space after the 'Text Prior' wording (see 'Text Prior' value above)"/>
+    <design:attribute name="column2_after" label="Column 2 Text After" description="What symbols/words to you want to put in front of your word? Example: putting a '%' sign or writing 'per year'."/>
+    <design:attribute name="column2_after_space" label="Column 2 - Space Before 'Text After'" description="Do you want to put a space before the 'Text After' wording (see 'Text After' value above)"/>
+    <design:attribute name="column3_prior" label="Column 3 Text Prior" description="What symbols/words to you want to put in front of your word? Example: putting a '$' sign or writing 'USD'."/>
+    <design:attribute name="column3_prior_space" label="Column 3 - Space After 'Text Prior'" description="Do you want to put a space after the 'Text Prior' wording (see 'Text Prior' value above)"/>
+    <design:attribute name="column3_after" label="Column 3 Text After" description="What symbols/words to you want to put in front of your word? Example: putting a '%' sign or writing 'per year'."/>
+    <design:attribute name="column3_after_space" label="Column 3 - Space Before 'Text After'" description="Do you want to put a space before the 'Text After' wording (see 'Text After' value above)"/>
+    <design:attribute name="column4_prior" label="Column 4 Text Prior" description="What symbols/words to you want to put in front of your word? Example: putting a '$' sign or writing 'USD'."/>
+    <design:attribute name="column4_prior_space" label="Column 4 - Space After 'Text Prior'" description="Do you want to put a space after the 'Text Prior' wording (see 'Text Prior' value above)"/>
+    <design:attribute name="column4_after" label="Column 4 Text After" description="What symbols/words to you want to put in front of your word? Example: putting a '%' sign or writing 'per year'."/>
+    <design:attribute name="column4_after_space" label="Column 4 - Space Before 'Text After'" description="Do you want to put a space before the 'Text After' wording (see 'Text After' value above)"/>
+    <design:attribute name="column5_prior" label="Column 5 Text Prior" description="What symbols/words to you want to put in front of your word? Example: putting a '$' sign or writing 'USD'."/>
+    <design:attribute name="column5_prior_space" label="Column 5 - Space After 'Text Prior'" description="Do you want to put a space after the 'Text Prior' wording (see 'Text Prior' value above)"/>
+    <design:attribute name="column5_after" label="Column 5 Text After" description="What symbols/words to you want to put in front of your word? Example: putting a '%' sign or writing 'per year'."/>
+    <design:attribute name="column5_after_space" label="Column 5 - Space Before 'Text After'" description="Do you want to put a space before the 'Text After' wording (see 'Text After' value above)"/>
+    <design:attribute name="column1_link" label="Column 1 is Hyperlinked (for visual sake)" description="Default is ON. It's just for visual sake. Just to show you can navigate within Salesforce, present more info, or go outside. Turn it off if you don't want to. You can always build on this if you want to."/>
+</design:component>

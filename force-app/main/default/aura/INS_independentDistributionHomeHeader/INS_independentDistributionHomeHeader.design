@@ -1,0 +1,18 @@
+<design:component>
+    
+    <design:attribute name="message" 
+                      label="Alert Message" 
+                      default=""
+                      description="Set the announcement text here."/>
+    
+    <design:attribute name="linkText" 
+                      label="Link Text" 
+                      default=""
+                      description="Set the link text here."/>
+    
+    <design:attribute name="linkURL" 
+                      label="Link URL" 
+                      default="https://trailhead.salesforce.com/en"
+                      description="Set the destination/web page you want to open when clicked."/>
+ 
+</design:component>

@@ -1,0 +1,5 @@
+<aura:event type="APPLICATION" description="Event used to enable communication between the toolkit cmp and corresponding child workspace cmp">
+    <aura:attribute name="message" type="String" />
+    <aura:attribute name="component" type="String" />
+    <aura:attribute name="attr" type="String" />
+</aura:event>

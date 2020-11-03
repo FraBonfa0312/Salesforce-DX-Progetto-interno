@@ -1,0 +1,18 @@
+<design:component>
+    <design:attribute name="title" label="Component Title" />
+    <design:attribute name="showTitle" label="Show Title" description="Show the title text" />
+    <design:attribute name="showAddressFields" label="Show Address Fields" description="Show the editable address fields" />
+    <design:attribute name="showMap" label="Show Map" description="Show the map component for current location and chosen location" />
+    
+    <design:attribute name="imageUrl" label="Place Image URL" />
+    <design:attribute name="placeId" label="Google Place Id" />
+    <design:attribute name="premise" label="Premise" />
+    <design:attribute name="street_number" label="Street Number" />
+    <design:attribute name="route" label="Street" />
+    <design:attribute name="fullStreetAddress" label="Full Street Address" description="All the 'street' fields of (Premise, Street Number, Street Name)" />
+    <design:attribute name="locality" label="City" />
+    <design:attribute name="administrative_area_level_1" label="Province/State" />
+    <design:attribute name="postal_code" label="Postal Code" />
+    <design:attribute name="country" label="Country" />
+    <design:attribute name="formattedAddress" label="Full Formatted Address" description="Full Address of 'Premise, Street Number, Street Name, Ciy, State, Postal Code and Country'" />
+</design:component>

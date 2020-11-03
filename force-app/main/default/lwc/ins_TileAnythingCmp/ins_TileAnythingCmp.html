@@ -1,0 +1,25 @@
+<template>
+    <div class="slds-card wholecard">
+            <div class="slds-p-around_small wholeCard">
+                <div class="slds-media slds-media_center">
+                    <div class="slds-media__figure">
+                        <lightning-icon icon-name="standard:account" size="medium"></lightning-icon>
+                    </div>
+                    <div class="slds-media__body">
+                        <a onclick={navToRecord}>
+                            <div class="slds-text-heading_small" style="color: rgb(0, 95, 178);">{record.Account.Name}</div>
+                        </a>
+                        <div style="color: rgb(107, 109, 112); font-size: 13px;">Health Score: {record.Account.Discovery_Score__c}
+                            <span>
+                                <lightning-dynamic-icon type="trend" option="good" alternative-text="Trending Up"
+                                    style="padding-left: 4px" ></lightning-dynamic-icon>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-p-top_medium">
+                    <lightning-badge label={record.WorkType.Name} class="" style="border-radius: 3px;"></lightning-badge>
+                </div>
+            </div>
+        </div>
+</template>

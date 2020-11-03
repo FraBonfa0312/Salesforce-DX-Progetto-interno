@@ -1,0 +1,150 @@
+<apex:page showHeader="false" controller="LSM_ServiceTerritoryMapController">
+    <html>
+        <head>
+            <style>
+                #map {
+                	height: 100%;
+                	min-height: 350px !important;
+                }
+                html, body {
+        			height: 100%;
+        			margin: 0;
+        			padding: 0;
+      			}
+            </style>
+        </head>
+        <body>
+            
+            <div id="map"></div>
+            
+            <script>
+            
+            	var lcOrigin = 'https://{!$CurrentPage.parameters.lcHost}';
+            	var mapsKey = '{!mapsKey}';
+            
+            	//Data for Google map
+            	var data;
+            
+            	var markers = [];
+            	var infowindows = [];
+            
+            	//Send message to Lightning Component
+            	function sendToLC(message) {
+                    if(typeof(lcOrigin) != 'undefined'){
+                        parent.postMessage(message, lcOrigin);
+                    }
+                }
+            
+            	//Receive message from Lightning Component
+            	window.addEventListener("message", function(event) {
+                    console.log('Data Sent to VisualForce: ', event.data);
+                	data = event.data;
+                    
+                    if(typeof(event.data.loadGoogleMap) != 'undefined') {
+                        if(event.data.loadGoogleMap == 'initial') {
+
+                            //Load Google Map Script
+                    		var script = document.createElement("script");
+                    		script.src = "https://maps.googleapis.com/maps/api/js?key=" + mapsKey + "&callback=initMap";
+                    		script.defer = true;
+                    		script.async = true;
+                    		document.getElementsByTagName("head")[0].appendChild(script);
+                    	
+                        } else if(event.data.loadGoogleMap == 'refresh') {
+                        
+                            initMap();
+                    	
+                        }
+                	} else if(typeof(event.data.showInfoWindow) != 'undefined') {
+                     		var markerId = event.data.markerId;
+                        	for(var i=0; i<markers.length; i++) {
+                            
+                                if(markers[i].id == markerId) google.maps.event.trigger(markers[i], 'click');
+                            
+                            }
+                        
+                    }
+                    
+            	}, false);
+            
+            	//Callback when Google Map is loaded
+            	function initMap() {
+
+	                //Add marker for each point along with text
+    	            function addMarker(feature) {
+        	            var marker = new google.maps.Marker({
+            	            position: feature.position,
+                	        title: feature.markerText,
+                    	    id: feature.id,
+                        	//icon: icons[feature.type].icon,
+                        	map: map
+                    	});
+                    	markers.push(marker);
+                        
+                        var contentString = '<div><h1>'+feature.markerText+'</h1><br/>'+
+                                            feature.Street + ',<br/>'+
+                                                feature.City + ', '+feature.State+'</div>';
+                                              
+                        
+                    	var infoWindow = new google.maps.InfoWindow({
+                    	    content: contentString
+                    	});
+                    	infowindows.push(infoWindow);
+                    
+                    	google.maps.event.addListener(marker, 'click', function() {
+    						for(var i=0; i<infowindows.length; i++) {
+                                infowindows[i].close();
+                            }
+                            if(!marker.open) {
+                            	infoWindow.open(map,marker);
+                            	marker.open = true;
+                            	sendToLC({'clicked':'true', 'marker':marker.id, 'vfHost':vfHost});
+                        	} else {
+	                            infoWindow.close();
+    	                        marker.open = false;
+        	                }
+            	            google.maps.event.addListener(map, 'click', function() {
+                	            infoWindow.close();
+                    	        marker.open = false;
+                        	});
+                    	});
+                    
+                	}
+                
+                	//Create new map
+                	var map = new google.maps.Map(document.getElementById("map"), JSON.parse(data.mapOptions));
+                
+                	var bounds  = new google.maps.LatLngBounds();
+                
+                	//iterate through map data for each point (even if 1)
+                	var mapData = data.mapData;
+                    if(mapData != null) {
+                        
+                        for(var i=0, j=mapData.length; i<j; i++) {
+
+                    		//Add marker for each point
+                    		var myLatlng = new google.maps.LatLng(mapData[i].lat, mapData[i].lng);
+                    		addMarker({position: myLatlng, 
+                            	       markerText: mapData[i].markerText,
+                                	   Street: mapData[i].Street,
+                                       City: mapData[i].City,
+                                       State: mapData[i].State,
+                                       id:mapData[i].id });
+                            bounds.extend(myLatlng);
+                        }
+                        
+                	}
+                
+                	map.fitBounds(bounds);      
+					map.panToBounds(bounds);    
+            	}
+            
+            	//Let LC know that VF page been loaded along with it's URL
+            	//LC will then send the data
+            	var vfHost = "{!LEFT($CurrentPage.URL,FIND('/',$CurrentPage.URL,9))}";
+            	sendToLC({'state':'LOADED', 'vfHost': vfHost});
+
+            </script>      
+    	</body>
+    </html>
+</apex:page>

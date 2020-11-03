@@ -1,0 +1,108 @@
+<aura:component controller="BdayRMDsCtrl" implements="flexipage:availableForAllPageTypes" access="global" >
+	
+    <aura:attribute name="recordType" type="String" access="public" />
+    
+    <aura:attribute name="users" type="Object[]" access="public" />
+    <aura:attribute name="selectedBdayUser" type="String" access="public"/>
+    <aura:attribute name="selectedRMDUser" type="String" access="public" />
+    
+    <aura:attribute name="BDayamount" type="Integer" access="public"  />
+    <aura:attribute name="RMDamount" type="Integer" access="public"  />
+    <aura:attribute name="AUMTreshold" type="Decimal" access="public" default="0" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    
+    <lightning:layout horizontalAlign="spread">
+        
+            <lightning:layoutItem flexibility="grow" padding="around-small">
+                <div class="card_wrap">
+                    <lightning:spinner aura:id="BdaySpinner" class="slds-hide" />
+                    <lightning:card title="Birthday Populator" footer="*May be rare cases where the age rises over 100 :/" iconName="standard:thanks">
+                        
+                        <div class="card_body">
+                            <lightning:select name="select1" label="Select a Demo User (Contact Owner)" required="true" messageWhenValueMissing="Did you forget to select a User?" aura:id="bday_user" value="{!v.selectedBdayUser}">
+                                <option value="">-- None --</option>
+                                <aura:iteration items="{!v.users}" var="user">
+                                    <option value="{!user.Id}" text="{!user.Name}"></option>
+                                </aura:iteration>
+                            </lightning:select>
+                            
+                            <div class="amount_wrap">
+                                <lightning:select name="select2" label="Number of Birthdays to edit" aura:id="bday_num" value="{!v.BDayamount}">
+                                    <option value="">-- None --</option>
+                                    <option value="2" text="2"></option>
+                                    <option value="3" text="3"></option>
+                                    <option value="4" text="4"></option>
+                                    <option value="5" text="5"></option>
+                                    <option value="6" text="6"></option>
+                                    <option value="7" text="7"></option>
+                                    <option value="8" text="8"></option>
+                                    <option value="9" text="9"></option>
+                                    <option value="10" text="10"></option>
+                                    <option value="15" text="15"></option>
+                                </lightning:select>
+                            </div>
+                            
+                            <div class="slds-align_absolute-center btn_wrap">
+                                <lightning:button variant="brand" label="Populate Birthdays" onclick="{! c.populateBday }" />
+                            </div>
+                        </div>
+                    </lightning:card>
+                </div>
+            </lightning:layoutItem>
+        
+            <lightning:layoutItem flexibility="grow" padding="around-small">
+                <div class="card_wrap">
+                    <lightning:spinner aura:id="RMDSpinner" class="slds-hide" />
+                    <lightning:card title="RMD Populator" footer="*Automatcially chooses RMDs where AUM is greater than 0 - looks better!" iconName="custom:custom25" >
+                        
+                        <div class="card_body">
+                            <lightning:select name="select3" label="Select a Demo User (Contact Owner)" required="true" messageWhenValueMissing="Did you forget to select a User?" aura:id="rmd_user" value="{!v.selectedRMDUser}">
+                                <option value="">-- None --</option>
+                                <aura:iteration items="{!v.users}" var="user">
+                                    <option value="{!user.Id}" text="{!user.Name}"></option>
+                                </aura:iteration>
+                            </lightning:select>
+							
+                            <div class="amount_wrap">
+                                <lightning:select name="select4" label="Number of RMDs to edit" aura:id="rmd_num" value="{!v.RMDamount}">
+                                    <option value="">-- None --</option>
+                                    <option value="2" text="2"></option>
+                                    <option value="3" text="3"></option>
+                                    <option value="4" text="4"></option>
+                                    <option value="5" text="5"></option>
+                                    <option value="6" text="6"></option>
+                                    <option value="7" text="7"></option>
+                                    <option value="8" text="8"></option>
+                                    <option value="10" text="10"></option>
+                                    <option value="16" text="16"></option>
+                                </lightning:select>
+                            </div>
+                            
+                            <div class="amount_wrap">
+                                <lightning:select name="select5" label="AUM Threshold" aura:id="aum_num" value="{!v.AUMTreshold}">
+                                    <option value="0" text="No Threshold"></option>
+                                    <option value="5000000" text="less than 5,000,000"></option>  
+                                    <option value="2000000" text="less than 2,000,000"></option>
+                                    <option value="1000000" text="less than 1,000,000"></option>
+                                    <option value="750000" text="less than 750,000"></option>
+                                    <option value="500000" text="less than 500,000"></option>
+                                    <option value="250000" text="less than 300,000"></option>
+                                </lightning:select>
+                            </div>
+                            
+                            <div class="slds-align_absolute-center btn_wrap" >
+                                <lightning:button variant="brand" label="Populate RMDs" onclick="{! c.populateRMD }" />
+                            </div>
+                            
+                        </div>
+                    </lightning:card>
+                </div>
+            </lightning:layoutItem>
+
+        </lightning:layout>
+    
+    
+    
+</aura:component>

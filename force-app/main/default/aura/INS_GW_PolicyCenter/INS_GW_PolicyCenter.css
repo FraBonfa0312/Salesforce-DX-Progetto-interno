@@ -1,0 +1,13 @@
+.THIS .hideDiv{
+	display: none;
+}
+.THIS .showDiv {
+    display: block;
+}
+.THIS img {
+    display: block;
+    margin: 0 auto;
+}
+.THIS button {
+    width: 100%;
+}

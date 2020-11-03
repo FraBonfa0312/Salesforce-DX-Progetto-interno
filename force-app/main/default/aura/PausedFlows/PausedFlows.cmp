@@ -1,0 +1,54 @@
+<aura:component controller="IDS_PausedFlowsCtrl" implements="flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+
+    <lightning:workspaceAPI aura:id="workspace" />
+
+    <aura:attribute name="flowList" type="Object[]" access="public" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <lightning:card title="Paused Flows" iconName="standard:flow">
+
+        <div class="slds-card__body--inner">   
+            
+            <aura:if isTrue="{!empty(v.flowList)}">   
+                <div class="slds-p-around--xxx-small slds-m-horizontal--small" >
+                    <div class="slds-align_absolute-center">
+                        <div class="empty-state-container slds-text-align_center"><img src="/img/lbpm/empty.svg" aria-hidden="true" />
+                            <div class="empty-state-message slds-m-top_medium">There are no paused flows yet.</div>
+                        </div>
+                    </div>
+                </div>
+            	<aura:set attribute="else">
+                    <aura:iteration items="{!v.flowList}" var="flow">
+                        <div class="slds-card lbpmActionListFlow">
+                            <div class="slds-box slds-box_xx-small slds-m-top--small">
+                                <button class="bare slds-button fullWidth uiButton" onclick="{! c.openTabWithSubtab }" id="{!flow.Id}" name="{!flow.InterviewLabel}">
+                                    <div class="slds-truncate slds-p-left--xx-small centered">
+                                        <div class="slds-icon_x-small slds-m-right_xx-small slds-m-left_xx-small forceEntityIcon" style="background-color: transparent" data-aura-class="forceEntityIcon">
+                                            <span class="uiImage" data-aura-class="uiImage"><img src="/img/lbpm/current_icon.svg" class="icon " alt="" title="" /></span> 
+                                        </div> 
+                                    </div>
+                                    <div class="slds-truncate slds-p-left--xx-small centered">
+                                        <div class="slds-truncate slds-p-left--xx-small centered" style="background-color: transparent" data-aura-class="forceEntityIcon">
+                                            {!flow.InterviewLabel} - {!flow.Owner.Name}
+                                        </div> 
+                                    </div>
+                                    
+                                </button>
+                                <div class="slds-align--right slds-float_right slds-p-around_xx-small uiMenu">
+                                    <lightning:buttonMenu alternativeText="Settings" iconSize="small" menuAlignment="right" onselect="{! c.handleMenuSelect }">
+                                        <lightning:menuItem label="View Tab" value="view" />
+                                        <lightning:menuItem label="Delete" value="delete"/>
+                                    </lightning:buttonMenu>
+                                </div>
+                            </div>
+                        </div>   
+                    </aura:iteration>
+                </aura:set>
+            </aura:if>
+            
+        	
+        </div>
+        
+    </lightning:card>
+    
+</aura:component>

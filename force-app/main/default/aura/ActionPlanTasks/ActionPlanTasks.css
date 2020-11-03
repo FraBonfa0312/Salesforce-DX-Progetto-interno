@@ -1,0 +1,33 @@
+.THIS {
+}
+.THIS .compRequired svg{
+    fill: #0070D2;
+}
+
+.THIS .rowSelected>td, .THIS .rowSelected>td:hover{
+    box-shadow: #1589ee 0 -1px 0 inset, #1589ee 0 1px 0 inset !important;
+    background-color: rgba(21, 137, 238, 0.06) !important;
+    border-top: 1px solid #1589ee;
+    border-bottom: 1px solid #1589ee;
+}
+
+.THIS .taskComplete{
+    text-decoration: line-through;
+}
+
+.THIS .todatOrOverdue{
+    color: #c23934;
+    font-weight: bold;
+}
+
+.THIS .border-bottom{
+    border-bottom: 1px solid #dddbda;
+}
+
+.THIS .hideCheckboxLabel .slds-form-element__label{
+    display: none;
+}
+
+.THIS .slds-form_horizontal .slds-form-element__label{
+    text-align: left !important;
+}

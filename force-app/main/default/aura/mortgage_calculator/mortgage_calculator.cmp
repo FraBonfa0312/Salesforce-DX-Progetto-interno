@@ -1,0 +1,177 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" >
+    <aura:attribute name="aIncome" type="Integer" default="0"/>
+    <aura:attribute name="dPay" type="Integer" default="0"/>
+    <aura:attribute name="mExp" type="Integer" default="0"/>
+    <aura:attribute name="mLoan" type="Integer" default="0"/>
+    <aura:attribute name="counter" type="Boolean" default="false"/>
+    <aura:attribute name="currentScreen" type="Integer" default="1"/>
+    <aura:attribute name="heightCheck" type="Integer" default="0"/>
+    
+    <aura:attribute name="city1" type="String" default="San Francisco"/>
+    <aura:attribute name="city2" type="String" default="New York"/>
+    <aura:attribute name="city3" type="String" default="Boston"/>
+    <aura:attribute name="city4" type="String" default="Washinton DC"/>
+    <aura:attribute name="city5" type="String" default="Florida"/>
+    <aura:attribute name="currency" type="String" default="$"/>
+
+    <aura:attribute name="urll" type="String" default="mortgage-summary-"/>
+
+    <aura:attribute name="figure1" type="Integer" default="30000"/>
+    <aura:attribute name="figure2" type="Integer" default="100000"/>
+    <aura:attribute name="figure3" type="Integer" default="10000"/>
+    <aura:attribute name="figure4" type="Integer" default="10000"/>
+
+
+    <aura:attribute name="stages" type="String[]" default="House,Appartment"/>
+    <aura:attribute name="houseType" type="String" default="House"/>
+    <aura:attribute name="country" type="String" default=""/>
+    
+    <div class="container">
+        <div aura:id="1stStage">
+            <div class="screen" style="text-align:center;" aura:id="s1" id = "s1">
+                <lightning:card footer="Card Footer" title="Step 1 of 6">
+                    <div class="slds-text-heading_medium">Where do you want to live?</div>
+                    <lightning:select name="select1" label="Enter City" required="true" value="{!v.country}">
+                            <option value="1">{!v.city1}</option>
+                            <option value="1">{!v.city2}</option>
+                            <option value="2">{!v.city3}</option>
+                            <option value="1">{!v.city4}</option>
+                            <option value="2">{!v.city5}</option>
+                        </lightning:select>
+                    <!--<p class="slds-p-horizontal_small">
+                        <lightning:select name="select1" label="Enter City" required="true" value="{!v.country}">
+                            <option value="1">{!v.city1}</option>
+                            <option value="1">{!v.city2}</option>
+                            <option value="2">{!v.city3}</option>
+                            <option value="1">{!v.city4}</option>
+                            <option value="2">{!v.city5}</option>
+                        </lightning:select>
+                    </p>-->
+                    <br/><ui:button aura:id="button2" label="Next" press="{!c.nextScreen}"/>
+                    
+                    <aura:set attribute="footer">
+                        <p>The location you enter helps us estimate some of your potential costs.</p>
+                    </aura:set>
+                </lightning:card> 
+            </div>
+            <div class="screen s2 slds-hide" style="text-align:center;" aura:id="s2" id = "s2">
+                <lightning:card footer="Card Footer" title="Step 2 of 6">
+                    <div class="slds-text-heading_medium">What kind of home are you looking for?</div>
+                    
+                    <p class="slds-p-horizontal_small" style="overflow: auto;">
+                        
+                        <!--<ui:inputRadio class = "radioCust" aura:id="r1" name="others" label="בית " change="{!c.onGroup}" value="true"/>
+                        <ui:inputRadio class = "radioCust" aura:id="r2" name="others" label="דירה " change="{!c.onGroup}"/>-->
+                        
+                        <div class = "radioCust">
+                            <div class = "houseAfter radioCust" aura:id="11" >
+                                
+                            </div>
+                            <ui:button aura:id="b1" class="radioCust btnCust1" label="House" press="{!c.clickBtn}"/>
+                        </div>
+                        
+                        
+                        <div  class = "radioCust">
+                            <div class = "appBefore radioCust" aura:id="22">
+                            </div>
+                            <ui:button aura:id="b2" class="radioCust btnCust2" label="Condo" press="{!c.clickBtn}"/>
+                        </div>
+                        
+                        
+                    </p>
+                    
+                    <ui:button aura:id="button3" label="Next" press="{!c.nextScreen}"/>
+                    <aura:set attribute="footer">
+                        <p>Different property types have different fees and fixed costs. For example, when you purchase a house, you can pay property taxes but you need to manage your own maintenance. A condominium has condo fees and property taxes, but the condo fees may take care of the maintenance costs.</p>
+                    </aura:set>
+                </lightning:card> 
+            </div>
+            <div class="screen s3 slds-hide" style="text-align:center;" aura:id="s3" id = "s3">
+                <lightning:card footer="Card Footer" title="Step 3 of 6">
+                    <div class="slds-text-heading_medium">What is your annual income?</div><br/>
+                    
+                    <p class="slds-p-horizontal_small">
+                        <lightning:input type="text" label="{!v.currency}" value="{!v.aIncome}"/>
+                        <lightning:slider step="" min="0" max="{!v.figure1}" value="{!v.aIncome}" onchange="{! c.handleChange }"/>
+                        0-{!v.figure1}
+                    </p>
+                    
+                    <br/><ui:button aura:id="button4" label="Next" press="{!c.nextScreen}"/>
+                    <aura:set attribute="footer">
+                        <p>Your annual income is the amount you earn before taxes, also known as the gross amount. If you’re buying a home with others, include their annual income before taxes as well.</p>
+                    </aura:set>
+                </lightning:card> 
+            </div>
+            <div class="screen s4  slds-hide" style="text-align:center;" aura:id="s4" id = "s4">
+                <lightning:card footer="Card Footer" title="Step 4 of 6">
+                    <div class="slds-text-heading_medium">How much do you have for a down payment?</div><br/>
+                    
+                    
+                    <p class="slds-p-horizontal_small">
+                        <lightning:input type="text" label="{!v.currency}" value="{!v.dPay}"/>
+                        <lightning:slider step="" min="0" max="{!v.figure2}" value="{!v.dPay}" onchange="{! c.handleChange }"/>
+                        0-{!v.figure2}
+                    </p>
+                    
+                    <br/><ui:button aura:id="button5" label="Next" press="{!c.nextScreen}"/>
+                    <aura:set attribute="footer">
+                        <p>Your down payment affects the amount you can borrow to buy a home and the size of your payments. This will impact your monthly budget.
+
+                                You must have at least 5% for a down payment if the home purchase price is less than $500,000.
+                                
+                                If the home purchase price is between $500,000 and $999,999.99, you must have at least 5% for the first $500,000 and 10% for the remaining amount.
+                                
+                                For home prices $1 million or over, the down payment must be 20%.
+                                
+                                If you are a first-time home buyer, you can borrow up to $25,000 from your RSP towards your down payment.1
+                                
+                                1. First time home buyers can withdraw up to $25,000, in a calendar year, from their RSPs for a home purchase (up to $50,000 for a couple). They then have 15 years to repay their RSP (other conditions apply). Find out more about the RSP Home Buyers' Plan.</p>
+                    </aura:set>
+                    
+                </lightning:card> 
+            </div>
+            <div class="screen s5  slds-hide" style="text-align:center;" aura:id="s5" id = "s6">
+                <lightning:card footer="Card Footer" title="">
+                    <div class="slds-text-heading_medium">What monthly expenses do you have?</div><br/>
+                    <p class="slds-p-horizontal_small">
+                        <lightning:input type="text" label="{!v.currency}" value="{!v.mExp}"/>
+                        <lightning:slider step="" min="0" max="{!v.figure3}" value="{!v.mExp}" onchange="{! c.handleChange }"/>
+                        0-{!v.figure3}
+                    </p>
+                    
+                    <br/><ui:button aura:id="button6" label="Next" press="{!c.nextScreen}"/>
+                    <aura:set attribute="footer">
+                        <p>Estimate your monthly expenses such as groceries, transportation, child care, insurance, shopping, media and regular contributions to savings.
+
+                                Please do not include rent or housing expenses.
+                                
+                                If you're buying a home with a spouse, partner, friend or family member, include their monthly expenses as well.
+                                
+                                If this amount is higher than your monthly income before taxes, please contact us to discuss your options.</p>
+                    </aura:set> 
+                </lightning:card> 
+            </div>
+            <div class="screen s6  slds-hide" style="text-align:center;" aura:id="s6" id = "s6">
+                <lightning:card footer="Card Footer" title="Step 5 of 6">
+                    <div class="slds-text-heading_medium">What are your monthly payments for loans, car loans, leases, lines of credit and credit cards?</div><br/>
+                    <p class="slds-p-horizontal_small">
+                        <lightning:input type="text" label="{!v.currency}" value="{!v.mLoan}"/>
+                        <lightning:slider step="" min="0" max="{!v.figure4}" value="{!v.mLoan}" onchange="{! c.handleChange }"/>
+                        0-{!v.figure4}
+                    </p>
+                    
+                    <br/><ui:button aura:id="button7" label="Next" press="{!c.nextScreen}"/>
+                    <aura:set attribute="footer">
+                        <p>Make sure to also include monthly payments for anyone who is buying the home with you. If your current monthly debt payments are more than 50% of your monthly income before taxes, please contact us to discuss your options.</p>
+                    </aura:set> 
+                </lightning:card> 
+            </div>
+            
+        </div>
+        
+        <!--<div aura:id="secondStage" class="slds-hide">
+            <c:DESZ_summeryScreen/>
+        </div>-->
+    </div>
+    
+</aura:component>

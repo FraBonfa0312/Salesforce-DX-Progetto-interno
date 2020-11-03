@@ -1,0 +1,59 @@
+<aura:component controller="PopulateMe" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+    <aura:attribute name="givenId" type="String"/>
+    <aura:attribute name="tempId" type="String"/>
+    <aura:attribute name="givenVal" type="Decimal"/>
+    <aura:attribute name="givenTypeOne" type="String"/>
+    <aura:attribute name="givenTypeTwo" type="String"/>
+    <aura:attribute name="givenTypeThree" type="String"/>
+    <aura:attribute name="myInfo" type="String"/>    
+    <aura:attribute name="myListVar" type="String[]"/>    
+
+    <lightning:card>
+        <lightning:layout horizontalAlign="center" verticalAlign="center">            
+            <div class="slds-grid slds-grid_vertical">
+                <div class="slds-col slds-border_bottom" style="padding: 1rem;">                    
+                    <div class="slds-text-heading_medium">
+                        <strong>Enter Record ID, Starting Value, and at least one Type</strong>                        
+                    </div>
+
+                    <lightning:input name="inputRecord" value="{!v.givenId}" placeholder="Enter Record ID"/>
+                    <lightning:input name="inputVal" value="{!v.givenVal}" placeholder="Enter Starting Value"/>
+                    <lightning:input name="inputTypeOne" value="{!v.givenTypeOne}" placeholder="Enter Type 1 Value"/>
+                    <lightning:input name="inputTypeTwo" value="{!v.givenTypeTwo}" placeholder="Enter Type 2 Value (Optional)"/>
+                    <lightning:input name="inputTypeThree" value="{!v.givenTypeThree}" placeholder="Enter Type 3 Value (Optional)"/>
+                    <br/>
+                    <lightning:button class="slds-align_absolute-center" variant="brand" label="Generate Data" onclick="{!c.generateData}"/>
+                </div>
+                <aura:if isTrue="{!v.myInfo == 'Error'}">
+                    <div class="slds-p-top_x-small slds-text-color_error slds-text-heading_medium slds-align_absolute-center slds-col">                        
+                        <strong>Please Fill in First 3 Boxes (mandatory)</strong>
+                    </div> 
+                </aura:if>
+                <aura:if isTrue="{!v.myInfo == 'Success'}">
+                    <div class="slds-p-top_x-small slds-text-color_success slds-text-heading_medium slds-align_absolute-center slds-col">                        
+                        Transactions are populated!
+                    </div>
+                    <div class="slds-p-top_x-small slds-text-heading_medium slds-align_absolute-center slds-col">                        
+                        <strong>
+                            <a onclick="{!c.getClick}">Click Here To Go To Your Record</a>
+                        </strong>
+                    </div>
+                </aura:if>
+            </div>                        
+        </lightning:layout>
+    </lightning:card>
+    
+    <lightning:card>
+        <lightning:layout horizontalAlign="center" verticalAlign="center">            
+            <div class="slds-grid slds-grid_vertical">
+                <div class="slds-text-heading_medium slds-align_absolute-center slds-p-bottom_small">
+                    <strong>Instructions:</strong>                    
+                </div>
+                <div>
+                    <img src="{!$Resource.tr_pop_guide_instr_stuff_99}"/>
+                </div>
+            </div>                        
+        </lightning:layout>
+    </lightning:card>
+    
+</aura:component>

@@ -1,0 +1,20 @@
+<aura:component implements="flexipage:availableForAllPageTypes">
+    <aura:attribute name="showCompanyInfo" type="Boolean" default="true"/>
+    <aura:attribute name="showPeople" type="Boolean" default="false"/>
+    <aura:attribute name="showInsights" type="Boolean" default="false"/>
+
+    <div class="imageContainerClass">
+        <aura:if isTrue="{!v.showCompanyInfo}">
+            <c:insideViewCompanyInfoAura></c:insideViewCompanyInfoAura>
+        </aura:if>
+        <aura:if isTrue="{!v.showPeople}">
+            <img src="{!$Resource.insideSalesPeople}" class="imageClass"/>
+        </aura:if>
+        <aura:if isTrue="{!v.showInsights}">
+            <img src="{!$Resource.insideSalesInsights}" class="imageClass"/>
+        </aura:if>
+        <div class="selectCompanyInfo" onclick="{!c.selectCompanyInfo}"></div>
+        <div class="selectPeople" onclick="{!c.selectPeople}"></div>
+        <div class="selectInsights" onclick="{!c.selectInsights}"></div>
+    </div>
+</aura:component>

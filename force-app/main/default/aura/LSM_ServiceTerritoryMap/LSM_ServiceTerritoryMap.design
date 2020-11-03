@@ -1,0 +1,16 @@
+<design:component>
+	
+    <design:attribute name="WorkTypeGroupId" label="Work Type Group Id (In)" />
+    <design:attribute name="WorkTypeId" label="Work Type Id (In)" />
+    <design:attribute name="UOM" label="Unit of Measure (In)" description="km or mi" default="km" />
+    <design:attribute name="radius" label="Radius" default="20" />
+    <design:attribute name="placeOptions" label="Place Options" default="+components=country:au+types=(cities)" />
+    <design:attribute name="markersTitle" label="Title of Map Markers" default="Our Locations"/>
+    <design:attribute name="ServiceTerritoryId" label="Service Territory Id (Out)" />
+    <design:attribute name="Street" label="Street (Out)" />
+    <design:attribute name="City" label="City (Out)" />
+    <design:attribute name="State" label="State (Out)" />
+    <design:attribute name="PostalCode" label="PostalCode (Out)" />
+    <design:attribute name="Country" label="Country (Out)" />
+	
+</design:component>

@@ -1,0 +1,4 @@
+<design:component>
+    <design:attribute name="finishActionType"   label="Finish Action Type" datasource="Default,Navigate to URL,Navigate to Record" default="Default" />
+    <design:attribute name="finishActionTarget" label="Finish Action Target" />
+</design:component>

@@ -1,0 +1,3 @@
+<apex:page standardcontroller="Account" docType="html-5.0" lightningStylesheets="true">
+<script> window.location=("https://demo.tableau.com/t/Salesforcetc19f/views/AccountManagement-TCSalesforceExample/StrategicEnterpriseAccountProfile?iframeSizedToWindow=true&:embed=y&:showAppBanner=false&:display_count=no&:showVizHome=no&:origin=viz_share_link"); </script>
+</apex:page>

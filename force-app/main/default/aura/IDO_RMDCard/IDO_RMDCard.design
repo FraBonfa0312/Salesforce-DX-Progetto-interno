@@ -1,0 +1,3 @@
+<design:component label="FSC RMD Card">
+	<design:attribute name="theLimit" label="Number of RMDs" min="2" max="5" default="2" />
+</design:component>

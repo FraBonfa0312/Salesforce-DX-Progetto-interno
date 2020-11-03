@@ -1,0 +1,41 @@
+.THIS {
+}
+
+.THIS .cardMain {
+   
+}
+
+.THIS .positiveNumber{
+    color:#4bc076; 
+}
+
+.THIS .negativeNumber{
+    color:#d4243d;
+}
+
+.THIS .classHidden {
+    display: none;
+}
+
+.THIS .underlined {
+    border-bottom: 1px dotted;
+}
+
+.THIS .headingText {
+	font-size: 18px;
+	font-weight: 450;    
+}
+
+.THIS .textValues {
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.THIS .textTitles {
+    font-weight: 450;
+}
+
+.THIS .imgIcons {
+    height: 30px;
+    width: 30px;
+}

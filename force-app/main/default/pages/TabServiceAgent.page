@@ -1,0 +1,3 @@
+<apex:page docType="html-5.0" standardController="Case" extensions="xTabHelperController" lightningStylesheets="true">
+<script> window.location=("https://{!metadata.Server_Name__c}/{!metadata.Site_Root__c}/views/ServiceCloudDashboards/ServiceAgentDashboard?iframeSizedToWindow=true&:embed=y&:toolbar=no&:showAppBanner=false&:showShareOptions=false&:display_count=no&:showVizHome=no"); </script>
+</apex:page>
